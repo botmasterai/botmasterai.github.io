@@ -1,1 +1,1 @@
-go to http://botmasterai.github.com to read the documentation.
+go to http://botmasterai.github.io to read the documentation.
