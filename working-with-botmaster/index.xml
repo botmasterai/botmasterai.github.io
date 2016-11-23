@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Working-with-botmaster-rsses on Botmaster Documentation</title>
-    <link>https://jdwuarin.github.io/botmaster/working-with-botmaster/index.xml</link>
+    <link>https://botmasterai.github.io/working-with-botmaster/index.xml</link>
     <description>Recent content in Working-with-botmaster-rsses on Botmaster Documentation</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>MIT</copyright>
     <lastBuildDate>Fri, 04 Nov 2016 01:17:34 +0000</lastBuildDate>
-    <atom:link href="https://jdwuarin.github.io/botmaster/working-with-botmaster/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://botmasterai.github.io/working-with-botmaster/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Working with Botmaster</title>
-      <link>https://jdwuarin.github.io/botmaster/working-with-botmaster/</link>
+      <link>https://botmasterai.github.io/working-with-botmaster/</link>
       <pubDate>Fri, 04 Nov 2016 01:17:34 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/working-with-botmaster/</guid>
+      <guid>https://botmasterai.github.io/working-with-botmaster/</guid>
       <description>
 
 &lt;h1 id=&#34;working-with-botmaster&#34;&gt;Working with Botmaster&lt;/h1&gt;
@@ -24,13 +24,13 @@
     
     <item>
       <title>Botmaster Basics</title>
-      <link>https://jdwuarin.github.io/botmaster/working-with-botmaster/botmaster-basics/</link>
+      <link>https://botmasterai.github.io/working-with-botmaster/botmaster-basics/</link>
       <pubDate>Fri, 04 Nov 2016 01:31:15 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/working-with-botmaster/botmaster-basics/</guid>
+      <guid>https://botmasterai.github.io/working-with-botmaster/botmaster-basics/</guid>
       <description>
 
-&lt;p&gt;Hopefully, by now you&amp;rsquo;ve gathered your credentials for at least one platform and got some basic bot running. We remember from the &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/quickstart&#34;&gt;quickstart&lt;/a&gt; and the various Setup guides in &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started&#34;&gt;getting-started&lt;/a&gt; that we can start our botmaster server like this:&lt;/p&gt;
+&lt;p&gt;Hopefully, by now you&amp;rsquo;ve gathered your credentials for at least one platform and got some basic bot running. We remember from the &lt;a href=&#34;https://botmasterai.github.io/getting-started/quickstart&#34;&gt;quickstart&lt;/a&gt; and the various Setup guides in &lt;a href=&#34;https://botmasterai.github.io/getting-started&#34;&gt;getting-started&lt;/a&gt; that we can start our botmaster server like this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
 .
@@ -67,7 +67,7 @@ const botmaster = new Botmaster(botmasterSettings);
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td&gt;botsSettings&lt;/td&gt;
-&lt;td&gt;An &lt;code&gt;array&lt;/code&gt; of platform specific settings. See &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/quickstart&#34;&gt;Quickstart&lt;/a&gt; to see an example of those and the various setup guides in &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started&#34;&gt;Getting started&lt;/a&gt; to see how to get started with the various platforms.&lt;/td&gt;
+&lt;td&gt;An &lt;code&gt;array&lt;/code&gt; of platform specific settings. See &lt;a href=&#34;https://botmasterai.github.io/getting-started/quickstart&#34;&gt;Quickstart&lt;/a&gt; to see an example of those and the various setup guides in &lt;a href=&#34;https://botmasterai.github.io/getting-started&#34;&gt;Getting started&lt;/a&gt; to see how to get started with the various platforms.&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;tr&gt;
@@ -380,7 +380,7 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 
 &lt;p&gt;Also, concerning &lt;code&gt;location&lt;/code&gt; and &lt;code&gt;venue&lt;/code&gt; attachments. The url received in Botmaster for Telegram is a google maps one with the coordinates as query parameters. It looks something like this: &lt;code&gt;https://maps.google.com/?q=&amp;lt;lat&amp;gt;,&amp;lt;long&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;A few of you will want to use attachments with your &lt;code&gt;socket.io&lt;/code&gt; bots. Because the Botmaster message standard is the Facebook Messenger one, everything is URL based. Which means it is left to the developer to store both incoming and outgoing attachments. A tutorial on how to deal with this will be up soon in the &lt;a href=&#34;https://jdwuarin.github.io/botmaster/tutorials&#34;&gt;Tutorials&lt;/a&gt; section.&lt;/p&gt;
+&lt;p&gt;A few of you will want to use attachments with your &lt;code&gt;socket.io&lt;/code&gt; bots. Because the Botmaster message standard is the Facebook Messenger one, everything is URL based. Which means it is left to the developer to store both incoming and outgoing attachments. A tutorial on how to deal with this will be up soon in the &lt;a href=&#34;https://botmasterai.github.io/tutorials&#34;&gt;Tutorials&lt;/a&gt; section.&lt;/p&gt;
 
 &lt;h3 id=&#34;outgoing-messages&#34;&gt;Outgoing messages&lt;/h3&gt;
 
@@ -701,10 +701,10 @@ app.listen(port, &#39;0.0.0.0&#39;, () =&amp;gt; {
     
     <item>
       <title>Writing your Own Bot Class</title>
-      <link>https://jdwuarin.github.io/botmaster/working-with-botmaster/writing-your-own-bot-class/</link>
+      <link>https://botmasterai.github.io/working-with-botmaster/writing-your-own-bot-class/</link>
       <pubDate>Thu, 17 Nov 2016 18:16:51 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/working-with-botmaster/writing-your-own-bot-class/</guid>
+      <guid>https://botmasterai.github.io/working-with-botmaster/writing-your-own-bot-class/</guid>
       <description>
 
 &lt;h2 id=&#34;bot-classes&#34;&gt;Bot classes&lt;/h2&gt;
@@ -743,7 +743,7 @@ app.listen(3000, function() {});
 
 &lt;h2 id=&#34;making-botmaster-objects-and-bot-objects-work-together&#34;&gt;Making Botmaster objects and bot objects work together&lt;/h2&gt;
 
-&lt;p&gt;In the &lt;a href=&#34;https://jdwuarin.github.io/botmaster/working-with-botmaster/botmaster-basics&#34;&gt;botmaster basics&lt;/a&gt; sectio nwe saw how botmaster objects return a bot object along with every update it receives. I.e. something like this happens:&lt;/p&gt;
+&lt;p&gt;In the &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/botmaster-basics&#34;&gt;botmaster basics&lt;/a&gt; sectio nwe saw how botmaster objects return a bot object along with every update it receives. I.e. something like this happens:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   console.log(bot.type);
@@ -780,7 +780,7 @@ const botmasterSettings = { botsSettings: botsSettings };
 const botmaster = new Botmaster(botmasterSettings);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;In this example the &lt;code&gt;botmaster&lt;/code&gt; object will start a new &lt;code&gt;express()&lt;/code&gt; &lt;code&gt;app&lt;/code&gt; server running locally on port &lt;code&gt;3000&lt;/code&gt; as expected by default (see &lt;a href=&#34;https://jdwuarin.github.io/botmaster/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app&#34;&gt;here&lt;/a&gt; to see how to change that). However, we later might want to add to botmaster the object we created in the first section, namely, &lt;code&gt;messengerBot&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In this example the &lt;code&gt;botmaster&lt;/code&gt; object will start a new &lt;code&gt;express()&lt;/code&gt; &lt;code&gt;app&lt;/code&gt; server running locally on port &lt;code&gt;3000&lt;/code&gt; as expected by default (see &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app&#34;&gt;here&lt;/a&gt; to see how to change that). However, we later might want to add to botmaster the object we created in the first section, namely, &lt;code&gt;messengerBot&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;We can achieve this by doing the following:&lt;/p&gt;
 
