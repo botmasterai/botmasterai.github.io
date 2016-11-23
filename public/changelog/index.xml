@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Changelog-rsses on Botmaster Documentation</title>
-    <link>https://jdwuarin.github.io/botmaster/changelog/index.xml</link>
+    <link>https://botmasterai.github.io/changelog/index.xml</link>
     <description>Recent content in Changelog-rsses on Botmaster Documentation</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>MIT</copyright>
     <lastBuildDate>Sat, 29 Oct 2016 19:55:42 +0100</lastBuildDate>
-    <atom:link href="https://jdwuarin.github.io/botmaster/changelog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://botmasterai.github.io/changelog/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>CHANGELOG</title>
-      <link>https://jdwuarin.github.io/botmaster/changelog/CHANGELOG/</link>
+      <link>https://botmasterai.github.io/changelog/CHANGELOG/</link>
       <pubDate>Sat, 29 Oct 2016 19:55:42 +0100</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/changelog/CHANGELOG/</guid>
+      <guid>https://botmasterai.github.io/changelog/CHANGELOG/</guid>
       <description>
 
 &lt;h3 id=&#34;patch-2-2-2&#34;&gt;PATCH: 2.2.2&lt;/h3&gt;
@@ -25,7 +25,7 @@
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var socket = io(&#39;?botmasterUserId=wantedUserId&#39;);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;See updated Botmaster Socket.io bot mini-tutorial &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/socketio-setup/#botmaster-socket-io-bot-mini-tutorial&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;See updated Botmaster Socket.io bot mini-tutorial &lt;a href=&#34;https://botmasterai.github.io/getting-started/socketio-setup/#botmaster-socket-io-bot-mini-tutorial&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;minor-botmaster-2-2-0&#34;&gt;MINOR: Botmaster 2.2.0&lt;/h3&gt;
 

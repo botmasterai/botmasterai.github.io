@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Botmaster Documentation</title>
-    <link>https://jdwuarin.github.io/botmaster/index.xml</link>
+    <link>https://botmasterai.github.io/index.xml</link>
     <description>Recent content on Botmaster Documentation</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>MIT</copyright>
     <lastBuildDate>Sat, 19 Nov 2016 17:08:11 +0000</lastBuildDate>
-    <atom:link href="https://jdwuarin.github.io/botmaster/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://botmasterai.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Other Articles</title>
-      <link>https://jdwuarin.github.io/botmaster/other-articles/</link>
+      <link>https://botmasterai.github.io/other-articles/</link>
       <pubDate>Sat, 19 Nov 2016 17:08:11 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/other-articles/</guid>
+      <guid>https://botmasterai.github.io/other-articles/</guid>
       <description>
 
 &lt;h1 id=&#34;other-articles&#34;&gt;OTHER ARTICLES&lt;/h1&gt;
@@ -26,10 +26,10 @@
     
     <item>
       <title>Tutorials (coming soon)</title>
-      <link>https://jdwuarin.github.io/botmaster/tutorials/</link>
+      <link>https://botmasterai.github.io/tutorials/</link>
       <pubDate>Fri, 11 Nov 2016 20:42:42 +0100</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/tutorials/</guid>
+      <guid>https://botmasterai.github.io/tutorials/</guid>
       <description>
 
 &lt;h1 id=&#34;coming-soon&#34;&gt;Coming soon&lt;/h1&gt;
@@ -38,10 +38,10 @@
     
     <item>
       <title>Working with Botmaster</title>
-      <link>https://jdwuarin.github.io/botmaster/working-with-botmaster/</link>
+      <link>https://botmasterai.github.io/working-with-botmaster/</link>
       <pubDate>Fri, 04 Nov 2016 01:17:34 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/working-with-botmaster/</guid>
+      <guid>https://botmasterai.github.io/working-with-botmaster/</guid>
       <description>
 
 &lt;h1 id=&#34;working-with-botmaster&#34;&gt;Working with Botmaster&lt;/h1&gt;
@@ -50,10 +50,10 @@
     
     <item>
       <title>CHANGELOG</title>
-      <link>https://jdwuarin.github.io/botmaster/changelog/CHANGELOG/</link>
+      <link>https://botmasterai.github.io/changelog/CHANGELOG/</link>
       <pubDate>Sat, 29 Oct 2016 19:55:42 +0100</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/changelog/CHANGELOG/</guid>
+      <guid>https://botmasterai.github.io/changelog/CHANGELOG/</guid>
       <description>
 
 &lt;h3 id=&#34;patch-2-2-2&#34;&gt;PATCH: 2.2.2&lt;/h3&gt;
@@ -63,7 +63,7 @@
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;var socket = io(&#39;?botmasterUserId=wantedUserId&#39;);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;See updated Botmaster Socket.io bot mini-tutorial &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/socketio-setup/#botmaster-socket-io-bot-mini-tutorial&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;See updated Botmaster Socket.io bot mini-tutorial &lt;a href=&#34;https://botmasterai.github.io/getting-started/socketio-setup/#botmaster-socket-io-bot-mini-tutorial&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;minor-botmaster-2-2-0&#34;&gt;MINOR: Botmaster 2.2.0&lt;/h3&gt;
 
@@ -125,10 +125,10 @@ bot class that will be in the core&lt;/p&gt;
     
     <item>
       <title>Botmaster v 2.2.2</title>
-      <link>https://jdwuarin.github.io/botmaster/home/</link>
+      <link>https://botmasterai.github.io/home/</link>
       <pubDate>Sat, 29 Oct 2016 19:25:10 +0100</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/home/</guid>
+      <guid>https://botmasterai.github.io/home/</guid>
       <description>
 
 &lt;h2 id=&#34;what-is-botmaster&#34;&gt;What is botmaster?&lt;/h2&gt;
@@ -163,10 +163,10 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
     
     <item>
       <title>Getting started</title>
-      <link>https://jdwuarin.github.io/botmaster/getting-started/</link>
+      <link>https://botmasterai.github.io/getting-started/</link>
       <pubDate>Sat, 29 Oct 2016 17:09:45 +0100</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/getting-started/</guid>
+      <guid>https://botmasterai.github.io/getting-started/</guid>
       <description>
 
 &lt;h1 id=&#34;getting-started&#34;&gt;GETTING STARTED&lt;/h1&gt;
@@ -193,10 +193,10 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
     
     <item>
       <title>Botmaster or Botkit?</title>
-      <link>https://jdwuarin.github.io/botmaster/other-articles/botmaster-or-botkit/</link>
+      <link>https://botmasterai.github.io/other-articles/botmaster-or-botkit/</link>
       <pubDate>Sat, 19 Nov 2016 17:07:40 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/other-articles/botmaster-or-botkit/</guid>
+      <guid>https://botmasterai.github.io/other-articles/botmaster-or-botkit/</guid>
       <description>
 
 &lt;h3 id=&#34;tl-dr&#34;&gt;tl;dr&lt;/h3&gt;
@@ -482,13 +482,13 @@ app.listen(3000, function() {
     
     <item>
       <title>Botmaster Basics</title>
-      <link>https://jdwuarin.github.io/botmaster/working-with-botmaster/botmaster-basics/</link>
+      <link>https://botmasterai.github.io/working-with-botmaster/botmaster-basics/</link>
       <pubDate>Fri, 04 Nov 2016 01:31:15 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/working-with-botmaster/botmaster-basics/</guid>
+      <guid>https://botmasterai.github.io/working-with-botmaster/botmaster-basics/</guid>
       <description>
 
-&lt;p&gt;Hopefully, by now you&amp;rsquo;ve gathered your credentials for at least one platform and got some basic bot running. We remember from the &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/quickstart&#34;&gt;quickstart&lt;/a&gt; and the various Setup guides in &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started&#34;&gt;getting-started&lt;/a&gt; that we can start our botmaster server like this:&lt;/p&gt;
+&lt;p&gt;Hopefully, by now you&amp;rsquo;ve gathered your credentials for at least one platform and got some basic bot running. We remember from the &lt;a href=&#34;https://botmasterai.github.io/getting-started/quickstart&#34;&gt;quickstart&lt;/a&gt; and the various Setup guides in &lt;a href=&#34;https://botmasterai.github.io/getting-started&#34;&gt;getting-started&lt;/a&gt; that we can start our botmaster server like this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
 .
@@ -525,7 +525,7 @@ const botmaster = new Botmaster(botmasterSettings);
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td&gt;botsSettings&lt;/td&gt;
-&lt;td&gt;An &lt;code&gt;array&lt;/code&gt; of platform specific settings. See &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/quickstart&#34;&gt;Quickstart&lt;/a&gt; to see an example of those and the various setup guides in &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started&#34;&gt;Getting started&lt;/a&gt; to see how to get started with the various platforms.&lt;/td&gt;
+&lt;td&gt;An &lt;code&gt;array&lt;/code&gt; of platform specific settings. See &lt;a href=&#34;https://botmasterai.github.io/getting-started/quickstart&#34;&gt;Quickstart&lt;/a&gt; to see an example of those and the various setup guides in &lt;a href=&#34;https://botmasterai.github.io/getting-started&#34;&gt;Getting started&lt;/a&gt; to see how to get started with the various platforms.&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;tr&gt;
@@ -838,7 +838,7 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 
 &lt;p&gt;Also, concerning &lt;code&gt;location&lt;/code&gt; and &lt;code&gt;venue&lt;/code&gt; attachments. The url received in Botmaster for Telegram is a google maps one with the coordinates as query parameters. It looks something like this: &lt;code&gt;https://maps.google.com/?q=&amp;lt;lat&amp;gt;,&amp;lt;long&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;A few of you will want to use attachments with your &lt;code&gt;socket.io&lt;/code&gt; bots. Because the Botmaster message standard is the Facebook Messenger one, everything is URL based. Which means it is left to the developer to store both incoming and outgoing attachments. A tutorial on how to deal with this will be up soon in the &lt;a href=&#34;https://jdwuarin.github.io/botmaster/tutorials&#34;&gt;Tutorials&lt;/a&gt; section.&lt;/p&gt;
+&lt;p&gt;A few of you will want to use attachments with your &lt;code&gt;socket.io&lt;/code&gt; bots. Because the Botmaster message standard is the Facebook Messenger one, everything is URL based. Which means it is left to the developer to store both incoming and outgoing attachments. A tutorial on how to deal with this will be up soon in the &lt;a href=&#34;https://botmasterai.github.io/tutorials&#34;&gt;Tutorials&lt;/a&gt; section.&lt;/p&gt;
 
 &lt;h3 id=&#34;outgoing-messages&#34;&gt;Outgoing messages&lt;/h3&gt;
 
@@ -1159,10 +1159,10 @@ app.listen(port, &#39;0.0.0.0&#39;, () =&amp;gt; {
     
     <item>
       <title>Installation</title>
-      <link>https://jdwuarin.github.io/botmaster/getting-started/installation/</link>
+      <link>https://botmasterai.github.io/getting-started/installation/</link>
       <pubDate>Mon, 31 Oct 2016 18:46:54 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/getting-started/installation/</guid>
+      <guid>https://botmasterai.github.io/getting-started/installation/</guid>
       <description>&lt;p&gt;Make sure you have &lt;a href=&#34;https://nodejs.org/en/&#34;&gt;Node.js&lt;/a&gt; and npm installed on your machine. If you don&amp;rsquo;t, I recommend using nvm to manage your node versions. Find out more about it &lt;a href=&#34;https://github.com/creationix/nvm/blob/master/README.markdown&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Once you have node, create a new project directory and go into it:&lt;/p&gt;
@@ -1186,10 +1186,10 @@ app.listen(port, &#39;0.0.0.0&#39;, () =&amp;gt; {
     
     <item>
       <title>Writing your Own Bot Class</title>
-      <link>https://jdwuarin.github.io/botmaster/working-with-botmaster/writing-your-own-bot-class/</link>
+      <link>https://botmasterai.github.io/working-with-botmaster/writing-your-own-bot-class/</link>
       <pubDate>Thu, 17 Nov 2016 18:16:51 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/working-with-botmaster/writing-your-own-bot-class/</guid>
+      <guid>https://botmasterai.github.io/working-with-botmaster/writing-your-own-bot-class/</guid>
       <description>
 
 &lt;h2 id=&#34;bot-classes&#34;&gt;Bot classes&lt;/h2&gt;
@@ -1228,7 +1228,7 @@ app.listen(3000, function() {});
 
 &lt;h2 id=&#34;making-botmaster-objects-and-bot-objects-work-together&#34;&gt;Making Botmaster objects and bot objects work together&lt;/h2&gt;
 
-&lt;p&gt;In the &lt;a href=&#34;https://jdwuarin.github.io/botmaster/working-with-botmaster/botmaster-basics&#34;&gt;botmaster basics&lt;/a&gt; sectio nwe saw how botmaster objects return a bot object along with every update it receives. I.e. something like this happens:&lt;/p&gt;
+&lt;p&gt;In the &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/botmaster-basics&#34;&gt;botmaster basics&lt;/a&gt; sectio nwe saw how botmaster objects return a bot object along with every update it receives. I.e. something like this happens:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   console.log(bot.type);
@@ -1265,7 +1265,7 @@ const botmasterSettings = { botsSettings: botsSettings };
 const botmaster = new Botmaster(botmasterSettings);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;In this example the &lt;code&gt;botmaster&lt;/code&gt; object will start a new &lt;code&gt;express()&lt;/code&gt; &lt;code&gt;app&lt;/code&gt; server running locally on port &lt;code&gt;3000&lt;/code&gt; as expected by default (see &lt;a href=&#34;https://jdwuarin.github.io/botmaster/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app&#34;&gt;here&lt;/a&gt; to see how to change that). However, we later might want to add to botmaster the object we created in the first section, namely, &lt;code&gt;messengerBot&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In this example the &lt;code&gt;botmaster&lt;/code&gt; object will start a new &lt;code&gt;express()&lt;/code&gt; &lt;code&gt;app&lt;/code&gt; server running locally on port &lt;code&gt;3000&lt;/code&gt; as expected by default (see &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app&#34;&gt;here&lt;/a&gt; to see how to change that). However, we later might want to add to botmaster the object we created in the first section, namely, &lt;code&gt;messengerBot&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;We can achieve this by doing the following:&lt;/p&gt;
 
@@ -1470,10 +1470,10 @@ It would make sense for you to do so for consistency and because it has to be de
     
     <item>
       <title>Quickstart</title>
-      <link>https://jdwuarin.github.io/botmaster/getting-started/quickstart/</link>
+      <link>https://botmasterai.github.io/getting-started/quickstart/</link>
       <pubDate>Mon, 31 Oct 2016 21:39:47 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/getting-started/quickstart/</guid>
+      <guid>https://botmasterai.github.io/getting-started/quickstart/</guid>
       <description>&lt;p&gt;If you already know your credentials for the platforms you want to be supporting in your project the following code will help you get started&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;
@@ -1550,10 +1550,10 @@ botmaster.on(&#39;error&#39;, (bot, err) =&amp;gt; {
     
     <item>
       <title>Getting set up</title>
-      <link>https://jdwuarin.github.io/botmaster/getting-started/getting-set-up/</link>
+      <link>https://botmasterai.github.io/getting-started/getting-set-up/</link>
       <pubDate>Mon, 31 Oct 2016 22:33:42 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/getting-started/getting-set-up/</guid>
+      <guid>https://botmasterai.github.io/getting-started/getting-set-up/</guid>
       <description>&lt;p&gt;In order to instantiate a &lt;code&gt;Botmaster&lt;/code&gt; object, you need to pass it some settings in the form of an object. These settings look like this.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const botmasterSettings = {
@@ -1565,7 +1565,7 @@ botmaster.on(&#39;error&#39;, (bot, err) =&amp;gt; {
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;See &lt;a href=&#34;https://jdwuarin.github.io/botmaster/working-with-botmaster&#34;&gt;Working with Botmaster&lt;/a&gt; for a more formal definition&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster&#34;&gt;Working with Botmaster&lt;/a&gt; for a more formal definition&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;botsSettings&lt;/code&gt; look something like this:&lt;/p&gt;
 
@@ -1587,10 +1587,10 @@ botmaster.on(&#39;error&#39;, (bot, err) =&amp;gt; {
     
     <item>
       <title>Facebook Messenger Setup</title>
-      <link>https://jdwuarin.github.io/botmaster/getting-started/messenger-setup/</link>
+      <link>https://botmasterai.github.io/getting-started/messenger-setup/</link>
       <pubDate>Mon, 31 Oct 2016 22:24:20 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/getting-started/messenger-setup/</guid>
+      <guid>https://botmasterai.github.io/getting-started/messenger-setup/</guid>
       <description>
 
 &lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
@@ -1626,7 +1626,7 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 
 &lt;h2 id=&#34;webhooks&#34;&gt;Webhooks&lt;/h2&gt;
 
-&lt;div class=&#34;notices note&#34; &gt;&lt;p&gt;If you are not too sure how webhooks work and/or how to get them to run locally, go to &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/webhooks&#34;&gt;webhooks&lt;/a&gt; to read some more.&lt;/p&gt;
+&lt;div class=&#34;notices note&#34; &gt;&lt;p&gt;If you are not too sure how webhooks work and/or how to get them to run locally, go to &lt;a href=&#34;https://botmasterai.github.io/getting-started/webhooks&#34;&gt;webhooks&lt;/a&gt; to read some more.&lt;/p&gt;
 &lt;/div&gt;
 
 </description>
@@ -1634,10 +1634,10 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
     
     <item>
       <title>Slack Setup</title>
-      <link>https://jdwuarin.github.io/botmaster/getting-started/slack-setup/</link>
+      <link>https://botmasterai.github.io/getting-started/slack-setup/</link>
       <pubDate>Mon, 31 Oct 2016 23:01:53 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/getting-started/slack-setup/</guid>
+      <guid>https://botmasterai.github.io/getting-started/slack-setup/</guid>
       <description>
 
 &lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
@@ -1676,7 +1676,7 @@ Admin team members can add support for a bot (by installing an App that packages
 
 &lt;h2 id=&#34;botmaster-slack-bot-mini-tutorial&#34;&gt;Botmaster Slack bot mini-tutorial&lt;/h2&gt;
 
-&lt;p&gt;Following these steps, you will have a fully functional Slack bot using botmaster that can then be edited as wanted. This mini-tutorial uses localtunnel to expose one of your ports to the world. see why you might want to use this and how to install and setup localtunnel &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/webhooks#localtunnel&#34;&gt;here&lt;/a&gt;for your local botmaster project. You can use ngrok or any other service you know or find suitable and achieve the same result.&lt;/p&gt;
+&lt;p&gt;Following these steps, you will have a fully functional Slack bot using botmaster that can then be edited as wanted. This mini-tutorial uses localtunnel to expose one of your ports to the world. see why you might want to use this and how to install and setup localtunnel &lt;a href=&#34;https://botmasterai.github.io/getting-started/webhooks#localtunnel&#34;&gt;here&lt;/a&gt;for your local botmaster project. You can use ngrok or any other service you know or find suitable and achieve the same result.&lt;/p&gt;
 
 &lt;h4 id=&#34;create-an-app&#34;&gt;Create an app&lt;/h4&gt;
 
@@ -1693,7 +1693,7 @@ Admin team members can add support for a bot (by installing an App that packages
 &lt;p&gt;You don&amp;rsquo;t need to know anything about OAuth to complete this step. Just know that this URL will be called when people are installing/authorizing your app.&lt;/p&gt;
 
 &lt;p&gt;In the left panel, click on the &lt;strong&gt;OAuth &amp;amp; Permissions&lt;/strong&gt; tab and enter your webhook in the &lt;strong&gt;Redirect URL(s)&lt;/strong&gt; field as shown here:
-    &lt;img src=&#34;https://jdwuarin.github.io/botmaster/images/slack_setup_1.png?width=90%&#34; alt=&#34;Slack Setup 1&#34; /&gt;
+    &lt;img src=&#34;https://botmasterai.github.io/images/slack_setup_1.png?width=90%&#34; alt=&#34;Slack Setup 1&#34; /&gt;
 This URL has to be of the form: &lt;strong&gt;https://&amp;lt;your_base_url&amp;gt;/slack/&amp;lt;webhookEndpoint&amp;gt;&lt;/strong&gt;. For example, &lt;strong&gt;if&lt;/strong&gt; I am using localtunnel to test the bot locally, and started localtunnel by running the following:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  lt -p 3000 -s botmastersubdomain
@@ -1713,7 +1713,7 @@ This URL has to be of the form: &lt;strong&gt;https://&amp;lt;your_base_url&amp;
 
 &lt;h4 id=&#34;start-your-botmaster-app-locally&#34;&gt;Start your Botmaster App Locally&lt;/h4&gt;
 
-&lt;p&gt;Start your botmaster app in any project folder you might want (see &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/installation&#34;&gt;here&lt;/a&gt; if you haven&amp;rsquo;t installed botmaster yet). To start the botmaster project, you&amp;rsquo;ll want to create an &lt;code&gt;app.js&lt;/code&gt; file with the contents from the &lt;a href=&#34;http://localhost:1313/getting-started/slack-setup/#code&#34;&gt;code&lt;/a&gt; at the top of this page in the root of your project folder. Replace the credentials with the ones you have gathered. Run &lt;code&gt;node app.js&lt;/code&gt; to start the app. Let&amp;rsquo;s now expose out bot to the world.&lt;/p&gt;
+&lt;p&gt;Start your botmaster app in any project folder you might want (see &lt;a href=&#34;https://botmasterai.github.io/getting-started/installation&#34;&gt;here&lt;/a&gt; if you haven&amp;rsquo;t installed botmaster yet). To start the botmaster project, you&amp;rsquo;ll want to create an &lt;code&gt;app.js&lt;/code&gt; file with the contents from the &lt;a href=&#34;http://localhost:1313/getting-started/slack-setup/#code&#34;&gt;code&lt;/a&gt; at the top of this page in the root of your project folder. Replace the credentials with the ones you have gathered. Run &lt;code&gt;node app.js&lt;/code&gt; to start the app. Let&amp;rsquo;s now expose out bot to the world.&lt;/p&gt;
 
 &lt;p&gt;For the webhook to work locally, you&amp;rsquo;ll now need to make sure you&amp;rsquo;ve started localtunnel. If you are doing all of that from a server that already has a Domain Name, you won&amp;rsquo;t need to do this. But I am assuming most people are doing this from their local computer. so in the command line, run something like this:&lt;/p&gt;
 
@@ -1722,7 +1722,7 @@ This URL has to be of the form: &lt;strong&gt;https://&amp;lt;your_base_url&amp;
 
 &lt;h4 id=&#34;setup-your-app-s-events-and-events-webhook&#34;&gt;Setup Your App&amp;rsquo;s Events and Events Webhook&lt;/h4&gt;
 
-&lt;p&gt;Go back to the &lt;strong&gt;Event subscription&lt;/strong&gt; page and enter your webhook url again. This should now work and look something like this: &lt;img src=&#34;https://jdwuarin.github.io/botmaster/images/slack_setup_2.png?width=90%&#34; alt=&#34;Slack Setup 2&#34; /&gt; Scroll down and click on &lt;strong&gt;Add Bot User Events&lt;/strong&gt;. At the minimum, add the following events:
+&lt;p&gt;Go back to the &lt;strong&gt;Event subscription&lt;/strong&gt; page and enter your webhook url again. This should now work and look something like this: &lt;img src=&#34;https://botmasterai.github.io/images/slack_setup_2.png?width=90%&#34; alt=&#34;Slack Setup 2&#34; /&gt; Scroll down and click on &lt;strong&gt;Add Bot User Events&lt;/strong&gt;. At the minimum, add the following events:
     * message.ipm
     * message.channels
     * message.im
@@ -1773,16 +1773,16 @@ If your pick the second one, navigate to your sub URL (&lt;code&gt;https://botma
 
 &lt;h2 id=&#34;webhooks&#34;&gt;Webhooks&lt;/h2&gt;
 
-&lt;p&gt;Now as with any other platform using Webhooks, you&amp;rsquo;ll need to update these to your production Domain Name once you deploy your code to production. And in a more general sense, if you are still unsure how webhooks work within the botmaster framework, go &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/webhooks&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Now as with any other platform using Webhooks, you&amp;rsquo;ll need to update these to your production Domain Name once you deploy your code to production. And in a more general sense, if you are still unsure how webhooks work within the botmaster framework, go &lt;a href=&#34;https://botmasterai.github.io/getting-started/webhooks&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Socket.io Setup</title>
-      <link>https://jdwuarin.github.io/botmaster/getting-started/socketio-setup/</link>
+      <link>https://botmasterai.github.io/getting-started/socketio-setup/</link>
       <pubDate>Wed, 02 Nov 2016 18:18:34 +0000</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/getting-started/socketio-setup/</guid>
+      <guid>https://botmasterai.github.io/getting-started/socketio-setup/</guid>
       <description>
 
 &lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
@@ -1834,7 +1834,7 @@ socket.on(&#39;connect&#39;, function() {
 
 &lt;h4 id=&#34;server-1&#34;&gt;Server&lt;/h4&gt;
 
-&lt;p&gt;After making sure that we have a project folder with a node.js project initialised and the botmaster package in it as per the &lt;a href=&#34;https://jdwuarin.github.io/botmaster/getting-started/installation&#34;&gt;installation&lt;/a&gt; guide.
+&lt;p&gt;After making sure that we have a project folder with a node.js project initialised and the botmaster package in it as per the &lt;a href=&#34;https://botmasterai.github.io/getting-started/installation&#34;&gt;installation&lt;/a&gt; guide.
 We want to make sure botmaster is setup and make sure that messages coming from a websocket connection are received. So in our poject folder, in our &lt;code&gt;app.js&lt;/code&gt; file, we simply copy the code found at the top of this page:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
@@ -2026,7 +2026,7 @@ socket.on(&#39;message&#39;, function(botmasterMessage){
 
 &lt;p&gt;Now that our code is here, simply go to your command line and run &lt;code&gt;node app.js&lt;/code&gt;. If you now open a browser to 127.0.0.1:3000 you should be able to chat with your pretty useless (for now) bot. Just like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://jdwuarin.github.io/botmaster/images/socket.io_setup_1.png?width=90%&#34; alt=&#34;Socket.io Setup 1&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://botmasterai.github.io/images/socket.io_setup_1.png?width=90%&#34; alt=&#34;Socket.io Setup 1&#34; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;security&#34;&gt;Security&lt;/h2&gt;
 

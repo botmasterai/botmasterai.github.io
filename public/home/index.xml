@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Home-rsses on Botmaster Documentation</title>
-    <link>https://jdwuarin.github.io/botmaster/home/index.xml</link>
+    <link>https://botmasterai.github.io/home/index.xml</link>
     <description>Recent content in Home-rsses on Botmaster Documentation</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>MIT</copyright>
     <lastBuildDate>Sat, 29 Oct 2016 19:25:10 +0100</lastBuildDate>
-    <atom:link href="https://jdwuarin.github.io/botmaster/home/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://botmasterai.github.io/home/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Botmaster v 2.2.2</title>
-      <link>https://jdwuarin.github.io/botmaster/home/</link>
+      <link>https://botmasterai.github.io/home/</link>
       <pubDate>Sat, 29 Oct 2016 19:25:10 +0100</pubDate>
       
-      <guid>https://jdwuarin.github.io/botmaster/home/</guid>
+      <guid>https://botmasterai.github.io/home/</guid>
       <description>
 
 &lt;h2 id=&#34;what-is-botmaster&#34;&gt;What is botmaster?&lt;/h2&gt;
