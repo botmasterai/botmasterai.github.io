@@ -9,3 +9,6 @@ weight: 0
 ---
 
 # Working with Botmaster
+
+### [Botmaster Basics](botmaster-basics)
+### [Writing your Own Botmaster Class](writing-your-own-bot-class)
