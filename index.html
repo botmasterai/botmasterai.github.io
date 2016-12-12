@@ -1,8 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-	<meta name="generator" content="Hugo 0.17" />
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-    <meta http-equiv="refresh" content="0; url=home"/>
-  </head>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Botmaster | lightweight chatbot framework</title>
+    <link rel="stylesheet" href="https://assets-cdn.github.com/assets/gist-embed-16647224f984fc8586ae94a1d644a995dc2a063cdd93962a270f733d68ae2efb.css" />
+    <link rel="stylesheet" href="antd.css" />
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+
+    <div id="root">
+        <div class="ant-row-flex ant-row-flex-center ant-row-flex-middle" style="height:100vh;">
+            <div class="ant-col-xs-24 ant-col-sm-18 ant-col-md-16 ant-col-lg-13">
+                <div style="text-align:center;width:100%;margin-bottom:30px;">
+                    <a href=""><img src="botmaster-light.svg" style="width:300px;" /></a>
+                    <h2 style="margin-top:20px;color:#666;">Lightweight chatbot framework</h2></div>
+                <div class="ant-card ant-card-bordered">
+                    <div class="ant-card-body">
+                        <div class="project-description">Botmaster is the simplest way to integrate your existing chatbot into all popular instant messaging networks</div>
+                        <div class="chat-network" style="display: none">
+                            <div data-show="true" class="ant-tag"><span class="ant-tag-text">Slack</span></div>
+                            <div data-show="true" class="ant-tag"><span class="ant-tag-text">Messenger</span></div>
+                            <div data-show="true" class="ant-tag"><span class="ant-tag-text">Telegram</span></div>
+                            <div data-show="true" class="ant-tag ant-tag-#00aced ant-tag-has-color" style="background-color:#00aced;"><span class="ant-tag-text">Twitter</span></div>
+                        </div>
+                        <div id="gist42507107" class="gist">
+                            <div class="gist-file">
+                                <div class="gist-data">
+                                    <div class="js-gist-file-update-container js-task-list-container file-box">
+                                        <div id="file-bot-js" class="file">
+                                            <div itemprop="text" class="blob-wrapper data type-javascript">
+                                              <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+                                                <tr>
+                                                  <td id="file-bot-js-L1" class="blob-num js-line-number" data-line-number="1"></td>
+                                                  <td id="file-bot-js-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// See full code example here: https://gist.github.com/7109113</span></td>
+                                                </tr>
+                                                <tr>
+                                                  <td id="file-bot-js-L2" class="blob-num js-line-number" data-line-number="2"></td>
+                                                  <td id="file-bot-js-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-c1">botmaster</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Botmaster</span>();</td>
+                                                </tr>
+                                                <tr>
+                                                  <td id="file-bot-js-L3" class="blob-num js-line-number" data-line-number="3"></td>
+                                                  <td id="file-bot-js-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-c1">slackBot</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SlackBot</span>(<span class="pl-c1">SLACK_SETTINGS</span>);</td>
+                                                </tr>
+                                                <tr>
+                                                  <td id="file-bot-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
+                                                  <td id="file-bot-js-LC4" class="blob-code blob-code-inner js-file-line">
+                                            </td>
+                                                </tr>
+                                                <tr>
+                                                  <td id="file-bot-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
+                                                  <td id="file-bot-js-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">botmaster</span>.<span class="pl-en">addBot</span>(slackBot);</td>
+                                                </tr>
+                                                <tr>
+                                                  <td id="file-bot-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
+                                                  <td id="file-bot-js-LC6" class="blob-code blob-code-inner js-file-line">
+                                            </td>
+                                                </tr>
+                                                <tr>
+                                                  <td id="file-bot-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
+                                                  <td id="file-bot-js-LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">botmaster</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">&#39;</span>update<span class="pl-pds">&#39;</span></span>, (<span class="pl-smi">bot</span>, <span class="pl-smi">update</span>) <span class="pl-k">=&gt;</span> {</td>
+                                                </tr>
+                                                <tr>
+                                                  <td id="file-bot-js-L8" class="blob-num js-line-number" data-line-number="8"></td>
+                                                  <td id="file-bot-js-LC8" class="blob-code blob-code-inner js-file-line">  <span class="pl-smi">&nbsp;&nbsp;&nbsp;&nbsp;bot</span>.<span class="pl-en">reply</span>(update, <span class="pl-s"><span class="pl-pds">&#39;</span>Hello world<span class="pl-pds">&#39;</span></span>);</td>
+                                                </tr>
+                                                <tr>
+                                                  <td id="file-bot-js-L9" class="blob-num js-line-number" data-line-number="9"></td>
+                                                  <td id="file-bot-js-LC9" class="blob-code blob-code-inner js-file-line">});</td>
+                                                </tr>
+                                            </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align:center;padding-bottom:20px;"><a href="https://botmasterai.github.io/home/" style="margin-right:10px;" class="ant-btn ant-btn-primary ant-btn-lg"><span>Get started</span></a><a href="https://github.com/botmasterai/botmaster" style="margin-left:10px;" class="ant-btn ant-btn-ghost ant-btn-lg"><i class="anticon anticon-github"></i><span>GitHub</span></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
