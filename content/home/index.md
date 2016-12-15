@@ -3,7 +3,7 @@ chapter: false
 date: 2016-10-29T19:25:10+01:00
 icon: <i class="fa fa-home" aria-hidden="true"></i>
 next: /getting-started
-title: Botmaster v 2.2.2
+title: Botmaster v 2.2.3
 weight: 0
 ---
 
@@ -14,14 +14,15 @@ Botmaster is a lightweight highly extendable, highly configurable chatbot framew
 ```js
 const Botmaster = require('botmaster');
 const config = require('./config');
-const botsSettings = [{ telegram: config.telegramSettings },
-                      { messenger: config.messengerSettings },
-                      { twitter: config.twitterSettings },
-                      { slack: config.slackSettings }];
 
-const botmasterSettings = { botsSettings };
+const botTypes = Botmaster.botTypes;
+const botmaster = new Botmaster();
 
-const botmaster = new Botmaster(botmasterSettings);
+botmaster.addBot(new botTypes.MessengerBot(config.messengerSettings));
+botmaster.addBot(new botTypes.SlackBot(config.slackSettings));
+botmaster.addBot(new botTypes.SocketioBot(config.socketioSettings));
+botmaster.addBot(new botTypes.TwitterBot(config.twitterSettings));
+botmaster.addBot(new botTypes.TelegramBot(config.telegramSettings));
 
 botmaster.on('update', (bot, update) => {
   bot.reply(update, 'Right back at you!');

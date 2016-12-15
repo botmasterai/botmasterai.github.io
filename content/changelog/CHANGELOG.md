@@ -7,6 +7,12 @@ title: CHANGELOG
 weight: 0
 ---
 
+### PATCH 2.2.3
+
+This patch adds support for the `bot.sendCascadeTo` and `bot.sendTextCascadeTo` methods. Allowing users to send a cascade of message with just one command rather than having to deal with that themselves. Read more about it here:
+
+[here](/working-with-botmaster/botmaster-basics/#cascade)
+
 ### PATCH: 2.2.2
 
 This patch allows users to set the userId from a sender when using the bot socket.io class. socket now needs to be opened with something like this on the client side:

@@ -60,6 +60,12 @@
       <guid>https://botmasterai.github.io/changelog/CHANGELOG/</guid>
       <description>
 
+&lt;h3 id=&#34;patch-2-2-3&#34;&gt;PATCH 2.2.3&lt;/h3&gt;
+
+&lt;p&gt;This patch adds support for the &lt;code&gt;bot.sendCascadeTo&lt;/code&gt; and &lt;code&gt;bot.sendTextCascadeTo&lt;/code&gt; methods. Allowing users to send a cascade of message with just one command rather than having to deal with that themselves. Read more about it here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#cascade&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
 &lt;h3 id=&#34;patch-2-2-2&#34;&gt;PATCH: 2.2.2&lt;/h3&gt;
 
 &lt;p&gt;This patch allows users to set the userId from a sender when using the bot socket.io class. socket now needs to be opened with something like this on the client side:&lt;/p&gt;
@@ -128,7 +134,7 @@ bot class that will be in the core&lt;/p&gt;
     </item>
     
     <item>
-      <title>Botmaster v 2.2.2</title>
+      <title>Botmaster v 2.2.3</title>
       <link>https://botmasterai.github.io/home/</link>
       <pubDate>Sat, 29 Oct 2016 19:25:10 +0100</pubDate>
       
@@ -141,14 +147,15 @@ bot class that will be in the core&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
 const config = require(&#39;./config&#39;);
-const botsSettings = [{ telegram: config.telegramSettings },
-                      { messenger: config.messengerSettings },
-                      { twitter: config.twitterSettings },
-                      { slack: config.slackSettings }];
 
-const botmasterSettings = { botsSettings };
+const botTypes = Botmaster.botTypes;
+const botmaster = new Botmaster();
 
-const botmaster = new Botmaster(botmasterSettings);
+botmaster.addBot(new botTypes.MessengerBot(config.messengerSettings));
+botmaster.addBot(new botTypes.SlackBot(config.slackSettings));
+botmaster.addBot(new botTypes.SocketioBot(config.socketioSettings));
+botmaster.addBot(new botTypes.TwitterBot(config.twitterSettings));
+botmaster.addBot(new botTypes.TelegramBot(config.telegramSettings));
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Right back at you!&#39;);
@@ -1113,6 +1120,70 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 &lt;/table&gt;
 
 &lt;p&gt;The function defaults to sending &lt;code&gt;quick_replies&lt;/code&gt; in Messenger, setting &lt;code&gt;Keyboard buttons&lt;/code&gt; in Telegram, buttons in Slack and simply prints button titles one on each line in Twitter as it doesn&amp;rsquo;t support buttons. The user is expecting to type in their choice in Twitter. In the socketio implementation, the front-end/app developer is expected to write the code that would display the buttons on their front-end.&lt;/p&gt;
+
+&lt;h4 id=&#34;cascade&#34;&gt;Cascade&lt;/h4&gt;
+
+&lt;p&gt;In order to send a cascade of messages (i.e. multiple messages one after another), you might want to have a look at both of these methods:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;bot.sendCascadeTo&lt;/code&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Argument&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;messageArray&lt;/td&gt;
+&lt;td&gt;Array of messages in a format as such: [{text: &amp;lsquo;something&amp;rsquo;}, {message: someMessengerValidMessage}] read below to see valid keys.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;recipientId&lt;/td&gt;
+&lt;td&gt;a string representing the id of the user to whom you want to send the message.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;As you might have guessed, Botmaster assures you that the objects in the messageArray will be sentin order. Furthermore, the objects of the messageArray must be of a certain form:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;{
+  raw: SOME_VALID_RAW_MESSAGE, // the same object as one you would send with sendRaw()
+  message: SOME_VALID_MESSENGER_MESSAGE, // the same object as one you would send with sendMessage() (i.e. the recipientId won&#39;t be taken into account!)
+  buttons: SOME_ARRAY_OF_BUTTON_TITLES, // same as what you would do with: sendDefaultButtonMessageTo. If you will be sending attachments/text alongside it, add them in the following fields. If both are present, the attachment will be used.
+  attachment: SOME_ATTACHMENT, // same object format as in: sendAttachmentTo()
+  text: &#39;some text&#39;, // same as when using sendTextMessageTo()
+  isTyping: SOME_TRUTHY_VALUE, // will call sendIsTypingMessageTo() on the recipientId used in sendCascade.
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;bot.sendTextCascadeTo&lt;/code&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Argument&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;textMessageArray&lt;/td&gt;
+&lt;td&gt;Array of strings that you want to send to the user in sequences.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;recipientId&lt;/td&gt;
+&lt;td&gt;a string representing the id of the user to whom you want to send the message.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;This method is really just a helper for calling &lt;code&gt;bot.sendCascadeTo&lt;/code&gt;. It just allows developers to use the method with an array of texts rather than an array of objects.&lt;/p&gt;
 
 &lt;h2 id=&#34;using-botmaster-with-your-own-express-app&#34;&gt;Using Botmaster with your own express() app&lt;/h2&gt;
 

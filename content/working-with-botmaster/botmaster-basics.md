@@ -443,6 +443,39 @@ Buttons will almost surely be part of your bot. Botmaster provides a method that
 
 The function defaults to sending `quick_replies` in Messenger, setting `Keyboard buttons` in Telegram, buttons in Slack and simply prints button titles one on each line in Twitter as it doesn't support buttons. The user is expecting to type in their choice in Twitter. In the socketio implementation, the front-end/app developer is expected to write the code that would display the buttons on their front-end.
 
+#### Cascade
+
+In order to send a cascade of messages (i.e. multiple messages one after another), you might want to have a look at both of these methods:
+
+`bot.sendCascadeTo`
+
+| Argument | Description
+|--- |---
+| messageArray | Array of messages in a format as such: [{text: 'something'}, {message: someMessengerValidMessage}] read below to see valid keys.
+| recipientId  | a string representing the id of the user to whom you want to send the message.
+
+As you might have guessed, Botmaster assures you that the objects in the messageArray will be sentin order. Furthermore, the objects of the messageArray must be of a certain form:
+
+```js
+{
+  raw: SOME_VALID_RAW_MESSAGE, // the same object as one you would send with sendRaw()
+  message: SOME_VALID_MESSENGER_MESSAGE, // the same object as one you would send with sendMessage() (i.e. the recipientId won't be taken into account!)
+  buttons: SOME_ARRAY_OF_BUTTON_TITLES, // same as what you would do with: sendDefaultButtonMessageTo. If you will be sending attachments/text alongside it, add them in the following fields. If both are present, the attachment will be used.
+  attachment: SOME_ATTACHMENT, // same object format as in: sendAttachmentTo()
+  text: 'some text', // same as when using sendTextMessageTo()
+  isTyping: SOME_TRUTHY_VALUE, // will call sendIsTypingMessageTo() on the recipientId used in sendCascade.
+}
+```
+
+`bot.sendTextCascadeTo`
+
+| Argument | Description
+|--- |---
+| textMessageArray | Array of strings that you want to send to the user in sequences.
+| recipientId  | a string representing the id of the user to whom you want to send the message.
+
+This method is really just a helper for calling `bot.sendCascadeTo`. It just allows developers to use the method with an array of texts rather than an array of objects.
+
 ## Using Botmaster with your own express() app
 
 Here's an example on how to do so:
