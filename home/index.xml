@@ -11,7 +11,7 @@
     <atom:link href="https://botmasterai.github.io/home/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Botmaster v 2.2.2</title>
+      <title>Botmaster v 2.2.3</title>
       <link>https://botmasterai.github.io/home/</link>
       <pubDate>Sat, 29 Oct 2016 19:25:10 +0100</pubDate>
       
@@ -24,14 +24,15 @@
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
 const config = require(&#39;./config&#39;);
-const botsSettings = [{ telegram: config.telegramSettings },
-                      { messenger: config.messengerSettings },
-                      { twitter: config.twitterSettings },
-                      { slack: config.slackSettings }];
 
-const botmasterSettings = { botsSettings };
+const botTypes = Botmaster.botTypes;
+const botmaster = new Botmaster();
 
-const botmaster = new Botmaster(botmasterSettings);
+botmaster.addBot(new botTypes.MessengerBot(config.messengerSettings));
+botmaster.addBot(new botTypes.SlackBot(config.slackSettings));
+botmaster.addBot(new botTypes.SocketioBot(config.socketioSettings));
+botmaster.addBot(new botTypes.TwitterBot(config.twitterSettings));
+botmaster.addBot(new botTypes.TelegramBot(config.telegramSettings));
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Right back at you!&#39;);

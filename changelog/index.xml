@@ -18,6 +18,12 @@
       <guid>https://botmasterai.github.io/changelog/CHANGELOG/</guid>
       <description>
 
+&lt;h3 id=&#34;patch-2-2-3&#34;&gt;PATCH 2.2.3&lt;/h3&gt;
+
+&lt;p&gt;This patch adds support for the &lt;code&gt;bot.sendCascadeTo&lt;/code&gt; and &lt;code&gt;bot.sendTextCascadeTo&lt;/code&gt; methods. Allowing users to send a cascade of message with just one command rather than having to deal with that themselves. Read more about it here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#cascade&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
 &lt;h3 id=&#34;patch-2-2-2&#34;&gt;PATCH: 2.2.2&lt;/h3&gt;
 
 &lt;p&gt;This patch allows users to set the userId from a sender when using the bot socket.io class. socket now needs to be opened with something like this on the client side:&lt;/p&gt;
