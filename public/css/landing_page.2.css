@@ -112,3 +112,15 @@ border-bottom: 1px solid #eee;
     font-size: 14px;
     border-radius: 2px;
 }
+
+/* Overriding animate.css stuff*/
+
+.fadeInUp {
+    -webkit-animation-duration: .2s;
+    animation-duration: .2s;
+}
+
+.fadeOutUp {
+    -webkit-animation-duration: .2s;
+    animation-duration: .2s;
+}

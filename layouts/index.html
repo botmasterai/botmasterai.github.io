@@ -6,8 +6,8 @@
     <title>Botmaster | lightweight chatbot framework</title>
     <link rel="stylesheet" href="https://assets-cdn.github.com/assets/gist-embed-16647224f984fc8586ae94a1d644a995dc2a063cdd93962a270f733d68ae2efb.css" />
     <link rel="stylesheet" href="/css/antd.css" />
-    <link rel="stylesheet" href="/css/landing_page.1.css" />
     <link rel="stylesheet" href="/css/animate.css" />
+    <link rel="stylesheet" href="/css/landing_page.2.css" />
     <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 </head>
@@ -29,7 +29,7 @@
                             </span>
                           </div>
                           <div id="slack-tab" data-show="true" class="ant-tag" onclick="landingPageTabSwitcher(this)">
-                            <span class="ant-tag-text"><i class="fa fa-slack" aria-hidden="true"></i> Slack
+                            <span class="ant-tag-text"><i class="fa fa-slack" aria-hidden="true"></i> slack
                             </span>
                           </div>
                           <div id="twitter-tab" data-show="true" class="ant-tag" onclick="landingPageTabSwitcher(this)">
@@ -38,6 +38,10 @@
                           </div>
                           <div id="telegram-tab" data-show="true" class="ant-tag" onclick="landingPageTabSwitcher(this)">
                             <span class="ant-tag-text"><i class="fa fa-telegram" aria-hidden="true"></i> Telegram
+                            </span>
+                          </div>
+                          <div id="socketio-tab" data-show="true" class="ant-tag" onclick="landingPageTabSwitcher(this)">
+                            <span class="ant-tag-text"><i class="fa fa-plug" aria-hidden="true"></i> socket.io
                             </span>
                           </div>
                         </div>
@@ -118,6 +122,8 @@
               button.style.cssText = "background-color: #1DA1F2";
             } else if (button.id === "telegram-tab") {
               button.style.cssText = "background-color: #30A7DE";
+            } else if (button.id === "socketio-tab") {
+              button.style.cssText = "background-color: #DB7AEE";
             }
           } else {
             button.style.cssText = "background-color: #f7f7f7";
@@ -143,7 +149,7 @@
               element.textContent = rightCasePlatformName;
             }
             element.className = element.className.replace('fadeOutUp', 'fadeInUp');
-          }, 700)
+          }, 200)
         }
 
         for (var j = 0; j < textElementsToChange.length; ++j) {
