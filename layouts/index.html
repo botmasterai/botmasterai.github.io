@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://assets-cdn.github.com/assets/gist-embed-16647224f984fc8586ae94a1d644a995dc2a063cdd93962a270f733d68ae2efb.css" />
     <link rel="stylesheet" href="/css/antd.css" />
     <link rel="stylesheet" href="/css/landing_page.css" />
+    <link rel="stylesheet" href="/css/animate.css" />
+    <link href="/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -20,11 +23,23 @@
                 <div class="ant-card ant-card-bordered">
                     <div class="ant-card-body">
                         <div class="project-description">Botmaster is the simplest way to integrate your existing chatbot into all popular instant messaging networks</div>
-                        <div class="chat-network" style="display: none">
-                            <div data-show="true" class="ant-tag"><span class="ant-tag-text">Slack</span></div>
-                            <div data-show="true" class="ant-tag"><span class="ant-tag-text">Messenger</span></div>
-                            <div data-show="true" class="ant-tag"><span class="ant-tag-text">Telegram</span></div>
-                            <div data-show="true" class="ant-tag ant-tag-#00aced ant-tag-has-color" style="background-color:#00aced;"><span class="ant-tag-text">Twitter</span></div>
+                        <div id="tabs" class="chat-network">
+                          <div id="messenger-tab" data-show="true" class="ant-tag ant-tag-has-color" style="background-color:#3B5998;" onclick="landingPageTabSwitcher(this)">
+                            <span class="ant-tag-text"><i class="fa fa-facebook-square" aria-hidden="true"></i> Messenger
+                            </span>
+                          </div>
+                          <div id="slack-tab" data-show="true" class="ant-tag" onclick="landingPageTabSwitcher(this)">
+                            <span class="ant-tag-text"><i class="fa fa-slack" aria-hidden="true"></i> Slack
+                            </span>
+                          </div>
+                          <div id="twitter-tab" data-show="true" class="ant-tag" onclick="landingPageTabSwitcher(this)">
+                            <span class="ant-tag-text"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter
+                            </span>
+                          </div>
+                          <div id="telegram-tab" data-show="true" class="ant-tag" onclick="landingPageTabSwitcher(this)">
+                            <span class="ant-tag-text"><i class="fa fa-telegram" aria-hidden="true"></i> Telegram
+                            </span>
+                          </div>
                         </div>
                         <div id="gist42507107" class="gist">
                             <div class="gist-file">
@@ -46,8 +61,8 @@
                                                   <td id="file-k-js-LC3" class="blob-code blob-code-inner js-file-line"></td>
                                                 </tr>
                                                 <tr>
-                                                  <td id="file-k-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
-                                                  <td id="file-k-js-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <span class="pl-c1">slackBot</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Botmaster.botTypes.Slackbot</span>(<span class="pl-c1">SLACK_SETTINGS</span>);</td>
+                                                  <td id="file-k-js-L4" style="display: inline-block" class="blob-num js-line-number" data-line-number="4"></td>
+                                                  <td id="file-k-js-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <p style="display: inline-block" class="pl-c1 bounceInUp animated">messengerBot</p> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Botmaster.botTypes.Messengerbot</span>(<span class="pl-c1">FB_MESSENGER_SETTINGS</span>);</td>
                                                 </tr>
                                                 <tr>
                                                   <td id="file-k-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
@@ -55,7 +70,7 @@
                                                 </tr>
                                                 <tr>
                                                   <td id="file-k-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
-                                                  <td id="file-k-js-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">botmaster</span>.<span class="pl-en">addBot</span>(slackBot);</td>
+                                                  <td id="file-k-js-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">botmaster</span>.<span class="pl-en">addBot</span>(messengerBot);</td>
                                                 </tr>
                                                 <tr>
                                                   <td id="file-k-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
@@ -86,6 +101,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+      function landingPageTabSwitcher(clickedButton) {
+        var buttons = document.getElementById('tabs').children;
+
+        for (var i = 0; i < buttons.length; ++i) {
+          var button = buttons[i];
+          if (button === clickedButton) {
+            button.className = "ant-tag ant-tag-has-color";
+            if (button.id === "messenger-tab") {
+              button.style.cssText = "background-color: #3B5998";
+            } else if (button.id === "slack-tab") {
+              button.style.cssText = "background-color: #78D4B6";
+            } else if (button.id === "twitter-tab") {
+              button.style.cssText = "background-color: #1DA1F2";
+            } else if (button.id === "telegram-tab") {
+              button.style.cssText = "background-color: #30A7DE";
+            }
+          } else {
+            button.style.cssText = "background-color: #f7f7f7";
+            button.className = "ant-tag";
+          }
+        }
+      }
+    </script>
 </body>
 
 </html>
