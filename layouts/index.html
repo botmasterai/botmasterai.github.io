@@ -62,7 +62,7 @@
                                                 </tr>
                                                 <tr>
                                                   <td id="file-k-js-L4" class="blob-num js-line-number" data-line-number="4"></td>
-                                                  <td id="file-k-js-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <p style="display: inline-block" class="pl-c1 bounceInUp animated">messengerBot</p> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Botmaster.botTypes.Messengerbot</span>(<span class="pl-c1">FB_MESSENGER_SETTINGS</span>);</td>
+                                                  <td id="file-k-js-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> <p style="display: inline-block" class="pl-c1 mutable-text fadeInUp animated">messengerBot</p> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Botmaster.botTypes.</span><p style="display: inline-block" class="pl-en mutable-text fadeInUp animated">MessengerBot</p>(<p style="display: inline-block" class="pl-c1 mutable-text fadeInUp animated">MESSENGER</p><span class="pl-c1">_SETTINGS</span>);</td>
                                                 </tr>
                                                 <tr>
                                                   <td id="file-k-js-L5" class="blob-num js-line-number" data-line-number="5"></td>
@@ -70,7 +70,7 @@
                                                 </tr>
                                                 <tr>
                                                   <td id="file-k-js-L6" class="blob-num js-line-number" data-line-number="6"></td>
-                                                  <td id="file-k-js-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">botmaster</span>.<span class="pl-en">addBot</span>(messengerBot);</td>
+                                                  <td id="file-k-js-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">botmaster</span>.<span class="pl-en">addBot</span>(<p style="display: inline-block" class="mutable-text fadeInUp animated">messengerBot</p>);</td>
                                                 </tr>
                                                 <tr>
                                                   <td id="file-k-js-L7" class="blob-num js-line-number" data-line-number="7"></td>
@@ -113,7 +113,7 @@
             if (button.id === "messenger-tab") {
               button.style.cssText = "background-color: #3B5998";
             } else if (button.id === "slack-tab") {
-              button.style.cssText = "background-color: #78D4B6";
+              button.style.cssText = "background-color: #E1A83E";
             } else if (button.id === "twitter-tab") {
               button.style.cssText = "background-color: #1DA1F2";
             } else if (button.id === "telegram-tab") {
@@ -123,6 +123,32 @@
             button.style.cssText = "background-color: #f7f7f7";
             button.className = "ant-tag";
           }
+        }
+
+        var textElementsToChange = document.getElementsByClassName('mutable-text');
+        var platformName = clickedButton.id.split('-')[0];
+
+        function changeTextInElement(element) {
+          element.className = element.className.replace('fadeInUp', 'fadeOutUp');
+          setTimeout(function() {
+            var rightCasePlatformName = platformName;
+            if (element.textContent[1].toUpperCase() === element.textContent[1]) {
+              rightCasePlatformName = platformName.toUpperCase();
+            } else if (element.textContent[0].toUpperCase() == element.textContent[0]) {
+              rightCasePlatformName = platformName[0].toUpperCase() + platformName.slice(1);
+            }
+            if (element.textContent.indexOf('Bot') > -1) {
+              element.textContent = rightCasePlatformName + 'Bot';
+            } else {
+              element.textContent = rightCasePlatformName;
+            }
+            element.className = element.className.replace('fadeOutUp', 'fadeInUp');
+          }, 700)
+        }
+
+        for (var j = 0; j < textElementsToChange.length; ++j) {
+          var element = textElementsToChange[j];
+          changeTextInElement(element);
         }
       }
     </script>
