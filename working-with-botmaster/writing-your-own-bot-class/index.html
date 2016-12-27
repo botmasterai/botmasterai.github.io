@@ -416,11 +416,11 @@
 <li><a href="#constructor-settings"><code>#constructor(settings)</code></a></li>
 <li><a href="#applysettings-settings"><code>#__applySettings(settings)</code></a></li>
 <li><a href="#createmountpoints"><code>#__createMountPoints()</code></a></li>
-<li><a href="#setbotidifnotset-update"><code>#__setBotIdIfNotSet(update)</code></a></li>
 <li><a href="#formatupdate-rawupdate"><code>#__formatUpdate(rawUpdate)</code></a></li>
 <li><a href="#emitupdate-update"><code>#__emitUpdate(update)</code></a></li>
 <li><a href="#sendmessage-message"><code>#__sendMessage(message)</code></a></li>
 <li><a href="#formatoutgoingmessage-message"><code>#__formatOutgoingMessage(message)</code></a></li>
+<li><a href="#setbotidifnotset-update"><code>#__setBotIdIfNotSet(update)</code></a></li>
 </ul></li>
 <li><a href="#is-this-really-all-there-is-to-it">Is this really all there is to it?</a></li>
 </ul></li>
@@ -442,7 +442,7 @@
 
 <h2 id="bot-classes">Bot classes</h2>
 
-<p>The following assumes that you have read the main documentation in &ldquo;getting started&rdquo; and in &ldquo;botmaster basics&rdquo;. A general understand of how Botmaster and more generally how chatbots work is also assumed.</p>
+<p>The following document assumes that you have read the main documentation in &ldquo;getting started&rdquo; and in &ldquo;botmaster basics&rdquo;. A general understand of how Botmaster and more generally how chatbots work is also assumed.</p>
 
 <p>Because of that, we will pick up right from there and start looking into the bot classes Botmaster comes bundled with.</p>
 
@@ -469,62 +469,44 @@ const messengerBot = new MessengerBot(messengerSettings);
 
 <pre><code class="language-js">const app = require('express')();
 app.use('/', messengerBot.app);
-app.listen(3000, function() {});
+app.listen(3001, function() {});
 </code></pre>
 
-<p>This will mount your bot onto: <code>https://Your_Domain_Name/webhook1234</code>. Note how the bot type <strong>is not</strong> part of the URL here.</p>
+<p>Or even better:</p>
+
+<pre><code class="language-js">messengerBot.app.listen(3001, function() {});
+</code></pre>
+
+<p>This will mount your bot onto: <code>https://Your_Domain_Name:3001/webhook1234</code>. Note how the bot type <strong>is not</strong> part of the URL here.</p>
 
 <h2 id="making-botmaster-objects-and-bot-objects-work-together">Making Botmaster objects and bot objects work together</h2>
 
-<p>In the <a href="https://botmasterai.github.io/working-with-botmaster/botmaster-basics">botmaster basics</a> sectio nwe saw how botmaster objects return a bot object along with every update it receives. I.e. something like this happens:</p>
+<p>Doing this is really trivial and as it turns out, you do this every time you use the <code>addBot</code> method.</p>
 
-<pre><code class="language-js">botmaster.on('update', (bot, update) =&gt; {
-  console.log(bot.type);
-  console.log(update);
-});
+<p>We recall from the various guides that to create a botmaster object the following is needed:</p>
+
+<pre><code class="language-js">const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
 </code></pre>
-
-<p>We also saw in the last section how to setup a bot using its own bot class. Let&rsquo;s have a look at how to use this bot inside of a botmaster object.</p>
 
 <p>As usual, we create a botmaster object. This one supports Twitter and Telegram, but not Messenger. We create it as such:</p>
 
-<pre><code class="language-js">const Botmaster = require('botmaster');
+<p>In this example the <code>botmaster</code> object will start a new <code>express()</code> <code>app</code> server running locally on port <code>3000</code> as expected by default (see <a href="https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app">here</a> to see how to change that).</p>
 
-const twitterSettings = {
-    consumerKey: 'YOUR consumerKey',
-    consumerSecret: 'YOUR consumerSecret',
-    accessToken: 'YOUR accessToken',
-    accessTokenSecret: 'YOUR accessTokenSecret',
-  }
-}
-
-const telegramSettings = {
-  credentials: {
-    authToken: 'YOUR authToken',
-  },
-  webhookEndpoint: '/webhook1234/',
-};
-
-const botsSettings = [{ twitter: twitterSettings },
-                      { telegram: telegramSettings }];
-
-const botmasterSettings = { botsSettings: botsSettings };
-
-const botmaster = new Botmaster(botmasterSettings);
-</code></pre>
-
-<p>In this example the <code>botmaster</code> object will start a new <code>express()</code> <code>app</code> server running locally on port <code>3000</code> as expected by default (see <a href="https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app">here</a> to see how to change that). However, we later might want to add to botmaster the object we created in the first section, namely, <code>messengerBot</code>.</p>
-
-<p>We can achieve this by doing the following:</p>
+<p>As usual, we add the messenegrBot as follows:</p>
 
 <pre><code class="language-js">botmaster.addBot(messengerBot);
 </code></pre>
 
-<p>This will mount your bot onto: <code>https://Your_Domain_Name/messenger/webhook1234</code>. Note how the bot type <strong>is</strong> part of the endpoint here. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.</p>
+<p>This will mount your bot onto: <code>https://Your_Domain_Name:3000/messenger/webhook1234</code>. Note how the bot type <strong>is</strong> part of the endpoint here. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.</p>
 
-<p>You will then get updates from the botmaster object as if you had instantiated it with the messenger settings too.</p>
+<p>You will then get updates from the botmaster object as if you had instantiated it with the messenger settings too if your endpoint is setup properly.</p>
 
-<p><strong>What this means is that any bot class that follows a  certain set of rules will be able to be added to a botmaster object.</strong></p>
+<div class="notices info" ><p>Please note, if you followed these steps and put all this code in one file. You will actually have two express servers running along side each other. One on port 3001 and one on port 3000. Both endpoints mentioned above would work. This is definitely not what you want to do in production. Pick one of the methods and stick to it in production.</p>
+</div>
+
+
+<p><strong>The main takeaway from all this is that any bot class that follows a  certain set of rules will be able to be added to a botmaster object.</strong></p>
 
 <h2 id="creating-your-own-bot-classes">Creating your own bot classes</h2>
 
@@ -566,7 +548,7 @@ const botmaster = new Botmaster(botmasterSettings);
 
 <h3 id="createmountpoints"><code>#__createMountPoints()</code></h3>
 
-<p>The last line of our controller makes a call to <code>this.__createMountPoints();</code>. This line should only be present if your bot class requires webhooks. If this is the case, you will be expected to define a class member function that looks like:</p>
+<p>The last line of our controller makes a call to <code>this.__createMountPoints();</code>. This line should only be present if your bot class requires webhooks. If this is the case, you will be expected to define a class member function that looks something like:</p>
 
 <pre><code class="language-js">  __createMountPoints() {
     this.app = express();
@@ -622,20 +604,7 @@ const botmaster = new Botmaster(botmasterSettings);
 }
 </code></pre>
 
-<p>I won&rsquo;t explain what is going on here as it&rsquo;s not necessary for building your own Bot class.</p>
-
-<h3 id="setbotidifnotset-update"><code>#__setBotIdIfNotSet(update)</code></h3>
-
-<p>In order to help you identify between bots of different types, you will want each bot instance to have a <code>this.id</code> value. This will often be the same as <code>update.recipient.id</code> when getting updates. But not always (for instance with socket.io bots). If these aren&rsquo;t set upon instantiation as with Facebook Messenger bots, you can write a function like this that gets called upon receiving a message.</p>
-
-<p>The following is a good default implementation used in many of botmaster&rsquo;s internal bot types:</p>
-
-<pre><code class="language-js">__setBotIdIfNotSet(update) {
-  if (!this.id) {
-  	this.id = update.recipient.id;
-  }
-}
-</code></pre>
+<p>Feel free to have a thorough read at this to understand what is going on here. Because it isn&rsquo;t necessary to understand this in order to build your own bot class, I won&rsquo;t explain what is going on here.</p>
 
 <h3 id="formatupdate-rawupdate"><code>#__formatUpdate(rawUpdate)</code></h3>
 
@@ -646,7 +615,7 @@ It would make sense for you to do so for consistency and because it has to be de
 
 <p>Typically, it would look something like this for a message with an image attachment. Independent of what platform the message comes from:</p>
 
-<pre><code class="language-js">{
+<pre><code>{
   raw: &lt;platform_specific_raw_update&gt;,
   sender: {
     id: &lt;id_of_sender&gt;
@@ -662,7 +631,7 @@ It would make sense for you to do so for consistency and because it has to be de
       {
         type: 'image',
         payload: {
-          url: 'https://scontent.xx.fbcdn.net/v/.....'
+          url: 'SOME_IMAGE_URL'
         }
       }
     ]
@@ -674,7 +643,7 @@ It would make sense for you to do so for consistency and because it has to be de
 
 <h3 id="emitupdate-update"><code>#__emitUpdate(update)</code></h3>
 
-<p>Like <code>__applySettings</code>, this method is implemented in <code>BaseBot</code>. It handles errors, calling the <code>incoming</code> middleware stack, and most importantly, actually calling <code>this.emit(update)</code> to emit the actual update. You can overwrite this method if you wish, but in its current state, it handles the most important cases you will want to deal with. You will however need to call it with your formatted update object as a parameter in order to actually get the update object in a <code>bot.on('update', callback)</code> block.</p>
+<p>Like <code>__applySettings</code>, this method is implemented in <code>BaseBot</code>. It handles errors, calling the <code>incoming</code> middleware stack, and most importantly, actually calling <code>this.emit(update)</code> to emit the actual update. You can overwrite this method if you wish, but in its current state, it handles the most important cases you will want to deal with. You should call this method with the formatted <code>update</code> object created by calling <code>formatUpdate()</code>;</p>
 
 <h3 id="sendmessage-message"><code>#__sendMessage(message)</code></h3>
 
@@ -689,7 +658,37 @@ It would make sense for you to do so for consistency and because it has to be de
   }
 </code></pre>
 
-<p>It is important that this be a promise and not a callback. Although developers using Botmaster can use <code>sendMessage</code> type methods with callbacks. The internals of Botmaster use Promises and therefore, so should your bot class.</p>
+<p>Code for it might look like this simplified one from <code>TelegramBot</code>:</p>
+
+<pre><code class="language-js"> __sendMessage(message) {
+  const options = {
+    url: 'https://api.telegram.org/sendMessage',
+    method: 'POST',
+  };
+  options.json = this.__formatOutgoingMessage(message);
+
+  return request(options) // using request-promise package and not request here
+
+  .then((body) =&gt; {
+    if (body.error) {
+      throw new Error(JSON.stringify(body.error));
+    }
+
+    const standardizedBody = {
+      raw: body,
+      recipient_id: body.result.chat.id,
+      // this is really the equivalent to a Messenger seq.
+      // But it's either that or null for telegram
+      message_id: body.result.message_id,
+    };
+    return standardizedBody;
+  });
+}
+</code></pre>
+
+<p>See how we are returning a promise that resolves to an object as specified above!</p>
+
+<p>It is important to note that this be a promise and not a callback. Although developers using Botmaster can use <code>sendMessage</code> type methods with callbacks. The internals of Botmaster use Promises and therefore, so should your bot class.</p>
 
 <p>Please note that the <code>BaseBot</code> superclass defines a set of methods that allow developers to more easily send messages to all platforms without having to build the whole Messenger compatible object themselves. These methods are the following:</p>
 
@@ -700,7 +699,9 @@ It would make sense for you to do so for consistency and because it has to be de
 <code>sendAttachmentTo</code>
 <code>sendAttachmentFromURLTo</code>
 <code>sendDefaultButtonMessageTo</code>
-<code>sendIsTypingMessageTo</code></p>
+<code>sendIsTypingMessageTo</code>
+<code>sendCascadeTo</code>
+<code>sendTextCascadeTo</code></p>
 
 <p>All these methods will convert a developer specified input into a Facebook Messenger compatible message that will be called as a parameter to <code>__sendMessage</code>. That is, they all eventually will call your <code>__sendMessage</code> method. You can however overwrite them if need be.</p>
 
@@ -709,6 +710,17 @@ It would make sense for you to do so for consistency and because it has to be de
 <p>Your <code>sendMessage</code> method is expected to call a <code>__formatOutgoingMessage(message)</code> method that will format the Messenger style message into one that is compatible with the platform you are coding your bot class for.</p>
 
 <p>You can have a look at the ones defined in the <code>TelegramBot</code> and the <code>TwitterBot</code> classes for inspiration.</p>
+
+<h3 id="setbotidifnotset-update"><code>#__setBotIdIfNotSet(update)</code></h3>
+
+<p>In order to help you identify between bots of different types, you will want each bot instance to have a <code>this.id</code> value. This should typically be the same as <code>update.recipient.id</code> when getting updates. If these aren&rsquo;t set upon instantiation (as with Facebook Messenger bots), you can write a function like this <code>MessengerBot</code> one that gets called upon receiving a message.</p>
+
+<pre><code class="language-js">__setBotIdIfNotSet(update) {
+  if (!this.id) {
+  	this.id = update.recipient.id;
+  }
+}
+</code></pre>
 
 <h2 id="is-this-really-all-there-is-to-it">Is this really all there is to it?</h2>
 
