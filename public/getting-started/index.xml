@@ -79,6 +79,16 @@
 // settings stuff
 const Botmaster = require(&#39;botmaster&#39;);
 
+const botmasterSettings = {
+  // by default botmaster will start an express server that listens on port 3000
+  // you can pass in a port argument here to change this default setting:
+  port: 3001,
+}
+
+const botmaster = new Botmaster(botmasterSettings);
+
+// you would typically hold this information in a &amp;quot;config&amp;quot; file.
+// or use environment variables
 const messengerSettings = {
   credentials: {
     verifyToken: &#39;YOUR verifyToken&#39;,
@@ -119,20 +129,20 @@ const socketioSettings = {
   id: &#39;SOME_ID_OF_YOUR_CHOOSING&#39;,
 };
 
-const botsSettings = [{ telegram: telegramSettings },
-                      { messenger: messengerSettings },
-                      { twitter: twitterSettings },
-                      { slack: slackSettings },
-                      { socketio: socketioSettings }];
+// instantiate new objects of the various bot classes bundled in with
+// the botmaster package. Other bot class packages can be installed or
+// built.
+const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
+const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings));
+const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
+const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
 
-const botmasterSettings = {
-  botsSettings: botsSettings,
-  // by default botmaster will start an express server that listens on port 3000
-  // you can pass in a port argument here to change this default setting:
-  port: 3001,
-}
-
-const botmaster = new Botmaster(botmasterSettings);
+botmaster.addBot(messengerBot);
+botmaster.addBot(slackBot);
+botmaster.addBot(socketioBot);
+botmaster.addBot(twitterBot);
+botmaster.addBot(telegramBot);
 
 // actual code
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
@@ -153,34 +163,55 @@ botmaster.on(&#39;error&#39;, (bot, err) =&amp;gt; {
       <pubDate>Mon, 31 Oct 2016 22:33:42 +0000</pubDate>
       
       <guid>https://botmasterai.github.io/getting-started/getting-set-up/</guid>
-      <description>&lt;p&gt;In order to instantiate a &lt;code&gt;Botmaster&lt;/code&gt; object, you need to pass it some settings in the form of an object. These settings look like this.&lt;/p&gt;
+      <description>
+
+&lt;p&gt;The following will create a &lt;code&gt;botmaster&lt;/code&gt; object you will be using in the rest of your code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+const botmaster = new Botmaster();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You would then add support for various messaging platforms as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const somePlatformBot = new PlatformBot(platformBotSettings);
+botmaster.addBot(somePlatformBot);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In practice this would look something like this for, say, Facebook Messenger:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const messengerSettings = {
+  credentials: {
+    verifyToken: &#39;YOUR verifyToken&#39;,
+    pageToken: &#39;YOUR pageToken&#39;,
+    fbAppSecret: &#39;YOUR fbAppSecret&#39;,
+  },
+  webhookEndpoint: &#39;/webhook1234&#39;, // botmaster will mount this webhook on https://Your_Domain_Name/messenger/webhook1234
+};
+const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
+botmaster.addBot(messengerBot);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where you&amp;rsquo;d typically hold the settings in a &lt;code&gt;config&lt;/code&gt; file somewhere.
+In order to instantiate a &lt;code&gt;Botmaster&lt;/code&gt; object, you need to pass it some settings in the form of an object. These settings look like this. See the various getting started guides for the different platforms to see both what credentials are required and how to gather them.&lt;/p&gt;
+
+&lt;h3 id=&#34;botmastersettings&#34;&gt;botmasterSettings&lt;/h3&gt;
+
+&lt;p&gt;You might want/need to specify the port to start botmaster on, or more generally, the express app that it should be working on (in this case you would have specified your own port separately)&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const botmasterSettings = {
-  botsSettings: botsSettings, // see below for a definition of botsSettings
-  app: app, // optional, an express app object if you are running your own server
-  server: server, // optional, an http server object (used if using socket.io)
-  port: port, // optional, only used if &amp;quot;app&amp;quot; is not defined. Defaults t0 3000 in that case
-  sessionStore: sessionStore // optional. Define if you will be dealing with sessions
+  app: app, // optional, an express app object if you are running your own express server
+  port: port, // optional, only used if &amp;quot;app&amp;quot; is not defined. Defaults to 3000 in that case
+  botsSettings: botsSettings, // optional see below for a definition of botsSettings [deprecated. Use &#39;botmaster.addBot()&#39; instead]
+  server: server, // optional, an http server object (used only if using socket.io) [deprecated. add server directly to socketioSettings]
 }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;See &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster&#34;&gt;Working with Botmaster&lt;/a&gt; for a more formal definition&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;botsSettings&lt;/code&gt; look something like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const botsSettings = [{ messenger: messengerSettings },
-                      { twitter: twitterSettings },
-                      { twitter: otherTwitterSettings }];
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;I.e. it is an array of single key objects. Where you specify the &lt;strong&gt;type as the key&lt;/strong&gt; of each object and the &lt;strong&gt;settings as the value&lt;/strong&gt;. Here I show that you can define multiple bots of the same type at once (twitter ones in this example). As you surely guessed, each different platform will expect different credentials. So platform specific settings will differ.&lt;/p&gt;
-
-&lt;p&gt;Once you have those &lt;code&gt;botmasterSettings&lt;/code&gt;, you can go on and instantiate a &lt;code&gt;Botmaster&lt;/code&gt; object. This looks something like this:&lt;/p&gt;
+&lt;p&gt;Once you have those &lt;code&gt;botmasterSettings&lt;/code&gt;, you would instantiate a &lt;code&gt;Botmaster&lt;/code&gt; object as such:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const botmaster = new Botmaster(botmasterSettings);
 &lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now, I know what you&amp;rsquo;re thinking: &amp;ldquo;but how do I get these &lt;code&gt;messengerSettings&lt;/code&gt; and &lt;code&gt;twitterSettings&lt;/code&gt; or other ones?&amp;rdquo; Well, I cover all of those in the following pages.&lt;/p&gt;
 </description>
     </item>
     
@@ -195,6 +226,7 @@ botmaster.on(&#39;error&#39;, (bot, err) =&amp;gt; {
 &lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+const botmaster = new Botmaster();
 
 const messengerSettings = {
   credentials: {
@@ -205,12 +237,11 @@ const messengerSettings = {
   webhookEndpoint: &#39;/webhook1234&#39;,
 };
 
-const botsSettings = [{ messenger: messengerSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
+botmaster.addBot(messengerBot);
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
-  bot.reply(update, &#39;Right back at you&#39;);
+  bot.reply(update, &#39;Hello world!&#39;);
 });
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -242,6 +273,7 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 &lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+const botmaster = new Botmaster();
 
 const slackSettings = {
   credentials: {
@@ -253,12 +285,11 @@ const slackSettings = {
   storeTeamInfoInFile: true,
 };
 
-const botsSettings = [{ slack: slackSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
+botmaster.addBot(slackBot);
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
-  bot.reply(update, &#39;Right back at you&#39;);
+  bot.reply(update, &#39;Hello world!&#39;);
 });
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -355,7 +386,6 @@ const express = require(&#39;express&#39;); // added
 .
 .
 .
-const botmaster = new Botmaster({ botsSettings });
 botmaster.app.use(express.static(__dirname + &#39;/views&#39;)); //added
 // or if you don&#39;t want it at the root of your app, add this:
 botmaster.app.use(&#39;/slack&#39;, express.static(__dirname + &#39;/views&#39;)); // added
@@ -363,7 +393,6 @@ botmaster.app.use(&#39;/slack&#39;, express.static(__dirname + &#39;/views&#39;)
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Right back at you&#39;);
 });
-
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Make sure to add either one of the &lt;code&gt;botmaster.app.use...&lt;/code&gt; lines.
@@ -389,14 +418,15 @@ If your pick the second one, navigate to your sub URL (&lt;code&gt;https://botma
 &lt;h4 id=&#34;server&#34;&gt;Server&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+const botmaster = new Botmaster();
 
 const socketioSettings = {
   id: &#39;SOME_BOT_ID_OF_YOUR_CHOOSING&#39;,
+  server: botmaster.server, // this is required for socket.io. You can set it to another node server object if you wish to. But in this example, we will use the one created by botmaster under the hood
 };
 
-const botsSettings = [{ socketio: socketioSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Right back at you&#39;);
@@ -407,7 +437,7 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const io = require(&#39;socket.io-client&#39;);
 
-const socket = io(&amp;quot;ws://localhost:4000&amp;quot;);
+const socket = io(&#39;ws://localhost:3000&#39;);
 
 socket.on(&#39;connect&#39;, function() {
   const message = {
@@ -421,9 +451,9 @@ socket.on(&#39;connect&#39;, function() {
 
 &lt;h2 id=&#34;the-botmaster-socket-io-bot&#34;&gt;The Botmaster Socket.io bot&lt;/h2&gt;
 
-&lt;p&gt;Socket.io is a great library that allows developers to write apps using webSockets (with fallbacks to http long-polling and others when webSockets aren&amp;rsquo;t available in the client). You can read more about it on their own website here: &lt;a href=&#34;http://socket.io&#34;&gt;http://socket.io&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Socket.io is a great library that allows developers to write apps using webSockets (with fallbacks to http long-polling and others when webSockets aren&amp;rsquo;t available on the client). You can read more about it on their own website here: &lt;a href=&#34;http://socket.io&#34;&gt;http://socket.io&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Because you might want to have a bot that not only works on some platform but also on your own webapp/app, support for socket.io was added to the Botmaster core. Although Socket.io enables developers to use their technology in a bunch of different applications, the fact that you want to use it in Botmaster means that you want to handle 1-1 conversations between users and your bot (managed by botmaster).&lt;/p&gt;
+&lt;p&gt;Because you might want to have a bot that not only works on some arbitrary platform but also on your own webapp/app, support for socket.io was added to the Botmaster core. Although Socket.io enables developers to use their technology in a bunch of different applications, the fact that you want to use it in Botmaster means that you want to handle 1-1 conversations between users and your bot (managed by botmaster).&lt;/p&gt;
 
 &lt;p&gt;If you&amp;rsquo;ve never used both botmaster and socket.io, It&amp;rsquo;s probably still pretty unclear how all of this fits in together. Hopefully the next section will help you understand and get started with this.&lt;/p&gt;
 
@@ -438,39 +468,44 @@ We want to make sure botmaster is setup and make sure that messages coming from 
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
 
+const botmaster = new Botmaster();
+
 const socketioSettings = {
-  id: &#39;SOME_ID_OF_YOUR_CHOOSING&#39;,
+  id: &#39;SOME_BOT_ID_OF_YOUR_CHOOSING&#39;,
+  server: botmaster.server,
 };
 
-const botsSettings = [{ socketio: socketioSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Right back at you&#39;);
 });
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;We will need to add a couple of lines to this code because we will be serving a webpage from our server. Not just listening on for botmaster messages. To do so, we take advantage of the fact that botmaster is built on top of express and that. We also assume that we will be serving our static assets (the components of our webpage) from a folder called &amp;lsquo;public&amp;rsquo; within our project directory. Our updated code looks like this:&lt;/p&gt;
+&lt;p&gt;We will need to add a couple of lines to this code because we will be serving a webpage from our server. Not just listening on for botmaster messages. To do so, we take advantage of the fact that botmaster is built on top of express and that this app es exposed via &lt;code&gt;botmaster.app&lt;/code&gt;. We also assume that we will be serving our static assets (the components of our webpage) from a folder called &amp;lsquo;public&amp;rsquo; within our project directory. Our updated code looks like this:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
-const express = require(&#39;express&#39;); //added
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const express = require(&#39;express&#39;); //added
+const Botmaster = require(&#39;botmaster&#39;);
+
+const botmaster = new Botmaster();
+botmaster.app.use(express.static(`${__dirname}/public`)); //added
+
 
 const socketioSettings = {
-  id: &#39;SOME_ID_OF_YOUR_CHOOSING&#39;,
+  id: &#39;SOME_BOT_ID_OF_YOUR_CHOOSING&#39;,
+  server: botmaster.server,
 };
 
-const botsSettings = [{ socketio: socketioSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
-botmaster.app.use(express.static(__dirname + &#39;/public&#39;)); //added
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Right back at you&#39;);
 });
 
 botmaster.on(&#39;error&#39;, (bot, err) =&amp;gt; {
-  console.log(err);
+  console.log(err.stack);
 });
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -575,8 +610,7 @@ form button {
 &lt;p&gt;Finally, in the &lt;code&gt;client_app.js&lt;/code&gt; file, you should include the following:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;// the following line could also be: &amp;quot;var socket = io(&#39;ws://&amp;lt;URL&amp;gt;:&amp;lt;PORT_Number&amp;gt;?botmasterUserId=wantedUserId&#39;);&amp;quot;
-// if you know you will be communicating with a server different from the one that served you the page you are on
-// do something like this: io(&#39;ws://&amp;lt;URL&amp;gt;:&amp;lt;PORT_Number&amp;gt;&#39;);
+// if you know you will be communicating with a server different from the one that served you the page you are on.
 // this only works because the socket.io library assumes with this syntax that the socket.io server
 // lives at the same address as the server that served this page (this should mostly be your case)
 var socket = io(&#39;?botmasterUserId=wantedUserId&#39;);
@@ -596,19 +630,18 @@ form.onsubmit = function(event) {
   // Add the user message to the web page
   messages.insertAdjacentHTML(&#39;beforeend&#39;,
     `&amp;lt;li class=&amp;quot;user-message&amp;quot;&amp;gt;${textInput.value}&amp;lt;/li&amp;gt;`);
-  // create a botmaster compatible message from the text input by user
+  // create a botmaster compatible message from the text input by the user
   const message = {
     text: textInput.value,
   };
-  // just send a stringified version of it over the webSocket
-  socket.send(JSON.stringify(message));
+  // send the message over the webSocket
+  socket.send(message);
   // finally, clear the user textInput field
   textInput.value = &#39;&#39;;
 };
 
 socket.on(&#39;message&#39;, function(botmasterMessage){
-  var messageObject = JSON.parse(botmasterMessage);
-  var textMessage = messageObject.message.text;
+  var textMessage = botmasterMessage.message.text;
 
   messages.insertAdjacentHTML(&#39;beforeend&#39;,
     `&amp;lt;li class=&amp;quot;botmaster-message&amp;quot;&amp;gt;${textMessage}&amp;lt;/li&amp;gt;`);
@@ -617,7 +650,7 @@ socket.on(&#39;message&#39;, function(botmasterMessage){
 
 &lt;p&gt;You should have a read through this code to make sure you understand it as that is the code communicating with our botmaster backend.&lt;/p&gt;
 
-&lt;p&gt;On the first line, we call: &lt;code&gt;var socket = io(&#39;?botmasterUserId=wantedUserId&#39;);&lt;/code&gt;. This effectively opens up a socket connection with our backend by making a request to something like this: &lt;code&gt;io(&#39;ws://localhost:3000?botmasterUserId=wantedUserId&#39;);&lt;/code&gt;. Here as you can see, we are setting a query param called &lt;strong&gt;botmasterUserId&lt;/strong&gt; to &amp;lsquo;wantedUserId&amp;rsquo;. This is done because we want to make sure that when we are getting updates in our backend, the &lt;code&gt;update.sender.id&lt;/code&gt; part will be what we set it to here and not anything else (by default the randomly allocated socket.id value). This is even more important when your users can connect from different clients and you want to make sure the botmaster reply is propagated to all the clients.&lt;/p&gt;
+&lt;p&gt;On the first line, we call: &lt;code&gt;var socket = io(&#39;?botmasterUserId=wantedUserId&#39;);&lt;/code&gt;. This effectively opens up a socket connection with our backend by making a request to something like this: &lt;code&gt;io(&#39;ws://localhost:3000?botmasterUserId=wantedUserId&#39;);&lt;/code&gt;. Here as you can see, we are setting a query param called &lt;strong&gt;botmasterUserId&lt;/strong&gt; to &amp;ldquo;wantedUserId&amp;rdquo;. This is done because we want to make sure that when we are getting updates in our backend, the &lt;code&gt;update.sender.id&lt;/code&gt; part will be what we set it to here and not anything else (by default the randomly allocated socket.id value). This is even more important when your users can connect from different clients and you want to make sure the botmaster reply is propagated to all the clients.&lt;/p&gt;
 
 &lt;p&gt;In the &lt;code&gt;form.onsubmit&lt;/code&gt; part, we make sure that the text contained in the input cell is correctly formatted then sent to botmaster via the websocket. We also make sure to display it in our page and to then clear the input.&lt;/p&gt;
 
@@ -656,8 +689,8 @@ socket.on(&#39;message&#39;, function(botmasterMessage){
       <guid>https://botmasterai.github.io/getting-started/twitter-setup/</guid>
       <description>
 
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;
-const Botmaster = require(&#39;botmaster&#39;);
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+const botmaster = new Botmaster();
 
 const twitterSettings = {
   credentials: {
@@ -668,9 +701,8 @@ const twitterSettings = {
   }
 }
 
-const botsSettings = [{ twitter: twitterSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
+botmaster.addBot(twitterBot);
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Right back at you&#39;);
@@ -715,8 +747,8 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 
 &lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;
-const Botmaster = require(&#39;botmaster&#39;);
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+const botmaster = new Botmaster();
 
 const telegramSettings = {
   credentials: {
@@ -725,9 +757,8 @@ const telegramSettings = {
   webhookEndpoint: &#39;/webhook1234/&#39;,
 };
 
-const botsSettings = [{ telegram: telegramSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+botmaster.addBot(telegramBot);
 
 botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Right back at you&#39;);
@@ -781,7 +812,7 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 };
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;This will mount your telegram webhook on: &lt;code&gt;https://Your_Domain_Name/messenger/webhook1234&lt;/code&gt;. And yes, you will need ssl in order to work with most platforms.&lt;/p&gt;
+&lt;p&gt;This will mount your telegram webhook on: &lt;code&gt;https://Your_Domain_Name:3000/messenger/webhook1234&lt;/code&gt;. And yes, you will need ssl in order to work with most platforms.&lt;/p&gt;
 
 &lt;p&gt;As an added layer of security, it is highly recommended that you include a sort of a code in your webhookEndpoint. I.e., rather that having this: &lt;code&gt;webhookEndpoint: &#39;/webhook/&#39;&lt;/code&gt;, do something more like this: &lt;code&gt;webhookEndpoint: &#39;/webhook92ywrnc9qm4qoiuthecvasdf42FG/&#39;&lt;/code&gt;. This will assure that you know where the request is coming from. It is more important on Telegram than on other platforms as Telegram doesn&amp;rsquo;t give us any way to verify the source of the message.&lt;/p&gt;
 

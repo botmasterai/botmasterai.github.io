@@ -9,7 +9,7 @@ weight: 20
 
 ## Bot classes
 
-The following assumes that you have read the main documentation in "getting started" and in "botmaster basics". A general understand of how Botmaster and more generally how chatbots work is also assumed.
+The following document assumes that you have read the main documentation in "getting started" and in "botmaster basics". A general understand of how Botmaster and more generally how chatbots work is also assumed.
 
 Because of that, we will pick up right from there and start looking into the bot classes Botmaster comes bundled with.
 
@@ -35,71 +35,53 @@ const messengerBot = new MessengerBot(messengerSettings);
 
 In order to get updates from Messenger, you would then be expected to mount your bot's express mini-app `messengerBot.app` onto your own express `app` by doing something like this:
 
-
 ```js
 const app = require('express')();
 app.use('/', messengerBot.app);
-app.listen(3000, function() {});
+app.listen(3001, function() {});
 ```
 
-This will mount your bot onto: `https://Your_Domain_Name/webhook1234`. Note how the bot type **is not** part of the URL here.
+Or even better:
 
+```js
+messengerBot.app.listen(3001, function() {});
+```
+
+This will mount your bot onto: `https://Your_Domain_Name:3001/webhook1234`. Note how the bot type **is not** part of the URL here.
 
 ## Making Botmaster objects and bot objects work together
 
-In the [botmaster basics](/working-with-botmaster/botmaster-basics) sectio nwe saw how botmaster objects return a bot object along with every update it receives. I.e. something like this happens:
+Doing this is really trivial and as it turns out, you do this every time you use the `addBot` method.
+
+We recall from the various guides that to create a botmaster object the following is needed:
 
 ```js
-botmaster.on('update', (bot, update) => {
-  console.log(bot.type);
-  console.log(update);
-});
+const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
 ```
 
-We also saw in the last section how to setup a bot using its own bot class. Let's have a look at how to use this bot inside of a botmaster object.
 
 As usual, we create a botmaster object. This one supports Twitter and Telegram, but not Messenger. We create it as such:
 
 
-```js
-const Botmaster = require('botmaster');
+In this example the `botmaster` object will start a new `express()` `app` server running locally on port `3000` as expected by default (see [here](/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app) to see how to change that).
 
-const twitterSettings = {
-    consumerKey: 'YOUR consumerKey',
-    consumerSecret: 'YOUR consumerSecret',
-    accessToken: 'YOUR accessToken',
-    accessTokenSecret: 'YOUR accessTokenSecret',
-  }
-}
-
-const telegramSettings = {
-  credentials: {
-    authToken: 'YOUR authToken',
-  },
-  webhookEndpoint: '/webhook1234/',
-};
-
-const botsSettings = [{ twitter: twitterSettings },
-                      { telegram: telegramSettings }];
-
-const botmasterSettings = { botsSettings: botsSettings };
-
-const botmaster = new Botmaster(botmasterSettings);
-```
-
-In this example the `botmaster` object will start a new `express()` `app` server running locally on port `3000` as expected by default (see [here](/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app) to see how to change that). However, we later might want to add to botmaster the object we created in the first section, namely, `messengerBot`.
-
-We can achieve this by doing the following:
+As usual, we add the messenegrBot as follows:
 
 ```js
 botmaster.addBot(messengerBot);
 ```
 
-This will mount your bot onto: `https://Your_Domain_Name/messenger/webhook1234`. Note how the bot type **is** part of the endpoint here. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.
+This will mount your bot onto: `https://Your_Domain_Name:3000/messenger/webhook1234`. Note how the bot type **is** part of the endpoint here. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.
 
-You will then get updates from the botmaster object as if you had instantiated it with the messenger settings too.
+You will then get updates from the botmaster object as if you had instantiated it with the messenger settings too if your endpoint is setup properly.
 
-**What this means is that any bot class that follows a  certain set of rules will be able to be added to a botmaster object.**
+{{% notice info %}}
+Please note, if you followed these steps and put all this code in one file. You will actually have two express servers running along side each other. One on port 3001 and one on port 3000. Both endpoints mentioned above would work. This is definitely not what you want to do in production. Pick one of the methods and stick to it in production.
+{{% /notice %}}
+
+
+**The main takeaway from all this is that any bot class that follows a  certain set of rules will be able to be added to a botmaster object.**
 
 
 ## Creating your own bot classes
@@ -141,7 +123,7 @@ The next line calls the `this.__applySettings(settings)` function. This function
 
 ### `#__createMountPoints()`
 
-The last line of our controller makes a call to `this.__createMountPoints();`. This line should only be present if your bot class requires webhooks. If this is the case, you will be expected to define a class member function that looks like:
+The last line of our controller makes a call to `this.__createMountPoints();`. This line should only be present if your bot class requires webhooks. If this is the case, you will be expected to define a class member function that looks something like:
 
 ```js
   __createMountPoints() {
@@ -199,24 +181,10 @@ __setupSocketioServer() {
 }
 ```
 
-I won't explain what is going on here as it's not necessary for building your own Bot class.
-
-### `#__setBotIdIfNotSet(update)`
-
-In order to help you identify between bots of different types, you will want each bot instance to have a `this.id` value. This will often be the same as `update.recipient.id` when getting updates. But not always (for instance with socket.io bots). If these aren't set upon instantiation as with Facebook Messenger bots, you can write a function like this that gets called upon receiving a message.
-
-The following is a good default implementation used in many of botmaster's internal bot types:
-
-```js
-__setBotIdIfNotSet(update) {
-  if (!this.id) {
-  	this.id = update.recipient.id;
-  }
-}
-```
-
+Feel free to have a thorough read at this to understand what is going on here. Because it isn't necessary to understand this in order to build your own bot class, I won't explain what is going on here.
 
 ### `#__formatUpdate(rawUpdate)`
+
 
 Although you can technically handle the body of the request as you wish. In our `__createMountPoints` example here (from TelegramBot code), we make a call to the `__formatUpdate` function with the body of the request.
 It would make sense for you to do so for consistency and because it has to be defined if you want your bot class to eventually be referenced in the Botmaster project.
@@ -225,7 +193,7 @@ This function is expected to transform the `rawUpdate` into an object which is o
 
 Typically, it would look something like this for a message with an image attachment. Independent of what platform the message comes from:
 
-```js
+```
 {
   raw: <platform_specific_raw_update>,
   sender: {
@@ -242,7 +210,7 @@ Typically, it would look something like this for a message with an image attachm
       {
         type: 'image',
         payload: {
-          url: 'https://scontent.xx.fbcdn.net/v/.....'
+          url: 'SOME_IMAGE_URL'
         }
       }
     ]
@@ -254,7 +222,7 @@ Your function should return the update object(or a promise that resolves a forma
 
 ### `#__emitUpdate(update)`
 
-Like `__applySettings`, this method is implemented in `BaseBot`. It handles errors, calling the `incoming` middleware stack, and most importantly, actually calling `this.emit(update)` to emit the actual update. You can overwrite this method if you wish, but in its current state, it handles the most important cases you will want to deal with. You will however need to call it with your formatted update object as a parameter in order to actually get the update object in a `bot.on('update', callback)` block.
+Like `__applySettings`, this method is implemented in `BaseBot`. It handles errors, calling the `incoming` middleware stack, and most importantly, actually calling `this.emit(update)` to emit the actual update. You can overwrite this method if you wish, but in its current state, it handles the most important cases you will want to deal with. You should call this method with the formatted `update` object created by calling `formatUpdate()`;
 
 ### `#__sendMessage(message)`
 
@@ -270,7 +238,38 @@ The `__sendMessage` method needs to be implemented. The method should take in a 
   }
  ```
 
- It is important that this be a promise and not a callback. Although developers using Botmaster can use `sendMessage` type methods with callbacks. The internals of Botmaster use Promises and therefore, so should your bot class.
+ Code for it might look like this simplified one from `TelegramBot`:
+
+ ```js
+ __sendMessage(message) {
+  const options = {
+    url: 'https://api.telegram.org/sendMessage',
+    method: 'POST',
+  };
+  options.json = this.__formatOutgoingMessage(message);
+
+  return request(options) // using request-promise package and not request here
+
+  .then((body) => {
+    if (body.error) {
+      throw new Error(JSON.stringify(body.error));
+    }
+
+    const standardizedBody = {
+      raw: body,
+      recipient_id: body.result.chat.id,
+      // this is really the equivalent to a Messenger seq.
+      // But it's either that or null for telegram
+      message_id: body.result.message_id,
+    };
+    return standardizedBody;
+  });
+}
+ ```
+
+See how we are returning a promise that resolves to an object as specified above!
+
+It is important to note that this be a promise and not a callback. Although developers using Botmaster can use `sendMessage` type methods with callbacks. The internals of Botmaster use Promises and therefore, so should your bot class.
 
 Please note that the `BaseBot` superclass defines a set of methods that allow developers to more easily send messages to all platforms without having to build the whole Messenger compatible object themselves. These methods are the following:
 
@@ -282,6 +281,8 @@ Please note that the `BaseBot` superclass defines a set of methods that allow de
 `sendAttachmentFromURLTo`
 `sendDefaultButtonMessageTo`
 `sendIsTypingMessageTo`
+`sendCascadeTo`
+`sendTextCascadeTo`
 
 All these methods will convert a developer specified input into a Facebook Messenger compatible message that will be called as a parameter to `__sendMessage`. That is, they all eventually will call your `__sendMessage` method. You can however overwrite them if need be.
 
@@ -290,6 +291,18 @@ All these methods will convert a developer specified input into a Facebook Messe
 Your `sendMessage` method is expected to call a `__formatOutgoingMessage(message)` method that will format the Messenger style message into one that is compatible with the platform you are coding your bot class for.
 
 You can have a look at the ones defined in the `TelegramBot` and the `TwitterBot` classes for inspiration.
+
+### `#__setBotIdIfNotSet(update)`
+
+In order to help you identify between bots of different types, you will want each bot instance to have a `this.id` value. This should typically be the same as `update.recipient.id` when getting updates. If these aren't set upon instantiation (as with Facebook Messenger bots), you can write a function like this `MessengerBot` one that gets called upon receiving a message.
+
+```js
+__setBotIdIfNotSet(update) {
+  if (!this.id) {
+  	this.id = update.recipient.id;
+  }
+}
+```
 
 ## Is this really all there is to it?
 

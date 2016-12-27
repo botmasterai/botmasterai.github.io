@@ -11,6 +11,7 @@ weight: 50
 
 ```js
 const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
 
 const slackSettings = {
   credentials: {
@@ -22,12 +23,11 @@ const slackSettings = {
   storeTeamInfoInFile: true,
 };
 
-const botsSettings = [{ slack: slackSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
+botmaster.addBot(slackBot);
 
 botmaster.on('update', (bot, update) => {
-  bot.reply(update, 'Right back at you');
+  bot.reply(update, 'Hello world!');
 });
 ```
 ## The Botmaster Slack bot
@@ -122,7 +122,6 @@ const express = require('express'); // added
 .
 .
 .
-const botmaster = new Botmaster({ botsSettings });
 botmaster.app.use(express.static(__dirname + '/views')); //added
 // or if you don't want it at the root of your app, add this:
 botmaster.app.use('/slack', express.static(__dirname + '/views')); // added
@@ -130,7 +129,6 @@ botmaster.app.use('/slack', express.static(__dirname + '/views')); // added
 botmaster.on('update', (bot, update) => {
   bot.reply(update, 'Right back at you');
 });
-
 ```
 Make sure to add either one of the `botmaster.app.use...` lines.
 If you pick the first one, navigate to your URL (`https://botmastersubdomain.localtunnel.me/` for this example) and you will see the button.

@@ -10,8 +10,8 @@ weight: 80
 ## Code
 
 ```js
-
 const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
 
 const telegramSettings = {
   credentials: {
@@ -20,9 +20,8 @@ const telegramSettings = {
   webhookEndpoint: '/webhook1234/',
 };
 
-const botsSettings = [{ telegram: telegramSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+botmaster.addBot(telegramBot);
 
 botmaster.on('update', (bot, update) => {
   bot.reply(update, 'Right back at you');

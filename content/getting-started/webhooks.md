@@ -21,7 +21,7 @@ const telegramSettings = {
 };
 ```
 
-This will mount your telegram webhook on: `https://Your_Domain_Name/messenger/webhook1234`. And yes, you will need ssl in order to work with most platforms.
+This will mount your telegram webhook on: `https://Your_Domain_Name:3000/messenger/webhook1234`. And yes, you will need ssl in order to work with most platforms.
 
 As an added layer of security, it is highly recommended that you include a sort of a code in your webhookEndpoint. I.e., rather that having this: `webhookEndpoint: '/webhook/'`, do something more like this: `webhookEndpoint: '/webhook92ywrnc9qm4qoiuthecvasdf42FG/'`. This will assure that you know where the request is coming from. It is more important on Telegram than on other platforms as Telegram doesn't give us any way to verify the source of the message.
 

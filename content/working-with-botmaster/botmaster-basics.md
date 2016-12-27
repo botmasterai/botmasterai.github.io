@@ -7,68 +7,220 @@ toc: true
 weight: 10
 ---
 
-Hopefully, by now you've gathered your credentials for at least one platform and got some basic bot running. We remember from the [quickstart](/getting-started/quickstart) and the various Setup guides in [getting-started](/getting-started) that we can start our botmaster server like this:
+### Bot object
+
+Hopefully, by now you've gathered your credentials for at least one platform and got some basic bot running. We remember from the [quickstart](/getting-started/quickstart) and the various Setup guides in [getting-started](/getting-started) that we can start a botmaster project like this:
+
 
 ```js
 const Botmaster = require('botmaster');
+
+const botmaster = new Botmaster();
 .
-. // full settings object omitted for brevity
+. // full settings objects omitted for brevity
 .
-const botsSettings = [{ telegram: telegramSettings },
-                      { messenger: messengerSettings },
-                      { twitter: twitterSettings },
-                      { slack: slackSettings },
-                      { socketio: socketioSettings }];
+const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
+const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings));
+const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
+const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+
+botmaster.addBot(messengerBot);
+botmaster.addBot(slackBot);
+botmaster.addBot(twitterBot);
+botmaster.addBot(socketioBot);
+botmaster.addBot(telegramBot);
+.
+.
+.
+```
+
+As it turns out, bot objects are really the ones running the show in the Botmaster framework. Your `botmaster` object is simply a central point of control for you to manage all of your bots. Botmaster assumes that most of your bots will have a central bit of code that you don't want to have to replicate for every platform/bot instance. Which should make sense.
+
+Although the point of botmaster is for developers to do something like this after declaring the botmaster instance:
+
+```js
+botmaster.on('update', (bot, update) => {
+  // do stuff with your bot and update here
+});
+```
+
+One could (but shouldn't) just as well do:
+
+```js
+messengerBot.on('update', (update) => {
+  // do stuff with your messenger bot here
+});
+
+// this applies to all the bot objects that would have been declared separately.
+```
+
+I say one shouldn't do that here because the only reason why this callback would work in this situation is because we've already called `botmaster.addBot(messengerBot)`. If we hadn't done that, we would have to mount the `messengerBot` object onto an express app ourselves. See [writing your own bot class](/working-with-botmaster/writing-your-own-bot-class) to read more on this.
+
+The `update` object in the event callback is the same as the botmaster `update` one you would get in the botmaster update callback. Of course the `messenger.on(...)` piece of code would only apply to your `messengerBot` instance and not the others.
+
+As seen, bot instances can be accessed directly within an `update` event. Because you might want to act differently on bots of a certain type or log information differently based on type, every bot comes with a `bot.type` parameter that is one of: `messenger`, `slack`, `twitter`, `socketio`, `telegram` or whatever third-party bot class you might have installed or created.
+
+It is important to note here, that you can have multiple bot objects for a certain type. I'm sure you can find reasons for why you would want to do this. This is important to mention, as you might have, say, 2 bots of type `messenger` dealt with via Botmaster. You might want to do platform specific code by doing the following:
+
+```js
+botmaster.on('update', (bot, update) => {
+  if (bot.type === 'messenger' {
+    // do messenger specific stuff
+    return;
+  })
+})
+```
+
+Then you might want to do bot object specific code. You would do this as such:
+
+```js
+botmaster.on('update', (bot, update) => {
+  if (bot.type === 'messenger' {
+    // do messenger specific stuff
+    if (bot.id === 'YOUR_BOT_ID') {// this will be the user id of bot for messenger
+      // do bot object specific stuff
+      return;
+    }
+  })
+})
+```
+
+Or if you declared your bots and botmaster as in the beginning of this section, you might have done the following:
+
+```js
+const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
+// These are some of the bot classes that come with Botmaster
+const Messengerbot = Botmaster.botTypes.MessengerBot;
+const SlackBot = Botmaster.botTypes.SlackBot;
+const TwitterBot = Botmaster.botTypes.TwitterBot;
+.
+. // full settings objects omitted for brevity
+.
+const messengerBot1 = new MessengerBot(messengerSettings1);
+const messengerBot2 = new MessengerBot(messengerSettings2);
+const slackBot = new SlackBot(slackSettings);
+const twitterBot = new TwitterBot(twitterSettings);
+
+botmaster.addBot(messengerBot);
+botmaster.addBot(slackBot);
+botmaster.addBot(twitterBot);
+
+botmaster.on('update', (bot, update) => {
+  if (bot.type === 'messenger' {
+    // do messenger bot specific stuff
+
+
+    if (bot === messengerBot1) { // without using ids
+      // do messengerBot1 specific stuff
+    }
+    return;
+  })
+})
+```
+
+{{% notice warning %}}
+Botmaster does not assure you that the `id` parameter of the `bot` object will exist upon instantiation. the `id` is only assured to be there once an update has been received by the bot. This is because some ids aren't known until botmaster knows 'who' the message was sent to (i.e. what id your bot should have).
+{{% /notice %}}
+
+I'll note quickly that each bot object created comes from one of the various bot classes as seen above. They act in the same way on the surface (because of heavy standardization), but have a few idiosynchrasies here and there.
+
+Also useful to note is that you can access all the bots added to botmaster by doing `botmaster.bots`. you can also use `botmastet.getBot` or `botmaster.getBots` to get a specific bot (using type or id);
+
+It is important to take note of the `addBot` syntax as you can create your own Bot class that extends the `Botmaster.botTypes.BaseBot` class. For instance, you might want to create your own class that supports your pre-existing messaging standards. Have a look at the [working with a botmaster supported bot class ](working-with-botmaster/writing-a-botmaster-supported-bot-class-readme.md) documentation to learn how to do this.
+
+### Settings
+
+Botmaster can be started with a so-called `botmasterSettings` object. It has the following parameters:
+The `botmasterSettings` object has the following parameters:
+
+| Parameter | Description
+|--- |---
+| port  | (__optional__) The port to use for your webhooks (see [webhooks](#webhooks) to understand more about webhooks). This will only be used if the `app` parameter is not provided. Otherwise, it will be ignored
+| app  | (__optional__) An `express.js` app object to mount the `webhookEnpoints` onto. If you choose to do this, it is assumed that you will be starting your own express server and this won't be done by Botmaster. Unless you also specify a `server` parameter, `botmaster.server` will be `undefined`
+
+{{% notice warning %}}
+`botsSettings` and `server` parameters have been deprecated in version 2.2.3. Please use `addBot` instead of botsSettings and set the socketio server in your socketSettings object.
+{{% /notice %}}
+
+Using botsSettings would look something like this if you want to set the port:
+
+```js
+const Botmaster = require('botmaster');
 
 const botmasterSettings = {
-  botsSettings: botsSettings,
   // by default botmaster will start an express server that listens on port 3000
   // you can pass in a port argument here to change this default setting:
   port: 3001
 }
 
 const botmaster = new Botmaster(botmasterSettings);
+
+.
+. // rest of code adding bots to botmaster etc
+.
+
 ```
-
-### Settings
-
-The `botmasterSettings` object has the following parameters:
-
-| Parameter | Description
-|--- |---
-| botsSettings | An `array` of platform specific settings. See [Quickstart](/getting-started/quickstart) to see an example of those and the various setup guides in [Getting started](/getting-started) to see how to get started with the various platforms.
-| port  | (__optional__) The port to use for your webhooks (see [webhooks](#webhooks) to understand more about webhooks). This will only be used if the `app` parameter is not provided. Otherwise, it will be ignored
-| app  | (__optional__) An `express.js` app object to mount the `webhookEnpoints` onto. If you choose to do this, it is assumed that you will be starting your own express server and this won't be done by Botmaster. Unless you also specify a `server` parameter, `botmaster.server` will be `null`
-| server | (__optional__) an `http` server object. It can be accessed via `botmaster.server` once instantiated. If passed and using socket.io. This server object will be used as the socker.io server.
 
 {{% notice info %}}
-Please note, if you are passing in an `app` object to the settings, it is assumed that you are dealing with anything relating to your http server. That is start listening, closing it if necessary etc.
+Please note, unless you are passing in an `app` object to the settings, it is assumed that you don't want to deal with anything relating to an http server. That is, botmaster will create an express server under the hood and expose both: `botmaster.app` and `botmaster.server`.
 {{% /notice %}}
 
-{{% notice warning %}}
-If using socket.io (`socketio`), you will need to either define BOTH an `app` object and its corresponding `server` object in the settings. Or if you would rather botmaster manage this for you, you can define none of them. Alternatively, if you want, say, to have a different http server for your main botmaster app and for socket.io, you can do something like this:
+#### Setting `botmasterSettings` to use Botmaster with your own express() app
+
+Here's an example on how to do so if you are setting your credentials in your environment variables:
+
 ```js
-.
-.
-const socketioSettings = {
-  id: 'SOME_ID_OF_YOUR_CHOOSING',
-  server: 'SOME_HTTP_SERVER_OF_YOURS', // this server can't run on port 3000 in this example
+const express = require('express');
+const Botmaster = require('botmaster');
+
+const app = express();
+const port = 3000;
+const botmasterSettings = { app: app };
+const botmaster = new Botmaster(botmasterSettings);
+
+// settings and adding those to botmaster
+const telegramSettings = {
+  credentials: {
+    authToken: process.env.TELEGRAM_TOKEN,
+  },
+  webhookEndpoint: '/webhook1234/',
 };
 
-const botsSettings = [{ telegram: telegramSettings },
-                      { messenger: messengerSettings },
-                      { twitter: twitterSettings },
-                      { slack: slackSettings },
-                      { socketio: socketioSettings }];
+const messengerSettings = {
+  credentials: {
+    verifyToken: process.env.MESSENGER_VERIFY_TOKEN,
+    pageToken: process.env.MESSENGER_PAGE_TOKEN,
+    fbAppSecret: process.env.FACEBOOK_APP_SECRET,
+  },
+  webhookEndpoint: '/webhook1234/',
+};
 
-const botmasterSettings = {
-  botsSettings: botsSettings,
-}
+const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
+const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
 
-const botmaster = new Botmaster(botmasterSettings);
+botmaster.addBot(messengerBot);
+botmaster.addBot(telegramBot);
+////////
+
+botmaster.on('update', (bot, update) => {
+  bot.sendMessage({
+    recipient: {
+      id: update.sender.id,
+    },
+    message: {
+      text: 'Well right back at you!',
+    },
+  });
+});
+
+// start server on the specified port and binding host
+app.listen(port, '0.0.0.0', () => {
+  // print a message when the server starts listening
+  console.log(`Running App on port: ${port}`);
+});
 ```
-In this example, a server will be started under the hood by botmaster using your express. This http server will be a different one from the one used in
-{{% /notice %}}
 
 ### Events
 
@@ -104,121 +256,6 @@ This is really where all the magic happens. Whenever a message (update in Botmas
 
 This event is thrown whenever an error internal to Botmaster occurs. I.e. if for some reason a misconfigured message was sent in. Or if some other kind of error occurred directly within Botmaster. It is good to listen onto this event and keep track of potential errors. Also, if you code an error within `botmaster.on`, and don't catch it, it will be caught by Botmaster and emitted in to `error`. So like this you have full control of what is going on and can log everything straight from there.
 
-### Bot object
-
-Bot objects are really the ones running the show in the Botmaster framework. Your `botmaster` object is simply a central point of control for you to manage all of your bots. Botmaster assumes that most of your bots will have a central bit of code that you don't want to have to replicate for every platform/bot instance. Which should make sense. To drive the point a little further, here is another [perfectly acceptable way] of starting botmaster.
-
-
-```js
-const Botmaster = require('botmaster');
-const MessengerBot = Botmaster.botTypes.MessengerBot;
-.
-.
-const botmaster = new Botmaster();
-.
-. // full settings objects omitted for brevity
-.
-const messengerBot = new MessengerBot(messengerSettings);
-const slackBot = new SlackBot(slackSettings);
-const twitterBot = new TwitterBot(twitterSettings);
-const socketioBot = new SocketioBot(socketioSettings);
-const telegramBot = new TelegramBot(telegramSettings);
-
-botmaster.addBot(messengerBot);
-botmaster.addBot(slackBot);
-botmaster.addBot(twitterBot);
-botmaster.addBot(socketioBot);
-botmaster.addBot(telegramBot);
-```
-
-Although the point of botmaster is for developers to do something like this after declaring the botmaster instance:
-
-```js
-botmaster.on('update', (bot, update) => {
-  // do stuff with your bot and update here
-});
-```
-
-One can just as well do:
-
-```js
-messengerBot.on('upadte', (update) => {
-  // do stuff with your messenger bot here
-});
-
-// this applies to all the bot objects that would have been declared separately.
-```
-
-The `update` object is the as the botmaster `update` one you would get from that bot. Of course, this code would only apply to your `messengerBot` instance and not the others.
-
-As seen, bot instances can be accessed directly within an `update` event. Because you might want to act differently on bots of a certain type or log information differently based on type, every bot comes with a `bot.type` parameter that is one of: `messenger`, `slack`, `twitter`, `socketio`, `telegram` or whatever third-party bot class you might have installed or created.
-
-It is important to note here, that you can have multiple bot objects for a certain type. I'm sure you can find reasons for why you would want to do this. This is important to mention, as you might have, say, 2 bots of type `messenger` dealt with via Botmaster. You might want to do platform specific code by doing the following:
-
-```js
-botmaster.on('update', (bot, update) => {
-  if (bot.type === 'messenger' {
-    // do messenger specific stuff
-    return;
-  })
-})
-```
-
-Then you might want to do bot object specific code. You would do this as such:
-
-```js
-botmaster.on('update', (bot, update) => {
-  if (bot.type === 'messenger' {
-    // do messenger specific stuff
-    if (bot.id === 'YOUR_BOT_ID') {// this will be the user id of bot for messenger
-      // do bot object specific stuff
-      return;
-    }
-  })
-})
-```
-
-{{% notice warning %}}
-Botmaster does not assure you that the `id` parameter of the `bot` object will exist upon instantiation. the `id` is only assured to be there once an update has been received by the bot. This is because some ids aren't known until botmaster knows 'who' [your bot] the message was sent to.
-{{% /notice %}}
-
-Or if you declared your bots and botmaster as in the beginning of this section, you might have done the following:
-
-```js
-const Botmaster = require('botmaster');
-const botmaster = new Botmaster();
-.
-. // full settings objects omitted for brevity
-.
-const messengerBot1 = new MessengerBot(messengerSettings1);
-const messengerBot2 = new MessengerBot(messengerSettings2);
-const slackBot = new SlackBot(slackSettings);
-const twitterBot = new TwitterBot(twitterSettings);
-
-botmaster.addBot(messengerBot);
-botmaster.addBot(slackBot);
-botmaster.addBot(twitterBot);
-
-botmaster.on('update', (bot, update) => {
-  if (bot.type === 'messenger' {
-    // do messenger bot specific stuff
-
-
-    if (bot === messengerBot1) { // without using ids
-      // do messengerBot1 specific stuff
-    }
-    return;
-  })
-})
-```
-
-If you want to perform bot object specific code, I recommend declaring your objects in this way rather than the standard way. If you want to perform platform specific way, the standard way is perfectly fine.
-
-I'll note quickly that each bot object created comes from one of the various bot classes as seen above. They act in the same way on the surface (because of heavy standardization), but have a few idiosynchrasies here and there. You can read about them all in their own sections.
-
-Also useful to note is that you can access all the bots added to botmaster by doing `botmaster.bots`. you can also use `botmastet.getBot` or `botmaster.getBots` to get a specific bot (using type or id);
-
-It is important to note the `addBot` syntax as you can create your own Bot class that extends the `Botmaster.botTypes.BaseBot` class. For instance, you might want to create your own class that supports your pre-existing messaging standards. Have a look at the [working with a botmaster supported bot class ](working-with-botmaster/writing-a-botmaster-supported-bot-class-readme.md) documentation to learn how to do this.
 
 ## Message/Update format
 
@@ -422,7 +459,7 @@ It is used as such:
 
 ```js
 botmaster.on('update', (bot, update) => {
-    bot.sendIsTypingMessageTo(update.sender.id);
+  bot.sendIsTypingMessageTo(update.sender.id);
 });
 ```
 
@@ -475,59 +512,3 @@ As you might have guessed, Botmaster assures you that the objects in the message
 | recipientId  | a string representing the id of the user to whom you want to send the message.
 
 This method is really just a helper for calling `bot.sendCascadeTo`. It just allows developers to use the method with an array of texts rather than an array of objects.
-
-## Using Botmaster with your own express() app
-
-Here's an example on how to do so:
-
-```js
-const express = require('express');
-const app = express();
-const port = 3000;
-
-const Botmaster = require('botmaster');
-
-const telegramSettings = {
-  credentials: {
-    authToken: process.env.TELEGRAM_TEST_TOKEN,
-  },
-  webhookEndpoint: '/webhook1234/',
-};
-
-const messengerSettings = {
-  credentials: {
-    verifyToken: process.env.MESSENGER_VERIFY_TOKEN,
-    pageToken: process.env.MESSENGER_PAGE_TOKEN,
-    fbAppSecret: process.env.FACEBOOK_APP_SECRET,
-  },
-  webhookEndpoint: '/webhook1234/',
-};
-
-const botsSettings = [{ telegram: telegramSettings },
-                      { messenger: messengerSettings }];
-
-const botmasterSettings = {
-  botsSettings: botsSettings,
-  app: app,
-}
-
-const botmaster = new Botmaster(botmasterSettings);
-
-botmaster.on('update', (bot, update) => {
-  bot.sendMessage({
-    recipient: {
-      id: update.sender.id,
-    },
-    message: {
-      text: 'Well right back at you!',
-    },
-  });
-});
-
-console.log(`Loading App`);
-// start server on the specified port and binding host
-app.listen(port, '0.0.0.0', () => {
-  // print a message when the server starts listening
-  console.log(`Running App on port: ${port}`);
-});
-```

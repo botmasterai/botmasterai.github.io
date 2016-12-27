@@ -11,6 +11,7 @@ weight: 40
 
 ```js
 const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
 
 const messengerSettings = {
   credentials: {
@@ -21,12 +22,11 @@ const messengerSettings = {
   webhookEndpoint: '/webhook1234',
 };
 
-const botsSettings = [{ messenger: messengerSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
+botmaster.addBot(messengerBot);
 
 botmaster.on('update', (bot, update) => {
-  bot.reply(update, 'Right back at you');
+  bot.reply(update, 'Hello world!');
 });
 ```
 

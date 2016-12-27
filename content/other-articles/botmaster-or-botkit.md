@@ -30,7 +30,7 @@ Botkit's messages are only standardized to some extent. Because Botkit it not op
 
 This means that a Facebook messenger message with an image attachments will look something like this:
 
-```js
+```
 {
   user: <id_of_sender>,
   channel: <id_of_sender>, // also
@@ -50,7 +50,7 @@ This means that a Facebook messenger message with an image attachments will look
 
 While a Twilio IPM message (Twilio IPM only supports text) will look like this:
 
-```js
+```
 { ChannelSid: <some_id>,
   EventType: 'onMessageSent',
   InstanceSid: <some_id>,
@@ -75,7 +75,7 @@ Because of the nature of Twilio and the nature of channels and how they are deal
 Standardization is at the heart of Botmaster. The framework was really created for that purpose. In order to do that, the Facebook Messenger message format was chosen and adopted. This means that when your botmaster object receives an 'update' event from anywhere (twitter, telegram as of this writing), you can be sure that it will be of the same format as a similar message that would come from Messenger.
 Typically, it would look something like this for a message with an image attachment. Independant of what platform the message comes from:
 
-```js
+```
 {
   raw: <platform_specific_raw_update>,
   sender: {

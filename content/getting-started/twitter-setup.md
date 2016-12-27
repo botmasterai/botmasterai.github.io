@@ -9,8 +9,8 @@ weight: 70
 
 
 ```js
-
 const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
 
 const twitterSettings = {
   credentials: {
@@ -21,9 +21,8 @@ const twitterSettings = {
   }
 }
 
-const botsSettings = [{ twitter: twitterSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
+botmaster.addBot(twitterBot);
 
 botmaster.on('update', (bot, update) => {
   bot.reply(update, 'Right back at you');

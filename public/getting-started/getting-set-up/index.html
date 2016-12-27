@@ -405,7 +405,17 @@
               
                   <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#botmastersettings">botmasterSettings</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
     </div>
 </div>
 
@@ -418,34 +428,55 @@
                 <h1>Getting set up</h1>
                 
 
-<p>In order to instantiate a <code>Botmaster</code> object, you need to pass it some settings in the form of an object. These settings look like this.</p>
+
+
+<p>The following will create a <code>botmaster</code> object you will be using in the rest of your code:</p>
+
+<pre><code class="language-js">const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
+</code></pre>
+
+<p>You would then add support for various messaging platforms as follows:</p>
+
+<pre><code class="language-js">const somePlatformBot = new PlatformBot(platformBotSettings);
+botmaster.addBot(somePlatformBot);
+</code></pre>
+
+<p>In practice this would look something like this for, say, Facebook Messenger:</p>
+
+<pre><code class="language-js">const messengerSettings = {
+  credentials: {
+    verifyToken: 'YOUR verifyToken',
+    pageToken: 'YOUR pageToken',
+    fbAppSecret: 'YOUR fbAppSecret',
+  },
+  webhookEndpoint: '/webhook1234', // botmaster will mount this webhook on https://Your_Domain_Name/messenger/webhook1234
+};
+const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
+botmaster.addBot(messengerBot);
+</code></pre>
+
+<p>Where you&rsquo;d typically hold the settings in a <code>config</code> file somewhere.
+In order to instantiate a <code>Botmaster</code> object, you need to pass it some settings in the form of an object. These settings look like this. See the various getting started guides for the different platforms to see both what credentials are required and how to gather them.</p>
+
+<h3 id="botmastersettings">botmasterSettings</h3>
+
+<p>You might want/need to specify the port to start botmaster on, or more generally, the express app that it should be working on (in this case you would have specified your own port separately)</p>
 
 <pre><code class="language-js">const botmasterSettings = {
-  botsSettings: botsSettings, // see below for a definition of botsSettings
-  app: app, // optional, an express app object if you are running your own server
-  server: server, // optional, an http server object (used if using socket.io)
-  port: port, // optional, only used if &quot;app&quot; is not defined. Defaults t0 3000 in that case
-  sessionStore: sessionStore // optional. Define if you will be dealing with sessions
+  app: app, // optional, an express app object if you are running your own express server
+  port: port, // optional, only used if &quot;app&quot; is not defined. Defaults to 3000 in that case
+  botsSettings: botsSettings, // optional see below for a definition of botsSettings [deprecated. Use 'botmaster.addBot()' instead]
+  server: server, // optional, an http server object (used only if using socket.io) [deprecated. add server directly to socketioSettings]
 }
 </code></pre>
 
 <p>See <a href="https://botmasterai.github.io/working-with-botmaster">Working with Botmaster</a> for a more formal definition</p>
 
-<p><code>botsSettings</code> look something like this:</p>
-
-<pre><code class="language-js">const botsSettings = [{ messenger: messengerSettings },
-                      { twitter: twitterSettings },
-                      { twitter: otherTwitterSettings }];
-</code></pre>
-
-<p>I.e. it is an array of single key objects. Where you specify the <strong>type as the key</strong> of each object and the <strong>settings as the value</strong>. Here I show that you can define multiple bots of the same type at once (twitter ones in this example). As you surely guessed, each different platform will expect different credentials. So platform specific settings will differ.</p>
-
-<p>Once you have those <code>botmasterSettings</code>, you can go on and instantiate a <code>Botmaster</code> object. This looks something like this:</p>
+<p>Once you have those <code>botmasterSettings</code>, you would instantiate a <code>Botmaster</code> object as such:</p>
 
 <pre><code class="language-js">const botmaster = new Botmaster(botmasterSettings);
 </code></pre>
-
-<p>Now, I know what you&rsquo;re thinking: &ldquo;but how do I get these <code>messengerSettings</code> and <code>twitterSettings</code> or other ones?&rdquo; Well, I cover all of those in the following pages.</p>
 
 
       

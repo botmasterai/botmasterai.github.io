@@ -449,14 +449,15 @@
 <h4 id="server">Server</h4>
 
 <pre><code class="language-js">const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
 
 const socketioSettings = {
   id: 'SOME_BOT_ID_OF_YOUR_CHOOSING',
+  server: botmaster.server, // this is required for socket.io. You can set it to another node server object if you wish to. But in this example, we will use the one created by botmaster under the hood
 };
 
-const botsSettings = [{ socketio: socketioSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
 
 botmaster.on('update', (bot, update) =&gt; {
   bot.reply(update, 'Right back at you');
@@ -467,7 +468,7 @@ botmaster.on('update', (bot, update) =&gt; {
 
 <pre><code class="language-js">const io = require('socket.io-client');
 
-const socket = io(&quot;ws://localhost:4000&quot;);
+const socket = io('ws://localhost:3000');
 
 socket.on('connect', function() {
   const message = {
@@ -481,9 +482,9 @@ socket.on('connect', function() {
 
 <h2 id="the-botmaster-socket-io-bot">The Botmaster Socket.io bot</h2>
 
-<p>Socket.io is a great library that allows developers to write apps using webSockets (with fallbacks to http long-polling and others when webSockets aren&rsquo;t available in the client). You can read more about it on their own website here: <a href="http://socket.io">http://socket.io</a>.</p>
+<p>Socket.io is a great library that allows developers to write apps using webSockets (with fallbacks to http long-polling and others when webSockets aren&rsquo;t available on the client). You can read more about it on their own website here: <a href="http://socket.io">http://socket.io</a>.</p>
 
-<p>Because you might want to have a bot that not only works on some platform but also on your own webapp/app, support for socket.io was added to the Botmaster core. Although Socket.io enables developers to use their technology in a bunch of different applications, the fact that you want to use it in Botmaster means that you want to handle 1-1 conversations between users and your bot (managed by botmaster).</p>
+<p>Because you might want to have a bot that not only works on some arbitrary platform but also on your own webapp/app, support for socket.io was added to the Botmaster core. Although Socket.io enables developers to use their technology in a bunch of different applications, the fact that you want to use it in Botmaster means that you want to handle 1-1 conversations between users and your bot (managed by botmaster).</p>
 
 <p>If you&rsquo;ve never used both botmaster and socket.io, It&rsquo;s probably still pretty unclear how all of this fits in together. Hopefully the next section will help you understand and get started with this.</p>
 
@@ -498,39 +499,44 @@ We want to make sure botmaster is setup and make sure that messages coming from 
 
 <pre><code class="language-js">const Botmaster = require('botmaster');
 
+const botmaster = new Botmaster();
+
 const socketioSettings = {
-  id: 'SOME_ID_OF_YOUR_CHOOSING',
+  id: 'SOME_BOT_ID_OF_YOUR_CHOOSING',
+  server: botmaster.server,
 };
 
-const botsSettings = [{ socketio: socketioSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
 
 botmaster.on('update', (bot, update) =&gt; {
   bot.reply(update, 'Right back at you');
 });
 </code></pre>
 
-<p>We will need to add a couple of lines to this code because we will be serving a webpage from our server. Not just listening on for botmaster messages. To do so, we take advantage of the fact that botmaster is built on top of express and that. We also assume that we will be serving our static assets (the components of our webpage) from a folder called &lsquo;public&rsquo; within our project directory. Our updated code looks like this:</p>
+<p>We will need to add a couple of lines to this code because we will be serving a webpage from our server. Not just listening on for botmaster messages. To do so, we take advantage of the fact that botmaster is built on top of express and that this app es exposed via <code>botmaster.app</code>. We also assume that we will be serving our static assets (the components of our webpage) from a folder called &lsquo;public&rsquo; within our project directory. Our updated code looks like this:</p>
 
-<pre><code class="language-js">const Botmaster = require('botmaster');
-const express = require('express'); //added
+<pre><code class="language-js">const express = require('express'); //added
+const Botmaster = require('botmaster');
+
+const botmaster = new Botmaster();
+botmaster.app.use(express.static(`${__dirname}/public`)); //added
+
 
 const socketioSettings = {
-  id: 'SOME_ID_OF_YOUR_CHOOSING',
+  id: 'SOME_BOT_ID_OF_YOUR_CHOOSING',
+  server: botmaster.server,
 };
 
-const botsSettings = [{ socketio: socketioSettings }];
-
-const botmaster = new Botmaster({ botsSettings });
-botmaster.app.use(express.static(__dirname + '/public')); //added
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
 
 botmaster.on('update', (bot, update) =&gt; {
   bot.reply(update, 'Right back at you');
 });
 
 botmaster.on('error', (bot, err) =&gt; {
-  console.log(err);
+  console.log(err.stack);
 });
 </code></pre>
 
@@ -635,8 +641,7 @@ form button {
 <p>Finally, in the <code>client_app.js</code> file, you should include the following:</p>
 
 <pre><code class="language-js">// the following line could also be: &quot;var socket = io('ws://&lt;URL&gt;:&lt;PORT_Number&gt;?botmasterUserId=wantedUserId');&quot;
-// if you know you will be communicating with a server different from the one that served you the page you are on
-// do something like this: io('ws://&lt;URL&gt;:&lt;PORT_Number&gt;');
+// if you know you will be communicating with a server different from the one that served you the page you are on.
 // this only works because the socket.io library assumes with this syntax that the socket.io server
 // lives at the same address as the server that served this page (this should mostly be your case)
 var socket = io('?botmasterUserId=wantedUserId');
@@ -656,19 +661,18 @@ form.onsubmit = function(event) {
   // Add the user message to the web page
   messages.insertAdjacentHTML('beforeend',
     `&lt;li class=&quot;user-message&quot;&gt;${textInput.value}&lt;/li&gt;`);
-  // create a botmaster compatible message from the text input by user
+  // create a botmaster compatible message from the text input by the user
   const message = {
     text: textInput.value,
   };
-  // just send a stringified version of it over the webSocket
-  socket.send(JSON.stringify(message));
+  // send the message over the webSocket
+  socket.send(message);
   // finally, clear the user textInput field
   textInput.value = '';
 };
 
 socket.on('message', function(botmasterMessage){
-  var messageObject = JSON.parse(botmasterMessage);
-  var textMessage = messageObject.message.text;
+  var textMessage = botmasterMessage.message.text;
 
   messages.insertAdjacentHTML('beforeend',
     `&lt;li class=&quot;botmaster-message&quot;&gt;${textMessage}&lt;/li&gt;`);
@@ -677,7 +681,7 @@ socket.on('message', function(botmasterMessage){
 
 <p>You should have a read through this code to make sure you understand it as that is the code communicating with our botmaster backend.</p>
 
-<p>On the first line, we call: <code>var socket = io('?botmasterUserId=wantedUserId');</code>. This effectively opens up a socket connection with our backend by making a request to something like this: <code>io('ws://localhost:3000?botmasterUserId=wantedUserId');</code>. Here as you can see, we are setting a query param called <strong>botmasterUserId</strong> to &lsquo;wantedUserId&rsquo;. This is done because we want to make sure that when we are getting updates in our backend, the <code>update.sender.id</code> part will be what we set it to here and not anything else (by default the randomly allocated socket.id value). This is even more important when your users can connect from different clients and you want to make sure the botmaster reply is propagated to all the clients.</p>
+<p>On the first line, we call: <code>var socket = io('?botmasterUserId=wantedUserId');</code>. This effectively opens up a socket connection with our backend by making a request to something like this: <code>io('ws://localhost:3000?botmasterUserId=wantedUserId');</code>. Here as you can see, we are setting a query param called <strong>botmasterUserId</strong> to &ldquo;wantedUserId&rdquo;. This is done because we want to make sure that when we are getting updates in our backend, the <code>update.sender.id</code> part will be what we set it to here and not anything else (by default the randomly allocated socket.id value). This is even more important when your users can connect from different clients and you want to make sure the botmaster reply is propagated to all the clients.</p>
 
 <p>In the <code>form.onsubmit</code> part, we make sure that the text contained in the input cell is correctly formatted then sent to botmaster via the websocket. We also make sure to display it in our page and to then clear the input.</p>
 

@@ -459,7 +459,7 @@
 
 <p>This means that a Facebook messenger message with an image attachments will look something like this:</p>
 
-<pre><code class="language-js">{
+<pre><code>{
   user: &lt;id_of_sender&gt;,
   channel: &lt;id_of_sender&gt;, // also
   timestamp: &lt;unix miliseconds timestamp&gt;,
@@ -478,7 +478,7 @@
 
 <p>While a Twilio IPM message (Twilio IPM only supports text) will look like this:</p>
 
-<pre><code class="language-js">{ ChannelSid: &lt;some_id&gt;,
+<pre><code>{ ChannelSid: &lt;some_id&gt;,
   EventType: 'onMessageSent',
   InstanceSid: &lt;some_id&gt;,
   Attributes: '{}',
@@ -501,7 +501,7 @@
 <p>Standardization is at the heart of Botmaster. The framework was really created for that purpose. In order to do that, the Facebook Messenger message format was chosen and adopted. This means that when your botmaster object receives an &lsquo;update&rsquo; event from anywhere (twitter, telegram as of this writing), you can be sure that it will be of the same format as a similar message that would come from Messenger.
 Typically, it would look something like this for a message with an image attachment. Independant of what platform the message comes from:</p>
 
-<pre><code class="language-js">{
+<pre><code>{
   raw: &lt;platform_specific_raw_update&gt;,
   sender: {
     id: &lt;id_of_sender&gt;
