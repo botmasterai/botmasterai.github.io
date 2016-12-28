@@ -688,11 +688,14 @@ It should not be confused with the <strong>context</strong> variable that your N
 
 <p>With the default mode you can only replace the tag. There are however other modes available that allow you to modify surrounding text.</p>
 
-<p><strong>action.replace</strong>:
-1. <strong>= &lsquo;before&rsquo;</strong> Replace the tag and text before the tag until another tag is reached. In the example above setting <strong>you</strong> to this mode will have the controller control up to <strong>hi how are <you /></strong>.
-2. <strong>= after</strong> Replace the tag and text after the tag until another tag is reached. In the example above setting <strong>after</strong> to this mode will set the controller to control <strong><optional /> hi how are you</strong>.
-3. <strong>= adjacent</strong> Replace the tag and text before and after the tag until other tags are reached. In the example above setting <strong>you</strong> to this mode will set the controller to control <strong>hi how are <you /> today ?</strong>.
-4. <strong>= replaceFunction($, responses)</strong> Under the hood fulfill uses cheerio. You can specify a replace function that receives the cheerio object representing the response and the responses. You should return a plain string that will finally go to sendMessage or downstream outgoing middleware.</p>
+<p><strong>action.replace</strong>:</p>
+
+<ol>
+<li><strong>= &lsquo;before&rsquo;</strong> Replace the tag and text before the tag until another tag is reached. In the example above setting <strong>you</strong> to this mode will have the controller control up to <strong>hi how are <you /></strong>.</li>
+<li><strong>= after</strong> Replace the tag and text after the tag until another tag is reached. In the example above setting <strong>after</strong> to this mode will set the controller to control <strong><optional /> hi how are you</strong>.</li>
+<li><strong>= adjacent</strong> Replace the tag and text before and after the tag until other tags are reached. In the example above setting <strong>you</strong> to this mode will set the controller to control <strong>hi how are <you /> today ?</strong>.</li>
+<li><strong>= replaceFunction($, responses)</strong> Under the hood fulfill uses cheerio. You can specify a replace function that receives the cheerio object representing the response and the responses. You should return a plain string that will finally go to sendMessage or downstream outgoing middleware.</li>
+</ol>
 
 <h1 id="using-botmaster-fulfill">Using botmaster-fulfill</h1>
 

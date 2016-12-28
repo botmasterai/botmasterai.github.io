@@ -204,6 +204,7 @@ Take the following example:
 With the default mode you can only replace the tag. There are however other modes available that allow you to modify surrounding text.
 
 **action.replace**:
+
 1. **= 'before'** Replace the tag and text before the tag until another tag is reached. In the example above setting **you** to this mode will have the controller control up to **hi how are <you />**.
 2. **= after** Replace the tag and text after the tag until another tag is reached. In the example above setting **after** to this mode will set the controller to control **<optional /> hi how are you**.
 3. **= adjacent** Replace the tag and text before and after the tag until other tags are reached. In the example above setting **you** to this mode will set the controller to control **hi how are <you /> today ?**.
