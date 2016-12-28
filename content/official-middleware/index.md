@@ -4,7 +4,7 @@ date: 2016-11-19T17:08:11Z
 icon: <i class="fa fa-plug" aria-hidden="true"></i>
 next: /tutorials
 prev: /working-with-botmaster
-title: Middleware
+title: Official Middleware
 type: index
 weight: 0
 ---

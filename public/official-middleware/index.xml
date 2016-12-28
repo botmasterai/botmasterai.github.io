@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Official-middlewares on Botmaster Documentation</title>
+    <link>https://botmasterai.github.io/official-middleware/index.xml</link>
+    <description>Recent content in Official-middlewares on Botmaster Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>MIT</copyright>
+    <lastBuildDate>Sat, 19 Nov 2016 17:08:11 +0000</lastBuildDate>
+    <atom:link href="https://botmasterai.github.io/official-middleware/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Official Middleware</title>
+      <link>https://botmasterai.github.io/official-middleware/</link>
+      <pubDate>Sat, 19 Nov 2016 17:08:11 +0000</pubDate>
+      
+      <guid>https://botmasterai.github.io/official-middleware/</guid>
+      <description>
+
+&lt;h1 id=&#34;middleware&#34;&gt;Middleware&lt;/h1&gt;
+
+&lt;p&gt;Middleware extends botmaster with additional functionality. Because of their modular nature its great for extending your bots with functionality very quickly.&lt;/p&gt;
+
+&lt;h3 id=&#34;official-botmaster-middleware&#34;&gt;Official botmaster middleware&lt;/h3&gt;
+
+&lt;h2 id=&#34;outgoing&#34;&gt;Outgoing&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;fulfill&#34;&gt;Fulfill&lt;/a&gt; - Declarative markup API and engine to integrate internal or external APIs with botmaster.
+&lt;code&gt;npm i botmaster-fulfill -S&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Fulfill</title>
+      <link>https://botmasterai.github.io/official-middleware/fulfill/</link>
+      <pubDate>Wed, 28 Dec 2016 17:31:40 +0000</pubDate>
+      
+      <guid>https://botmasterai.github.io/official-middleware/fulfill/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;botmaster-fulfill&lt;/strong&gt; provides a text-friendly way to integrate actions with your bot. You supply an object of action-functions that can return synchronously or asynchronously and replace text in the response, generate new responses, or do what the response claims to do, by for example actually placing the users burger order for him using a REST API.&lt;/p&gt;
+
+&lt;!-- TOC depthFrom:1 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#markup-for-your-chatbot&#34;&gt;Markup for your chatbot.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#quick-start&#34;&gt;Quick start&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#how-to-use-the-fulfill-api&#34;&gt;How to use the Fulfill API&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#format-for-the-action-spec&#34;&gt;Format for the action spec&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#more-info-on-params&#34;&gt;More info on params:&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#additional-controller-configuration-options&#34;&gt;Additional controller configuration options&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#using-botmaster-fulfill&#34;&gt;Using botmaster-fulfill&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#additional-middleware-options&#34;&gt;Additional middleware options&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#using-standalone-without-botmaster&#34;&gt;Using standalone without botmaster&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#setup-hint-drag-and-drop-action-modules&#34;&gt;Setup hint - drag and drop action modules&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#debug&#34;&gt;Debug&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- /TOC --&gt;
+
+&lt;h1 id=&#34;markup-for-your-chatbot&#34;&gt;Markup for your chatbot.&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt; Chabot: &amp;quot;Let me see if I can place your order, &amp;lt;pause /&amp;gt; &amp;lt;placeOrder id=12 /&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You just built a chatbot. Its funny, and it says useful stuff. But how do you get it to do something?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;Shaquille O&#39;Neal: Little man, I ordered tomatoes on this Good Burger, and I don&#39;t see no tomatoes!
+
+Ed: Well, hang on... &amp;lt;modifyOrder style=&#39;slap&#39;&amp;gt;Tomatoes&amp;lt;/modifyOrder&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Good Burger, Brian Robbins (1997)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Fulfill makes this easy with declarative markup that is easy to understand for non-technical chat authors and is easy to integrate into your current botmaster stack.&lt;/p&gt;
+
+&lt;p&gt;Available on npm:
+&lt;a href=&#34;https://www.npmjs.com/package/botmaster-fulfill&#34;&gt;https://www.npmjs.com/package/botmaster-fulfill&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;quick-start&#34;&gt;Quick start&lt;/h1&gt;
+
+&lt;p&gt;All you need to get started.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;npm install botmaster-fulfill --save
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const {outgoing} = require(&#39;botmaster-fulfill&#39;);
+const Botmaster = require(&#39;botmaster&#39;);
+const botsSettings = require(&#39;./my-bots-settings&#39;);
+const botmaster = new Botmaster({botsSettings});
+const actions = {
+        hi: {
+            controller: () =&amp;gt; &#39;hi there!&#39;
+        }
+}
+botmaster.use(&#39;outgoing&#39;, outgoing({actions}));
+botmaster.on(&#39;update&#39;, bot =&amp;gt; bot.sendMessage(&#39;&amp;lt;hi /&amp;gt;&#39;));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;botmaster-fulfill extends botmaster with a repertoire of actions that your bots can perform with a declarative and easy to use syntax based on XML. It is a great way to separate business logic (when to do what and where) and functional logic (how to do it).&lt;/p&gt;
+
+&lt;p&gt;When writing the output of your bots all you have to do is write:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;quot;ok &amp;lt;userName /&amp;gt;, im placing your order for you. &amp;lt;placeOrder /&amp;gt; here you go. &amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here &lt;code&gt;&amp;lt;userName /&amp;gt;&lt;/code&gt; could for example mean get a human readable version of the audience&amp;rsquo;s name.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;&amp;lt;placeOrder /&amp;gt;&lt;/code&gt;  does two much more interesting things and demonstrates the power of using markup over a simple field-based JSON payload. First, it sends the rest of the message before the tag (&amp;ldquo;ok bob, I&amp;rsquo;m placing your order for you.&amp;rdquo;) onwards so that the user knows we are placing his order. Second, it starts placing the order and when its done, it sends the text following it, &amp;ldquo;here you go.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;And in order to connect that all you have to do is write in plain js:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const actions = {
+    // for &amp;lt;userName /&amp;gt;
+    userName: {
+        controller: function(params) {
+            // return a promise (using an imaginary getUser method)
+            return getUser(params.context.user)
+                .then( function(result) {
+                    return result.user.name
+                    // if name is &amp;quot;bob&amp;quot; then the text would be
+                    // &amp;quot;ok bob, I&#39;m placing your oder for you.&amp;quot;
+                });
+        }
+    },
+    // for &amp;lt;placeOrder /&amp;gt;
+    placeOrder: {
+        // replace not just the tag, but the text after too
+        replace: &#39;after&#39;,
+        controller: function(params) {
+            placeOrder(params.context.order)
+                .then( function(result) {
+                    // once the order is placed then send the rest of the message
+                    params.sendMessage(params.after)
+                });
+            // remove the tag and the text after it and send the message (&amp;quot;ok bob, I&#39;m placing your order for you.&amp;quot;)
+            return &#39;&#39;;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;how-to-use-the-fulfill-api&#34;&gt;How to use the Fulfill API&lt;/h1&gt;
+
+&lt;p&gt;You use fulfill by specifying an action spec. At a minimum your spec must specify controller as a javascript function that can return either by callback, promise or even synchronously. The action controller receives a params object which it can use as parameters such as the contents of the tag or data about the chat, which is stored in a variable called context. It can update the context and its return value will replace the tag. If the returned value from an action includes another action, this action will also be evaluated.&lt;/p&gt;
+
+&lt;p&gt;Once fulfill has finished evaluating or actions you get back an updated response string and any context passed in has been modified in place.&lt;/p&gt;
+
+&lt;h2 id=&#34;format-for-the-action-spec&#34;&gt;Format for the action spec&lt;/h2&gt;
+
+&lt;p&gt;You should provide an &lt;strong&gt;actions&lt;/strong&gt; object where the key is the name of the xml element that will be matched. The value should specify another object that has the key &lt;strong&gt;controller&lt;/strong&gt; which as a value should have a function that takes &lt;strong&gt;params&lt;/strong&gt; and an optional callback.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;const actions = {
+// sync &amp;lt;burgerImage /&amp;gt; example
+  burgerImage: {
+    controller: function() {
+      return &amp;quot;&amp;lt;img url=&#39;some/complex/static/path/burger.png&#39;&amp;gt;&amp;quot;;
+    }
+  },
+// error first callback &amp;lt;modifyOrder style=&#39;someStyle&#39;&amp;gt;Stuff to order&amp;lt;/modifyOrder&amp;gt;
+  modifyOrder: {
+    controller: function(params, cb) {
+      myOrderAPI.modify(params.context.orderId, params.content, params.attributes.style, function(err) {
+        if (! err) {
+          cb(null, &amp;quot;There, consider yourself tomatoed!&amp;quot;);
+        } else {
+          cb(null, &amp;quot;Sorry I can&#39;t modify your order now. Please check again later&amp;quot;)
+        }
+        });
+    }
+  },
+// promise example
+  hi: {
+    controller: function(params) {
+        return new Promise(function(resolve, reject) {
+          resolve(&amp;quot;hello world&amp;quot;);
+        });
+    }
+  }
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;more-info-on-params&#34;&gt;More info on params:&lt;/h2&gt;
+
+&lt;p&gt;Params argument provides several variables that can control its behavior.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;params.context&lt;/strong&gt;: a reference to the context object which can be updated or read&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;params.content&lt;/strong&gt;: the literal text between the xml element opening and closing&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;params.attributes&lt;/strong&gt;: an object where keys are the name of an attribute against the xml element and the the value is the value of that attribute.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;params.after&lt;/strong&gt;: the text immediately following the tag, up to another tag.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;params.before&lt;/strong&gt;: the text immediately preceding the tag, up to another tag.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;suggested-context-setup&#34;&gt;Suggested context setup:&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;context&lt;/strong&gt; provides a great deal of control and allows you to pass custom dependencies down to your controllers.
+It should not be confused with the &lt;strong&gt;context&lt;/strong&gt; variable that your NLU like IBM Conversations uses.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a good setup for context that will allow your actions a great deal of flexibility:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const context = {
+    chatContext, // specific to your NLU
+    apis // configured APIs connector libraries to call in your actions
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To configure this in your middleware:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;botmaster.use(&#39;outgoing&#39;, outgoing({actions, context}))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;where-did-my-nlu-context-go&#34;&gt;Where did my NLU context go?&lt;/h3&gt;
+
+&lt;p&gt;In botmaster the fulfill context will also have &lt;strong&gt;context.update&lt;/strong&gt; available. To get an NLU&amp;rsquo;s context the update handler or one of the middleware&amp;rsquo;s should have set it in &lt;strong&gt;update&lt;/strong&gt;. So for example your context might be in &lt;strong&gt;context.update.context&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;getting-impatient-emitting-updates-before-fulfill-has-completed&#34;&gt;Getting impatient - emitting updates before fulfill has completed&lt;/h3&gt;
+
+&lt;p&gt;You might want to cascade messages and separate them by one minute pauses. Or you want to let your user know that you are working on it. Whatever your use case, emitting multiple updates is not a problem. In botmaster you will also have available &lt;strong&gt;context.bot.sendMessage&lt;/strong&gt; which you can use to send another template response down the pipeline. This will be processed again by fulfill since fulfill is part of the outgoing middleware stack. This is actually advantageous because this way you can be sure that there are no further actions to fulfill from the emitted message.&lt;/p&gt;
+
+&lt;p&gt;If you are not using botmaster you can achieve the same thing by including in the context an emitter which should set off a handler that calls fulfill.&lt;/p&gt;
+
+&lt;h2 id=&#34;additional-controller-configuration-options&#34;&gt;Additional controller configuration options&lt;/h2&gt;
+
+&lt;p&gt;By default, an action modifies the response text by replacing the xml tag with its response inline. This allows multiple actions in a response to not conflict. Note that this default does not allow you to modify any text surrounding the tag.&lt;/p&gt;
+
+&lt;p&gt;Take the following example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;optional /&amp;gt; hi how are &amp;lt;you /&amp;gt; today?
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With the default mode you can only replace the tag. There are however other modes available that allow you to modify surrounding text.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;action.replace&lt;/strong&gt;:
+1. &lt;strong&gt;= &amp;lsquo;before&amp;rsquo;&lt;/strong&gt; Replace the tag and text before the tag until another tag is reached. In the example above setting &lt;strong&gt;you&lt;/strong&gt; to this mode will have the controller control up to &lt;strong&gt;hi how are &lt;you /&gt;&lt;/strong&gt;.
+2. &lt;strong&gt;= after&lt;/strong&gt; Replace the tag and text after the tag until another tag is reached. In the example above setting &lt;strong&gt;after&lt;/strong&gt; to this mode will set the controller to control &lt;strong&gt;&lt;optional /&gt; hi how are you&lt;/strong&gt;.
+3. &lt;strong&gt;= adjacent&lt;/strong&gt; Replace the tag and text before and after the tag until other tags are reached. In the example above setting &lt;strong&gt;you&lt;/strong&gt; to this mode will set the controller to control &lt;strong&gt;hi how are &lt;you /&gt; today ?&lt;/strong&gt;.
+4. &lt;strong&gt;= replaceFunction($, responses)&lt;/strong&gt; Under the hood fulfill uses cheerio. You can specify a replace function that receives the cheerio object representing the response and the responses. You should return a plain string that will finally go to sendMessage or downstream outgoing middleware.&lt;/p&gt;
+
+&lt;h1 id=&#34;using-botmaster-fulfill&#34;&gt;Using botmaster-fulfill&lt;/h1&gt;
+
+&lt;p&gt;Botmaster-fulfill exports two functions. The first is &lt;strong&gt;fulfill&lt;/strong&gt; and implements the fulfill API. The second &lt;strong&gt;outgoing&lt;/strong&gt; produces botmaster outgoing middleware.&lt;/p&gt;
+
+&lt;p&gt;If you look at the quick start example the necessary steps are:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;require the necessary dependencies (the examples gets the outgoing function through destructuring)&lt;/li&gt;
+&lt;li&gt;connect our bots to botmaster&lt;/li&gt;
+&lt;li&gt;get actions pass as settings object to &lt;strong&gt;outgoing&lt;/strong&gt; function for it to generate our middleware.&lt;/li&gt;
+&lt;li&gt;register the resulting middleware to botmaster outgoing middlware.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;additional-middleware-options&#34;&gt;Additional middleware options&lt;/h2&gt;
+
+&lt;p&gt;All of these settings are optional and have reasonable defaults.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;settings.context&lt;/strong&gt; By default &lt;strong&gt;{bot, update}&lt;/strong&gt; is passed as the context object which is made available to actions. If you want any other variables available in the context assign them as values in the &lt;strong&gt;settings.object&lt;/strong&gt;. &lt;strong&gt;bot&lt;/strong&gt; and &lt;strong&gt;update&lt;/strong&gt; will still be passed into the fulfill context and will overwrite any &lt;strong&gt;bot&lt;/strong&gt; or &lt;strong&gt;update&lt;/strong&gt; in your custom context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;settings.updateToInput&lt;/strong&gt; By default &lt;strong&gt;update.message.text&lt;/strong&gt; is used as the input into response. If this is not acceptable you can define your own function. It will receive an object &lt;strong&gt;{bot, update}&lt;/strong&gt; and expect a string response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;settings.responseToUpdate&lt;/strong&gt; By default &lt;strong&gt;update.message.text&lt;/strong&gt; is replaced with the response from fulfill. It also returns true for sending an update when the response is not empty (&lt;strong&gt;&amp;ldquo;&lt;/strong&gt;). To define your own setter define a function that accepts &lt;strong&gt;update&lt;/strong&gt; and &lt;strong&gt;response&lt;/strong&gt;, modifies the update in place, and returns true or false whether that update should be sent.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;using-standalone-without-botmaster&#34;&gt;Using standalone without botmaster&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;const {fulfill} = require(&#39;botmaster-fulfill&#39;);
+// the input and context would be from your chatbot, but assume they look like this.
+// also assume actions above
+var input = &amp;quot;&amp;lt;hi /&amp;gt;&amp;quot;;
+var context = {};
+fulfill(actions, context, input, function(err, response)  {
+    // response =  &#39;hello world!&#39;
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;setup-hint-drag-and-drop-action-modules&#34;&gt;Setup hint - drag and drop action modules&lt;/h1&gt;
+
+&lt;p&gt;You can drag and drop actions by requiring from an actions folder where you setup your middleware:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const actions = require(&#39;./actions&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In your your actions directory then need to include an index.js:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const fs = require(&amp;quot;fs&amp;quot;);
+const path = require(&amp;quot;path&amp;quot;);
+
+fs.readdirSync(__dirname).forEach(function (file) {
+    if (file.endsWith(&amp;quot;.js&amp;quot;) &amp;amp;&amp;amp; file !== &amp;quot;index.js&amp;quot;)
+        exports[file.substr(0, file.length - 3)] = require(&amp;quot;./&amp;quot; + file);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Each action module should export an object that specifies a controller.&lt;/p&gt;
+
+&lt;h1 id=&#34;debug&#34;&gt;Debug&lt;/h1&gt;
+
+&lt;p&gt;You can enable debug mode by setting &lt;code&gt;DEBUG = botmaster:fulfill:*&lt;/code&gt; in your environment.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

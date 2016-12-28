@@ -18,7 +18,7 @@ googleAnalytics = ""
 	menu = [ "home",
 					 "getting-started",
 					 "working-with-botmaster",
-                     "middleware",
+                     "official-middleware",
 					 "tutorials",
 					 "other-articles",
 					 "changelog"]
