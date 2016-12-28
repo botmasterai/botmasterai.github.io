@@ -76,9 +76,9 @@ When writing the output of your bots all you have to do is write:
 "ok <userName />, im placing your order for you. <placeOrder /> here you go. "
 ```
 
-Here `<userName />` could for example mean get a human readable version of the audience's name.
+Here **userName** could for example mean get a human readable version of the audience's name.
 
-`<placeOrder />`  does two much more interesting things and demonstrates the power of using markup over a simple field-based JSON payload. First, it sends the rest of the message before the tag ("ok bob, I'm placing your order for you.") onwards so that the user knows we are placing his order. Second, it starts placing the order and when its done, it sends the text following it, "here you go."
+**placeOrder**  does two much more interesting things and demonstrates the power of using markup over a simple field-based JSON payload. First, it sends the rest of the message before the tag ("ok bob, I'm placing your order for you.") onwards so that the user knows we are placing his order. Second, it starts placing the order and when its done, it sends the text following it, "here you go."
 
 And in order to connect that all you have to do is write in plain js:
 ```js
