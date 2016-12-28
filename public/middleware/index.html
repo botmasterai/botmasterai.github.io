@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="https://botmasterai.github.io/images/favicon.ico" type="image/x-icon" />
 
     
-    <title>Getting set up</title>
+    <title>Middleware</title>
     <link href="https://botmasterai.github.io//css/nucleus.css" rel="stylesheet">
     <link href="https://botmasterai.github.io//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://botmasterai.github.io//css/hybrid.css" rel="stylesheet">
@@ -25,7 +25,7 @@
     <link href="https://botmasterai.github.io/css/botmaster_style.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/getting-started/getting-set-up/">
+  <body class="" data-url="/middleware/">
     <nav id="sidebar">
   <div id="header-wrapper">
     <div id="header">
@@ -118,7 +118,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/getting-started/">
+      <li class="dd-item  " data-nav-id="/getting-started/">
         <a href="https://botmasterai.github.io/getting-started/">
           <span>
             
@@ -150,7 +150,7 @@
           
           
           
-            <li class="dd-item active" data-nav-id="/getting-started/getting-set-up/">
+            <li class="dd-item " data-nav-id="/getting-started/getting-set-up/">
               <a href="https://botmasterai.github.io/getting-started/getting-set-up/">
                 <span>Getting set up     </i></span>
               </a>
@@ -262,7 +262,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/middleware/">
+      <li class="dd-item active parent" data-nav-id="/middleware/">
         <a href="https://botmasterai.github.io/middleware/">
           <span>
             
@@ -404,7 +404,7 @@
                 
                 
               <div id="top-github-link">
-                  <a class="github-link" href="https://github.com/botmasterai/botmasterai.github.io/tree/hugo-code/content/getting-started/getting-set-up.md" target="blank">
+                  <a class="github-link" href="https://github.com/botmasterai/botmasterai.github.io/tree/hugo-code/content/middleware/index.md" target="blank">
                     <i class="fa fa-code-fork"></i>
                     Edit this page
                   </a>
@@ -418,18 +418,9 @@
                       </a>
                   </span>
                 
-                <span id="toc-menu"><a href=""><i class="fa fa-list-alt"></i></a></span>
                 
                 
                 
-                
-                  
-                
-                  
-                    
-                    
-                <a href="https://botmasterai.github.io/getting-started/" itemprop="url"><span itemprop="title">Getting started</span></a> <i class="fa fa-angle-right"></i>
-                    
                   
                 
                   
@@ -442,92 +433,44 @@
                 
                   
                 
-                <span itemprop="title"> Getting set up</span>
+                  
+                
+                <span itemprop="title"> Middleware</span>
               </div>
-              
-                  <div class="progress">
-    <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#botmastersettings">botmasterSettings</a></li>
-</ul></li>
-</ul></li>
-</ul>
-</nav>
-    </div>
-</div>
-
               
 
             </div>
             
+              <div id="chapter">
+            
     	        <div id="body-inner">
                 
-                <h1>Getting set up</h1>
-                
 
 
 
-<p>The following will create a <code>botmaster</code> object you will be using in the rest of your code:</p>
+<h1 id="middleware">Middleware</h1>
 
-<pre><code class="language-js">const Botmaster = require('botmaster');
-const botmaster = new Botmaster();
-</code></pre>
+<p>Middleware extends botmaster with additional functionality. Because of their modular nature its great for extending your bots with functionality very quickly.</p>
 
-<p>You would then add support for various messaging platforms as follows:</p>
+<h3 id="official-botmaster-middleware">Official botmaster middleware</h3>
 
-<pre><code class="language-js">const somePlatformBot = new PlatformBot(platformBotSettings);
-botmaster.addBot(somePlatformBot);
-</code></pre>
+<h2 id="outgoing">Outgoing</h2>
 
-<p>In practice this would look something like this for, say, Facebook Messenger:</p>
-
-<pre><code class="language-js">const messengerSettings = {
-  credentials: {
-    verifyToken: 'YOUR verifyToken',
-    pageToken: 'YOUR pageToken',
-    fbAppSecret: 'YOUR fbAppSecret',
-  },
-  webhookEndpoint: '/webhook1234', // botmaster will mount this webhook on https://Your_Domain_Name/messenger/webhook1234
-};
-const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
-botmaster.addBot(messengerBot);
-</code></pre>
-
-<p>Where you&rsquo;d typically hold the settings in a <code>config</code> file somewhere.
-In order to instantiate a <code>Botmaster</code> object, you need to pass it some settings in the form of an object. These settings look like this. See the various getting started guides for the different platforms to see both what credentials are required and how to gather them.</p>
-
-<h3 id="botmastersettings">botmasterSettings</h3>
-
-<p>You might want/need to specify the port to start botmaster on, or more generally, the express app that it should be working on (in this case you would have specified your own port separately)</p>
-
-<pre><code class="language-js">const botmasterSettings = {
-  app: app, // optional, an express app object if you are running your own express server
-  port: port, // optional, only used if &quot;app&quot; is not defined. Defaults to 3000 in that case
-  botsSettings: botsSettings, // optional see below for a definition of botsSettings [deprecated. Use 'botmaster.addBot()' instead]
-  server: server, // optional, an http server object (used only if using socket.io) [deprecated. add server directly to socketioSettings]
-}
-</code></pre>
-
-<p>See <a href="https://botmasterai.github.io/working-with-botmaster">Working with Botmaster</a> for a more formal definition</p>
-
-<p>Once you have those <code>botmasterSettings</code>, you would instantiate a <code>Botmaster</code> object as such:</p>
-
-<pre><code class="language-js">const botmaster = new Botmaster(botmasterSettings);
-</code></pre>
+<ol>
+<li><a href="fulfill">Fulfill</a> - Declarative markup API and engine to integrate internal or external APIs with botmaster.
+<code>npm i botmaster-fulfill -S</code></li>
+</ol>
 
 
+      
+        </div> 
       
       </div>
     </div>
 
     <div id="navigation">
-        <a class="nav nav-prev" href="https://botmasterai.github.io/getting-started/quickstart"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="https://botmasterai.github.io/getting-started/messenger-setup" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="https://botmasterai.github.io/working-with-botmaster"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="https://botmasterai.github.io/tutorials" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>
