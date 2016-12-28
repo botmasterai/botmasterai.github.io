@@ -250,11 +250,14 @@ It should not be confused with the &lt;strong&gt;context&lt;/strong&gt; variable
 
 &lt;p&gt;With the default mode you can only replace the tag. There are however other modes available that allow you to modify surrounding text.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;action.replace&lt;/strong&gt;:
-1. &lt;strong&gt;= &amp;lsquo;before&amp;rsquo;&lt;/strong&gt; Replace the tag and text before the tag until another tag is reached. In the example above setting &lt;strong&gt;you&lt;/strong&gt; to this mode will have the controller control up to &lt;strong&gt;hi how are &lt;you /&gt;&lt;/strong&gt;.
-2. &lt;strong&gt;= after&lt;/strong&gt; Replace the tag and text after the tag until another tag is reached. In the example above setting &lt;strong&gt;after&lt;/strong&gt; to this mode will set the controller to control &lt;strong&gt;&lt;optional /&gt; hi how are you&lt;/strong&gt;.
-3. &lt;strong&gt;= adjacent&lt;/strong&gt; Replace the tag and text before and after the tag until other tags are reached. In the example above setting &lt;strong&gt;you&lt;/strong&gt; to this mode will set the controller to control &lt;strong&gt;hi how are &lt;you /&gt; today ?&lt;/strong&gt;.
-4. &lt;strong&gt;= replaceFunction($, responses)&lt;/strong&gt; Under the hood fulfill uses cheerio. You can specify a replace function that receives the cheerio object representing the response and the responses. You should return a plain string that will finally go to sendMessage or downstream outgoing middleware.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;action.replace&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;= &amp;lsquo;before&amp;rsquo;&lt;/strong&gt; Replace the tag and text before the tag until another tag is reached. In the example above setting &lt;strong&gt;you&lt;/strong&gt; to this mode will have the controller control up to &lt;strong&gt;hi how are &lt;you /&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;= after&lt;/strong&gt; Replace the tag and text after the tag until another tag is reached. In the example above setting &lt;strong&gt;after&lt;/strong&gt; to this mode will set the controller to control &lt;strong&gt;&lt;optional /&gt; hi how are you&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;= adjacent&lt;/strong&gt; Replace the tag and text before and after the tag until other tags are reached. In the example above setting &lt;strong&gt;you&lt;/strong&gt; to this mode will set the controller to control &lt;strong&gt;hi how are &lt;you /&gt; today ?&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;= replaceFunction($, responses)&lt;/strong&gt; Under the hood fulfill uses cheerio. You can specify a replace function that receives the cheerio object representing the response and the responses. You should return a plain string that will finally go to sendMessage or downstream outgoing middleware.&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h1 id=&#34;using-botmaster-fulfill&#34;&gt;Using botmaster-fulfill&lt;/h1&gt;
 
