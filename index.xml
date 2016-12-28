@@ -42,10 +42,10 @@
     
     <item>
       <title>Fulfill</title>
-      <link>https://botmasterai.github.io/middleware/fulfill/</link>
+      <link>https://botmasterai.github.io/official-middleware/fulfill/</link>
       <pubDate>Wed, 28 Dec 2016 17:31:40 +0000</pubDate>
       
-      <guid>https://botmasterai.github.io/middleware/fulfill/</guid>
+      <guid>https://botmasterai.github.io/official-middleware/fulfill/</guid>
       <description>
 
 &lt;p&gt;&lt;strong&gt;botmaster-fulfill&lt;/strong&gt; provides a text-friendly way to integrate actions with your bot. You supply an object of action-functions that can return synchronously or asynchronously and replace text in the response, generate new responses, or do what the response claims to do, by for example actually placing the users burger order for him using a REST API.&lt;/p&gt;
@@ -123,9 +123,9 @@ botmaster.on(&#39;update&#39;, bot =&amp;gt; bot.sendMessage(&#39;&amp;lt;hi /&a
 &lt;pre&gt;&lt;code&gt;&amp;quot;ok &amp;lt;userName /&amp;gt;, im placing your order for you. &amp;lt;placeOrder /&amp;gt; here you go. &amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Here &lt;strong&gt;&lt;userName /&gt;&lt;/strong&gt; could for example mean get a human readable version of the audience&amp;rsquo;s name.&lt;/p&gt;
+&lt;p&gt;Here &lt;code&gt;&amp;lt;userName /&amp;gt;&lt;/code&gt; could for example mean get a human readable version of the audience&amp;rsquo;s name.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;&lt;placeOrder /&gt;&lt;/strong&gt;  does two much more interesting things and demonstrates the power of using markup over a simple field-based JSON payload. First, it sends the rest of the message before the tag (&amp;ldquo;ok bob, I&amp;rsquo;m placing your order for you.&amp;rdquo;) onwards so that the user knows we are placing his order. Second, it starts placing the order and when its done, it sends the text following it, &amp;ldquo;here you go.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;placeOrder /&amp;gt;&lt;/code&gt;  does two much more interesting things and demonstrates the power of using markup over a simple field-based JSON payload. First, it sends the rest of the message before the tag (&amp;ldquo;ok bob, I&amp;rsquo;m placing your order for you.&amp;rdquo;) onwards so that the user knows we are placing his order. Second, it starts placing the order and when its done, it sends the text following it, &amp;ldquo;here you go.&amp;rdquo;&lt;/p&gt;
 
 &lt;p&gt;And in order to connect that all you have to do is write in plain js:&lt;/p&gt;
 
