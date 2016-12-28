@@ -561,9 +561,9 @@ botmaster.on('update', bot =&gt; bot.sendMessage('&lt;hi /&gt;'));
 <pre><code>&quot;ok &lt;userName /&gt;, im placing your order for you. &lt;placeOrder /&gt; here you go. &quot;
 </code></pre>
 
-<p>Here <code>&lt;userName /&gt;</code> could for example mean get a human readable version of the audience&rsquo;s name.</p>
+<p>Here <strong>userName</strong> could for example mean get a human readable version of the audience&rsquo;s name.</p>
 
-<p><code>&lt;placeOrder /&gt;</code>  does two much more interesting things and demonstrates the power of using markup over a simple field-based JSON payload. First, it sends the rest of the message before the tag (&ldquo;ok bob, I&rsquo;m placing your order for you.&rdquo;) onwards so that the user knows we are placing his order. Second, it starts placing the order and when its done, it sends the text following it, &ldquo;here you go.&rdquo;</p>
+<p><strong>placeOrder</strong>  does two much more interesting things and demonstrates the power of using markup over a simple field-based JSON payload. First, it sends the rest of the message before the tag (&ldquo;ok bob, I&rsquo;m placing your order for you.&rdquo;) onwards so that the user knows we are placing his order. Second, it starts placing the order and when its done, it sends the text following it, &ldquo;here you go.&rdquo;</p>
 
 <p>And in order to connect that all you have to do is write in plain js:</p>
 
