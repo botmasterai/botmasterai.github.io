@@ -451,7 +451,6 @@
 <ul>
 <li>
 <ul>
-<li><a href="#code">Code</a></li>
 <li><a href="#the-botmaster-slack-bot">The Botmaster Slack bot</a></li>
 <li><a href="#botmaster-slack-bot-mini-tutorial">Botmaster Slack bot mini-tutorial</a>
 <ul>
@@ -486,29 +485,6 @@
                 
 
 
-
-<h2 id="code">Code</h2>
-
-<pre><code class="language-js">const Botmaster = require('botmaster');
-const botmaster = new Botmaster();
-
-const slackSettings = {
-  credentials: {
-    clientId: 'YOUR app client ID',
-    clientSecret: 'YOUR app client secret',
-    verificationToken: 'YOUR app verification Token'
-  },
-  webhookEndpoint: '/webhookd24sr34se',
-  storeTeamInfoInFile: true,
-};
-
-const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
-botmaster.addBot(slackBot);
-
-botmaster.on('update', (bot, update) =&gt; {
-  bot.reply(update, 'Hello world!');
-});
-</code></pre>
 
 <h2 id="the-botmaster-slack-bot">The Botmaster Slack bot</h2>
 
@@ -560,7 +536,30 @@ This URL has to be of the form: <strong>https://&lt;your_base_url&gt;/slack/&lt;
 
 <h4 id="start-your-botmaster-app-locally">Start your Botmaster App Locally</h4>
 
-<p>Start your botmaster app in any project folder you might want (see <a href="https://botmasterai.github.io/getting-started/installation">here</a> if you haven&rsquo;t installed botmaster yet). To start the botmaster project, you&rsquo;ll want to create an <code>app.js</code> file with the contents from the <a href="http://localhost:1313/getting-started/slack-setup/#code">code</a> at the top of this page in the root of your project folder. Replace the credentials with the ones you have gathered. Run <code>node app.js</code> to start the app. Let&rsquo;s now expose out bot to the world.</p>
+<p>Start your botmaster app in any project folder you might want (see <a href="https://botmasterai.github.io/getting-started/installation">here</a> if you haven&rsquo;t installed botmaster yet). To start the botmaster project, you&rsquo;ll want to create an <code>app.js</code> file with the following contents:</p>
+
+<pre><code class="language-js">const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
+
+const slackSettings = {
+  credentials: {
+    clientId: 'YOUR app client ID',
+    clientSecret: 'YOUR app client secret',
+    verificationToken: 'YOUR app verification Token'
+  },
+  webhookEndpoint: '/webhookd24sr34se',
+  storeTeamInfoInFile: true,
+};
+
+const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
+botmaster.addBot(slackBot);
+
+botmaster.on('update', (bot, update) =&gt; {
+  bot.reply(update, 'Hello world!');
+});
+</code></pre>
+
+<p>and place it at the root of your project folder. Replace the credentials with the ones you have gathered. Run <code>node app.js</code> to start the app. Let&rsquo;s now expose our bot to the world.</p>
 
 <p>For the webhook to work locally, you&rsquo;ll now need to make sure you&rsquo;ve started localtunnel. If you are doing all of that from a server that already has a Domain Name, you won&rsquo;t need to do this. But I am assuming most people are doing this from their local computer. so in the command line, run something like this:</p>
 
