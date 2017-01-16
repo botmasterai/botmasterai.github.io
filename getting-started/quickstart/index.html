@@ -3,23 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.18" />
+    <meta name="generator" content="Hugo 0.17" />
     <meta name="description" content="The Bot framework for your serious projects">
 <meta name="author" content="JD Wuarin">
 
     <link rel="shortcut icon" href="https://botmasterai.github.io/images/favicon.ico" type="image/x-icon" />
 
     
-    <title>Quickstart</title>
-    <link href="https://botmasterai.github.io//css/nucleus.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/hybrid.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/featherlight.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/perfect-scrollbar.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/horsey.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/theme.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/hugo-theme.css" rel="stylesheet">
-    <script src="https://botmasterai.github.io//js/jquery-2.x.min.js"></script>
+    <title>Quickstart/mini-tutorial</title>
+    <link href="https://botmasterai.github.io/css/nucleus.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/hybrid.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/featherlight.min.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/horsey.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/theme.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/hugo-theme.css" rel="stylesheet">
+    <script src="https://botmasterai.github.io/js/jquery-2.x.min.js"></script>
     <style type="text/css">:root #header + #content > #left > #rlblock_left
     {display:none !important;}</style>
     <link href="https://botmasterai.github.io/css/botmaster_style.css" rel="stylesheet">
@@ -40,12 +40,12 @@
     <input id="search-by" type="text" placeholder="Search">
     <span data-search-clear=""><i class="fa fa-close"></i></span>
 </div>
-<script type="text/javascript" src="https://botmasterai.github.io//js/lunr.min.js"></script>
-<script type="text/javascript" src="https://botmasterai.github.io//js/horsey.js"></script>
+<script type="text/javascript" src="https://botmasterai.github.io/js/lunr.min.js"></script>
+<script type="text/javascript" src="https://botmasterai.github.io/js/horsey.js"></script>
 <script type="text/javascript">
     var baseurl = "https:\/\/botmasterai.github.io\/";
 </script>
-<script type="text/javascript" src="https://botmasterai.github.io//js/search.js"></script>
+<script type="text/javascript" src="https://botmasterai.github.io/js/search.js"></script>
 
     
 </div>
@@ -144,7 +144,7 @@
           
             <li class="dd-item active" data-nav-id="/getting-started/quickstart/">
               <a href="https://botmasterai.github.io/getting-started/quickstart/">
-                <span>Quickstart     </i></span>
+                <span>Quickstart/mini-tutorial     </i></span>
               </a>
             </li>
           
@@ -442,12 +442,22 @@
                 
                   
                 
-                <span itemprop="title"> Quickstart</span>
+                <span itemprop="title"> Quickstart/mini-tutorial</span>
               </div>
               
                   <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#step-1-setup">Step 1: Setup</a></li>
+<li><a href="#step-2-listening-to-events">Step 2: listening to events</a></li>
+<li><a href="#step-3-sending-replies">Step 3: sending replies</a></li>
+<li><a href="#closing-comments">Closing Comments</a></li>
+</ul></li>
+</ul>
+</nav>
     </div>
 </div>
 
@@ -457,25 +467,48 @@
             
     	        <div id="body-inner">
                 
-                <h1>Quickstart</h1>
+                <h1>Quickstart/mini-tutorial</h1>
                 
 
-<p>If you already know your credentials for the platforms you want to be supporting in your project the following code will help you get started</p>
 
-<pre><code class="language-js">
-// settings stuff
-const Botmaster = require('botmaster');
 
-const botmasterSettings = {
-  // by default botmaster will start an express server that listens on port 3000
-  // you can pass in a port argument here to change this default setting:
-  port: 3001,
-}
+<p>In this quickstart tutorial, you&rsquo;ll learn how to quickly get a simple Botmaster project up and running.
+The bot will work on both the Facebook Messenger and Twitter (DMs) platforms. Support for other platforms can be added
+very easily as will be described later.</p>
 
-const botmaster = new Botmaster(botmasterSettings);
+<p>Because we only want to get acquainted with Botmaster, we&rsquo;ll build a very naive and simple bot that doesn&rsquo;t really do much. i.e. with no support for natural language processing, conversational flows etc&hellip; We just want to expose how botmaster works here.</p>
 
-// you would typically hold this information in a &quot;config&quot; file.
-// or use environment variables
+<p>It&rsquo;ll look something like this on Facebook Messenger:</p>
+
+<p><img src="https://botmasterai.github.io/images/quickstart_1.png?width=50%" alt="Quickstart 1" /></p>
+
+<p>And like this on Twitter (DMs):</p>
+
+<p><img src="https://botmasterai.github.io/images/quickstart_2.png?width=50%" alt="Quickstart 2" /></p>
+
+<p>This mini-tutorial assumes that you have already installed botmaster as documented in the installation guide: <a href="https://botmasterai.github.io/getting-started/installation">here</a>.</p>
+
+<h2 id="step-1-setup">Step 1: Setup</h2>
+
+<p>In the folder in which you installed botmaster, create an <code>app.js</code> file and put the following lines in it:</p>
+
+<pre><code class="language-js">const Botmaster = require('botmaster');
+
+const botmaster = new Botmaster();
+</code></pre>
+
+<p>Nothing special is going on here. We&rsquo;re just requiring the Botmaster class (exposed via the botmaster package) and creating a new instance of Botmaster.</p>
+
+<p>Now, in order for Botmaster to manage out bots, we obviously need to create at least one bot. We&rsquo;ll go on and create couple. One Facebook Messenger bot and one Twitter DM bot.</p>
+
+<div class="notices info" ><p>To complete the following steps, you will need to gather valid credentials for the platforms you want to use. Read the following small guides for Facebook Messenger and Twitter DMs if you don&rsquo;t have credentials for these platforms yet:
+<a href="https://botmasterai.github.io/getting-started/messenger-setup">messenger</a>, <a href="https://botmasterai.github.io/getting-started/twitter-setup">twitter</a>. Other guides are also available in this getting-started section.</p>
+</div>
+
+
+<pre><code class="language-js">const MessengerBot = Botmaster.botTypes.MessengerBot;
+const TwitterBot = Botmaster.botTypes.TwitterBot;
+
 const messengerSettings = {
   credentials: {
     verifyToken: 'YOUR verifyToken',
@@ -494,53 +527,76 @@ const twitterSettings = {
   }
 }
 
-const telegramSettings = {
-  credentials: {
-    authToken: 'YOUR authToken',
-  },
-  webhookEndpoint: '/webhook1234/',
-};
+const messengerBot = new MessengerBot(messengerSettings);
+const twitterBot = new TwitterBot(twitterSettings);
+</code></pre>
 
-const slackSettings = {
-  credentials: {
-    clientId: 'YOUR app client ID',
-    clientSecret: 'YOUR app client secret',
-    verificationToken: 'YOUR app verification Token',
-    landingPageURL: 'YOUR landing page URL' // users will be redirected there after adding your bot app to slack. If not set, they will be redirected to their standard slack chats.
-  },
-  webhookEndpoint: '/webhook',
-  storeTeamInfoInFile: true,
-};
+<p>There seems to be quite a bit going on here. Let&rsquo;s look at it all line by line:</p>
 
-const socketioSettings = {
-  id: 'SOME_ID_OF_YOUR_CHOOSING',
-};
+<p>On the first two lines we get the <code>MessengerBot</code> and <code>TwitterBot</code> classes exposed via Botmaster. The Botmaster package comes bundled in with 5 bot classes so that you can get started straight away. They are all exposed via: <code>Botmaster.botTypes</code>, where <code>Botmaster</code> is gotten via <code>const Botmaster = require('botmaster');</code></p>
 
-// instantiate new objects of the various bot classes bundled in with
-// the botmaster package. Other bot class packages can be installed or
-// built.
-const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
-const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
-const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings));
-const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
-const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+<p>Next, settings objets for both platforms are created: namely the <code>messengerSettings</code> and <code>twitterSettings</code> objects. To see how to gather the necessary credentials, have a look at these small guides: <a href="https://botmasterai.github.io/getting-started/messenger-setup">messenger</a>, <a href="https://botmasterai.github.io/getting-started/twitter-setup">twitter</a>.</p>
 
-botmaster.addBot(messengerBot);
-botmaster.addBot(slackBot);
-botmaster.addBot(socketioBot);
+<p>In the <code>messengerSettings</code> object, the <code>webhookEndpoint</code> parameter simply indicates to Botmaster what endpoint we want the Facebook Messenger messages to come into. I.e. if you host your Botmaster app on, say, &ldquo;<a href="http://somebotmasterapp.com&quot;">http://somebotmasterapp.com&quot;</a>, Messages coming in from Facebook Messenger will hit: &ldquo;<a href="http://somebotmasterapp.com/messenger/webhook1234&quot;">http://somebotmasterapp.com/messenger/webhook1234&quot;</a>. This works because Botmaster is built on top of express.js. Read more about webhooks and how to make them work locally <a href="https://botmasterai.github.io/getting-started/webhooks">here</a>.</p>
+
+<p>As it stands, these bot objects don&rsquo;t really have much to do with our previously create botmaster one. We want to be able to manage them from the botmaster obejct. So we will now add (or mount) these newly created bot objects onto the botmaster object we created previously. So right after these few lines, enter the following:</p>
+
+<pre><code class="language-js">botmaster.addBot(messengerBot);
 botmaster.addBot(twitterBot);
-botmaster.addBot(telegramBot);
+</code></pre>
 
-// actual code
-botmaster.on('update', (bot, update) =&gt; {
-  bot.sendTextMessageTo('Right back at you!', update.sender.id);
-});
+<p>These lines simply indicate to botmaster that it should be notified of all activity going on within our two bot objects. But still, botmaster doesn&rsquo;t actually do anything yet. let&rsquo;s change this!</p>
 
-botmaster.on('error', (bot, err) =&gt; {
-  console.log(err.stack);
-  console.log('there was an error');
+<h2 id="step-2-listening-to-events">Step 2: listening to events</h2>
+
+<p>In order for botmaster to be notified of any activity going on (i.e. users sending messages to your bots), we&rsquo;ll need to listen to the &lsquo;update&rsquo; event that fires whenever a user sends a message to one of our bots. It looks like this:</p>
+
+<pre><code class="language-js">botmaster.on('update', (bot, update) =&gt; {
+  console.log(update, null, 2);
 });
 </code></pre>
+
+<div class="notices warning" ><p>You should ever only have one <code>.on('update',...)</code> listener by botmaster app, as events are asynchronous in nature and having multiple ones will result in unforeseen occurrences.</p>
+</div>
+
+
+<p>At this point, whenever a message (or update in Botmaster semantic) is received by any of your bots, you will be printing to the console the received message. You&rsquo;ll also note that the callback function has a <code>bot</code> object associated with it. This object will be either of <code>messengerBot</code> or <code>twitterBot</code> in this example depending on what bot actually received the update</p>
+
+<p>This is great. But what if I want to send something back to the user. Well, let&rsquo;s have a look.</p>
+
+<h2 id="step-3-sending-replies">Step 3: sending replies</h2>
+
+<p>The easiest thing to do to have a bot that answers you is the following; replace the Step 2 code with this:</p>
+
+<pre><code class="language-js">botmaster.on('update', (bot, update) =&gt; {
+  bot.reply(update, 'Hello World!');
+});
+</code></pre>
+
+<p>This really doesn&rsquo;t do much however. Let&rsquo;s try to get to something like what we saw in the pictures at the beginning of this tutorial. Let&rsquo;s replace this code with this:</p>
+
+<pre><code class="language-js">botmaster.on('update', (bot, update) =&gt; {
+  if (update.message.text === 'hi' ||
+      update.message.text === 'Hi' ||
+      update.message.text === 'hello' ||
+      update.message.text === 'Hello') {
+    bot.reply(update, 'well hi right back at you');
+  } else if (update.message.text.indexOf('weather') &gt; -1) {
+    bot.sendTextMessageTo('It is currently sunny in Philadelphia', update.sender.id);
+  } else {
+    const messages = ['I\'m sorry about this.',
+                      'But it seems like I couldn\'t understand your message.',
+                      'Could you try reformulating it?']
+    bot.sendTextCascadeTo(messages, update.sender.id)
+  }
+});
+</code></pre>
+
+<p>What&rsquo;s going on here is really fairly straightforward. The point of this code is really to expose to you the different ways there are to send messages in botmaster. In the first conditional block, I look to see if the text from the platform says something like &ldquo;hello&rdquo;, if so, answer that way using the <code>reply</code> helper function. However, if the message contains the word &ldquo;weather&rdquo;, we reply using the <code>sendTextMessageTo</code> helper function. In any other situation, we reply in a cascade of text messages using the <code>sendTextCascadeTo</code> helper function to send multiple text messages one after the other. If you want to see all the available send helper functions available to you in Botmaster, check it out <a href="https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#outgoing-messages">here</a>.</p>
+
+<h2 id="closing-comments">Closing Comments</h2>
+
+<p>Now as mentioned at the beginning of this tutorial, this bot is not a very good or helpful bot. It&rsquo;s quite dumb and doesn&rsquo;t even leverage a lot of the Botmaster goodies like <a href="https://botmasterai.github.io/working-with-botmaster/middleware">middlewares</a>, using <a href="https://botmasterai.github.io/getting-started/socketio-setup">socket.io</a> to have a bot on your own website. Or adding support for a different bot class as mentioned <a href="https://botmasterai.github.io/working-with-botmaster/writing-your-own-bot-class/">here</a></p>
 
 
       
@@ -556,17 +612,17 @@ botmaster.on('error', (bot, err) =&gt; {
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="https://botmasterai.github.io//js/clipboard.min.js"></script>
-    <script src="https://botmasterai.github.io//js/perfect-scrollbar.min.js"></script>
-    <script src="https://botmasterai.github.io//js/perfect-scrollbar.jquery.min.js"></script>
-    <script src="https://botmasterai.github.io//js/jquery.sticky-kit.min.js"></script>
-    <script src="https://botmasterai.github.io//js/featherlight.min.js"></script>
-    <script src="https://botmasterai.github.io//js/html5shiv-printshiv.min.js"></script>
-    <script src="https://botmasterai.github.io//js/highlight.pack.js"></script>
+    <script src="https://botmasterai.github.io/js/clipboard.min.js"></script>
+    <script src="https://botmasterai.github.io/js/perfect-scrollbar.min.js"></script>
+    <script src="https://botmasterai.github.io/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="https://botmasterai.github.io/js/jquery.sticky-kit.min.js"></script>
+    <script src="https://botmasterai.github.io/js/featherlight.min.js"></script>
+    <script src="https://botmasterai.github.io/js/html5shiv-printshiv.min.js"></script>
+    <script src="https://botmasterai.github.io/js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="https://botmasterai.github.io//js/modernizr.custom.71422.js"></script>
-    <script src="https://botmasterai.github.io//js/learn.js"></script>
-    <script src="https://botmasterai.github.io//js/hugo-learn.js"></script>
+    <script src="https://botmasterai.github.io/js/modernizr.custom.71422.js"></script>
+    <script src="https://botmasterai.github.io/js/learn.js"></script>
+    <script src="https://botmasterai.github.io/js/hugo-learn.js"></script>
     
 
   </body>
