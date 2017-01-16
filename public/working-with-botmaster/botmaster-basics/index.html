@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.18" />
+    <meta name="generator" content="Hugo 0.17" />
     <meta name="description" content="The Bot framework for your serious projects">
 <meta name="author" content="JD Wuarin">
 
@@ -11,15 +11,15 @@
 
     
     <title>Botmaster Basics</title>
-    <link href="https://botmasterai.github.io//css/nucleus.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/hybrid.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/featherlight.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/perfect-scrollbar.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/horsey.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/theme.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io//css/hugo-theme.css" rel="stylesheet">
-    <script src="https://botmasterai.github.io//js/jquery-2.x.min.js"></script>
+    <link href="https://botmasterai.github.io/css/nucleus.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/hybrid.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/featherlight.min.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/horsey.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/theme.css" rel="stylesheet">
+    <link href="https://botmasterai.github.io/css/hugo-theme.css" rel="stylesheet">
+    <script src="https://botmasterai.github.io/js/jquery-2.x.min.js"></script>
     <style type="text/css">:root #header + #content > #left > #rlblock_left
     {display:none !important;}</style>
     <link href="https://botmasterai.github.io/css/botmaster_style.css" rel="stylesheet">
@@ -40,12 +40,12 @@
     <input id="search-by" type="text" placeholder="Search">
     <span data-search-clear=""><i class="fa fa-close"></i></span>
 </div>
-<script type="text/javascript" src="https://botmasterai.github.io//js/lunr.min.js"></script>
-<script type="text/javascript" src="https://botmasterai.github.io//js/horsey.js"></script>
+<script type="text/javascript" src="https://botmasterai.github.io/js/lunr.min.js"></script>
+<script type="text/javascript" src="https://botmasterai.github.io/js/horsey.js"></script>
 <script type="text/javascript">
     var baseurl = "https:\/\/botmasterai.github.io\/";
 </script>
-<script type="text/javascript" src="https://botmasterai.github.io//js/search.js"></script>
+<script type="text/javascript" src="https://botmasterai.github.io/js/search.js"></script>
 
     
 </div>
@@ -144,7 +144,7 @@
           
             <li class="dd-item " data-nav-id="/getting-started/quickstart/">
               <a href="https://botmasterai.github.io/getting-started/quickstart/">
-                <span>Quickstart     </i></span>
+                <span>Quickstart/mini-tutorial     </i></span>
               </a>
             </li>
           
@@ -823,7 +823,7 @@ botmaster.on('error', (bot, err) =&gt; {
 
 <p>Also, here&rsquo;s an important caveat for Twitter bot developers who are receiving attachments. Image links that come in from the Twitter API will be private and not public, which makes using them quite tricky. You might need to make authenticated requests to do so. The twitterBot objects you will receive in the update will have a <code>bot.twit</code> object. Documentation for how to use this is available <a href="https://github.com/ttezel/twit">here</a>.</p>
 
-<p>Receiving and sending attachments [the Botmaster way] is not yet supported on <strong>Slack</strong> as of version 2.2.1. However, Slack supports url unfurling (meaning if you send images and other types of media this will be shown in the messages and users won&rsquo;t just see a url). Also, because of how Botmaster is built (don&rsquo;t throw any of the original information from the message away) you can find all the necessary information in the <code>update.raw</code> object of the update.</p>
+<p>Receiving and sending attachments [the Botmaster way] is not yet supported on <strong>Slack</strong> as of version 2.2.3. However, Slack supports url unfurling (meaning if you send images and other types of media urls in your message, this will be shown in the messages and users won&rsquo;t just see a url). Also, because of how Botmaster is built (i.e. keep all information from the original message) you can find all the necessary information in the <code>update.raw</code> object of the update.</p>
 
 <p>Attachment type conversion works as such for <strong>Telegram</strong>:</p>
 
@@ -1134,6 +1134,15 @@ botmaster.on('error', (bot, err) =&gt; {
 
 <p>The function defaults to sending <code>quick_replies</code> in Messenger, setting <code>Keyboard buttons</code> in Telegram, buttons in Slack and simply prints button titles one on each line in Twitter as it doesn&rsquo;t support buttons. The user is expecting to type in their choice in Twitter. In the socketio implementation, the front-end/app developer is expected to write the code that would display the buttons on their front-end.</p>
 
+<p>It is used as such:</p>
+
+<pre><code class="language-js">botmaster.on('update', (bot, update) =&gt; {
+  const buttonArray = ['button1', 'button2'];
+  bot.sendDefaultButtonMessageTo(buttonArray, update.sender.id,
+    'Please select &quot;button1&quot; or &quot;button2&quot;');
+});
+</code></pre>
+
 <h4 id="cascade">Cascade</h4>
 
 <p>In order to send a cascade of messages (i.e. multiple messages one after another), you might want to have a look at both of these methods:</p>
@@ -1161,7 +1170,7 @@ botmaster.on('error', (bot, err) =&gt; {
 </tbody>
 </table>
 
-<p>As you might have guessed, Botmaster assures you that the objects in the messageArray will be sentin order. Furthermore, the objects of the messageArray must be of a certain form:</p>
+<p>As you might have guessed, Botmaster assures you that the objects in the messageArray will be sent in order. Furthermore, the objects of the messageArray must be of a certain form where valid params are the following:</p>
 
 <pre><code class="language-js">{
   raw: SOME_VALID_RAW_MESSAGE, // the same object as one you would send with sendRaw()
@@ -1172,6 +1181,47 @@ botmaster.on('error', (bot, err) =&gt; {
   isTyping: SOME_TRUTHY_VALUE, // will call sendIsTypingMessageTo() on the recipientId used in sendCascade.
 }
 </code></pre>
+
+<div class="notices info" ><p>It is important to note that all these parameters will be hit in the shown order if present. I.e. if <code>raw</code> is present, <code>message</code> will not be hit not will <code>buttons</code> be hit etc.</p>
+</div>
+
+
+<p>You could typically use this as such:</p>
+
+<pre><code class="language-js">botmaster.on('update', (bot, update) =&gt; {
+  const rawMessage = SOME_RAW_PLATFORM_MESSAGE;
+
+  const fullMessage = {
+    recipient: {
+      id: someUserId, // note that I am not using update.sender.id on purpose here, so as to show that this overrides the recipientId from the sendCascade Method
+    },
+    message: {
+      text: 'Some arbitrary text of yours'
+    },
+  };
+
+  const buttonsArray = ['button1', 'button2'];
+  const textForButtons = 'Please select one of the two buttons';
+
+  const someText = 'some text message after all this';
+
+  bot.sendCascadeTo([
+    { raw: rawMessage},
+    { message: fullMessage },
+    { isTyping: true },
+    { buttons: buttonsArray,
+      text: textForButtons
+    },
+    { isTyping: true },
+    { text: someText },
+  ], update.sender.id)
+});
+
+</code></pre>
+
+<p>Where our <code>recipientId</code> is set to <code>update.sender.id</code>.</p>
+
+<p>In this example, the bot will send a rawMessage and then a botmaster supported message to the platform (both these messages will not take into consideration the recipientId (update.sender.id) set in sendCascade). Then it will send a button message and then a standard text message. Both these last messages will be sent to the specified recipientId (again, update.sender.id). Note that before each message sent to the recipient, I also send an &lsquo;isTyping&rsquo; message to the recipient. I purposefully do not do so for the first two messages as it is assumed here that those messages are not being sent to the recipient, but to some other user.</p>
 
 <p><code>bot.sendTextCascadeTo</code></p>
 
@@ -1198,6 +1248,11 @@ botmaster.on('error', (bot, err) =&gt; {
 
 <p>This method is really just a helper for calling <code>bot.sendCascadeTo</code>. It just allows developers to use the method with an array of texts rather than an array of objects.</p>
 
+<p>Something like this will do:</p>
+
+<pre><code class="language-js">bot.sendTextCascadeTo(['message1', 'message2'], user.sender.id);
+</code></pre>
+
 
       
       </div>
@@ -1212,17 +1267,17 @@ botmaster.on('error', (bot, err) =&gt; {
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="https://botmasterai.github.io//js/clipboard.min.js"></script>
-    <script src="https://botmasterai.github.io//js/perfect-scrollbar.min.js"></script>
-    <script src="https://botmasterai.github.io//js/perfect-scrollbar.jquery.min.js"></script>
-    <script src="https://botmasterai.github.io//js/jquery.sticky-kit.min.js"></script>
-    <script src="https://botmasterai.github.io//js/featherlight.min.js"></script>
-    <script src="https://botmasterai.github.io//js/html5shiv-printshiv.min.js"></script>
-    <script src="https://botmasterai.github.io//js/highlight.pack.js"></script>
+    <script src="https://botmasterai.github.io/js/clipboard.min.js"></script>
+    <script src="https://botmasterai.github.io/js/perfect-scrollbar.min.js"></script>
+    <script src="https://botmasterai.github.io/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="https://botmasterai.github.io/js/jquery.sticky-kit.min.js"></script>
+    <script src="https://botmasterai.github.io/js/featherlight.min.js"></script>
+    <script src="https://botmasterai.github.io/js/html5shiv-printshiv.min.js"></script>
+    <script src="https://botmasterai.github.io/js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="https://botmasterai.github.io//js/modernizr.custom.71422.js"></script>
-    <script src="https://botmasterai.github.io//js/learn.js"></script>
-    <script src="https://botmasterai.github.io//js/hugo-learn.js"></script>
+    <script src="https://botmasterai.github.io/js/modernizr.custom.71422.js"></script>
+    <script src="https://botmasterai.github.io/js/learn.js"></script>
+    <script src="https://botmasterai.github.io/js/hugo-learn.js"></script>
     
 
   </body>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Getting-starteds on Botmaster Documentation</title>
+    <title>Getting-started-rsses on Botmaster Documentation</title>
     <link>https://botmasterai.github.io/getting-started/index.xml</link>
-    <description>Recent content in Getting-starteds on Botmaster Documentation</description>
+    <description>Recent content in Getting-started-rsses on Botmaster Documentation</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>MIT</copyright>
@@ -68,27 +68,50 @@
     </item>
     
     <item>
-      <title>Quickstart</title>
+      <title>Quickstart/mini-tutorial</title>
       <link>https://botmasterai.github.io/getting-started/quickstart/</link>
       <pubDate>Mon, 31 Oct 2016 21:39:47 +0000</pubDate>
       
       <guid>https://botmasterai.github.io/getting-started/quickstart/</guid>
-      <description>&lt;p&gt;If you already know your credentials for the platforms you want to be supporting in your project the following code will help you get started&lt;/p&gt;
+      <description>
 
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;
-// settings stuff
-const Botmaster = require(&#39;botmaster&#39;);
+&lt;p&gt;In this quickstart tutorial, you&amp;rsquo;ll learn how to quickly get a simple Botmaster project up and running.
+The bot will work on both the Facebook Messenger and Twitter (DMs) platforms. Support for other platforms can be added
+very easily as will be described later.&lt;/p&gt;
 
-const botmasterSettings = {
-  // by default botmaster will start an express server that listens on port 3000
-  // you can pass in a port argument here to change this default setting:
-  port: 3001,
-}
+&lt;p&gt;Because we only want to get acquainted with Botmaster, we&amp;rsquo;ll build a very naive and simple bot that doesn&amp;rsquo;t really do much. i.e. with no support for natural language processing, conversational flows etc&amp;hellip; We just want to expose how botmaster works here.&lt;/p&gt;
 
-const botmaster = new Botmaster(botmasterSettings);
+&lt;p&gt;It&amp;rsquo;ll look something like this on Facebook Messenger:&lt;/p&gt;
 
-// you would typically hold this information in a &amp;quot;config&amp;quot; file.
-// or use environment variables
+&lt;p&gt;&lt;img src=&#34;https://botmasterai.github.io/images/quickstart_1.png?width=50%&#34; alt=&#34;Quickstart 1&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And like this on Twitter (DMs):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://botmasterai.github.io/images/quickstart_2.png?width=50%&#34; alt=&#34;Quickstart 2&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This mini-tutorial assumes that you have already installed botmaster as documented in the installation guide: &lt;a href=&#34;https://botmasterai.github.io/getting-started/installation&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;step-1-setup&#34;&gt;Step 1: Setup&lt;/h2&gt;
+
+&lt;p&gt;In the folder in which you installed botmaster, create an &lt;code&gt;app.js&lt;/code&gt; file and put the following lines in it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+
+const botmaster = new Botmaster();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nothing special is going on here. We&amp;rsquo;re just requiring the Botmaster class (exposed via the botmaster package) and creating a new instance of Botmaster.&lt;/p&gt;
+
+&lt;p&gt;Now, in order for Botmaster to manage out bots, we obviously need to create at least one bot. We&amp;rsquo;ll go on and create couple. One Facebook Messenger bot and one Twitter DM bot.&lt;/p&gt;
+
+&lt;div class=&#34;notices info&#34; &gt;&lt;p&gt;To complete the following steps, you will need to gather valid credentials for the platforms you want to use. Read the following small guides for Facebook Messenger and Twitter DMs if you don&amp;rsquo;t have credentials for these platforms yet:
+&lt;a href=&#34;https://botmasterai.github.io/getting-started/messenger-setup&#34;&gt;messenger&lt;/a&gt;, &lt;a href=&#34;https://botmasterai.github.io/getting-started/twitter-setup&#34;&gt;twitter&lt;/a&gt;. Other guides are also available in this getting-started section.&lt;/p&gt;
+&lt;/div&gt;
+
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const MessengerBot = Botmaster.botTypes.MessengerBot;
+const TwitterBot = Botmaster.botTypes.TwitterBot;
+
 const messengerSettings = {
   credentials: {
     verifyToken: &#39;YOUR verifyToken&#39;,
@@ -107,53 +130,76 @@ const twitterSettings = {
   }
 }
 
-const telegramSettings = {
-  credentials: {
-    authToken: &#39;YOUR authToken&#39;,
-  },
-  webhookEndpoint: &#39;/webhook1234/&#39;,
-};
+const messengerBot = new MessengerBot(messengerSettings);
+const twitterBot = new TwitterBot(twitterSettings);
+&lt;/code&gt;&lt;/pre&gt;
 
-const slackSettings = {
-  credentials: {
-    clientId: &#39;YOUR app client ID&#39;,
-    clientSecret: &#39;YOUR app client secret&#39;,
-    verificationToken: &#39;YOUR app verification Token&#39;,
-    landingPageURL: &#39;YOUR landing page URL&#39; // users will be redirected there after adding your bot app to slack. If not set, they will be redirected to their standard slack chats.
-  },
-  webhookEndpoint: &#39;/webhook&#39;,
-  storeTeamInfoInFile: true,
-};
+&lt;p&gt;There seems to be quite a bit going on here. Let&amp;rsquo;s look at it all line by line:&lt;/p&gt;
 
-const socketioSettings = {
-  id: &#39;SOME_ID_OF_YOUR_CHOOSING&#39;,
-};
+&lt;p&gt;On the first two lines we get the &lt;code&gt;MessengerBot&lt;/code&gt; and &lt;code&gt;TwitterBot&lt;/code&gt; classes exposed via Botmaster. The Botmaster package comes bundled in with 5 bot classes so that you can get started straight away. They are all exposed via: &lt;code&gt;Botmaster.botTypes&lt;/code&gt;, where &lt;code&gt;Botmaster&lt;/code&gt; is gotten via &lt;code&gt;const Botmaster = require(&#39;botmaster&#39;);&lt;/code&gt;&lt;/p&gt;
 
-// instantiate new objects of the various bot classes bundled in with
-// the botmaster package. Other bot class packages can be installed or
-// built.
-const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
-const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
-const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings));
-const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
-const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+&lt;p&gt;Next, settings objets for both platforms are created: namely the &lt;code&gt;messengerSettings&lt;/code&gt; and &lt;code&gt;twitterSettings&lt;/code&gt; objects. To see how to gather the necessary credentials, have a look at these small guides: &lt;a href=&#34;https://botmasterai.github.io/getting-started/messenger-setup&#34;&gt;messenger&lt;/a&gt;, &lt;a href=&#34;https://botmasterai.github.io/getting-started/twitter-setup&#34;&gt;twitter&lt;/a&gt;.&lt;/p&gt;
 
-botmaster.addBot(messengerBot);
-botmaster.addBot(slackBot);
-botmaster.addBot(socketioBot);
+&lt;p&gt;In the &lt;code&gt;messengerSettings&lt;/code&gt; object, the &lt;code&gt;webhookEndpoint&lt;/code&gt; parameter simply indicates to Botmaster what endpoint we want the Facebook Messenger messages to come into. I.e. if you host your Botmaster app on, say, &amp;ldquo;&lt;a href=&#34;http://somebotmasterapp.com&amp;quot;&#34;&gt;http://somebotmasterapp.com&amp;quot;&lt;/a&gt;, Messages coming in from Facebook Messenger will hit: &amp;ldquo;&lt;a href=&#34;http://somebotmasterapp.com/messenger/webhook1234&amp;quot;&#34;&gt;http://somebotmasterapp.com/messenger/webhook1234&amp;quot;&lt;/a&gt;. This works because Botmaster is built on top of express.js. Read more about webhooks and how to make them work locally &lt;a href=&#34;https://botmasterai.github.io/getting-started/webhooks&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;As it stands, these bot objects don&amp;rsquo;t really have much to do with our previously create botmaster one. We want to be able to manage them from the botmaster obejct. So we will now add (or mount) these newly created bot objects onto the botmaster object we created previously. So right after these few lines, enter the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;botmaster.addBot(messengerBot);
 botmaster.addBot(twitterBot);
-botmaster.addBot(telegramBot);
+&lt;/code&gt;&lt;/pre&gt;
 
-// actual code
-botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
-  bot.sendTextMessageTo(&#39;Right back at you!&#39;, update.sender.id);
-});
+&lt;p&gt;These lines simply indicate to botmaster that it should be notified of all activity going on within our two bot objects. But still, botmaster doesn&amp;rsquo;t actually do anything yet. let&amp;rsquo;s change this!&lt;/p&gt;
 
-botmaster.on(&#39;error&#39;, (bot, err) =&amp;gt; {
-  console.log(err.stack);
-  console.log(&#39;there was an error&#39;);
+&lt;h2 id=&#34;step-2-listening-to-events&#34;&gt;Step 2: listening to events&lt;/h2&gt;
+
+&lt;p&gt;In order for botmaster to be notified of any activity going on (i.e. users sending messages to your bots), we&amp;rsquo;ll need to listen to the &amp;lsquo;update&amp;rsquo; event that fires whenever a user sends a message to one of our bots. It looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
+  console.log(update, null, 2);
 });
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&#34;notices warning&#34; &gt;&lt;p&gt;You should ever only have one &lt;code&gt;.on(&#39;update&#39;,...)&lt;/code&gt; listener by botmaster app, as events are asynchronous in nature and having multiple ones will result in unforeseen occurrences.&lt;/p&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;At this point, whenever a message (or update in Botmaster semantic) is received by any of your bots, you will be printing to the console the received message. You&amp;rsquo;ll also note that the callback function has a &lt;code&gt;bot&lt;/code&gt; object associated with it. This object will be either of &lt;code&gt;messengerBot&lt;/code&gt; or &lt;code&gt;twitterBot&lt;/code&gt; in this example depending on what bot actually received the update&lt;/p&gt;
+
+&lt;p&gt;This is great. But what if I want to send something back to the user. Well, let&amp;rsquo;s have a look.&lt;/p&gt;
+
+&lt;h2 id=&#34;step-3-sending-replies&#34;&gt;Step 3: sending replies&lt;/h2&gt;
+
+&lt;p&gt;The easiest thing to do to have a bot that answers you is the following; replace the Step 2 code with this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
+  bot.reply(update, &#39;Hello World!&#39;);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This really doesn&amp;rsquo;t do much however. Let&amp;rsquo;s try to get to something like what we saw in the pictures at the beginning of this tutorial. Let&amp;rsquo;s replace this code with this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
+  if (update.message.text === &#39;hi&#39; ||
+      update.message.text === &#39;Hi&#39; ||
+      update.message.text === &#39;hello&#39; ||
+      update.message.text === &#39;Hello&#39;) {
+    bot.reply(update, &#39;well hi right back at you&#39;);
+  } else if (update.message.text.indexOf(&#39;weather&#39;) &amp;gt; -1) {
+    bot.sendTextMessageTo(&#39;It is currently sunny in Philadelphia&#39;, update.sender.id);
+  } else {
+    const messages = [&#39;I\&#39;m sorry about this.&#39;,
+                      &#39;But it seems like I couldn\&#39;t understand your message.&#39;,
+                      &#39;Could you try reformulating it?&#39;]
+    bot.sendTextCascadeTo(messages, update.sender.id)
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;What&amp;rsquo;s going on here is really fairly straightforward. The point of this code is really to expose to you the different ways there are to send messages in botmaster. In the first conditional block, I look to see if the text from the platform says something like &amp;ldquo;hello&amp;rdquo;, if so, answer that way using the &lt;code&gt;reply&lt;/code&gt; helper function. However, if the message contains the word &amp;ldquo;weather&amp;rdquo;, we reply using the &lt;code&gt;sendTextMessageTo&lt;/code&gt; helper function. In any other situation, we reply in a cascade of text messages using the &lt;code&gt;sendTextCascadeTo&lt;/code&gt; helper function to send multiple text messages one after the other. If you want to see all the available send helper functions available to you in Botmaster, check it out &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#outgoing-messages&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;closing-comments&#34;&gt;Closing Comments&lt;/h2&gt;
+
+&lt;p&gt;Now as mentioned at the beginning of this tutorial, this bot is not a very good or helpful bot. It&amp;rsquo;s quite dumb and doesn&amp;rsquo;t even leverage a lot of the Botmaster goodies like &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/middleware&#34;&gt;middlewares&lt;/a&gt;, using &lt;a href=&#34;https://botmasterai.github.io/getting-started/socketio-setup&#34;&gt;socket.io&lt;/a&gt; to have a bot on your own website. Or adding support for a different bot class as mentioned &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster/writing-your-own-bot-class/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
@@ -223,6 +269,15 @@ In order to instantiate a &lt;code&gt;Botmaster&lt;/code&gt; object, you need to
       <guid>https://botmasterai.github.io/getting-started/messenger-setup/</guid>
       <description>
 
+&lt;h2 id=&#34;getting-your-credentials&#34;&gt;Getting your Credentials&lt;/h2&gt;
+
+&lt;p&gt;If you don&amp;rsquo;t already have these, follow the steps &lt;strong&gt;1-4&lt;/strong&gt; on the Facebook Messenger guide:
+&lt;a href=&#34;https://developers.facebook.com/docs/messenger-platform/guides/quick-start&#34;&gt;https://developers.facebook.com/docs/messenger-platform/guides/quick-start&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In &lt;strong&gt;step 2&lt;/strong&gt;, where you setup your webhook, no need to code anything. Just specify the webhook, enter any secure string you want as a verify token(&lt;code&gt;verifyToken&lt;/code&gt;) and copy that value in the settings object. Also, click on whichever message [those are &amp;ldquo;update&amp;rdquo;s using botmaster semantics] type you want to receive from Messenger (&lt;code&gt;message_deliveries&lt;/code&gt;, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;message_postbacks&lt;/code&gt; etc&amp;hellip;).&lt;/p&gt;
+
+&lt;p&gt;To find your Facebook App Secret (&lt;code&gt;fbAppSecret&lt;/code&gt;), navigate to your apps dashboard and under &lt;code&gt;App Secret&lt;/code&gt; click show, enter your password if prompted and then there it is.&lt;/p&gt;
+
 &lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
@@ -244,15 +299,6 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
   bot.reply(update, &#39;Hello world!&#39;);
 });
 &lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;getting-your-credentials&#34;&gt;Getting your Credentials&lt;/h2&gt;
-
-&lt;p&gt;If you don&amp;rsquo;t already have these, follow the steps &lt;strong&gt;1-4&lt;/strong&gt; on the Facebook Messenger guide:
-&lt;a href=&#34;https://developers.facebook.com/docs/messenger-platform/guides/quick-start&#34;&gt;https://developers.facebook.com/docs/messenger-platform/guides/quick-start&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;In &lt;strong&gt;step 2&lt;/strong&gt;, where you setup your webhook, no need to code anything. Just specify the webhook, enter any secure string you want as a verify token(&lt;code&gt;verifyToken&lt;/code&gt;) and copy that value in the settings object. Also, click on whichever message [those are &amp;ldquo;update&amp;rdquo;s using botmaster semantics] type you want to receive from Messenger (&lt;code&gt;message_deliveries&lt;/code&gt;, &lt;code&gt;messages&lt;/code&gt;, &lt;code&gt;message_postbacks&lt;/code&gt; etc&amp;hellip;).&lt;/p&gt;
-
-&lt;p&gt;To find your Facebook App Secret (&lt;code&gt;fbAppSecret&lt;/code&gt;), navigate to your apps dashboard and under &lt;code&gt;App Secret&lt;/code&gt; click show, enter your password if prompted and then there it is.&lt;/p&gt;
 
 &lt;h2 id=&#34;webhooks&#34;&gt;Webhooks&lt;/h2&gt;
 
@@ -689,26 +735,6 @@ socket.on(&#39;message&#39;, function(botmasterMessage){
       <guid>https://botmasterai.github.io/getting-started/twitter-setup/</guid>
       <description>
 
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
-const botmaster = new Botmaster();
-
-const twitterSettings = {
-  credentials: {
-    consumerKey: &#39;YOUR consumerKey&#39;,
-    consumerSecret: &#39;YOUR consumerSecret&#39;,
-    accessToken: &#39;YOUR accessToken&#39;,
-    accessTokenSecret: &#39;YOUR accessTokenSecret&#39;,
-  }
-}
-
-const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
-botmaster.addBot(twitterBot);
-
-botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
-  bot.reply(update, &#39;Right back at you&#39;);
-});
-&lt;/code&gt;&lt;/pre&gt;
-
 &lt;h2 id=&#34;getting-your-credentials&#34;&gt;Getting your Credentials&lt;/h2&gt;
 
 &lt;p&gt;Twitter&amp;rsquo;s setup is slightly more tricky than one would wish. Because Twitter requires you to create an actual account and not a page or a bot, you&amp;rsquo;ll have to do a few more steps.&lt;/p&gt;
@@ -734,6 +760,28 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 &lt;p&gt;! Makes sure not to create your access token before having reset your permissions. If you do that, you will need to change your permissions then regenerate your access token.&lt;/p&gt;
 
 &lt;p&gt;That should about do it. Because twitter DM is not completely separate from the rest of Twitter, it behaves quite differently from the other platforms on many aspects. These points are covered in &lt;a href=&#34;https://botmasterai.github.io/working-with-botmaster&#34;&gt;working with botmaster&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+const botmaster = new Botmaster();
+
+const twitterSettings = {
+  credentials: {
+    consumerKey: &#39;YOUR consumerKey&#39;,
+    consumerSecret: &#39;YOUR consumerSecret&#39;,
+    accessToken: &#39;YOUR accessToken&#39;,
+    accessTokenSecret: &#39;YOUR accessTokenSecret&#39;,
+  }
+}
+
+const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
+botmaster.addBot(twitterBot);
+
+botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
+  bot.reply(update, &#39;Right back at you&#39;);
+});
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
@@ -744,26 +792,6 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
       
       <guid>https://botmasterai.github.io/getting-started/telegram-setup/</guid>
       <description>
-
-&lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
-const botmaster = new Botmaster();
-
-const telegramSettings = {
-  credentials: {
-    authToken: &#39;YOUR authToken&#39;,
-  },
-  webhookEndpoint: &#39;/webhook1234/&#39;,
-};
-
-const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
-botmaster.addBot(telegramBot);
-
-botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
-  bot.reply(update, &#39;Right back at you&#39;);
-});
-&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;credentials&#34;&gt;Credentials&lt;/h2&gt;
 
@@ -787,6 +815,26 @@ botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
 &lt;div class=&#34;notices note&#34; &gt;&lt;p&gt;If you are not too sure how webhooks work and/or how to get them to run locally, go to &lt;a href=&#34;https://botmasterai.github.io/getting-started/webhooks&#34;&gt;webhooks&lt;/a&gt; to read some more.&lt;/p&gt;
 &lt;/div&gt;
 
+
+&lt;h2 id=&#34;code&#34;&gt;Code&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;const Botmaster = require(&#39;botmaster&#39;);
+const botmaster = new Botmaster();
+
+const telegramSettings = {
+  credentials: {
+    authToken: &#39;YOUR authToken&#39;,
+  },
+  webhookEndpoint: &#39;/webhook1234/&#39;,
+};
+
+const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+botmaster.addBot(telegramBot);
+
+botmaster.on(&#39;update&#39;, (bot, update) =&amp;gt; {
+  bot.reply(update, &#39;Right back at you&#39;);
+});
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     

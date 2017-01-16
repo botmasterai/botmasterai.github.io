@@ -2,6 +2,9 @@
 
 echo -e "\033[0;32mDeploying updates to botmaster documentaition...\033[0m"
 
+# re-build index
+npm run index
+
 # Build the project.
 hugo -t hugo-theme-learn
 

@@ -7,6 +7,15 @@ toc: true
 weight: 40
 ---
 
+## Getting your Credentials
+
+If you don't already have these, follow the steps **1-4** on the Facebook Messenger guide:
+https://developers.facebook.com/docs/messenger-platform/guides/quick-start
+
+In **step 2**, where you setup your webhook, no need to code anything. Just specify the webhook, enter any secure string you want as a verify token(`verifyToken`) and copy that value in the settings object. Also, click on whichever message [those are "update"s using botmaster semantics] type you want to receive from Messenger (`message_deliveries`, `messages`, `message_postbacks` etc...).
+
+To find your Facebook App Secret (`fbAppSecret`), navigate to your apps dashboard and under `App Secret` click show, enter your password if prompted and then there it is.
+
 ## Code
 
 ```js
@@ -29,15 +38,6 @@ botmaster.on('update', (bot, update) => {
   bot.reply(update, 'Hello world!');
 });
 ```
-
-## Getting your Credentials
-
-If you don't already have these, follow the steps **1-4** on the Facebook Messenger guide:
-https://developers.facebook.com/docs/messenger-platform/guides/quick-start
-
-In **step 2**, where you setup your webhook, no need to code anything. Just specify the webhook, enter any secure string you want as a verify token(`verifyToken`) and copy that value in the settings object. Also, click on whichever message [those are "update"s using botmaster semantics] type you want to receive from Messenger (`message_deliveries`, `messages`, `message_postbacks` etc...).
-
-To find your Facebook App Secret (`fbAppSecret`), navigate to your apps dashboard and under `App Secret` click show, enter your password if prompted and then there it is.
 
 ## Webhooks
 

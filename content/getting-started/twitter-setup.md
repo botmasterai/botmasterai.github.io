@@ -7,28 +7,6 @@ toc: true
 weight: 70
 ---
 
-
-```js
-const Botmaster = require('botmaster');
-const botmaster = new Botmaster();
-
-const twitterSettings = {
-  credentials: {
-    consumerKey: 'YOUR consumerKey',
-    consumerSecret: 'YOUR consumerSecret',
-    accessToken: 'YOUR accessToken',
-    accessTokenSecret: 'YOUR accessTokenSecret',
-  }
-}
-
-const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
-botmaster.addBot(twitterBot);
-
-botmaster.on('update', (bot, update) => {
-  bot.reply(update, 'Right back at you');
-});
-```
-
 ## Getting your Credentials
 
 Twitter's setup is slightly more tricky than one would wish. Because Twitter requires you to create an actual account and not a page or a bot, you'll have to do a few more steps.
@@ -50,3 +28,26 @@ Twitter's setup is slightly more tricky than one would wish. Because Twitter req
 ! Makes sure not to create your access token before having reset your permissions. If you do that, you will need to change your permissions then regenerate your access token.
 
 That should about do it. Because twitter DM is not completely separate from the rest of Twitter, it behaves quite differently from the other platforms on many aspects. These points are covered in [working with botmaster](/working-with-botmaster).
+
+## Code
+
+```js
+const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
+
+const twitterSettings = {
+  credentials: {
+    consumerKey: 'YOUR consumerKey',
+    consumerSecret: 'YOUR consumerSecret',
+    accessToken: 'YOUR accessToken',
+    accessTokenSecret: 'YOUR accessTokenSecret',
+  }
+}
+
+const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
+botmaster.addBot(twitterBot);
+
+botmaster.on('update', (bot, update) => {
+  bot.reply(update, 'Right back at you');
+});
+```

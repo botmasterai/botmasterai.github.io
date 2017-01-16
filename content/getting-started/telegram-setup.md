@@ -7,27 +7,6 @@ toc: true
 weight: 80
 ---
 
-## Code
-
-```js
-const Botmaster = require('botmaster');
-const botmaster = new Botmaster();
-
-const telegramSettings = {
-  credentials: {
-    authToken: 'YOUR authToken',
-  },
-  webhookEndpoint: '/webhook1234/',
-};
-
-const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
-botmaster.addBot(telegramBot);
-
-botmaster.on('update', (bot, update) => {
-  bot.reply(update, 'Right back at you');
-});
-```
-
 ## Credentials
 
 All you need here is an authToken. In order to get one, you will need to either create a new bot on telegram.
@@ -53,3 +32,24 @@ Because Telegram doesn't send any type of information to verify the identity of 
 {{% notice note %}}
 If you are not too sure how webhooks work and/or how to get them to run locally, go to [webhooks](/getting-started/webhooks) to read some more.
 {{% /notice %}}
+
+## Code
+
+```js
+const Botmaster = require('botmaster');
+const botmaster = new Botmaster();
+
+const telegramSettings = {
+  credentials: {
+    authToken: 'YOUR authToken',
+  },
+  webhookEndpoint: '/webhook1234/',
+};
+
+const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+botmaster.addBot(telegramBot);
+
+botmaster.on('update', (bot, update) => {
+  bot.reply(update, 'Right back at you');
+});
+```

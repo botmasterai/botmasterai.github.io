@@ -309,7 +309,7 @@ Attachment type conversion on incoming updates works as such for __Twitter__:
 
 Also, here's an important caveat for Twitter bot developers who are receiving attachments. Image links that come in from the Twitter API will be private and not public, which makes using them quite tricky. You might need to make authenticated requests to do so. The twitterBot objects you will receive in the update will have a `bot.twit` object. Documentation for how to use this is available [here](https://github.com/ttezel/twit).
 
-Receiving and sending attachments [the Botmaster way] is not yet supported on **Slack** as of version 2.2.1. However, Slack supports url unfurling (meaning if you send images and other types of media this will be shown in the messages and users won't just see a url). Also, because of how Botmaster is built (don't throw any of the original information from the message away) you can find all the necessary information in the `update.raw` object of the update.
+Receiving and sending attachments [the Botmaster way] is not yet supported on **Slack** as of version 2.2.3. However, Slack supports url unfurling (meaning if you send images and other types of media urls in your message, this will be shown in the messages and users won't just see a url). Also, because of how Botmaster is built (i.e. keep all information from the original message) you can find all the necessary information in the `update.raw` object of the update.
 
 Attachment type conversion works as such for __Telegram__:
 
@@ -480,6 +480,16 @@ Buttons will almost surely be part of your bot. Botmaster provides a method that
 
 The function defaults to sending `quick_replies` in Messenger, setting `Keyboard buttons` in Telegram, buttons in Slack and simply prints button titles one on each line in Twitter as it doesn't support buttons. The user is expecting to type in their choice in Twitter. In the socketio implementation, the front-end/app developer is expected to write the code that would display the buttons on their front-end.
 
+It is used as such:
+
+```js
+botmaster.on('update', (bot, update) => {
+  const buttonArray = ['button1', 'button2'];
+  bot.sendDefaultButtonMessageTo(buttonArray, update.sender.id,
+    'Please select "button1" or "button2"');
+});
+```
+
 #### Cascade
 
 In order to send a cascade of messages (i.e. multiple messages one after another), you might want to have a look at both of these methods:
@@ -491,7 +501,7 @@ In order to send a cascade of messages (i.e. multiple messages one after another
 | messageArray | Array of messages in a format as such: [{text: 'something'}, {message: someMessengerValidMessage}] read below to see valid keys.
 | recipientId  | a string representing the id of the user to whom you want to send the message.
 
-As you might have guessed, Botmaster assures you that the objects in the messageArray will be sentin order. Furthermore, the objects of the messageArray must be of a certain form:
+As you might have guessed, Botmaster assures you that the objects in the messageArray will be sent in order. Furthermore, the objects of the messageArray must be of a certain form where valid params are the following:
 
 ```js
 {
@@ -504,6 +514,47 @@ As you might have guessed, Botmaster assures you that the objects in the message
 }
 ```
 
+{{% notice info %}}
+It is important to note that all these parameters will be hit in the shown order if present. I.e. if `raw` is present, `message` will not be hit not will `buttons` be hit etc.
+{{% /notice %}}
+
+You could typically use this as such:
+
+```js
+botmaster.on('update', (bot, update) => {
+  const rawMessage = SOME_RAW_PLATFORM_MESSAGE;
+
+  const fullMessage = {
+    recipient: {
+      id: someUserId, // note that I am not using update.sender.id on purpose here, so as to show that this overrides the recipientId from the sendCascade Method
+    },
+    message: {
+      text: 'Some arbitrary text of yours'
+    },
+  };
+
+  const buttonsArray = ['button1', 'button2'];
+  const textForButtons = 'Please select one of the two buttons';
+
+  const someText = 'some text message after all this';
+
+  bot.sendCascadeTo([
+    { raw: rawMessage},
+    { message: fullMessage },
+    { isTyping: true },
+    { buttons: buttonsArray,
+      text: textForButtons
+    },
+    { isTyping: true },
+    { text: someText },
+  ], update.sender.id)
+});
+
+```
+Where our `recipientId` is set to `update.sender.id`.
+
+In this example, the bot will send a rawMessage and then a botmaster supported message to the platform (both these messages will not take into consideration the recipientId (update.sender.id) set in sendCascade). Then it will send a button message and then a standard text message. Both these last messages will be sent to the specified recipientId (again, update.sender.id). Note that before each message sent to the recipient, I also send an 'isTyping' message to the recipient. I purposefully do not do so for the first two messages as it is assumed here that those messages are not being sent to the recipient, but to some other user.
+
 `bot.sendTextCascadeTo`
 
 | Argument | Description
@@ -512,3 +563,9 @@ As you might have guessed, Botmaster assures you that the objects in the message
 | recipientId  | a string representing the id of the user to whom you want to send the message.
 
 This method is really just a helper for calling `bot.sendCascadeTo`. It just allows developers to use the method with an array of texts rather than an array of objects.
+
+Something like this will do:
+
+```js
+bot.sendTextCascadeTo(['message1', 'message2'], user.sender.id);
+```

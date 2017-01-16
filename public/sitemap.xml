@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://botmasterai.github.io/</loc>
+    <lastmod>2016-11-19T17:08:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://botmasterai.github.io/official-middleware/</loc>
+    <lastmod>2016-11-19T17:08:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://botmasterai.github.io/other-articles/</loc>
+    <lastmod>2016-11-19T17:08:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://botmasterai.github.io/tutorials/</loc>
+    <lastmod>2016-11-11T20:42:42+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://botmasterai.github.io/working-with-botmaster/</loc>
+    <lastmod>2016-11-04T01:17:34+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://botmasterai.github.io/changelog/CHANGELOG/</loc>
+    <lastmod>2016-10-29T19:55:42+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://botmasterai.github.io/home/</loc>
+    <lastmod>2016-10-29T19:25:10+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://botmasterai.github.io/getting-started/</loc>
     <lastmod>2016-10-29T17:09:45+01:00</lastmod>
   </url>
@@ -74,84 +109,6 @@
   <url>
     <loc>https://botmasterai.github.io/getting-started/webhooks/</loc>
     <lastmod>2016-11-17T15:28:40+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/official-middleware/</loc>
-    <lastmod>2016-11-19T17:08:11+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/other-articles/</loc>
-    <lastmod>2016-11-19T17:08:11+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/tutorials/</loc>
-    <lastmod>2016-11-11T20:42:42+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/working-with-botmaster/</loc>
-    <lastmod>2016-11-04T01:17:34+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/changelog/CHANGELOG/</loc>
-    <lastmod>2016-10-29T19:55:42+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/home/</loc>
-    <lastmod>2016-10-29T19:25:10+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/</loc>
-    <lastmod>2016-10-29T17:09:45+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/changelog/</loc>
-    <lastmod>2016-10-29T19:55:42+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/getting-started/</loc>
-    <lastmod>2016-10-29T17:09:45+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/home/</loc>
-    <lastmod>2016-10-29T19:25:10+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/official-middleware/</loc>
-    <lastmod>2016-11-19T17:08:11+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/other-articles/</loc>
-    <lastmod>2016-11-19T17:08:11+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/tutorials/</loc>
-    <lastmod>2016-11-11T20:42:42+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://botmasterai.github.io/working-with-botmaster/</loc>
-    <lastmod>2016-11-04T01:17:34+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>
