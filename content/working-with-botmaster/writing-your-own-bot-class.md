@@ -1,10 +1,10 @@
 ---
 date: 2016-11-17T18:16:51Z
 next: /tutorials
-prev: /working-with-botmaster/botmaster-basics
+prev: /working-with-botmaster/middleware
 title: Writing your Own Bot Class
 toc: true
-weight: 20
+weight: 30
 ---
 
 ## Bot classes
