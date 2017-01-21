@@ -2,7 +2,7 @@
 date: 2016-11-19T17:07:40Z
 next: /changelog/CHANGELOG
 prev: /other-articles
-title: Botmaster or Botkit?
+title: Frameworks comparison
 toc: true
 weight: 10
 ---
