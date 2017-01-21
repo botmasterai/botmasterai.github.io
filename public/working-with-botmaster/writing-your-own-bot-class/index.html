@@ -1,486 +1,205 @@
-<!DOCTYPE html>
-<html lang="en" class="js csstransforms3d">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.17" />
-    <meta name="description" content="The Bot framework for your serious projects">
-<meta name="author" content="JD Wuarin">
+<!doctype html>
+<html>
 
-    <link rel="shortcut icon" href="https://botmasterai.github.io/images/favicon.ico" type="image/x-icon" />
+<head>
+  <meta charset="utf-8" />
+  <title>Botmaster | Writing your Own Bot Class</title>
+  <link rel="stylesheet" href="../../css/tachyons.css" />
+  <link rel="stylesheet" href="../../css/main.css" />
+  <link rel="stylesheet" href="../../css/notices.css" />
+  <link rel="stylesheet" href="../../css/base16-tomorrow.light.css" />
+</head>
 
-    
-    <title>Writing your Own Bot Class</title>
-    <link href="https://botmasterai.github.io/css/nucleus.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io/css/hybrid.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io/css/featherlight.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io/css/perfect-scrollbar.min.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io/css/horsey.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io/css/theme.css" rel="stylesheet">
-    <link href="https://botmasterai.github.io/css/hugo-theme.css" rel="stylesheet">
-    <script src="https://botmasterai.github.io/js/jquery-2.x.min.js"></script>
-    <style type="text/css">:root #header + #content > #left > #rlblock_left
-    {display:none !important;}</style>
-    <link href="https://botmasterai.github.io/css/botmaster_style.css" rel="stylesheet">
+<body>
 
-  </head>
-  <body class="" data-url="/working-with-botmaster/writing-your-own-bot-class/">
-    <nav id="sidebar">
-  <div id="header-wrapper">
-    <div id="header">
-      <a id="logo" target="_blank" href="https://github.com/jdwuarin/botmaster">
-  <img style="width:100%;" src="https://botmasterai.github.io/images/botmaster_1.svg" onerror="this.src='/images/botmaster_1.png'" >
-</a>
-
-    </div>
-    
-        <div class="searchbox">
-    <label for="search-by"><i class="fa fa-search"></i></label>
-    <input id="search-by" type="text" placeholder="Search">
-    <span data-search-clear=""><i class="fa fa-close"></i></span>
-</div>
-<script type="text/javascript" src="https://botmasterai.github.io/js/lunr.min.js"></script>
-<script type="text/javascript" src="https://botmasterai.github.io/js/horsey.js"></script>
-<script type="text/javascript">
-    var baseurl = "https:\/\/botmasterai.github.io\/";
-</script>
-<script type="text/javascript" src="https://botmasterai.github.io/js/search.js"></script>
-
-    
-</div>
-
-
-  <div class="highlightable">
-    <ul class="topics">
-      
-      
-        
-        
-          
-            
-          
-        
-          
-            
-          
-        
-          
-            
-          
-        
-          
-            
-          
-        
-          
-            
-          
-        
-          
-            
-          
-        
-          
-            
-          
-        
-      
-      
-      
-      
-
-      
-        
-      
-      
-      
-
-      <li class="dd-item  " data-nav-id="/home/">
-        <a href="https://botmasterai.github.io/home/">
-          <span>
-            
-              <i class="fa fa-home" aria-hidden="true"></i>
-            
-             Botmaster v 2.2.3
-            
-           </span>
-        </a>
-        
-      </li>
-      
-      
-      
-
-      
-        
-      
-      
-      
-
-      <li class="dd-item  " data-nav-id="/getting-started/">
-        <a href="https://botmasterai.github.io/getting-started/">
-          <span>
-            
-              <i class="fa fa-road" aria-hidden="true"></i>
-            
-             Getting started
-            
-           </span>
-        </a>
-        
-        <ul>
-          
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/installation/">
-              <a href="https://botmasterai.github.io/getting-started/installation/">
-                <span>Installation     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/quickstart/">
-              <a href="https://botmasterai.github.io/getting-started/quickstart/">
-                <span>Quickstart/mini-tutorial     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/getting-set-up/">
-              <a href="https://botmasterai.github.io/getting-started/getting-set-up/">
-                <span>Getting set up     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/messenger-setup/">
-              <a href="https://botmasterai.github.io/getting-started/messenger-setup/">
-                <span>Facebook Messenger Setup     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/slack-setup/">
-              <a href="https://botmasterai.github.io/getting-started/slack-setup/">
-                <span>Slack Setup     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/socketio-setup/">
-              <a href="https://botmasterai.github.io/getting-started/socketio-setup/">
-                <span>Socket.io Setup     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/twitter-setup/">
-              <a href="https://botmasterai.github.io/getting-started/twitter-setup/">
-                <span>Twitter Setup     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/telegram-setup/">
-              <a href="https://botmasterai.github.io/getting-started/telegram-setup/">
-                <span>Telegram Setup     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/getting-started/webhooks/">
-              <a href="https://botmasterai.github.io/getting-started/webhooks/">
-                <span>Webhooks     </i></span>
-              </a>
-            </li>
-          
-          
-        </ul>
-        
-      </li>
-      
-      
-      
-
-      
-        
-      
-      
-      
-
-      <li class="dd-item  parent" data-nav-id="/working-with-botmaster/">
-        <a href="https://botmasterai.github.io/working-with-botmaster/">
-          <span>
-            
-              <i class="fa fa-wrench" aria-hidden="true"></i>
-            
-             Working with Botmaster
-            
-           </span>
-        </a>
-        
-        <ul>
-          
-          
-          
-          
-            <li class="dd-item " data-nav-id="/working-with-botmaster/botmaster-basics/">
-              <a href="https://botmasterai.github.io/working-with-botmaster/botmaster-basics/">
-                <span>Botmaster Basics     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item active" data-nav-id="/working-with-botmaster/writing-your-own-bot-class/">
-              <a href="https://botmasterai.github.io/working-with-botmaster/writing-your-own-bot-class/">
-                <span>Writing your Own Bot Class     </i></span>
-              </a>
-            </li>
-          
-          
-        </ul>
-        
-      </li>
-      
-      
-      
-
-      
-        
-      
-      
-      
-
-      <li class="dd-item  " data-nav-id="/official-middleware/">
-        <a href="https://botmasterai.github.io/official-middleware/">
-          <span>
-            
-              <i class="fa fa-plug" aria-hidden="true"></i>
-            
-             Official Middleware
-            
-           </span>
-        </a>
-        
-        <ul>
-          
-          
-          
-          
-            <li class="dd-item " data-nav-id="/official-middleware/fulfill/">
-              <a href="https://botmasterai.github.io/official-middleware/fulfill/">
-                <span>Fulfill     </i></span>
-              </a>
-            </li>
-          
-          
-        </ul>
-        
-      </li>
-      
-      
-      
-
-      
-        
-      
-      
-      
-
-      <li class="dd-item  " data-nav-id="/tutorials/">
-        <a href="https://botmasterai.github.io/tutorials/">
-          <span>
-            
-              <i class="fa fa-code" aria-hidden="true"></i>
-            
-             Tutorials (coming soon)
-            
-           </span>
-        </a>
-        
-        <ul>
-          
-          
-          
-          
-            <li class="dd-item " data-nav-id="/tutorials/watson-conversation/">
-              <a href="https://botmasterai.github.io/tutorials/watson-conversation/">
-                <span>watson conversation     </i></span>
-              </a>
-            </li>
-          
-          
-        </ul>
-        
-      </li>
-      
-      
-      
-
-      
-        
-      
-      
-      
-
-      <li class="dd-item  " data-nav-id="/other-articles/">
-        <a href="https://botmasterai.github.io/other-articles/">
-          <span>
-            
-              <i class="fa fa-newspaper-o" aria-hidden="true"></i>
-            
-             Other Articles
-            
-           </span>
-        </a>
-        
-        <ul>
-          
-          
-          
-          
-            <li class="dd-item " data-nav-id="/other-articles/botmaster-or-botkit/">
-              <a href="https://botmasterai.github.io/other-articles/botmaster-or-botkit/">
-                <span>Botmaster or Botkit?     </i></span>
-              </a>
-            </li>
-          
-          
-        </ul>
-        
-      </li>
-      
-      
-      
-
-      
-        
-      
-      
-      
-
-      <li class="dd-item  " data-nav-id="/changelog/CHANGELOG/">
-        <a href="https://botmasterai.github.io/changelog/CHANGELOG/">
-          <span>
-            
-              <i class="fa fa-list" aria-hidden="true"></i>
-            
-             CHANGELOG
-            
-           </span>
-        </a>
-        
-      </li>
-      
-      
-    </ul>
-    <hr>
-     
-    <section id="footer">
-      <p>Built with <a href="https://github.com/matcornic/hugo-theme-learn"><i class="fa fa-heart"></i></a> from <a href="http://getgrav.org">Grav</a> and <a href="http://gohugo.io/">Hugo</a></p>
-    </section>
+<nav class="container center pa4 mb3">
+  <div class="fl w-80 w-100-l">
+    <a href="../../">
+      <img class="v-mid" src="../../img/botmaster_light.svg" width="200" />
+    </a>
+  </div>
+  <div class="fl w-20 tr dn-l f1 dusty-gray" onclick="showNavMenu()">
+    &#9776;
   </div>
 </nav>
-
-        <section id="body">
-        <div id="overlay"></div>
-
-        <div class="padding highlightable">
-
-            <div id="top-bar">
-              
-                
-                
-                
-              <div id="top-github-link">
-                  <a class="github-link" href="https://github.com/botmasterai/botmasterai.github.io/tree/hugo-code/content/working-with-botmaster/writing-your-own-bot-class.md" target="blank">
-                    <i class="fa fa-code-fork"></i>
-                    Edit this page
-                  </a>
-              </div>
-                
-              
-              <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                  <span id="sidebar-toggle-span">
-                      <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
-                        <i class="fa fa-bars"></i>
-                      </a>
-                  </span>
-                
-                <span id="toc-menu"><a href=""><i class="fa fa-list-alt"></i></a></span>
-                
-                
-                
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                    
-                    
-                <a href="https://botmasterai.github.io/working-with-botmaster/" itemprop="url"><span itemprop="title">Working with Botmaster</span></a> <i class="fa fa-angle-right"></i>
-                    
-                  
-                
-                <span itemprop="title"> Writing your Own Bot Class</span>
-              </div>
-              
-                  <div class="progress">
-    <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#bot-classes">Bot classes</a></li>
-<li><a href="#making-botmaster-objects-and-bot-objects-work-together">Making Botmaster objects and bot objects work together</a></li>
-<li><a href="#creating-your-own-bot-classes">Creating your own bot classes</a>
-<ul>
-<li><a href="#constructor-settings"><code>#constructor(settings)</code></a></li>
-<li><a href="#applysettings-settings"><code>#__applySettings(settings)</code></a></li>
-<li><a href="#createmountpoints"><code>#__createMountPoints()</code></a></li>
-<li><a href="#formatupdate-rawupdate"><code>#__formatUpdate(rawUpdate)</code></a></li>
-<li><a href="#emitupdate-update"><code>#__emitUpdate(update)</code></a></li>
-<li><a href="#sendmessage-message"><code>#__sendMessage(message)</code></a></li>
-<li><a href="#formatoutgoingmessage-message"><code>#__formatOutgoingMessage(message)</code></a></li>
-<li><a href="#setbotidifnotset-update"><code>#__setBotIdIfNotSet(update)</code></a></li>
-</ul></li>
-<li><a href="#is-this-really-all-there-is-to-it">Is this really all there is to it?</a></li>
-</ul></li>
-</ul>
-</nav>
-    </div>
+<main class="container center">
+  <div id="sidebar" class="fl w-100 w-20-l pr1-l dn di-l">
+  <ul class="list mv2 ml4 ma2-l pa0">
+    
+      <h5 class="dusty-gray mt3 mb3 ttu">Documentation</h5>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../documentation/botmaster/">
+            Botmaster
+          </a>
+        </li>
+      
+    
+      <h5 class="dusty-gray mt3 mb3 ttu">Getting Started</h5>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/installation/">
+            Installation
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/quickstart/">
+            Quickstart
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/getting-set-up/">
+            Getting set up
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/messenger-setup/">
+            Messenger setup
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/slack-setup/">
+            Slack setup
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/twitter-setup/">
+            Twitter setup
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/telegram-setup/">
+            Telegram setup
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/socketio-setup/">
+            Socketio setup
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../getting-started/webhooks/">
+            Webhooks
+          </a>
+        </li>
+      
+    
+      <h5 class="dusty-gray mt3 mb3 ttu">Working with Botmaster</h5>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../working-with-botmaster/botmaster-basics/">
+            Botmaster Basics
+          </a>
+        </li>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../working-with-botmaster/writing-your-own-bot-class/">
+            Writing your own Bot Class
+          </a>
+        </li>
+      
+    
+      <h5 class="dusty-gray mt3 mb3 ttu">Middlewares</h5>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../middlewares/fulfill/">
+            Fulfill
+          </a>
+        </li>
+      
+    
+      <h5 class="dusty-gray mt3 mb3 ttu">Tutorials</h5>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../tutorials/ibm-watson/">
+            IBM Watson
+          </a>
+        </li>
+      
+    
+      <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../articles/frameworks-comparison/">
+            Frameworks comparison
+          </a>
+        </li>
+      
+    
+      <h5 class="dusty-gray mt3 mb3 ttu">Updates</h5>
+      
+        <li class="mb2">
+          
+          
+          
+          <a class="no-underline cerulean-blue" href="../../updates/changelog/">
+            Changelog
+          </a>
+        </li>
+      
+    
+  </ul>
 </div>
 
-              
-
-            </div>
-            
-    	        <div id="body-inner">
-                
-                <h1>Writing your Own Bot Class</h1>
-                
-
-
+  <div class="fl w-80-l w-100 pl2-l">
+    <div class="bg-white br2 mt3">
+      <div class="tc bg-black-pearl pv4 br--top2">
+        <h1 class="fw5 white">Writing your Own Bot Class</h1>
+      </div>
+      <div class="pa4">
 
 <h2 id="bot-classes">Bot classes</h2>
 
@@ -491,33 +210,30 @@
 <p>Botmaster makes five usable bot classes available to developers out of the box. <code>MessengerBot</code>, <code>SlackBot</code>, <code>SocketioBot</code>, <code>TelegramBot</code> and <code>TwitterBot</code>.</p>
 
 <p>For example, you can instantiate a new <code>MessengerBot</code> object as such:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">Botmaster</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">MessengerBot</span> <span class="o">=</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">.</span><span class="nx">MessengerBot</span><span class="p">;</span>
 
-<pre><code class="language-js">const Botmaster = require('botmaster');
-const MessengerBot = Botmaster.botTypes.MessengerBot;
+<span class="kr">const</span> <span class="nx">messengerSettings</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">credentials</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">verifyToken</span><span class="o">:</span> <span class="s1">&#39;YOUR verifyToken&#39;</span><span class="p">,</span>
+    <span class="nx">pageToken</span><span class="o">:</span> <span class="s1">&#39;YOUR pageToken&#39;</span><span class="p">,</span>
+    <span class="nx">fbAppSecret</span><span class="o">:</span> <span class="s1">&#39;YOUR fbAppSecret&#39;</span>
+  <span class="p">},</span>
+  <span class="nx">webhookEndpoint</span><span class="o">:</span> <span class="s1">&#39;/webhook1234&#39;</span><span class="p">,</span>
+<span class="p">};</span>
 
-const messengerSettings = {
-  credentials: {
-    verifyToken: 'YOUR verifyToken',
-    pageToken: 'YOUR pageToken',
-    fbAppSecret: 'YOUR fbAppSecret'
-  },
-  webhookEndpoint: '/webhook1234',
-};
-
-const messengerBot = new MessengerBot(messengerSettings);
-</code></pre>
+<span class="kr">const</span> <span class="nx">messengerBot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MessengerBot</span><span class="p">(</span><span class="nx">messengerSettings</span><span class="p">);</span>
+</code></pre></div>
 
 <p>In order to get updates from Messenger, you would then be expected to mount your bot&rsquo;s express mini-app <code>messengerBot.app</code> onto your own express <code>app</code> by doing something like this:</p>
-
-<pre><code class="language-js">const app = require('express')();
-app.use('/', messengerBot.app);
-app.listen(3001, function() {});
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)();</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nx">messengerBot</span><span class="p">.</span><span class="nx">app</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3001</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+</code></pre></div>
 
 <p>Or even better:</p>
-
-<pre><code class="language-js">messengerBot.app.listen(3001, function() {});
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">messengerBot</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3001</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+</code></pre></div>
 
 <p>This will mount your bot onto: <code>https://Your_Domain_Name:3001/webhook1234</code>. Note how the bot type <strong>is not</strong> part of the URL here.</p>
 
@@ -526,19 +242,17 @@ app.listen(3001, function() {});
 <p>Doing this is really trivial and as it turns out, you do this every time you use the <code>addBot</code> method.</p>
 
 <p>We recall from the various guides that to create a botmaster object the following is needed:</p>
-
-<pre><code class="language-js">const Botmaster = require('botmaster');
-const botmaster = new Botmaster();
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">Botmaster</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">botmaster</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">();</span>
+</code></pre></div>
 
 <p>As usual, we create a botmaster object. This one supports Twitter and Telegram, but not Messenger. We create it as such:</p>
 
-<p>In this example the <code>botmaster</code> object will start a new <code>express()</code> <code>app</code> server running locally on port <code>3000</code> as expected by default (see <a href="https://botmasterai.github.io/working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app">here</a> to see how to change that).</p>
+<p>In this example the <code>botmaster</code> object will start a new <code>express()</code> <code>app</code> server running locally on port <code>3000</code> as expected by default (see <a href="../../working-with-botmaster/botmaster-basics/#using-botmaster-with-your-own-express-app">here</a> to see how to change that).</p>
 
 <p>As usual, we add the messenegrBot as follows:</p>
-
-<pre><code class="language-js">botmaster.addBot(messengerBot);
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">messengerBot</span><span class="p">);</span>
+</code></pre></div>
 
 <p>This will mount your bot onto: <code>https://Your_Domain_Name:3000/messenger/webhook1234</code>. Note how the bot type <strong>is</strong> part of the endpoint here. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.</p>
 
@@ -555,24 +269,23 @@ const botmaster = new Botmaster();
 <p>Before defining the rules that have to be respected in order to write a Botmaster compatible bot class let&rsquo;s look at the constructor of one of the existing one, <code>TelegramBot</code>:</p>
 
 <h3 id="constructor-settings"><code>#constructor(settings)</code></h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">class</span> <span class="nx">TelegramBot</span> <span class="kr">extends</span> <span class="nx">BaseBot</span> <span class="p">{</span>
 
-<pre><code class="language-js">class TelegramBot extends BaseBot {
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s1">&#39;telegram&#39;</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">requiresWebhook</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">requiredCredentials</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;authToken&#39;</span><span class="p">];</span>
 
-  constructor(settings) {
-    super(settings);
-    this.type = 'telegram';
-    this.requiresWebhook = true;
-    this.requiredCredentials = ['authToken'];
+    <span class="k">this</span><span class="p">.</span><span class="nx">__applySettings</span><span class="p">(</span><span class="nx">settings</span><span class="p">);</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">__createMountPoints</span><span class="p">();</span>
+  <span class="p">}</span>
 
-    this.__applySettings(settings);
-    .
-    .
-    .
-    this.__createMountPoints();
-  }
-
- }
-</code></pre>
+ <span class="p">}</span>
+</code></pre></div>
 
 <p>Let&rsquo;s look into this line by line. The first line reads <code>super(settings)</code>. Which of course just means it calls the constructor of <code>TelegramBot</code>&rsquo;s superclass, namely, <code>BaseBot</code>. <code>BaseBot</code>&rsquo;s constructor doesn&rsquo;t actually do anything fancy a part from calling its own superclass&rsquo;s constructor and setting a few default values [as pointers for you, the developer]. BaseBot calls its own superclass&rsquo;s constructor as it inherits from node.js&rsquo;s <code>EventEmitter</code> which will allow your bot&rsquo;s classes to listen to events as well as emit them.</p>
 
@@ -591,60 +304,58 @@ const botmaster = new Botmaster();
 <h3 id="createmountpoints"><code>#__createMountPoints()</code></h3>
 
 <p>The last line of our controller makes a call to <code>this.__createMountPoints();</code>. This line should only be present if your bot class requires webhooks. If this is the case, you will be expected to define a class member function that looks something like:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span>  <span class="nx">__createMountPoints</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+    <span class="c1">// for parsing application/json</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+    <span class="c1">// for parsing application/x-www-form-urlencoded</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">extended</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}));</span>
 
-<pre><code class="language-js">  __createMountPoints() {
-    this.app = express();
-    // for parsing application/json
-    this.app.use(bodyParser.json());
-    // for parsing application/x-www-form-urlencoded
-    this.app.use(bodyParser.urlencoded({ extended: true }));
+    <span class="k">this</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">webhookEndpoint</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">__formatUpdate</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
 
-    this.app.post(this.webhookEndpoint, (req, res) =&gt; {
-      this.__formatUpdate(req.body)
+      <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">__emitUpdate</span><span class="p">(</span><span class="nx">update</span><span class="p">);</span>
+      <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">err</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="sb">`Error in __formatUpdate &quot;</span><span class="si">${</span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="si">}</span><span class="sb">&quot;. Please report this.`</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+      <span class="p">});</span>
 
-      .then((update) =&gt; {
-        this.__emitUpdate(update);
-      }, (err) =&gt; {
-        err.message = `Error in __formatUpdate &quot;${err.message}&quot;. Please report this.`;
-        this.emit('error', err);
-      });
-
-      // just letting telegram know we got the update
-      res.sendStatus(200);
-    });
-  }
-</code></pre>
+      <span class="c1">// just letting telegram know we got the update</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+</code></pre></div>
 
 <p>Very importantly, this function creates an express router <code>this.app</code> that will be mounted onto the main <code>app</code> router from the botmaster object if <code>botmaster.addBot</code> is used.</p>
 
 <p>It then sets up the post endpoint that listens onto <code>this.webhookEnpoint</code>. No further assumption is made here.</p>
 
 <p>Please note that you might have another function that needs to be called at this point. For instance, in the <code>socketioBot</code> class, I make a call to: <code>this.__setupSocketioServer();</code> and that function looks like this:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">__setupSocketioServer</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">ioServer</span> <span class="o">=</span> <span class="nx">io</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">server</span><span class="p">);</span>
 
-<pre><code class="language-js">__setupSocketioServer() {
-  this.ioServer = io(this.server);
+  <span class="k">this</span><span class="p">.</span><span class="nx">ioServer</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">socket</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">SocketioBot</span><span class="p">.</span><span class="nx">__getBotmasteruserId</span><span class="p">(</span><span class="nx">socket</span><span class="p">));</span>
 
-  this.ioServer.on('connection', (socket) =&gt; {
-    socket.join(SocketioBot.__getBotmasteruserId(socket));
-
-    socket.on('message', (message) =&gt; {
-      // just broadcast the message to other connected clients with same user id
-      const botmasterUserId = SocketioBot.__getBotmasteruserId(socket);
-      socket.broadcast.to(botmasterUserId).emit('own message', message);
-      // console.log(JSON.stringify(socket.rooms, null, 2));
-      const rawUpdate = message;
-      try {
-        rawUpdate.socket = socket;
-      } catch (err) {
-        err.message = `ERROR: &quot;Expected JSON object but got '${typeof message}' ${message} instead&quot;`;
-        return this.emit('error', err);
-      }
-      const update = this.__formatUpdate(rawUpdate, botmasterUserId);
-      return this.__emitUpdate(update);
-    });
-  });
-}
-</code></pre>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="c1">// just broadcast the message to other connected clients with same user id</span>
+      <span class="kr">const</span> <span class="nx">botmasterUserId</span> <span class="o">=</span> <span class="nx">SocketioBot</span><span class="p">.</span><span class="nx">__getBotmasteruserId</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
+      <span class="nx">socket</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">.</span><span class="nx">to</span><span class="p">(</span><span class="nx">botmasterUserId</span><span class="p">).</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;own message&#39;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+      <span class="c1">// console.log(JSON.stringify(socket.rooms, null, 2));</span>
+      <span class="kr">const</span> <span class="nx">rawUpdate</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
+      <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">rawUpdate</span><span class="p">.</span><span class="nx">socket</span> <span class="o">=</span> <span class="nx">socket</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">err</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="sb">`ERROR: &quot;Expected JSON object but got &#39;</span><span class="si">${</span><span class="k">typeof</span> <span class="nx">message</span><span class="si">}</span><span class="sb">&#39; </span><span class="si">${</span><span class="nx">message</span><span class="si">}</span><span class="sb"> instead&quot;`</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="kr">const</span> <span class="nx">update</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">__formatUpdate</span><span class="p">(</span><span class="nx">rawUpdate</span><span class="p">,</span> <span class="nx">botmasterUserId</span><span class="p">);</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">__emitUpdate</span><span class="p">(</span><span class="nx">update</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <p>Feel free to have a thorough read at this to understand what is going on here. Because it isn&rsquo;t necessary to understand this in order to build your own bot class, I won&rsquo;t explain what is going on here.</p>
 
@@ -692,41 +403,39 @@ It would make sense for you to do so for consistency and because it has to be de
 <p>All previous methods had either something to do with object instantiation or with incoming messages. We&rsquo;ll now have a look at what needs to be done within your bot class to send messages.</p>
 
 <p>The <code>__sendMessage</code> method needs to be implemented. The method should take in a Messenger style message and send a formatted message to the bot platform. It should return a <code>Promise</code> that resolves to something like this:</p>
-
-<pre><code class="language-js">  {
-   raw: rawBody,
-   recipient_id: &lt;id_of_user&gt;,
-   message_id: &lt;message_id_of_what_was_just_sent&gt;
-  }
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span>  <span class="p">{</span>
+   <span class="nx">raw</span><span class="o">:</span> <span class="nx">rawBody</span><span class="p">,</span>
+   <span class="nx">recipient_id</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">id_of_user</span><span class="o">&gt;</span><span class="p">,</span>
+   <span class="nx">message_id</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">message_id_of_what_was_just_sent</span><span class="o">&gt;</span>
+  <span class="p">}</span>
+</code></pre></div>
 
 <p>Code for it might look like this simplified one from <code>TelegramBot</code>:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span> <span class="nx">__sendMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;https://api.telegram.org/sendMessage&#39;</span><span class="p">,</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+  <span class="p">};</span>
+  <span class="nx">options</span><span class="p">.</span><span class="nx">json</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">__formatOutgoingMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
 
-<pre><code class="language-js"> __sendMessage(message) {
-  const options = {
-    url: 'https://api.telegram.org/sendMessage',
-    method: 'POST',
-  };
-  options.json = this.__formatOutgoingMessage(message);
+  <span class="k">return</span> <span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="c1">// using request-promise package and not request here</span>
 
-  return request(options) // using request-promise package and not request here
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">body</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">body</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">body</span><span class="p">.</span><span class="nx">error</span><span class="p">));</span>
+    <span class="p">}</span>
 
-  .then((body) =&gt; {
-    if (body.error) {
-      throw new Error(JSON.stringify(body.error));
-    }
-
-    const standardizedBody = {
-      raw: body,
-      recipient_id: body.result.chat.id,
-      // this is really the equivalent to a Messenger seq.
-      // But it's either that or null for telegram
-      message_id: body.result.message_id,
-    };
-    return standardizedBody;
-  });
-}
-</code></pre>
+    <span class="kr">const</span> <span class="nx">standardizedBody</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">raw</span><span class="o">:</span> <span class="nx">body</span><span class="p">,</span>
+      <span class="nx">recipient_id</span><span class="o">:</span> <span class="nx">body</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">chat</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+      <span class="c1">// this is really the equivalent to a Messenger seq.</span>
+      <span class="c1">// But it&#39;s either that or null for telegram</span>
+      <span class="nx">message_id</span><span class="o">:</span> <span class="nx">body</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">message_id</span><span class="p">,</span>
+    <span class="p">};</span>
+    <span class="k">return</span> <span class="nx">standardizedBody</span><span class="p">;</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <p>See how we are returning a promise that resolves to an object as specified above!</p>
 
@@ -756,45 +465,31 @@ It would make sense for you to do so for consistency and because it has to be de
 <h3 id="setbotidifnotset-update"><code>#__setBotIdIfNotSet(update)</code></h3>
 
 <p>In order to help you identify between bots of different types, you will want each bot instance to have a <code>this.id</code> value. This should typically be the same as <code>update.recipient.id</code> when getting updates. If these aren&rsquo;t set upon instantiation (as with Facebook Messenger bots), you can write a function like this <code>MessengerBot</code> one that gets called upon receiving a message.</p>
-
-<pre><code class="language-js">__setBotIdIfNotSet(update) {
-  if (!this.id) {
-  	this.id = update.recipient.id;
-  }
-}
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">__setBotIdIfNotSet</span><span class="p">(</span><span class="nx">update</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  	<span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">update</span><span class="p">.</span><span class="nx">recipient</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <h2 id="is-this-really-all-there-is-to-it">Is this really all there is to it?</h2>
 
 <p>Yes it is! These few basic steps are the steps that should be followed in order to build your own bot classes. Nothing more is required. Of course, formatting the incoming updates and the outgoing messages won&rsquo;t always be as trivial as we&rsquo;d wish, but this guide should help you into doing this.</p>
-
-
-      
-      </div>
+</div>
     </div>
+  </main>
+  <script>
+    function showNavMenu() {
+      var sidebar = document.getElementById('sidebar')
 
-    <div id="navigation">
-        <a class="nav nav-prev" href="https://botmasterai.github.io/working-with-botmaster/botmaster-basics"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="https://botmasterai.github.io/tutorials" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
-    </div>
+      if (sidebar.className.indexOf('dn') !== -1) {
+        sidebar.className = 'fl w-100 w-20-l pr2-l di-l'
+      } else {
+        sidebar.className = 'fl w-100 w-20-l pr2-l di-l dn'
+      }
+    }
+  </script>
+</body>
 
-    </section>
-    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
-      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
-    </div>
-    <script src="https://botmasterai.github.io/js/clipboard.min.js"></script>
-    <script src="https://botmasterai.github.io/js/perfect-scrollbar.min.js"></script>
-    <script src="https://botmasterai.github.io/js/perfect-scrollbar.jquery.min.js"></script>
-    <script src="https://botmasterai.github.io/js/jquery.sticky-kit.min.js"></script>
-    <script src="https://botmasterai.github.io/js/featherlight.min.js"></script>
-    <script src="https://botmasterai.github.io/js/html5shiv-printshiv.min.js"></script>
-    <script src="https://botmasterai.github.io/js/highlight.pack.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    <script src="https://botmasterai.github.io/js/modernizr.custom.71422.js"></script>
-    <script src="https://botmasterai.github.io/js/learn.js"></script>
-    <script src="https://botmasterai.github.io/js/hugo-learn.js"></script>
-    
-
-  </body>
 </html>
 

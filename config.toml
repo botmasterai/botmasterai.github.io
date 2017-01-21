@@ -1,12 +1,18 @@
-baseurl = "https://botmasterai.github.io/"
+baseurl = "/"
 languageCode = "en-us"
 publishdir = "public"
 title = "Botmaster Documentation"
-theme = "hugo-theme-learn"
+theme = "bastille-day"
 metadataformat = "yaml"
-canonifyurls = true
+relativeURLs = true
+pygmentsuseclasses = true
+PygmentsCodeFences = true
 # Enable Google Analytics by entering your tracking id
 googleAnalytics = ""
+# Do not build RSS files
+disableRSS = true
+# Do not build Sitemap file
+disableSitemap = true
 
 [params]
 	# General information

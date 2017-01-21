@@ -6,7 +6,7 @@ echo -e "\033[0;32mDeploying updates to botmaster documentaition...\033[0m"
 npm run index
 
 # Build the project.
-hugo -t hugo-theme-learn
+hugo -t bastille-day
 
 # Add changes to git.
 git add -A
