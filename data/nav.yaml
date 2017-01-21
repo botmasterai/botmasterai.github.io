@@ -1,0 +1,39 @@
+---
+menu:
+  -
+    items:
+      - "Botmaster"
+    label: "Documentation"
+  -
+    items:
+      - "Installation"
+      - "Quickstart"
+      - "Getting set up"
+      - "Messenger setup"
+      - "Slack setup"
+      - "Twitter setup"
+      - "Telegram setup"
+      - "Socketio setup"
+      - "Webhooks"
+    label: "Getting Started"
+  -
+    items:
+      - "Botmaster Basics"
+      - "Writing your own Bot Class"
+    label: "Working with Botmaster"
+  -
+    items:
+      - "Fulfill"
+    label: "Middlewares"
+  -
+    items:
+      - "IBM Watson"
+    label: "Tutorials"
+  -
+    items:
+      - "Frameworks comparison"
+    label: "Articles"
+  -
+    items:
+      - "Changelog"
+    label: "Updates"
