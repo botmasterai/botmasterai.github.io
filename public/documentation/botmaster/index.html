@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Botmaster | Twitter Setup</title>
+  <title>Botmaster | Botmaster</title>
   <link rel="stylesheet" href="../../css/tachyons.css" />
   <link rel="stylesheet" href="../../css/main.css" />
   <link rel="stylesheet" href="../../css/notices.css" />
@@ -197,56 +197,37 @@
   <div class="fl w-80-l w-100 pl2-l">
     <div class="bg-white br2 mt3">
       <div class="tc bg-black-pearl pv4 br--top2">
-        <h1 class="fw5 white">Twitter Setup</h1>
+        <h1 class="fw5 white">Botmaster</h1>
       </div>
       <div class="pa4">
 
-<h2 id="getting-your-credentials">Getting your Credentials</h2>
+<h2 id="what-is-botmaster">What is botmaster?</h2>
 
-<p>Twitter&rsquo;s setup is slightly more tricky than one would wish. Because Twitter requires you to create an actual account and not a page or a bot, you&rsquo;ll have to do a few more steps.</p>
-
-<h4 id="setting-up-the-bot-account">Setting up the bot account</h4>
-
-<ul>
-<li>Just create a standard twitter account as you would any other. Name it as you want.</li>
-<li>navigate to your security and privacy settings (click on your image profile &gt; settings &gt; privacy and security settings)</li>
-<li>scroll to the bottom of the page and make sure &ldquo;Receive Direct Messages from anyone&rdquo; is ticked. (currently this has to be done because of Twitter&rsquo;s rules concerning DMs, where in order to send a DM to someone, they have to be following you).</li>
-</ul>
-
-<h4 id="setting-up-the-app">Setting up the app</h4>
-
-<ul>
-<li>Navigate to the somewhat hard to find Twitter developer app dashboard at: <a href="https://apps.twitter.com/">https://apps.twitter.com/</a></li>
-<li>Click Create New App. Enter your details (callback URL is not required if you are starting from scratch here). &lsquo;Website&rsquo; can take in a placeholder like (<a href="http://www.example.com">http://www.example.com</a>)</li>
-<li>Now navigate straight to the &lsquo;Permissions&rsquo; tab(do this before going to the &lsquo;Keys and Access Tokens&rsquo; tab). Select &lsquo;Read, Write and Access direct messages&rsquo; and then click &lsquo;Update Setting&rsquo;</li>
-<li>Navigate to the &lsquo;Keys and Access Tokens&rsquo; tab. You&rsquo;ll find your consumerKey and consumerSecret right here</li>
-<li>Scroll down and click on &lsquo;Create my access token&rsquo;. You now have your accessToken  and your accessTokenSecret</li>
-</ul>
-
-<p>! Makes sure not to create your access token before having reset your permissions. If you do that, you will need to change your permissions then regenerate your access token.</p>
-
-<p>That should about do it. Because twitter DM is not completely separate from the rest of Twitter, it behaves quite differently from the other platforms on many aspects. These points are covered in <a href="../../working-with-botmaster">working with botmaster</a>.</p>
-
-<h2 id="code">Code</h2>
+<p>Botmaster is a lightweight highly extendable, highly configurable chatbot framework. It was meant to be used both in small scale and large scale projects. Its purpose is to integrate your chatbot into a variety of messaging channels - currently Facebook Messenger, Slack, Twitter DM, Telegram and socket.io. Using botmaster looks something like this:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">Botmaster</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./config&#39;</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">botTypes</span> <span class="o">=</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">botmaster</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">();</span>
 
-<span class="kr">const</span> <span class="nx">twitterSettings</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">credentials</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">consumerKey</span><span class="o">:</span> <span class="s1">&#39;YOUR consumerKey&#39;</span><span class="p">,</span>
-    <span class="nx">consumerSecret</span><span class="o">:</span> <span class="s1">&#39;YOUR consumerSecret&#39;</span><span class="p">,</span>
-    <span class="nx">accessToken</span><span class="o">:</span> <span class="s1">&#39;YOUR accessToken&#39;</span><span class="p">,</span>
-    <span class="nx">accessTokenSecret</span><span class="o">:</span> <span class="s1">&#39;YOUR accessTokenSecret&#39;</span><span class="p">,</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kr">const</span> <span class="nx">twitterBot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">.</span><span class="nx">TwitterBot</span><span class="p">(</span><span class="nx">twitterSettings</span><span class="p">);</span>
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">twitterBot</span><span class="p">);</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="k">new</span> <span class="nx">botTypes</span><span class="p">.</span><span class="nx">MessengerBot</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">messengerSettings</span><span class="p">));</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="k">new</span> <span class="nx">botTypes</span><span class="p">.</span><span class="nx">SlackBot</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">slackSettings</span><span class="p">));</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="k">new</span> <span class="nx">botTypes</span><span class="p">.</span><span class="nx">SocketioBot</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">socketioSettings</span><span class="p">));</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="k">new</span> <span class="nx">botTypes</span><span class="p">.</span><span class="nx">TwitterBot</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">twitterSettings</span><span class="p">));</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="k">new</span> <span class="nx">botTypes</span><span class="p">.</span><span class="nx">TelegramBot</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">telegramSettings</span><span class="p">));</span>
 
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Right back at you&#39;</span><span class="p">);</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Right back at you!&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
+
+<h2 id="botmaster-is-platform-agnostic">Botmaster is platform agnostic</h2>
+
+<p>Botmaster is platform agnostic in two important ways. Firstly, out of the box, developers can have bots running on Facebook Messenger, Slack, Twitter DM, Telegram and their personal webapp/app via socket.io with not only a standardized text message format, but also a standardized attachment format. Secondly, BotMaster makes no assumptions about the back-end bot itself - you can write code that allows BotMaster to call conversational engines such as IBM Watson&rsquo;s conversation API, open source frameworks or even write the conversation engine yourself.</p>
+
+<h2 id="botmaster-s-philosophy">Botmaster&rsquo;s Philosophy</h2>
+
+<p>Its philosophy is to minimise the amount of code developers have to write in order to create 1-on-1 conversational chatbots that work on multiple platforms. It does so by defining a standard with respect to what format messages take and how 1-on-1 conversations occur. Messages to/from the various messaging channels supported are all mapped onto this botmaster standard, meaning the code you write is much reduced when compared to a set of point:point integrations.</p>
 </div>
     </div>
   </main>
