@@ -7,6 +7,44 @@ title: Changelog
 weight: 0
 ---
 
+### PATCH 2.2.4
+
+This patch allows users to use `sendMessage` type functions with an optional `sendOptions` object. Currently, this can be used to bypass outgoing middleware
+when sending messages. Using this looks something like this:
+
+```js
+bot.reply(incomingUpdateCopy, 'Hello world', { ignoreMiddleware: true })
+```
+
+or using a callback function
+
+```js
+bot.reply(incomingUpdateCopy, 'Hello world', { ignoreMiddleware: true }, (body) =>
+  console.log(body);
+);
+```
+
+or for buttons
+
+```js
+bot.sendDefaultButtonMessageTo(
+  ['button1', 'button2'], sender.user.id, 'click on a button',
+  { ignoreMiddleware: true })
+```
+
+or
+
+or with cascade messages
+
+```js
+bot.sendTextCascadeTo(
+  ['message1', 'message2'], sender.user.id,
+  { ignoreMiddleware: true }, (bodies) => {
+
+  console.log(bodies);
+})
+```
+
 ### PATCH 2.2.3
 
 This patch adds support for the `bot.sendCascadeTo` and `bot.sendTextCascadeTo` methods. Allowing users to send a cascade of message with just one command rather than having to deal with that themselves. Read more about it here:

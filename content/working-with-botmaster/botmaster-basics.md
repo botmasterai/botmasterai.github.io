@@ -359,6 +359,61 @@ botmaster.on('update', (bot, update) => {
 });
 ```
 
+typically, you would want to perform some action upon confirmation that the message was sent or catch a potential error. doing so is done like this:
+
+```js
+botmaster.on('update', (bot, update) => {
+  .
+  .
+  bot.sendMessage(message)
+
+  .then((body) => {
+    console.log(body);
+  })
+
+  .catch((err) => {
+    console.log(err.message);
+  })
+});
+
+```
+
+You can also opt to use callbacks rather than promises and this would work as such:
+
+```js
+botmaster.on('update', (bot, update) => {
+  .
+  .
+  bot.sendMessage(message, (err, body) => {
+    if (err) {
+      return console.log(err.message);
+    }
+
+    console.log(body);
+  });
+});
+```
+
+Typically, this method (and all its accompanying helper ones that follow) will hit all your setup outgoing middleware (read more about middleware [here](/working-with-botmaster/middleware) if you don't know about them yet). If you want to avoid that and ignore your setup middleware in certain situations, do something like this:
+
+```js
+botmaster.on('update', (bot, update) => {
+  .
+  .
+  bot.sendMessage(message, { ignoreMiddleware: true })
+});
+```
+
+And its signature is as follows:
+
+`bot.sendMessage`
+
+| Argument | Description
+|--- |---
+| message | a full valid messenger message object.
+| sendOptions | (__optional__) an object containing options regarding the sending of the message. One of those options is: `ignoreMiddleware`.
+| cb | (__optional__) callback function if you don't want to use botmaster with promises.
+
 As you can see, the `sendMessage` method used is used directly from the bot object and not using the botmaster one.
 
 Because you might not always want to code in a complex json object just to send in a simple text message or photo attachment, Botmaster comes with a few helper methods that can be used to send messages with less code:
@@ -369,6 +424,8 @@ Because you might not always want to code in a complex json object just to send 
 |--- |---
 | message | an object without the recipient part. In the previous example, it would be `message.message`.
 | recipientId  | a string representing the id of the user to whom you want to send the message.
+| sendOptions | (__optional__) an object containing options regarding the sending of the message. One of those options is: `ignoreMiddleware`.
+| cb | (__optional__) callback function if you don't want to use botmaster with promises.
 
 `bot.sendTextMessageTo`
 
@@ -376,6 +433,8 @@ Because you might not always want to code in a complex json object just to send 
 |--- |---
 | text | just a string with the text you want to send to your user
 | recipientId  | a string representing the id of the user to whom you want to send the message.
+| sendOptions | (__optional__) an object containing options regarding the sending of the message. One of those options is: `ignoreMiddleware`.
+| cb | (__optional__) callback function if you don't want to use botmaster with promises.
 
 Typically used like so to send a text message to the user who just spoke to the bot:
 
@@ -391,6 +450,8 @@ botmaster.on('update', (bot, update) => {
 |--- |---
 | update | an update object with a valid `update.sender.id`.
 | text  | just a string with the text you want to send to your user
+| sendOptions | (__optional__) an object containing options regarding the sending of the message. One of those options is: `ignoreMiddleware`.
+| cb | (__optional__) callback function if you don't want to use botmaster with promises.
 
 This is is typically used like so:
 
@@ -410,6 +471,8 @@ We'll note here really quickly that Messenger only takes in urls for file attach
 |--- |---
 | attachment | a valid Messenger style attachment. See [here](https://developers.facebook.com/docs/messenger-platform/send-api-reference) for more on that.
 | recipientId  | a string representing the id of the user to whom you want to send the message.
+| sendOptions | (__optional__) an object containing options regarding the sending of the message. One of those options is: `ignoreMiddleware`.
+| cb | (__optional__) callback function if you don't want to use botmaster with promises.
 
 This is the general attachment sending method that will always work for Messenger but not necessarily for other platforms as Facebook Messenger supports all sorts of attachments that other platforms don't necessarily support. So beware when using it. To assure your attachment will be sent to all platforms, use `bot.sendAttachmentFromURLTo`.
 
@@ -436,6 +499,8 @@ Just easier to use this to send standard url attachments. And URL attachments if
 | type | string representing the type of attachment (audio, video, image or file)
 | url  | the url to your file
 | recipientId  | a string representing the id of the user to whom you want to send the message.
+| sendOptions | (__optional__) an object containing options regarding the sending of the message. One of those options is: `ignoreMiddleware`.
+| cb | (__optional__) callback function if you don't want to use botmaster with promises.
 
 This is typically used as such for sending an image url.
 
@@ -454,6 +519,8 @@ To indicate that something is happening on your bots end, you can show your user
 | Argument | Description
 |--- |---
 | recipientId  | a string representing the id of the user to whom you want to send the message.
+| sendOptions | (__optional__) an object containing options regarding the sending of the message. One of those options is: `ignoreMiddleware`.
+| cb | (__optional__) callback function if you don't want to use botmaster with promises.
 
 It is used as such:
 
@@ -476,7 +543,9 @@ Buttons will almost surely be part of your bot. Botmaster provides a method that
 |--- |---
 | buttonTitles | array of button titles (no longer than 10 in size).
 | recipientId  | a string representing the id of the user to whom you want to send the message.
-| textOrAttachment  | (__optional__) a string or an attachment object similar to the ones required in `bot.sendAttachmentTo`. This is meant to provide context to the buttons. I.e. why are there buttons here. A piece of text or an attachment could detail that. If not provided,  text will be added that reads: 'Please select one of:'.
+| textOrAttachment  | (__optional__) a string or an attachment object similar to the ones required in `bot.sendAttachmentTo`. This is meant to provide context to the buttons. I.e. why are there buttons here. A piece of text or an attachment could detail that. If not provided,  text will be added that reads: 'Please select one of:'. This is only optional if none of sendOptions and cb is specified
+| sendOptions | (__optional__) an object containing options regarding the sending of the message. One of those options is: `ignoreMiddleware`.
+| cb | (__optional__) callback function if you don't want to use botmaster with promises.
 
 The function defaults to sending `quick_replies` in Messenger, setting `Keyboard buttons` in Telegram, buttons in Slack and simply prints button titles one on each line in Twitter as it doesn't support buttons. The user is expecting to type in their choice in Twitter. In the socketio implementation, the front-end/app developer is expected to write the code that would display the buttons on their front-end.
 
@@ -489,6 +558,11 @@ botmaster.on('update', (bot, update) => {
     'Please select "button1" or "button2"');
 });
 ```
+
+{{% notice warning %}}
+If you will be using either of `sendOptions` or `cb`, you will need to specify `textOrAttachment`.
+{{% /notice %}}
+
 
 #### Cascade
 
@@ -515,7 +589,7 @@ As you might have guessed, Botmaster assures you that the objects in the message
 ```
 
 {{% notice info %}}
-It is important to note that all these parameters will be hit in the shown order if present. I.e. if `raw` is present, `message` will not be hit not will `buttons` be hit etc.
+It is important to note that all these parameters will be hit in the shown order if present. I.e. if `raw` is present, `message` will not be hit nor will `buttons` be hit etc.
 {{% /notice %}}
 
 You could typically use this as such:

@@ -19,6 +19,7 @@ menu:
   -
     items:
       - "Botmaster Basics"
+      - "Middleware"
       - "Writing your own Bot Class"
     label: "Working with Botmaster"
   -
