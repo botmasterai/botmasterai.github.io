@@ -29,9 +29,6 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Documentation</h5>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../documentation/botmaster/">
             Botmaster
           </a>
@@ -41,81 +38,54 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Getting Started</h5>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/installation/">
             Installation
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/quickstart/">
             Quickstart
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/getting-set-up/">
             Getting set up
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/messenger-setup/">
             Messenger setup
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/slack-setup/">
             Slack setup
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/twitter-setup/">
             Twitter setup
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/telegram-setup/">
             Telegram setup
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/socketio-setup/">
             Socketio setup
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../getting-started/webhooks/">
             Webhooks
           </a>
@@ -125,18 +95,18 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Working with Botmaster</h5>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../working-with-botmaster/botmaster-basics/">
             Botmaster Basics
           </a>
         </li>
       
         <li class="mb2">
-          
-          
-          
+          <a class="no-underline cerulean-blue" href="../../working-with-botmaster/middleware/">
+            Middleware
+          </a>
+        </li>
+      
+        <li class="mb2">
           <a class="no-underline cerulean-blue" href="../../working-with-botmaster/writing-your-own-bot-class/">
             Writing your own Bot Class
           </a>
@@ -146,9 +116,6 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Middlewares</h5>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../middlewares/fulfill/">
             Fulfill
           </a>
@@ -158,9 +125,6 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Tutorials</h5>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../tutorials/ibm-watson/">
             IBM Watson
           </a>
@@ -170,9 +134,6 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../articles/frameworks-comparison/">
             Frameworks comparison
           </a>
@@ -182,9 +143,6 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Updates</h5>
       
         <li class="mb2">
-          
-          
-          
           <a class="no-underline cerulean-blue" href="../../updates/changelog/">
             Changelog
           </a>
@@ -595,6 +553,74 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <span class="p">});</span>
 </code></pre></div>
 
+<p>typically, you would want to perform some action upon confirmation that the message was sent or catch a potential error. doing so is done like this:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">body</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">})</span>
+
+  <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>You can also opt to use callbacks rather than promises and this would work as such:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>Typically, this method (and all its accompanying helper ones that follow) will hit all your setup outgoing middleware (read more about middleware <a href="../../working-with-botmaster/middleware">here</a> if you don&rsquo;t know about them yet). If you want to avoid that and ignore your setup middleware in certain situations, do something like this:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>And its signature is as follows:</p>
+
+<p><code>bot.sendMessage</code></p>
+
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>message</td>
+<td>a full valid messenger message object.</td>
+</tr>
+
+<tr>
+<td>sendOptions</td>
+<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
+</tr>
+
+<tr>
+<td>cb</td>
+<td>(<strong>optional</strong>) callback function if you don&rsquo;t want to use botmaster with promises.</td>
+</tr>
+</tbody>
+</table>
+
 <p>As you can see, the <code>sendMessage</code> method used is used directly from the bot object and not using the botmaster one.</p>
 
 <p>Because you might not always want to code in a complex json object just to send in a simple text message or photo attachment, Botmaster comes with a few helper methods that can be used to send messages with less code:</p>
@@ -619,6 +645,16 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <td>recipientId</td>
 <td>a string representing the id of the user to whom you want to send the message.</td>
 </tr>
+
+<tr>
+<td>sendOptions</td>
+<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
+</tr>
+
+<tr>
+<td>cb</td>
+<td>(<strong>optional</strong>) callback function if you don&rsquo;t want to use botmaster with promises.</td>
+</tr>
 </tbody>
 </table>
 
@@ -641,6 +677,16 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <tr>
 <td>recipientId</td>
 <td>a string representing the id of the user to whom you want to send the message.</td>
+</tr>
+
+<tr>
+<td>sendOptions</td>
+<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
+</tr>
+
+<tr>
+<td>cb</td>
+<td>(<strong>optional</strong>) callback function if you don&rsquo;t want to use botmaster with promises.</td>
 </tr>
 </tbody>
 </table>
@@ -670,6 +716,16 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <tr>
 <td>text</td>
 <td>just a string with the text you want to send to your user</td>
+</tr>
+
+<tr>
+<td>sendOptions</td>
+<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
+</tr>
+
+<tr>
+<td>cb</td>
+<td>(<strong>optional</strong>) callback function if you don&rsquo;t want to use botmaster with promises.</td>
 </tr>
 </tbody>
 </table>
@@ -703,6 +759,16 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <tr>
 <td>recipientId</td>
 <td>a string representing the id of the user to whom you want to send the message.</td>
+</tr>
+
+<tr>
+<td>sendOptions</td>
+<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
+</tr>
+
+<tr>
+<td>cb</td>
+<td>(<strong>optional</strong>) callback function if you don&rsquo;t want to use botmaster with promises.</td>
 </tr>
 </tbody>
 </table>
@@ -748,6 +814,16 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <td>recipientId</td>
 <td>a string representing the id of the user to whom you want to send the message.</td>
 </tr>
+
+<tr>
+<td>sendOptions</td>
+<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
+</tr>
+
+<tr>
+<td>cb</td>
+<td>(<strong>optional</strong>) callback function if you don&rsquo;t want to use botmaster with promises.</td>
+</tr>
 </tbody>
 </table>
 
@@ -775,6 +851,16 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <tr>
 <td>recipientId</td>
 <td>a string representing the id of the user to whom you want to send the message.</td>
+</tr>
+
+<tr>
+<td>sendOptions</td>
+<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
+</tr>
+
+<tr>
+<td>cb</td>
+<td>(<strong>optional</strong>) callback function if you don&rsquo;t want to use botmaster with promises.</td>
 </tr>
 </tbody>
 </table>
@@ -814,7 +900,17 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 
 <tr>
 <td>textOrAttachment</td>
-<td>(<strong>optional</strong>) a string or an attachment object similar to the ones required in <code>bot.sendAttachmentTo</code>. This is meant to provide context to the buttons. I.e. why are there buttons here. A piece of text or an attachment could detail that. If not provided,  text will be added that reads: &lsquo;Please select one of:&lsquo;.</td>
+<td>(<strong>optional</strong>) a string or an attachment object similar to the ones required in <code>bot.sendAttachmentTo</code>. This is meant to provide context to the buttons. I.e. why are there buttons here. A piece of text or an attachment could detail that. If not provided,  text will be added that reads: &lsquo;Please select one of:&lsquo;. This is only optional if none of sendOptions and cb is specified</td>
+</tr>
+
+<tr>
+<td>sendOptions</td>
+<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
+</tr>
+
+<tr>
+<td>cb</td>
+<td>(<strong>optional</strong>) callback function if you don&rsquo;t want to use botmaster with promises.</td>
 </tr>
 </tbody>
 </table>
@@ -828,6 +924,10 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
     <span class="s1">&#39;Please select &quot;button1&quot; or &quot;button2&quot;&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
+
+<div class="notices warning" ><p>If you will be using either of <code>sendOptions</code> or <code>cb</code>, you will need to specify <code>textOrAttachment</code>.</p>
+</div>
+
 
 <h4 id="cascade">Cascade</h4>
 
@@ -867,7 +967,7 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<div class="notices info" ><p>It is important to note that all these parameters will be hit in the shown order if present. I.e. if <code>raw</code> is present, <code>message</code> will not be hit not will <code>buttons</code> be hit etc.</p>
+<div class="notices info" ><p>It is important to note that all these parameters will be hit in the shown order if present. I.e. if <code>raw</code> is present, <code>message</code> will not be hit nor will <code>buttons</code> be hit etc.</p>
 </div>
 
 
