@@ -50,12 +50,6 @@
         </li>
       
         <li class="mb2">
-          <a class="no-underline cerulean-blue" href="../../getting-started/getting-set-up/">
-            Getting set up
-          </a>
-        </li>
-      
-        <li class="mb2">
           <a class="no-underline cerulean-blue" href="../../getting-started/messenger-setup/">
             Messenger setup
           </a>
@@ -125,8 +119,8 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Tutorials</h5>
       
         <li class="mb2">
-          <a class="no-underline cerulean-blue" href="../../tutorials/ibm-watson/">
-            IBM Watson
+          <a class="no-underline cerulean-blue" href="../../tutorials/watson-conversation/">
+            Watson Conversation
           </a>
         </li>
       
@@ -161,7 +155,104 @@
 
 <h2 id="middleware-basics">Middleware basics</h2>
 
-<p>Middleware in Botmaster is designed to work as what you would expect in an express.js app. However, they work slightly differently and if you&rsquo;ve never written express.js apps, you&rsquo;ll still want to leverage middleware in Botmaster.</p>
+<p>Middleware in Botmaster is designed to work similarly to  what you would expect in an express.js app. However, you might not have used express and they work slightly differently, so here&rsquo;s a writeup of how they work.</p>
+
+<p>Generally, middleware allows developers to do some preprocessing on some received data before performing some main action based on what was received (like sending a response to the client that made the request). Because the term pre-processing is fairly vague and can be interpreted as broad, developers often end up having the main parts of their code within middleware. Botmaster is no different.</p>
+
+<p>Because Botmaster is a chatbot framework and not a we app framework, we go on and define two different types of middleware: <code>incoming</code> and <code>outgoing</code> middleware. Incoming middleware is akin to what you would have in a standard express middleware (if you have experience with express), whereas outgoing middleware will act on your response object.</p>
+
+<p>Here is the signature of <code>botmaster.use</code></p>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>middlewareType</td>
+<td>either <code>'incoming'</code> or <code>'outgoing'</code> depending on what middleware you are setting up.</td>
+</tr>
+
+<tr>
+<td>options</td>
+<td>(<strong>optional</strong>) set options for when to activate the middleware. Currently only supports a <code>type</code> parameter that takes in a space separated string of platform names (names are defined in the bot classes and values are set in <code>bot.type</code>)</td>
+</tr>
+
+<tr>
+<td>middlewareCallback</td>
+<td>The actual middleware function that will be called. It is of type: <code>function(bot, update, next)</code> on <code>incoming</code> and <code>function(bot, message, next)</code> on <code>outgoing</code></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="incoming-middleware">Incoming middleware</h3>
+
+<p>As mentioned briefly above, <code>incoming</code> middleware in Botmaster is similar to what you would have in express middleware and can be used similarly. They are all called in order of declaration upon receiving a message before entering the <code>on('update'...)</code> function. Here is a very simple example of how one would go on and use <code>incoming</code> middleware:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// assumed here that some weather API is queried to get that weatherInformation</span>
+  <span class="nx">update</span><span class="p">.</span><span class="nx">weatherInformation</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">weather</span><span class="o">:</span> <span class="mi">23</span><span class="p">,</span>
+    <span class="nx">unit</span><span class="o">:</span> <span class="s1">&#39;celcius&#39;</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="nx">next</span><span class="p">();</span> <span class="c1">// !! always call next when done to go to next middleware function</span>
+<span class="p">});</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">weatherInformation</span><span class="p">.</span><span class="nx">weather</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;the weather is warm&#39;</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;the weather is mild&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>This is a very basic example. But hopefully, it gets the message through of how and why you would use <code>incoming</code> middleware. Clearly, anything can be done in a middleware function, like calling external APIs etc. You are encouraged to do so really.</p>
+
+<p>Now if I wanted to, say, have a middleware function that would get hit after the first one and only on Facebook Messenger bots (bots of type <code>messenger</code>), I would do so as follows:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="p">.</span>
+<span class="p">.</span>
+  <span class="nx">next</span><span class="p">();</span> <span class="c1">// !! always call next when done to go to next middleware function</span>
+<span class="p">});</span>
+
+<span class="c1">// this middleware function is called after the one setting weatherInformation</span>
+<span class="c1">// so `update.weatherInformation` exists here</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;messenger&#39;</span> <span class="p">},</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">update</span><span class="p">.</span><span class="nx">user</span> <span class="o">=</span> <span class="nx">bot</span><span class="p">.</span><span class="nx">getUserInfo</span><span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">userInfo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">update</span><span class="p">.</span><span class="nx">userInfo</span> <span class="o">=</span> <span class="nx">userInfo</span><span class="p">;</span>
+    <span class="nx">next</span><span class="p">();</span> <span class="c1">// next is here called after the</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// just set update.username</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">update</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="s1">&#39;there&#39;</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">userInfo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">update</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">update</span><span class="p">.</span><span class="nx">userInfo</span><span class="p">.</span><span class="nx">first_name</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">weatherInformation</span><span class="p">.</span><span class="nx">weather</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="sb">`Hi </span><span class="si">${</span><span class="nx">update</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">, the weather is warm`</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="sb">`Hi </span><span class="si">${</span><span class="nx">update</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">, the weather is warm`</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>In this example, I expand on the previous example and setup two new middleware functions. One that will be called only on bots of type <code>messenger</code> and the other one on all bots. The first one gets the information available on the user if the bot is of type messenger. The second one then set the <code>update.username</code> according to whether it finds a name or not. As mentioned, they are called in order.</p>
+
+<p>Now that we&rsquo;ve had a look at incoming middleware, let&rsquo;s have a look at how outgoing middleware works.</p>
+
+<h3 id="outgoing-middleware">Outgoing middleware</h3>
 </div>
     </div>
   </main>

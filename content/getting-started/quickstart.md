@@ -74,7 +74,7 @@ On the first two lines we get the `MessengerBot` and `TwitterBot` classes expose
 
 Next, settings objets for both platforms are created: namely the `messengerSettings` and `twitterSettings` objects. To see how to gather the necessary credentials, have a look at these small guides: [messenger](/getting-started/messenger-setup), [twitter](/getting-started/twitter-setup).
 
-In the `messengerSettings` object, the `webhookEndpoint` parameter simply indicates to Botmaster what endpoint we want the Facebook Messenger messages to come into. I.e. if you host your Botmaster app on, say, "http://somebotmasterapp.com", Messages coming in from Facebook Messenger will hit: "http://somebotmasterapp.com/messenger/webhook1234". This works because Botmaster is built on top of express.js. Read more about webhooks and how to make them work locally [here](/getting-started/webhooks).
+In the `messengerSettings` object, the `webhookEndpoint` parameter simply indicates to Botmaster what endpoint we want the Facebook Messenger messages to come into. I.e. if you host your Botmaster app on, say, "https://somebotmasterapp.com", Messages coming in from Facebook Messenger will hit: "https://somebotmasterapp.com/messenger/webhook1234". This works because Botmaster is built on top of express.js. Read more about webhooks and how to make them work locally [here](/getting-started/webhooks).
 
 As it stands, these bot objects don't really have much to do with our previously create botmaster one. We want to be able to manage them from the botmaster obejct. So we will now add (or mount) these newly created bot objects onto the botmaster object we created previously. So right after these few lines, enter the following:
 

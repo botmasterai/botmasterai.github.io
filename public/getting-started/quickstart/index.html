@@ -50,12 +50,6 @@
         </li>
       
         <li class="mb2">
-          <a class="no-underline cerulean-blue" href="../../getting-started/getting-set-up/">
-            Getting set up
-          </a>
-        </li>
-      
-        <li class="mb2">
           <a class="no-underline cerulean-blue" href="../../getting-started/messenger-setup/">
             Messenger setup
           </a>
@@ -125,8 +119,8 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Tutorials</h5>
       
         <li class="mb2">
-          <a class="no-underline cerulean-blue" href="../../tutorials/ibm-watson/">
-            IBM Watson
+          <a class="no-underline cerulean-blue" href="../../tutorials/watson-conversation/">
+            Watson Conversation
           </a>
         </li>
       
@@ -222,7 +216,7 @@ very easily as will be described later.</p>
 
 <p>Next, settings objets for both platforms are created: namely the <code>messengerSettings</code> and <code>twitterSettings</code> objects. To see how to gather the necessary credentials, have a look at these small guides: <a href="../../getting-started/messenger-setup">messenger</a>, <a href="../../getting-started/twitter-setup">twitter</a>.</p>
 
-<p>In the <code>messengerSettings</code> object, the <code>webhookEndpoint</code> parameter simply indicates to Botmaster what endpoint we want the Facebook Messenger messages to come into. I.e. if you host your Botmaster app on, say, &ldquo;<a href="http://somebotmasterapp.com&quot;">http://somebotmasterapp.com&quot;</a>, Messages coming in from Facebook Messenger will hit: &ldquo;<a href="http://somebotmasterapp.com/messenger/webhook1234&quot;">http://somebotmasterapp.com/messenger/webhook1234&quot;</a>. This works because Botmaster is built on top of express.js. Read more about webhooks and how to make them work locally <a href="../../getting-started/webhooks">here</a>.</p>
+<p>In the <code>messengerSettings</code> object, the <code>webhookEndpoint</code> parameter simply indicates to Botmaster what endpoint we want the Facebook Messenger messages to come into. I.e. if you host your Botmaster app on, say, &ldquo;<a href="https://somebotmasterapp.com&quot;">https://somebotmasterapp.com&quot;</a>, Messages coming in from Facebook Messenger will hit: &ldquo;<a href="https://somebotmasterapp.com/messenger/webhook1234&quot;">https://somebotmasterapp.com/messenger/webhook1234&quot;</a>. This works because Botmaster is built on top of express.js. Read more about webhooks and how to make them work locally <a href="../../getting-started/webhooks">here</a>.</p>
 
 <p>As it stands, these bot objects don&rsquo;t really have much to do with our previously create botmaster one. We want to be able to manage them from the botmaster obejct. So we will now add (or mount) these newly created bot objects onto the botmaster object we created previously. So right after these few lines, enter the following:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">messengerBot</span><span class="p">);</span>

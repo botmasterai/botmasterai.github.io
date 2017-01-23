@@ -8,7 +8,6 @@ menu:
     items:
       - "Installation"
       - "Quickstart"
-      - "Getting set up"
       - "Messenger setup"
       - "Slack setup"
       - "Twitter setup"
@@ -28,7 +27,7 @@ menu:
     label: "Middlewares"
   -
     items:
-      - "IBM Watson"
+      - "Watson Conversation"
     label: "Tutorials"
   -
     items:
