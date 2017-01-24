@@ -7,11 +7,14 @@ toc: true
 weight: 20
 ---
 
-## Middleware basics
-
 Middleware in Botmaster is designed to work similarly to  what you would expect in an express.js app. However, you might not have used express and they work slightly differently, so here's a writeup of how they work.
 
-Generally, middleware allows developers to do some preprocessing on some received data before performing some main action based on what was received (like sending a response to the client that made the request). Because the term pre-processing is fairly vague and can be interpreted as broad, developers often end up having the main parts of their code within middleware. Botmaster is no different.
+Generally, middleware allows developers to do some preprocessing on some received data before performing some main action based on what was received (like sending a response to the client that made the request). Because the term pre-processing is fairly vague and can be interpreted as broad, developers often end up having the main parts of their code within middleware. Botmaster is no different. Here's a typical diagram flow showing how it looks like under the hood.
+
+
+
+![Middleware Diagram 1](/images/middleware_diagram.png)
+
 
 Because Botmaster is a chatbot framework and not a we app framework, we go on and define two different types of middleware: `incoming` and `outgoing` middleware. Incoming middleware is akin to what you would have in a standard express middleware (if you have experience with express), whereas outgoing middleware will act on your response object.
 

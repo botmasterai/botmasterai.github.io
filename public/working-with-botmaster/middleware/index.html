@@ -3,11 +3,16 @@
 
 <head>
   <meta charset="utf-8" />
+  
+  <link rel="shortcut icon" href="../../images/favicon.ico" type="image/x-icon" />
+
   <title>Botmaster | Middleware</title>
   <link rel="stylesheet" href="../../css/tachyons.css" />
   <link rel="stylesheet" href="../../css/main.css" />
   <link rel="stylesheet" href="../../css/notices.css" />
   <link rel="stylesheet" href="../../css/base16-tomorrow.light.css" />
+  <link href="../../css/botmaster_style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -153,11 +158,11 @@
       </div>
       <div class="pa4">
 
-<h2 id="middleware-basics">Middleware basics</h2>
-
 <p>Middleware in Botmaster is designed to work similarly to  what you would expect in an express.js app. However, you might not have used express and they work slightly differently, so here&rsquo;s a writeup of how they work.</p>
 
-<p>Generally, middleware allows developers to do some preprocessing on some received data before performing some main action based on what was received (like sending a response to the client that made the request). Because the term pre-processing is fairly vague and can be interpreted as broad, developers often end up having the main parts of their code within middleware. Botmaster is no different.</p>
+<p>Generally, middleware allows developers to do some preprocessing on some received data before performing some main action based on what was received (like sending a response to the client that made the request). Because the term pre-processing is fairly vague and can be interpreted as broad, developers often end up having the main parts of their code within middleware. Botmaster is no different. Here&rsquo;s a typical diagram flow showing how it looks like under the hood.</p>
+
+<p><img src="../../images/middleware_diagram.png" alt="Middleware Diagram 1" /></p>
 
 <p>Because Botmaster is a chatbot framework and not a we app framework, we go on and define two different types of middleware: <code>incoming</code> and <code>outgoing</code> middleware. Incoming middleware is akin to what you would have in a standard express middleware (if you have experience with express), whereas outgoing middleware will act on your response object.</p>
 
