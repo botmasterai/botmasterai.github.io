@@ -115,6 +115,12 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Middlewares</h5>
       
         <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../middlewares/official-middleware/">
+            Official Middleware
+          </a>
+        </li>
+      
+        <li class="mb2">
           <a class="no-underline cerulean-blue" href="../../middlewares/fulfill/">
             Fulfill
           </a>
@@ -1033,6 +1039,26 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <p>Something like this will do:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">bot</span><span class="p">.</span><span class="nx">sendTextCascadeTo</span><span class="p">([</span><span class="s1">&#39;message1&#39;</span><span class="p">,</span> <span class="s1">&#39;message2&#39;</span><span class="p">],</span> <span class="nx">user</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
 </code></pre></div>
+
+<p><code>sendOptions</code> is an optional argument that can take in the following parameters (for now)</p>
+
+<table>
+<thead>
+<tr>
+<th>key/option</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ignoreMiddleware</td>
+<td>outgoing middleware will not be hit if this parameter is set to true (or any truthy value)</td>
+</tr>
+</tbody>
+</table>
+
+<p>If you want to learn more about middleware and why you might want to use any of these options, read more about middleware <a href="../../working-with-botmaster/middleware">here</a></p>
 </div>
     </div>
   </main>

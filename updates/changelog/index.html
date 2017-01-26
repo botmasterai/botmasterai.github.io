@@ -115,6 +115,12 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Middlewares</h5>
       
         <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../middlewares/official-middleware/">
+            Official Middleware
+          </a>
+        </li>
+      
+        <li class="mb2">
           <a class="no-underline cerulean-blue" href="../../middlewares/fulfill/">
             Fulfill
           </a>
@@ -161,12 +167,12 @@
 <h3 id="patch-2-2-4">PATCH 2.2.4</h3>
 
 <p>This patch allows users to use <code>sendMessage</code> type functions with an optional <code>sendOptions</code> object. Currently, this can be used to bypass outgoing middleware
-when sending messages. Using this looks something like this:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">incomingUpdateCopy</span><span class="p">,</span> <span class="s1">&#39;Hello world&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
+when sending messages by using the <code>ignoreMiddleware</code> option. Using this looks something like this:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Hello world!&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
 </code></pre></div>
 
 <p>or using a callback function</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">incomingUpdateCopy</span><span class="p">,</span> <span class="s1">&#39;Hello world&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="o">=&gt;</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Hello world!&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
 <span class="p">);</span>
 </code></pre></div>
