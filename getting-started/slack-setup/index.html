@@ -173,11 +173,11 @@
 <p>Teams can either build a bot that will only live within their own slack team. Or they can package a bot in a Slack app that &ldquo;packages&rdquo; the bot.
 Admin team members can add support for a bot (by installing an App that packages said bot) and then team members can start communicating with it as they would with another team member. At this point, they would be communicating with what is known as, in Slack semantics, a <strong>bot user</strong>.</p>
 
-<p>The <code>slackSettings</code> object is required to allow us to communicate to end users via this <strong>bot user</strong> that needs to be set up on Slack&rsquo;s end.</p>
+<p>All the information required by Slack concerning this is setup in the <code>slackSettings</code> object within Botmaster. This will allow us to create a Slack Bot object that communicates to end users via this <strong>bot user</strong> that needs to be set up on Slack&rsquo;s end. Because this whole setup and gathering the proper credentials is not as trivial as one might want and quite unclear on their website, here&rsquo;s a mini-tutorial to get you started with Botmaster * Slack.</p>
 
 <h2 id="botmaster-slack-bot-mini-tutorial">Botmaster Slack bot mini-tutorial</h2>
 
-<p>Following these steps, you will have a fully functional Slack bot using botmaster that can then be edited as wanted. This mini-tutorial uses localtunnel to expose one of your ports to the world. see why you might want to use this and how to install and setup localtunnel <a href="../../getting-started/webhooks#localtunnel">here</a>for your local botmaster project. You can use ngrok or any other service you know or find suitable and achieve the same result.</p>
+<p>Following these steps, you will have a fully functional Slack bot using Botmaster that can then be edited as wanted. This mini-tutorial uses localtunnel to expose one of your ports to the world. see why you might want to use this and how to install and setup localtunnel <a href="../../getting-started/webhooks#localtunnel">here</a> for your local botmaster project. You can use ngrok or any other service you know or find suitable and achieve the same result.</p>
 
 <h4 id="create-an-app">Create an app</h4>
 
@@ -199,7 +199,7 @@ This URL has to be of the form: <strong>https://&lt;your_base_url&gt;/slack/&lt;
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>  lt -p <span class="m">3000</span> -s botmastersubdomain
 </code></pre></div>
 
-<p>I would set my Redirect URL(s) to: <code>https://botmastersubdomain.localtunnel.me/slack/webhookd24sr34se</code> (based on the <code>webhookEnpoint</code> set in my <code>slackSettings</code> at the top of this page). Click on <strong>Save Changes</strong>.</p>
+<p>I would set my Redirect URL(s) to: <code>https://botmastersubdomain.localtunnel.me/slack/webhookd24sr34se</code> (based on the <code>webhookEnpoint</code> set in my <code>slackSettings</code> in the &ldquo;Start your Botmaster App Locally&rdquo; section). Click on <strong>Save Changes</strong>.</p>
 
 <h4 id="add-a-bot-user">Add a Bot User</h4>
 
@@ -207,7 +207,7 @@ This URL has to be of the form: <strong>https://&lt;your_base_url&gt;/slack/&lt;
 
 <h4 id="get-the-rest-of-your-credentials">Get the rest of your credentials</h4>
 
-<p>Navigate to the <strong>Event Subscriptions</strong> tab and click on the toggle button in the to right corner to <strong>on</strong>. Then in the <strong>Request URL</strong> field that pops up, enter the same URL as in step 4. <strong>You will get an error</strong>. This is normal and is due to two reasons. Firstly, we don&rsquo;t actually have an app started and listening at the mentioned URL and secondly because even if we did, we don&rsquo;t have our App&rsquo;s verification Token. Let&rsquo;s fix this!</p>
+<p>Navigate to the <strong>Event Subscriptions</strong> tab and click on the toggle button in the to right corner to <strong>on</strong>. Then in the <strong>Request URL</strong> field that pops up, enter the same URL as in the OAuth &amp; Permissions tab. <strong>You will get an error</strong>. This is normal and is due to two reasons. Firstly, we don&rsquo;t actually have an app started and listening at the mentioned URL and secondly because even if we did, we don&rsquo;t have our App&rsquo;s verification Token. Let&rsquo;s fix this!</p>
 
 <p>Navigate back to <strong>Basic Information</strong> and note that you now have a <strong>Verification Token</strong> in the App Credentials box. Take note of it.</p>
 
