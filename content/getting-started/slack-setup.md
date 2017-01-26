@@ -16,11 +16,11 @@ As you surely know, Slack is a product that enables team members to communicate 
 Teams can either build a bot that will only live within their own slack team. Or they can package a bot in a Slack app that "packages" the bot.
 Admin team members can add support for a bot (by installing an App that packages said bot) and then team members can start communicating with it as they would with another team member. At this point, they would be communicating with what is known as, in Slack semantics, a **bot user**.
 
-The `slackSettings` object is required to allow us to communicate to end users via this **bot user** that needs to be set up on Slack's end.
+All the information required by Slack concerning this is setup in the `slackSettings` object within Botmaster. This will allow us to create a Slack Bot object that communicates to end users via this **bot user** that needs to be set up on Slack's end. Because this whole setup and gathering the proper credentials is not as trivial as one might want and quite unclear on their website, here's a mini-tutorial to get you started with Botmaster * Slack.
 
 ## Botmaster Slack bot mini-tutorial
 
-Following these steps, you will have a fully functional Slack bot using botmaster that can then be edited as wanted. This mini-tutorial uses localtunnel to expose one of your ports to the world. see why you might want to use this and how to install and setup localtunnel [here](/getting-started/webhooks#localtunnel)for your local botmaster project. You can use ngrok or any other service you know or find suitable and achieve the same result.
+Following these steps, you will have a fully functional Slack bot using Botmaster that can then be edited as wanted. This mini-tutorial uses localtunnel to expose one of your ports to the world. see why you might want to use this and how to install and setup localtunnel [here](/getting-started/webhooks#localtunnel) for your local botmaster project. You can use ngrok or any other service you know or find suitable and achieve the same result.
 
 #### Create an app
 
@@ -42,7 +42,7 @@ This URL has to be of the form: **https://\<your_base_url\>/slack/\<webhookEndpo
  ```bash
   lt -p 3000 -s botmastersubdomain
  ```
-I would set my Redirect URL(s) to: `https://botmastersubdomain.localtunnel.me/slack/webhookd24sr34se` (based on the `webhookEnpoint` set in my `slackSettings` at the top of this page). Click on **Save Changes**.
+I would set my Redirect URL(s) to: `https://botmastersubdomain.localtunnel.me/slack/webhookd24sr34se` (based on the `webhookEnpoint` set in my `slackSettings` in the "Start your Botmaster App Locally" section). Click on **Save Changes**.
 
 #### Add a Bot User
 
@@ -50,7 +50,7 @@ Go to **Bot Users** and click on the **Add a Bot User** button. Select a name fo
 
 #### Get the rest of your credentials
 
-Navigate to the **Event Subscriptions** tab and click on the toggle button in the to right corner to **on**. Then in the **Request URL** field that pops up, enter the same URL as in step 4. **You will get an error**. This is normal and is due to two reasons. Firstly, we don't actually have an app started and listening at the mentioned URL and secondly because even if we did, we don't have our App's verification Token. Let's fix this!
+Navigate to the **Event Subscriptions** tab and click on the toggle button in the to right corner to **on**. Then in the **Request URL** field that pops up, enter the same URL as in the OAuth & Permissions tab. **You will get an error**. This is normal and is due to two reasons. Firstly, we don't actually have an app started and listening at the mentioned URL and secondly because even if we did, we don't have our App's verification Token. Let's fix this!
 
 Navigate back to **Basic Information** and note that you now have a **Verification Token** in the App Credentials box. Take note of it.
 
