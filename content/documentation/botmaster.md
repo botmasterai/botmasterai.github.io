@@ -7,7 +7,7 @@ title: Botmaster
 weight: 0
 ---
 
-## What is botmaster?
+## What is Botmaster?
 
 Botmaster is a lightweight highly extendable, highly configurable chatbot framework. It was meant to be used both in small scale and large scale projects. Its purpose is to integrate your chatbot into a variety of messaging channels - currently Facebook Messenger, Slack, Twitter DM, Telegram and socket.io. Using botmaster looks something like this:
 

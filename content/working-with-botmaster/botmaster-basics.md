@@ -643,3 +643,11 @@ Something like this will do:
 ```js
 bot.sendTextCascadeTo(['message1', 'message2'], user.sender.id);
 ```
+
+`sendOptions` is an optional argument that can take in the following parameters (for now)
+
+| key/option |  Description
+|--- |---
+| ignoreMiddleware | outgoing middleware will not be hit if this parameter is set to true (or any truthy value)
+
+If you want to learn more about middleware and why you might want to use any of these options, read more about middleware [here](/working-with-botmaster/middleware)

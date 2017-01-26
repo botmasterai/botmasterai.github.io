@@ -115,6 +115,12 @@
       <h5 class="dusty-gray mt3 mb3 ttu">Middlewares</h5>
       
         <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../middlewares/official-middleware/">
+            Official Middleware
+          </a>
+        </li>
+      
+        <li class="mb2">
           <a class="no-underline cerulean-blue" href="../../middlewares/fulfill/">
             Fulfill
           </a>
@@ -164,7 +170,7 @@
 
 <p><img src="../../images/middleware_diagram.png" alt="Middleware Diagram 1" /></p>
 
-<p>Because Botmaster is a chatbot framework and not a we app framework, we go on and define two different types of middleware: <code>incoming</code> and <code>outgoing</code> middleware. Incoming middleware is akin to what you would have in a standard express middleware (if you have experience with express), whereas outgoing middleware will act on your response object.</p>
+<p>Because Botmaster is a chatbot framework and not a web app framework, we go on and define two different types of middleware: <code>incoming</code> and <code>outgoing</code> middleware. Incoming middleware is akin to what you would have in a standard express middleware (if you have experience with express), whereas outgoing middleware will act on your response object.</p>
 
 <p>Here is the signature of <code>botmaster.use</code></p>
 
@@ -194,12 +200,16 @@
 </tbody>
 </table>
 
-<h3 id="incoming-middleware">Incoming middleware</h3>
+<h2 id="incoming-middleware">Incoming middleware</h2>
 
-<p>As mentioned briefly above, <code>incoming</code> middleware in Botmaster is similar to what you would have in express middleware and can be used similarly. They are all called in order of declaration upon receiving a message before entering the <code>on('update'...)</code> function. Here is a very simple example of how one would go on and use <code>incoming</code> middleware:</p>
+<p>As mentioned briefly above, <code>incoming</code> middleware in Botmaster is similar to what you would have in express middleware and can be used similarly. They are all called in order of declaration upon receiving an update before entering the <code>on('update'...)</code> function.</p>
+
+<h3 id="basic-incoming-middleware-example">Basic incoming middleware example</h3>
+
+<p>Here is a very simple example of how one would go on and use <code>incoming</code> middleware:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="c1">// assumed here that some weather API is queried to get that weatherInformation</span>
-  <span class="nx">update</span><span class="p">.</span><span class="nx">weatherInformation</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">update</span><span class="p">.</span><span class="nx">weatherInfo</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">weather</span><span class="o">:</span> <span class="mi">23</span><span class="p">,</span>
     <span class="nx">unit</span><span class="o">:</span> <span class="s1">&#39;celcius&#39;</span><span class="p">,</span>
   <span class="p">}</span>
@@ -207,7 +217,7 @@
 <span class="p">});</span>
 
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">weatherInformation</span><span class="p">.</span><span class="nx">weather</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">weatherInfo</span><span class="p">.</span><span class="nx">weather</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;the weather is warm&#39;</span><span class="p">);</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;the weather is mild&#39;</span><span class="p">);</span>
@@ -217,32 +227,121 @@
 
 <p>This is a very basic example. But hopefully, it gets the message through of how and why you would use <code>incoming</code> middleware. Clearly, anything can be done in a middleware function, like calling external APIs etc. You are encouraged to do so really.</p>
 
-<p>Now if I wanted to, say, have a middleware function that would get hit after the first one and only on Facebook Messenger bots (bots of type <code>messenger</code>), I would do so as follows:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="p">.</span>
-<span class="p">.</span>
-  <span class="nx">next</span><span class="p">();</span> <span class="c1">// !! always call next when done to go to next middleware function</span>
-<span class="p">});</span>
+<h3 id="basic-incoming-middleware-example-with-structure">Basic incoming middleware example with structure</h3>
 
-<span class="c1">// this middleware function is called after the one setting weatherInformation</span>
-<span class="c1">// so `update.weatherInformation` exists here</span>
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;messenger&#39;</span> <span class="p">},</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">update</span><span class="p">.</span><span class="nx">user</span> <span class="o">=</span> <span class="nx">bot</span><span class="p">.</span><span class="nx">getUserInfo</span><span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+<p>In practice, your middleware code will really live within separate files that you would &ldquo;require&rdquo; within your main &ldquo;app.js&rdquo; file. That means that the previous example will have a tree structure similar to the following:</p>
+
+<pre><code>├── app.js
+└── middleware
+    ├── incoming
+    │   ├── weather.js
+    │   └── index.js
+    └── outgoing // no outgoing middleware in this example
+        └── index.js // this will remain an empty file for now
+</code></pre>
+
+<p>This is only a suggested structure (the one I use). Feel free to come up with a different, potentially better, structure that suits you better.</p>
+
+<p>That means that the previous example&rsquo;s code will probably look more like this:</p>
+
+<p><code>middleware/incoming/weather.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// using eslint disallowFunctionDeclarations here. Read here: https://github.com/airbnb/javascript#functions to see why I use this syntax rather than the standard function updateText(bot,  message, next) one.</span>
+<span class="kr">const</span> <span class="nx">addWeatherInfoToUpdate</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addWeatherInfoToUpdate</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">update</span><span class="p">.</span><span class="nx">weatherInfo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">weather</span><span class="o">:</span> <span class="mi">23</span><span class="p">,</span>
+    <span class="nx">unit</span><span class="o">:</span> <span class="s1">&#39;celcius&#39;</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">addWeatherInfoToUpdate</span><span class="p">,</span> <span class="c1">// using shorthand here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>middleware/incoming/index.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">weather</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./weather&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">weather</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p><code>app.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">incomingMiddleware</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./middleware/incoming&#39;</span><span class="p">);</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="nx">incomingMiddleware</span><span class="p">.</span><span class="nx">weather</span><span class="p">.</span><span class="nx">addWeatherInfoToUpdate</span><span class="p">);</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">){</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">weatherInformation</span><span class="p">.</span><span class="nx">weather</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;the weather is warm&#39;</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;the weather is mild&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<h3 id="complete-incoming-middleware-example-with-structure">Complete incoming middleware example with structure</h3>
+
+<p>Now if I wanted to, say, add a couple of user info related middleware functions including a middleware function that would get hit only on Facebook Messenger bots (bots of type <code>messenger</code>), using the same base structure, and updating it as follows:</p>
+
+<pre><code>├── app.js
+└── middleware
+    ├── incoming
+    │   ├── weather.js
+    │   ├── user_info.js
+    │   └── index.js
+    └── outgoing
+        └── index.js
+</code></pre>
+
+<p>I would do the following:</p>
+
+<p>create the file <code>middleware/incoming/user_info.js</code> as follows:</p>
+
+<p><code>middleware/incoming/user_info.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">addUserInfoToUpdate</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addUserInfoToUpdate</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">getUserInfo</span><span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
 
   <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">userInfo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="nx">update</span><span class="p">.</span><span class="nx">userInfo</span> <span class="o">=</span> <span class="nx">userInfo</span><span class="p">;</span>
-    <span class="nx">next</span><span class="p">();</span> <span class="c1">// next is here called after the</span>
+    <span class="nx">next</span><span class="p">();</span> <span class="c1">// next is only called once the user information is gathered</span>
   <span class="p">});</span>
-<span class="p">});</span>
+<span class="p">}</span>
 
-<span class="c1">// just set update.username</span>
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="kr">const</span> <span class="nx">addUsernameToUpdate</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addUsernameToUpdate</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">update</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="s1">&#39;there&#39;</span><span class="p">;</span>
 
   <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">userInfo</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">update</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">update</span><span class="p">.</span><span class="nx">userInfo</span><span class="p">.</span><span class="nx">first_name</span><span class="p">;</span>
   <span class="p">}</span>
   <span class="nx">next</span><span class="p">();</span>
-<span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">addUserInfoToUpdate</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Then update <code>middleware/incoming/index.js</code> and <code>app.js</code> to look like this respectively:</p>
+
+<p><code>middleware/incoming/index.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">weather</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./weather&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">userInfo</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./user_info&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">weather</span><span class="p">,</span>
+  <span class="nx">userInfo</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p><code>app.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">incomingMiddleware</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./middleware/incoming&#39;</span><span class="p">);</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="nx">incomingMiddleware</span><span class="p">.</span><span class="nx">weather</span><span class="p">.</span><span class="nx">addWeatherInfoToUpdate</span><span class="p">);</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;messenger&#39;</span> <span class="p">},</span>
+              <span class="nx">incomingMiddleware</span><span class="p">.</span><span class="nx">userInfo</span><span class="p">.</span><span class="nx">addUserInfoToUpdate</span><span class="p">);</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="nx">incomingMiddleware</span><span class="p">.</span><span class="nx">userInfo</span><span class="p">.</span><span class="nx">addUsernameToUpdate</span><span class="p">);</span>
 
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">weatherInformation</span><span class="p">.</span><span class="nx">weather</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
@@ -253,11 +352,175 @@
 <span class="p">});</span>
 </code></pre></div>
 
-<p>In this example, I expand on the previous example and setup two new middleware functions. One that will be called only on bots of type <code>messenger</code> and the other one on all bots. The first one gets the information available on the user if the bot is of type messenger. The second one then set the <code>update.username</code> according to whether it finds a name or not. As mentioned, they are called in order.</p>
+<p>In this example, I expand on the previous example and setup two new middleware functions. One that will be called only on bots of type <code>messenger</code> and the other one on all bots. The first one gets the information available on the user if the bot is of type <code>messenger</code>. The second one then sets the <code>update.username</code> according to whether it finds a name or not. As mentioned, they are called in order of declaration.</p>
+
+<p>It should be clear by now that this reads much clearer than the previous example. Simply by reading the <code>app.js</code> file I can have an idea of what is going on in the code. Cleary, some weather information and user information is added to the <code>update</code> object that information is then used to customize the text returned to the user.</p>
 
 <p>Now that we&rsquo;ve had a look at incoming middleware, let&rsquo;s have a look at how outgoing middleware works.</p>
 
-<h3 id="outgoing-middleware">Outgoing middleware</h3>
+<h2 id="outgoing-middleware">Outgoing middleware</h2>
+
+<p>similar to the <code>incoming</code> middleware, the <code>outgoing</code> middleware is called in order of declaration. However, it is called on every message object sent by you the developer. To illustrate this, here&rsquo;s an example:</p>
+
+<h3 id="basic-example">Basic example</h3>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">){</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span> <span class="c1">// using a helper function to send text message</span>
+<span class="p">});</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// this is a full valid messenger object.</span>
+
+  <span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;Hello you!&quot;</span><span class="p">;</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>In this example, the first three lines are what you would expect if you were simply trying to reply &ldquo;Hello world&rdquo; to any message. However, if you try this out, you&rsquo;ll see that you get a &ldquo;Hello you!&rdquo; text message back. Indeed, our middleware, aside from printing the message object to show you what it looks like, replaces the text with &ldquo;Hello you&rdquo;.</p>
+
+<p>This is really what you&rsquo;ll want to be doing within outgoing middleware. First use one of the Botmaster helper functions to send a message, then edit it in your outgoing middleware functions. Botmaster simply creates the valid [messenger compatible] message object before hitting the outgoing middleware where you can play with this.</p>
+
+<h3 id="basic-example-with-structure">Basic example with structure</h3>
+
+<p>As in the incoming middleware example, in practice, your middleware code will really live within separate files that you would &ldquo;require: within your main &ldquo;app.js&rdquo; file. Using a structure similar to the one used in the incoming middleware example. We look at something like this:</p>
+
+<pre><code>├── app.js
+└── middleware
+    ├── incoming // no incoming middleware in this example
+    │   └── index.js // this will remain an empty file for now
+    └── outgoing
+        ├── message_transformers.js
+        └── index.js
+</code></pre>
+
+<p>Where your code will look something like this
+That means that the previous example will probably look more like this:</p>
+
+<p><code>middleware/outgoing/message_transformers.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// using eslint disallowFunctionDeclarations here. Read here: https://github.com/airbnb/javascript#functions to see why I use this syntax rather than the standard function updateText(bot,  message, next) one.</span>
+<span class="kr">const</span> <span class="nx">changeText</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">changeText</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// using</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// this is a full valid messenger object.</span>
+
+  <span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="s1">&#39;Hello you!&#39;</span><span class="p">;</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">changeText</span><span class="p">,</span> <span class="c1">// using shorthand here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>middleware/outgoing/index.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">messageTransformers</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./message_transformers&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">messageTransformers</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p><code>app.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">outgoingMiddleware</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./middleware/outgoing&#39;</span><span class="p">);</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">){</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span> <span class="c1">// using a helper function to send text message</span>
+<span class="p">});</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoingMiddleware</span><span class="p">.</span><span class="nx">messageTransformers</span><span class="p">.</span><span class="nx">updateText</span><span class="p">);</span>
+</code></pre></div>
+
+<p>This might seem like slight overkill at this point because of how trivial of an example this is. But this adds clear structure to our project and when reading our app.js file we can already know what is going on. It also makes it very clear regarding what is going on if you were to add another middleware function right after the <code>updateText</code> one.</p>
+
+<h3 id="complete-outgoing-middleware-example-with-structure">Complete outgoing middleware example with structure</h3>
+
+<p>Taking this one step further, you can do something like the following to, say, send buttons without using the builtin <code>sendDefaultButtonMessageTo</code> method. We&rsquo;ll keep our structure and simply update the files to look like this:</p>
+
+<p><code>middleware/outgoing/message_transformers.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">changeText</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">changeText</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// using</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span> <span class="o">===</span> <span class="s1">&#39;Thank you&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="s1">&#39;Thanks&#39;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">addButtonsToMessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addButtonsToMessage</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+
+  <span class="kr">const</span> <span class="nx">buttonsRegexObject</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/&amp;\[.+]/</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">buttonsRegexObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">buttonTitles</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">buttonsRegexObject</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="kr">const</span> <span class="nx">cleanedText</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">buttonsRegexObject</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+    <span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">quick_replies</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">buttonTitle</span> <span class="k">of</span> <span class="nx">buttonTitles</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">quick_replies</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+        <span class="nx">content_type</span><span class="o">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+        <span class="nx">title</span><span class="o">:</span> <span class="nx">buttonTitle</span><span class="p">,</span>
+        <span class="nx">payload</span><span class="o">:</span> <span class="nx">buttonTitle</span><span class="p">,</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="nx">message</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">cleanedText</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">changeText</span><span class="p">,</span> <span class="c1">// using shorthand here</span>
+  <span class="nx">addButtonsToMessage</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>This simple <code>addButtonsToMessage</code> function simply uses regular expressions to see if the text contains any bit of text that looks anything like the following: <code>'[&quot;Button1&quot;,&quot;Button2&quot;]'</code>. If any such string is found, it then proceeds to add a quick_replies component to your message object and update the text to remove those button mentions. We next have a look at <code>app.js</code> that also has to be transformed:</p>
+
+<p><code>app.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">outgoingMiddleware</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./middleware/outgoing&#39;</span><span class="p">);</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">){</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendTextCascadeTo</span><span class="p">([</span><span class="s1">&#39;Hi there, I`m about to ask you to press buttons:&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;Please press any of: [&quot;Button1&quot;,&quot;Button2&quot;]&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;Thank you&#39;</span><span class="p">]);</span>
+<span class="p">});</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoingMiddleware</span><span class="p">.</span><span class="nx">messageTransformers</span><span class="p">.</span><span class="nx">updateText</span><span class="p">);</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoingMiddleware</span><span class="p">.</span><span class="nx">messageTransformers</span><span class="p">.</span><span class="nx">addButtonsToMessage</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Now this will work great. But actually, what i want to do is show the user a typing indicator right before sending every message that goes out. Because I&rsquo;m using a sendCascade function, namely, <code>sendTextCascadeTo</code>, the best way to do so is to do this within an outgoing middleware function. Here&rsquo;s how we can edit <code>app.js</code> to achieve this goal:</p>
+
+<p><code>app.js</code></p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">outgoingMiddleware</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./middleware/outgoing&#39;</span><span class="p">);</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">){</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendTextCascadeTo</span><span class="p">([</span><span class="s1">&#39;Hi there, I`m about to ask you to press buttons:&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;Please press any of: [&quot;Button1&quot;,&quot;Button2&quot;]&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;Thank you&#39;</span><span class="p">]);</span>
+<span class="p">});</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoingMiddleware</span><span class="p">.</span><span class="nx">messageTransformers</span><span class="p">.</span><span class="nx">updateText</span><span class="p">);</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoingMiddleware</span><span class="p">.</span><span class="nx">messageTransformers</span><span class="p">.</span><span class="nx">addButtonsToMessage</span><span class="p">);</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">recipient</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendIsTypingMessageTo</span><span class="p">(</span><span class="nx">userId</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
+
+  <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">next</span><span class="p">();</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">})</span>
+</code></pre></div>
+
+<p>There&rsquo;s a few things going on in this added bit of code here. First we make it clear again that middleware code can technically live anywhere. It would be better to have it in a separate file somewhere. But this also works. Second, We introduce the <code>ignoreMiddleware</code> option when sending a message. This will always work and simply tells Botmaster to not go through any of the middleware with this message and send it directly. This is very important as otherwise, we would be stuck in an infinite loop trying to send an &ldquo;is typing&rdquo; indicator. Second we note that we use <code>setTimeout</code> to make it look like the bot is typing for about 1 second before firing out the message by calling <code>next()</code>.</p>
+
+<h2 id="external-middleware">External middleware</h2>
+
+<p>This is all great. But Using the code in <code>addButtonsToMessage</code> to add buttons to your message is probably not the best. Indeed, external middleware packages provide better solutions to this problem. Like in any other framework that contains middleware, middleware can be put into packages. These packages are then available and downloadable via <code>npm</code> and thus easily accessible in your code.</p>
+
+<p>Have a look in our list of official middleware <a href="../../middlewares/official-middleware">here</a></p>
 </div>
     </div>
   </main>

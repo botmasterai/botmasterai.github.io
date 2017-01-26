@@ -10,16 +10,16 @@ weight: 0
 ### PATCH 2.2.4
 
 This patch allows users to use `sendMessage` type functions with an optional `sendOptions` object. Currently, this can be used to bypass outgoing middleware
-when sending messages. Using this looks something like this:
+when sending messages by using the `ignoreMiddleware` option. Using this looks something like this:
 
 ```js
-bot.reply(incomingUpdateCopy, 'Hello world', { ignoreMiddleware: true })
+bot.reply(update, 'Hello world!', { ignoreMiddleware: true })
 ```
 
 or using a callback function
 
 ```js
-bot.reply(incomingUpdateCopy, 'Hello world', { ignoreMiddleware: true }, (body) =>
+bot.reply(update, 'Hello world!', { ignoreMiddleware: true }, (body) =>
   console.log(body);
 );
 ```

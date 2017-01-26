@@ -23,6 +23,7 @@ menu:
     label: "Working with Botmaster"
   -
     items:
+      - "Official Middleware"
       - "Fulfill"
     label: "Middlewares"
   -
