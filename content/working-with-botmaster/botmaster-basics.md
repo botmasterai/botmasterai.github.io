@@ -506,7 +506,7 @@ This is typically used as such for sending an image url.
 
 ```js
 botmaster.on('update', (bot, update) => {
-  bot.sendAttachment('image', "some image url you've got", update.sender.id);
+  bot.sendAttachmentFromURLTo('image', "some image url you've got", update.sender.id);
 });
 ```
 
