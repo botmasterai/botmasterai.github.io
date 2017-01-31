@@ -834,7 +834,7 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 
 <p>This is typically used as such for sending an image url.</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendAttachment</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s2">&quot;some image url you&#39;ve got&quot;</span><span class="p">,</span> <span class="nx">update</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendAttachmentFromURLTo</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s2">&quot;some image url you&#39;ve got&quot;</span><span class="p">,</span> <span class="nx">update</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
 
