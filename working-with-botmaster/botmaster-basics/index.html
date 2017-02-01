@@ -574,6 +574,39 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <span class="p">});</span>
 </code></pre></div>
 
+<p>The <code>body</code> part of the response has the following structure:</p>
+
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>raw</td>
+<td>raw response body (response from the platform).</td>
+</tr>
+
+<tr>
+<td>recipient_id</td>
+<td>id of user who sent the message</td>
+</tr>
+
+<tr>
+<td>message_id</td>
+<td>id of message that was just sent</td>
+</tr>
+
+<tr>
+<td>sent_message</td>
+<td>full object that was just sent after going through all the outgoing middlewares</td>
+</tr>
+</tbody>
+</table>
+
 <p>You can also opt to use callbacks rather than promises and this would work as such:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="p">.</span>
