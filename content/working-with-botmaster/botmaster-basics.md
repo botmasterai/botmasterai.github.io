@@ -378,6 +378,16 @@ botmaster.on('update', (bot, update) => {
 
 ```
 
+The `body` part of the response has the following structure:
+
+
+| Argument | Description
+|--- |---
+| raw | raw response body (response from the platform).
+| recipient_id | id of user who sent the message
+| message_id | id of message that was just sent
+| sent_message | full object that was just sent after going through all the outgoing middlewares
+
 You can also opt to use callbacks rather than promises and this would work as such:
 
 ```js

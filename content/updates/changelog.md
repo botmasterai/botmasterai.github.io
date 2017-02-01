@@ -32,8 +32,6 @@ bot.sendDefaultButtonMessageTo(
   { ignoreMiddleware: true })
 ```
 
-or
-
 or with cascade messages
 
 ```js
