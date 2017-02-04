@@ -164,6 +164,24 @@
       </div>
       <div class="pa4">
 
+<h3 id="patch-2-2-7">PATCH 2.2.7</h3>
+
+<p>Add the concept of <code>implements</code> for bot classes. Now every bot object has a <code>bot.implements</code> object that specifies which functionalities are implemented by the bot class. Currently, the values that exist and can be tested against are:</p>
+
+<p><code>quickReply</code> // for quick replies
+<code>attachment</code> // does it support attachments
+<code>typing</code> // does it support typing status</p>
+
+<h3 id="patch-2-2-6">PATCH 2.2.6</h3>
+
+<p>Just fix a bug in outgoing middleware</p>
+
+<h3 id="patch-2-2-5">PATCH 2.2.5</h3>
+
+<p>This patch adds to the body returned when using any of the <code>bot.sendMessage</code> type helper methods.</p>
+
+<p>Now the body also contains a <code>body.sent_message</code> parameter that is simply the full object that was sent by the bot</p>
+
 <h3 id="patch-2-2-4">PATCH 2.2.4</h3>
 
 <p>This patch allows users to use <code>sendMessage</code> type functions with an optional <code>sendOptions</code> object. Currently, this can be used to bypass outgoing middleware
