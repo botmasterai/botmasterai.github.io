@@ -7,6 +7,25 @@ title: Changelog
 weight: 0
 ---
 
+### PATCH 2.2.7
+
+Add the concept of `implements` for bot classes. Now every bot object has a `bot.implements` object that specifies which functionalities are implemented by the bot class. Currently, the values that exist and can be tested against are:
+
+`quickReply` // for quick replies
+`attachment` // does it support attachments
+`typing` // does it support typing status
+
+### PATCH 2.2.6
+
+Just fix a bug in outgoing middleware
+
+### PATCH 2.2.5
+
+This patch adds to the body returned when using any of the `bot.sendMessage` type helper methods.
+
+Now the body also contains a `body.sent_message` parameter that is simply the full object that was sent by the bot
+
+
 ### PATCH 2.2.4
 
 This patch allows users to use `sendMessage` type functions with an optional `sendOptions` object. Currently, this can be used to bypass outgoing middleware
