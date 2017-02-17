@@ -38,7 +38,7 @@ socket.on('connect', function() {
     text: 'Hey there botmaster!'
   };
 
-  socket.send(JSON.stringify(message));
+  socket.send(message);
 });
 
 ```
