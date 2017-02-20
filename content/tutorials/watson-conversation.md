@@ -1,7 +1,7 @@
 ---
 date: 2016-11-30T10:56:16Z
 next: /working-with-botmaster
-prev: /tutorials
+prev: /using-fulfill
 title: Watson Conversation
 toc: true
 weight: 10
