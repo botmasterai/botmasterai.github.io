@@ -135,6 +135,12 @@
           </a>
         </li>
       
+        <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../tutorials/using-fulfill/">
+            Using Fulfill
+          </a>
+        </li>
+      
     
       <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
       
@@ -178,7 +184,7 @@
 <span class="kr">const</span> <span class="nx">socketioBot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">.</span><span class="nx">SocketioBot</span><span class="p">(</span><span class="nx">socketioSettings</span><span class="p">);</span>
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">socketioBot</span><span class="p">);</span>
 
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Right back at you&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
@@ -225,7 +231,7 @@ We want to make sure botmaster is setup and make sure that messages coming from 
 <span class="kr">const</span> <span class="nx">socketioBot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">.</span><span class="nx">SocketioBot</span><span class="p">(</span><span class="nx">socketioSettings</span><span class="p">);</span>
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">socketioBot</span><span class="p">);</span>
 
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Right back at you&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
@@ -246,11 +252,11 @@ We want to make sure botmaster is setup and make sure that messages coming from 
 <span class="kr">const</span> <span class="nx">socketioBot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">.</span><span class="nx">SocketioBot</span><span class="p">(</span><span class="nx">socketioSettings</span><span class="p">);</span>
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">socketioBot</span><span class="p">);</span>
 
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Right back at you&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">stack</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
@@ -303,48 +309,48 @@ The other imports are simply the ones we will be creating.</p>
 
 <p>In the <code>style.css</code> file, simply add the following:</p>
 <div class="highlight"><pre><code class="language-css" data-lang="css"><span></span><span class="o">*</span> <span class="p">{</span>
-  <span class="nb">margin</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
-  <span class="nb">padding</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
-  <span class="n">box</span><span class="o">-</span><span class="n">sizing</span><span class="o">:</span>
-  <span class="nb">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">box-sizing</span><span class="p">:</span>
+  <span class="kc">border-box</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="nt">body</span> <span class="p">{</span>
-  <span class="nb">font</span><span class="o">:</span> <span class="m">13px</span> <span class="n">Helvetica</span><span class="o">,</span> <span class="n">Arial</span><span class="p">;</span>
+  <span class="k">font</span><span class="p">:</span> <span class="mi">13</span><span class="kt">px</span> <span class="n">Helvetica</span><span class="p">,</span> <span class="n">Arial</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="nt">form</span> <span class="p">{</span>
-  <span class="nb">background</span><span class="o">:</span> <span class="m">#000</span><span class="p">;</span>
-  <span class="nb">padding</span><span class="o">:</span> <span class="m">3px</span><span class="p">;</span>
-  <span class="nb">position</span><span class="o">:</span> <span class="nb">fixed</span><span class="p">;</span>
-  <span class="nb">bottom</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
-  <span class="nb">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#000</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">3</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+  <span class="k">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="nt">form</span> <span class="nt">input</span> <span class="p">{</span>
-  <span class="nb">border</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
-  <span class="nb">padding</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
-  <span class="nb">width</span><span class="o">:</span> <span class="m">90%</span><span class="p">;</span>
-  <span class="nb">margin-right</span><span class="o">:</span> <span class="m">.5%</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">90</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">margin-right</span><span class="p">:</span> <span class="mf">.5</span><span class="kt">%</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="nt">form</span> <span class="nt">button</span> <span class="p">{</span>
-  <span class="nb">width</span><span class="o">:</span> <span class="m">9%</span><span class="p">;</span> <span class="nb">background</span><span class="o">:</span> <span class="nb">rgb</span><span class="p">(</span><span class="m">130</span><span class="o">,</span> <span class="m">224</span><span class="o">,</span> <span class="m">255</span><span class="p">);</span>
-  <span class="nb">border</span><span class="o">:</span> <span class="nb">none</span><span class="p">;</span> <span class="nb">padding</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">9</span><span class="kt">%</span><span class="p">;</span> <span class="k">background</span><span class="p">:</span> <span class="nb">rgb</span><span class="p">(</span><span class="mi">130</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+  <span class="k">border</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span> <span class="k">padding</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nn">#messages</span> <span class="p">{</span>
-  <span class="nb">list-style-type</span><span class="o">:</span> <span class="nb">none</span><span class="p">;</span>
-  <span class="nb">margin</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
-  <span class="nb">padding</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">#</span><span class="nn">messages</span> <span class="p">{</span>
+  <span class="k">list-style-type</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nn">#messages</span> <span class="nt">li</span> <span class="p">{</span>
-  <span class="nb">padding</span><span class="o">:</span> <span class="m">5px</span> <span class="m">10px</span><span class="p">;</span>
+<span class="p">#</span><span class="nn">messages</span> <span class="nt">li</span> <span class="p">{</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nn">#messages</span> <span class="nc">.botmaster-message</span> <span class="p">{</span>
-  <span class="nb">background</span><span class="o">:</span> <span class="m">#eee</span><span class="p">;</span>
+<span class="p">#</span><span class="nn">messages</span> <span class="p">.</span><span class="nc">botmaster-message</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#eee</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -409,7 +415,7 @@ The other imports are simply the ones we will be creating.</p>
 </code></pre></div>
 
 <p>Then you&rsquo;ll be able to register a middleware function to your socker.io server as such:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">socketioBot</span><span class="p">.</span><span class="nx">ioServer</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">socket</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">socketioBot</span><span class="p">.</span><span class="nx">ioServer</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">socket</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">socket</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">cookie</span><span class="p">)</span> <span class="k">return</span> <span class="nx">next</span><span class="p">();</span>
   <span class="nx">next</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Authentication error&#39;</span><span class="p">));</span>
 <span class="p">});</span>

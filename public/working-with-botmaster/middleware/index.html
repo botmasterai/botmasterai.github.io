@@ -135,6 +135,12 @@
           </a>
         </li>
       
+        <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../tutorials/using-fulfill/">
+            Using Fulfill
+          </a>
+        </li>
+      
     
       <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
       
@@ -207,7 +213,7 @@
 <h3 id="basic-incoming-middleware-example">Basic incoming middleware example</h3>
 
 <p>Here is a very simple example of how one would go on and use <code>incoming</code> middleware:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// assumed here that some weather API is queried to get that weatherInformation</span>
   <span class="nx">update</span><span class="p">.</span><span class="nx">weatherInfo</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">weather</span><span class="o">:</span> <span class="mi">23</span><span class="p">,</span>
@@ -216,7 +222,7 @@
   <span class="nx">next</span><span class="p">();</span> <span class="c1">// !! always call next when done to go to next middleware function</span>
 <span class="p">});</span>
 
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">weatherInfo</span><span class="p">.</span><span class="nx">weather</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;the weather is warm&#39;</span><span class="p">);</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -303,7 +309,7 @@
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">addUserInfoToUpdate</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addUserInfoToUpdate</span><span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">bot</span><span class="p">.</span><span class="nx">getUserInfo</span><span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
 
-  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">userInfo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">userInfo</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">update</span><span class="p">.</span><span class="nx">userInfo</span> <span class="o">=</span> <span class="nx">userInfo</span><span class="p">;</span>
     <span class="nx">next</span><span class="p">();</span> <span class="c1">// next is only called once the user information is gathered</span>
   <span class="p">});</span>
@@ -343,7 +349,7 @@
               <span class="nx">incomingMiddleware</span><span class="p">.</span><span class="nx">userInfo</span><span class="p">.</span><span class="nx">addUserInfoToUpdate</span><span class="p">);</span>
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;incoming&#39;</span><span class="p">,</span> <span class="nx">incomingMiddleware</span><span class="p">.</span><span class="nx">userInfo</span><span class="p">.</span><span class="nx">addUsernameToUpdate</span><span class="p">);</span>
 
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">weatherInformation</span><span class="p">.</span><span class="nx">weather</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="sb">`Hi </span><span class="si">${</span><span class="nx">update</span><span class="p">.</span><span class="nx">username</span><span class="si">}</span><span class="sb">, the weather is warm`</span><span class="p">);</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -501,13 +507,13 @@ That means that the previous example will probably look more like this:</p>
 
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoingMiddleware</span><span class="p">.</span><span class="nx">messageTransformers</span><span class="p">.</span><span class="nx">updateText</span><span class="p">);</span>
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoingMiddleware</span><span class="p">.</span><span class="nx">messageTransformers</span><span class="p">.</span><span class="nx">addButtonsToMessage</span><span class="p">);</span>
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">recipient</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
 
   <span class="nx">bot</span><span class="p">.</span><span class="nx">sendIsTypingMessageTo</span><span class="p">(</span><span class="nx">userId</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">})</span>
 
-  <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
       <span class="nx">next</span><span class="p">();</span>
     <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
   <span class="p">});</span>

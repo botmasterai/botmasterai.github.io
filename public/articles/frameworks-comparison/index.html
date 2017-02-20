@@ -135,6 +135,12 @@
           </a>
         </li>
       
+        <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../tutorials/using-fulfill/">
+            Using Fulfill
+          </a>
+        </li>
+      
     
       <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
       
@@ -297,7 +303,7 @@ Typically, it would look something like this for a message with an image attachm
 </code></pre></div>
 
 <p>Bot objects are created under the hood and events received by each of them will be relayed to the Botmaster in the standardized Messenger format mentioned in the Message format part. Events are called updates and receiving them looks like this:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
 <span class="p">});</span>
 </code></pre></div>
 
@@ -327,7 +333,7 @@ Typically, it would look something like this for a message with an image attachm
 <span class="p">.</span>
 <span class="p">.</span>
 <span class="p">.</span>
-<span class="nx">controller</span><span class="p">.</span><span class="nx">createWebhookEndpoints</span><span class="p">(</span><span class="nx">app</span><span class="p">,</span> <span class="nx">bot</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">controller</span><span class="p">.</span><span class="nx">createWebhookEndpoints</span><span class="p">(</span><span class="nx">app</span><span class="p">,</span> <span class="nx">bot</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;This bot is online!!!&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 
