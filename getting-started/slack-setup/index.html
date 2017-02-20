@@ -135,6 +135,12 @@
           </a>
         </li>
       
+        <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../tutorials/using-fulfill/">
+            Using Fulfill
+          </a>
+        </li>
+      
     
       <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
       
@@ -230,7 +236,7 @@ This URL has to be of the form: <strong>https://&lt;your_base_url&gt;/slack/&lt;
 <span class="kr">const</span> <span class="nx">slackBot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">.</span><span class="nx">SlackBot</span><span class="p">(</span><span class="nx">slackSettings</span><span class="p">);</span>
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">slackBot</span><span class="p">);</span>
 
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Hello world!&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
@@ -279,7 +285,7 @@ Click <strong>Save Changes</strong></p>
 <span class="c1">// or if you don&#39;t want it at the root of your app, add this:</span>
 <span class="nx">botmaster</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/slack&#39;</span><span class="p">,</span> <span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/views&#39;</span><span class="p">));</span> <span class="c1">// added</span>
 
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Right back at you&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>

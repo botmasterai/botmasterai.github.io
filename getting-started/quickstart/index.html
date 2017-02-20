@@ -135,6 +135,12 @@
           </a>
         </li>
       
+        <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../tutorials/using-fulfill/">
+            Using Fulfill
+          </a>
+        </li>
+      
     
       <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
       
@@ -239,7 +245,7 @@ very easily as will be described later.</p>
 <h2 id="step-2-listening-to-events">Step 2: listening to events</h2>
 
 <p>In order for botmaster to be notified of any activity going on (i.e. users sending messages to your bots), we&rsquo;ll need to listen to the &lsquo;update&rsquo; event that fires whenever a user sends a message to one of our bots. It looks like this:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
@@ -255,13 +261,13 @@ very easily as will be described later.</p>
 <h2 id="step-3-sending-replies">Step 3: sending replies</h2>
 
 <p>The easiest thing to do to have a bot that answers you is the following; replace the Step 2 code with this:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
 
 <p>This really doesn&rsquo;t do much however. Let&rsquo;s try to get to something like what we saw in the pictures at the beginning of this tutorial. Let&rsquo;s replace this code with this:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">update</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span> <span class="o">===</span> <span class="s1">&#39;hi&#39;</span> <span class="o">||</span>
       <span class="nx">update</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span> <span class="o">===</span> <span class="s1">&#39;Hi&#39;</span> <span class="o">||</span>
       <span class="nx">update</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">text</span> <span class="o">===</span> <span class="s1">&#39;hello&#39;</span> <span class="o">||</span>

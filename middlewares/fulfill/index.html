@@ -135,6 +135,12 @@
           </a>
         </li>
       
+        <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../tutorials/using-fulfill/">
+            Using Fulfill
+          </a>
+        </li>
+      
     
       <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
       
@@ -164,6 +170,10 @@
       </div>
       <div class="pa4">
 
+<div class="notices note" ><p>In addition, to this documentation, we highly recommend that you read the <a href="../../tutorials/using-fulfill/">fulfill tutorial</a>.</p>
+</div>
+
+
 <p><strong>botmaster-fulfill</strong> provides a text-friendly way to integrate actions with your bot. You supply an object of action-functions that can return synchronously or asynchronously and replace text in the response, generate new responses, or do what the response claims to do, by for example actually placing the users burger order for him using a REST API.</p>
 
 <!-- TOC depthFrom:1 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
@@ -171,7 +181,13 @@
 <ul>
 <li><a href="#markup-for-your-chatbot">Markup for your chatbot.</a></li>
 <li><a href="#quick-start">Quick start</a></li>
-<li><a href="#introduction">Introduction</a></li>
+<li><a href="#standard-actions">Standard Actions</a>
+
+<ul>
+<li><a href="#pause">pause</a></li>
+<li><a href="#greet">greet</a></li>
+</ul></li>
+<li><a href="#in-depth">In-depth</a></li>
 <li><a href="#how-to-use-the-fulfill-api">How to use the Fulfill API</a>
 
 <ul>
@@ -212,28 +228,82 @@ Ed: Well, hang on... <span class="p">&lt;</span><span class="nt">modifyOrder</sp
 
 <p>All you need to get started.</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>npm install botmaster-fulfill --save
+npm install botmaster-fulfill-actions --save
 </code></pre></div>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="p">{</span><span class="nx">outgoing</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster-fulfill&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="p">{</span><span class="nx">FulfillWare</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster-fulfill&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">actions</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster-fulfill-actions&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">Botmaster</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">botsSettings</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./my-bots-settings&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">botmaster</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">({</span><span class="nx">botsSettings</span><span class="p">});</span>
-<span class="kr">const</span> <span class="nx">actions</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">hi</span><span class="o">:</span> <span class="p">{</span>
-            <span class="nx">controller</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="s1">&#39;hi there!&#39;</span>
-        <span class="p">}</span>
-<span class="p">}</span>
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoing</span><span class="p">({</span><span class="nx">actions</span><span class="p">}));</span>
-<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="nx">bot</span> <span class="o">=&gt;</span> <span class="nx">bot</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="s1">&#39;&lt;hi /&gt;&#39;</span><span class="p">));</span>
+<span class="nx">actions</span><span class="p">.</span><span class="nx">hi</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">controller</span><span class="o">:</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="s1">&#39;hi there!&#39;</span>
+<span class="p">};</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">FulfillWare</span><span class="p">({</span><span class="nx">actions</span><span class="p">}));</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="nx">bot</span> <span class="p">=&gt;</span> <span class="nx">bot</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="s1">&#39;&lt;hi /&gt;&lt;pause wait=2500 /&gt;What is your name?&#39;</span><span class="p">));</span>
 </code></pre></div>
 
-<h1 id="introduction">Introduction</h1>
+<p>This will send two messages &ldquo;hi there!&rdquo; and &ldquo;What is your name?&rdquo; with a delay of 2.5 seconds between them.</p>
+
+<h1 id="standard-actions">Standard Actions</h1>
+
+<p>The package &ldquo;botmaster-fulfill-actions&rdquo; provides out-of-the-box standard actions.</p>
+
+<h2 id="pause">pause</h2>
+
+<p>Break text up with a separate messages pausing before each one</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span></span><span class="nt">&lt;pause</span> <span class="na">wait=</span><span class="s">2000</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+
+<p>evaluated in series
+ after evaluating all text / xml before removed
+ controller sends text before and then waits before allowing rest of text/xml to be evaluated
+ if the bot implements typing a typing status is sent between pauses.</p>
+
+<p><strong>Parameters</strong></p>
+
+<ul>
+<li><code>wait</code>  {String} how long to wait in ms between each defaults to 1000</li>
+</ul>
+
+<h2 id="greet">greet</h2>
+
+<p>Greet users with a greeting that reflects the time of day</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span></span><span class="nt">&lt;greet</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;greet</span> <span class="na">tz=</span><span class="s">&#39;America/New_York&#39;</span> <span class="na">lang=</span><span class="s">&#39;es&#39;</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+
+<p>Outputs based on the detected system language</p>
+
+<p><strong>English (en)</strong></p>
+
+<ul>
+<li>between 4 am and 12 pm say &ldquo;Good morning&rdquo;</li>
+<li>between 12 pm and 5pm  say &ldquo;Good afternoon&rdquo;</li>
+<li>between 5 pm and 4am  say &ldquo;Good evening&rdquo;</li>
+</ul>
+
+<p><strong>Spanish (es)</strong></p>
+
+<ul>
+<li>between 4 am and 12 pm say &ldquo;Buenos dias&rdquo;</li>
+<li>between 12 pm and 8pm  say &ldquo;Buenas tardes&rdquo;</li>
+<li>between 8 pm and 4am  say &ldquo;Buenas noches&rdquo;</li>
+</ul>
+
+<p><strong>Parameters</strong></p>
+
+<ul>
+<li><code>tz</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> Which timezone to use for the time-based greeting. Defaults to GMT. To see available options see <a href="http://momentjs.com/timezone/">http://momentjs.com/timezone/</a></li>
+<li><code>lang</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> Which language to use. Defaults to system locale setting</li>
+</ul>
+
+<h1 id="in-depth">In-depth</h1>
 
 <p>botmaster-fulfill extends botmaster with a repertoire of actions that your bots can perform with a declarative and easy to use syntax based on XML. It is a great way to separate business logic (when to do what and where) and functional logic (how to do it).</p>
 
 <p>When writing the output of your bots all you have to do is write:</p>
-
-<pre><code>&quot;ok &lt;userName /&gt;, im placing your order for you. &lt;placeOrder /&gt; here you go. &quot;
-</code></pre>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span></span>&quot;ok <span class="p">&lt;</span><span class="nt">userName</span> <span class="p">/&gt;</span>, im placing your order for you. <span class="p">&lt;</span><span class="nt">placeOrder</span> <span class="p">/&gt;</span> here you go. &quot;
+</code></pre></div>
 
 <p>Here <strong>userName</strong> could for example mean get a human readable version of the audience&rsquo;s name.</p>
 
@@ -269,6 +339,8 @@ Ed: Well, hang on... <span class="p">&lt;</span><span class="nt">modifyOrder</sp
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
+<p>The most ipmortant part of the action spec is what the controller function returns. The return value If you want to strip it out</p>
 
 <h1 id="how-to-use-the-fulfill-api">How to use the Fulfill API</h1>
 
@@ -317,29 +389,49 @@ Ed: Well, hang on... <span class="p">&lt;</span><span class="nt">modifyOrder</sp
 <li><strong>params.context</strong>: a reference to the context object which can be updated or read</li>
 <li><strong>params.content</strong>: the literal text between the xml element opening and closing</li>
 <li><strong>params.attributes</strong>: an object where keys are the name of an attribute against the xml element and the the value is the value of that attribute.</li>
-<li><strong>params.after</strong>: the text immediately following the tag, up to another tag.</li>
-<li><strong>params.before</strong>: the text immediately preceding the tag, up to another tag.</li>
+<li><strong>params.after</strong>: all text and tags before the tag.</li>
+<li><strong>params.before</strong>: all text and tags preceding the tag.</li>
 </ul>
 
-<h3 id="suggested-context-setup">Suggested context setup:</h3>
+<h3 id="context">Context:</h3>
 
 <p><strong>context</strong> provides a great deal of control and allows you to pass custom dependencies down to your controllers.
 It should not be confused with the <strong>context</strong> variable that your NLU like IBM Conversations uses.</p>
 
-<p>Here&rsquo;s a good setup for context that will allow your actions a great deal of flexibility:</p>
+<p>For example:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">context</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">chatContext</span><span class="p">,</span> <span class="c1">// specific to your NLU</span>
-    <span class="nx">apis</span> <span class="c1">// configured APIs connector libraries to call in your actions</span>
+    <span class="nx">myEnvironment</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span>
+    <span class="p">}</span>
+    <span class="nx">myApis</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">dbLibrary</span>
+    <span class="p">}</span>
 <span class="p">}</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoing</span><span class="p">({</span><span class="nx">actions</span><span class="p">,</span> <span class="nx">context</span><span class="p">}))</span>
 </code></pre></div>
 
-<p>To configure this in your middleware:</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">botmaster</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;outgoing&#39;</span><span class="p">,</span> <span class="nx">outgoing</span><span class="p">({</span><span class="nx">actions</span><span class="p">,</span> <span class="nx">context</span><span class="p">}))</span>
-</code></pre></div>
+<p>Fulfill will merge these custom context with several standard context objects available when using as part of botmaster.</p>
 
-<h3 id="where-did-my-nlu-context-go">Where did my NLU context go?</h3>
+<h4 id="standard-context">Standard Context</h4>
 
-<p>In botmaster the fulfill context will also have <strong>context.update</strong> available. To get an NLU&rsquo;s context the update handler or one of the middleware&rsquo;s should have set it in <strong>update</strong>. So for example your context might be in <strong>context.update.context</strong>.</p>
+<table>
+    <thead>
+        <td>Key</td><td>Description</td>
+    </thead>
+    <tbody>
+        <tr>
+            <td>params.update</td><td>Botmaster update object</td>
+        </tr>
+        <tr>
+            <td>params.bot</td><td>Botmaster bot object</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="notices info" ><p>To get an NLU&rsquo;s context the update handler or one of the middleware&rsquo;s should have set it in <strong>update</strong>. So for example your context might be in <strong>context.update.context</strong>.</p>
+</div>
+
 
 <h3 id="getting-impatient-emitting-updates-before-fulfill-has-completed">Getting impatient - emitting updates before fulfill has completed</h3>
 
@@ -363,12 +455,11 @@ It should not be confused with the <strong>context</strong> variable that your N
 <li><strong>= &lsquo;before&rsquo;</strong> Replace the tag and text before the tag until another tag is reached. In the example above setting <strong>you</strong> to this mode will have the controller control up to <strong>hi how are <you /></strong>.</li>
 <li><strong>= after</strong> Replace the tag and text after the tag until another tag is reached. In the example above setting <strong>after</strong> to this mode will set the controller to control <strong><optional /> hi how are you</strong>.</li>
 <li><strong>= adjacent</strong> Replace the tag and text before and after the tag until other tags are reached. In the example above setting <strong>you</strong> to this mode will set the controller to control <strong>hi how are <you /> today ?</strong>.</li>
-<li><strong>= replaceFunction($, responses)</strong> Under the hood fulfill uses cheerio. You can specify a replace function that receives the cheerio object representing the response and the responses. You should return a plain string that will finally go to sendMessage or downstream outgoing middleware.</li>
 </ol>
 
 <h1 id="using-botmaster-fulfill">Using botmaster-fulfill</h1>
 
-<p>Botmaster-fulfill exports two functions. The first is <strong>fulfill</strong> and implements the fulfill API. The second <strong>outgoing</strong> produces botmaster outgoing middleware.</p>
+<p>Botmaster-fulfill exports two functions. The first is <strong>fulfill</strong> and implements the fulfill API. The second <strong>FulfillWare</strong> produces botmaster outgoing middleware.</p>
 
 <p>If you look at the quick start example the necessary steps are:</p>
 
@@ -390,7 +481,7 @@ It should not be confused with the <strong>context</strong> variable that your N
 </ol>
 
 <h1 id="using-standalone-without-botmaster">Using standalone without botmaster</h1>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span></span><span class="kr">const</span> <span class="p">{</span><span class="nx">fulfill</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster-fulfill&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="p">{</span><span class="nx">fulfill</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster-fulfill&#39;</span><span class="p">);</span>
 <span class="c1">// the input and context would be from your chatbot, but assume they look like this.</span>
 <span class="c1">// also assume actions above</span>
 <span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="s2">&quot;&lt;hi /&gt;&quot;</span><span class="p">;</span>

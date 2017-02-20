@@ -135,6 +135,12 @@
           </a>
         </li>
       
+        <li class="mb2">
+          <a class="no-underline cerulean-blue" href="../../tutorials/using-fulfill/">
+            Using Fulfill
+          </a>
+        </li>
+      
     
       <h5 class="dusty-gray mt3 mb3 ttu">Articles</h5>
       
@@ -190,7 +196,7 @@ when sending messages by using the <code>ignoreMiddleware</code> option. Using t
 </code></pre></div>
 
 <p>or using a callback function</p>
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Hello world!&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="o">=&gt;</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">update</span><span class="p">,</span> <span class="s1">&#39;Hello world!&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="p">=&gt;</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
 <span class="p">);</span>
 </code></pre></div>
@@ -204,7 +210,7 @@ when sending messages by using the <code>ignoreMiddleware</code> option. Using t
 <p>or with cascade messages</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="nx">bot</span><span class="p">.</span><span class="nx">sendTextCascadeTo</span><span class="p">(</span>
   <span class="p">[</span><span class="s1">&#39;message1&#39;</span><span class="p">,</span> <span class="s1">&#39;message2&#39;</span><span class="p">],</span> <span class="nx">sender</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
-  <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="p">(</span><span class="nx">bodies</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="p">{</span> <span class="nx">ignoreMiddleware</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="p">(</span><span class="nx">bodies</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
 
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bodies</span><span class="p">);</span>
 <span class="p">})</span>
