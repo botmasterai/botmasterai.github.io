@@ -377,6 +377,62 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <span class="p">});</span>
 </code></pre></div>
 
+<h4 id="setting-botmastersettings-to-use-botmaster-with-your-own-express-app-and-own-server-object">Setting <code>botmasterSettings</code> to use Botmaster with your own express() app and own server object</h4>
+
+<p>This example is what you should base your code on if you are using socket.io and your own http server object rather than the default botmaster one.</p>
+
+<p>Here&rsquo;s an example on how to do so if you are setting your credentials in your environment variables:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kr">const</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">Botmaster</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;botmaster&#39;</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">myServer</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">port</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">botmasterSettings</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">app</span><span class="o">:</span> <span class="nx">app</span> <span class="p">};</span>
+<span class="kr">const</span> <span class="nx">botmaster</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">(</span><span class="nx">botmasterSettings</span><span class="p">);</span>
+
+<span class="c1">// settings and adding those to botmaster</span>
+<span class="kr">const</span> <span class="nx">telegramSettings</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">credentials</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">authToken</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TELEGRAM_TOKEN</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="nx">webhookEndpoint</span><span class="o">:</span> <span class="s1">&#39;/webhook1234/&#39;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">socketioSettings</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;SOME_ID&#39;</span><span class="p">,</span>
+  <span class="nx">server</span><span class="o">:</span> <span class="nx">myServer</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">telegramBot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">.</span><span class="nx">TelegramBot</span><span class="p">(</span><span class="nx">telegramSettings</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">socketioBot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Botmaster</span><span class="p">.</span><span class="nx">botTypes</span><span class="p">.</span><span class="nx">SocketioBot</span><span class="p">(</span><span class="nx">socketioSettings</span><span class="p">);</span>
+
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">messengerBot</span><span class="p">);</span>
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">addBot</span><span class="p">(</span><span class="nx">socketioBot</span><span class="p">);</span>
+<span class="c1">////////</span>
+
+<span class="nx">botmaster</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">update</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">bot</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">({</span>
+    <span class="nx">recipient</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">id</span><span class="o">:</span> <span class="nx">update</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="nx">message</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Well right back at you!&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// start server on the specified port and binding host</span>
+<span class="nx">myServer</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span> <span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// print a message when the server starts listening</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Running App on port: </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>The difference between this example and the previous one is that in the previous, we are using the express helper <code>app.listen</code> which essentially wraps around the <code>http</code> <code>server.listen</code> and returns a server instance. Whereas here we are doing it all ourselves and use <code>myServer.listen</code>.</p>
+
 <h3 id="events">Events</h3>
 
 <p>Botmaster is built on top of the EventEmitter node.js class. Which means it can emit events and most importantly for us here, it can listen onto them. By doing any of the following:</p>
