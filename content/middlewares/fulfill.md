@@ -7,13 +7,22 @@ toc: true
 weight: 10
 ---
 
+{{% notice note %}}
+In addition, to this documentation, we highly recommend that you read the [fulfill tutorial](/tutorials/using-fulfill/).
+{{% /notice %}}
+
 **botmaster-fulfill** provides a text-friendly way to integrate actions with your bot. You supply an object of action-functions that can return synchronously or asynchronously and replace text in the response, generate new responses, or do what the response claims to do, by for example actually placing the users burger order for him using a REST API.
+
+
 
 <!-- TOC depthFrom:1 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Markup for your chatbot.](#markup-for-your-chatbot)
 - [Quick start](#quick-start)
-- [Introduction](#introduction)
+- [Standard Actions](#standard-actions)
+	- [pause](#pause)
+	- [greet](#greet)
+- [In-depth](#in-depth)
 - [How to use the Fulfill API](#how-to-use-the-fulfill-api)
 	- [Format for the action spec](#format-for-the-action-spec)
 	- [More info on params:](#more-info-on-params)
@@ -25,6 +34,7 @@ weight: 10
 - [Debug](#debug)
 
 <!-- /TOC -->
+
 
 
 # Markup for your chatbot.
@@ -52,27 +62,80 @@ All you need to get started.
 
 ```bash
 npm install botmaster-fulfill --save
+npm install botmaster-fulfill-actions --save
 ```
 
 ```js
-const {outgoing} = require('botmaster-fulfill');
+const {FulfillWare} = require('botmaster-fulfill');
+const actions = require('botmaster-fulfill-actions');
 const Botmaster = require('botmaster');
 const botsSettings = require('./my-bots-settings');
 const botmaster = new Botmaster({botsSettings});
-const actions = {
-        hi: {
-            controller: () => 'hi there!'
-        }
-}
-botmaster.use('outgoing', outgoing({actions}));
-botmaster.on('update', bot => bot.sendMessage('<hi />'));
+actions.hi = {
+    controller: () => 'hi there!'
+};
+botmaster.use('outgoing', FulfillWare({actions}));
+botmaster.on('update', bot => bot.sendMessage('<hi /><pause wait=2500 />What is your name?'));
 ```
 
-# Introduction
+This will send two messages "hi there!" and "What is your name?" with a delay of 2.5 seconds between them.
+
+# Standard Actions
+
+The package "botmaster-fulfill-actions" provides out-of-the-box standard actions.
+
+## pause
+
+Break text up with a separate messages pausing before each one
+
+```xml
+<pause wait=2000 />
+```
+
+ evaluated in series
+ after evaluating all text / xml before removed
+ controller sends text before and then waits before allowing rest of text/xml to be evaluated
+ if the bot implements typing a typing status is sent between pauses.
+
+**Parameters**
+
+-   `wait`  {String} how long to wait in ms between each defaults to 1000
+
+## greet
+
+Greet users with a greeting that reflects the time of day
+
+```xml
+<greet />
+<greet tz='America/New_York' lang='es' />
+```
+
+Outputs based on the detected system language
+
+**English (en)**
+
+-   between 4 am and 12 pm say "Good morning"
+-   between 12 pm and 5pm  say "Good afternoon"
+-   between 5 pm and 4am  say "Good evening"
+
+**Spanish (es)**
+
+-   between 4 am and 12 pm say "Buenos dias"
+-   between 12 pm and 8pm  say "Buenas tardes"
+-   between 8 pm and 4am  say "Buenas noches"
+
+**Parameters**
+
+-   `tz` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Which timezone to use for the time-based greeting. Defaults to GMT. To see available options see <http://momentjs.com/timezone/>
+-   `lang` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Which language to use. Defaults to system locale setting
+
+
+# In-depth
 botmaster-fulfill extends botmaster with a repertoire of actions that your bots can perform with a declarative and easy to use syntax based on XML. It is a great way to separate business logic (when to do what and where) and functional logic (how to do it).
 
 When writing the output of your bots all you have to do is write:
-```
+
+```html
 "ok <userName />, im placing your order for you. <placeOrder /> here you go. "
 ```
 
@@ -81,6 +144,7 @@ Here **userName** could for example mean get a human readable version of the aud
 **placeOrder**  does two much more interesting things and demonstrates the power of using markup over a simple field-based JSON payload. First, it sends the rest of the message before the tag ("ok bob, I'm placing your order for you.") onwards so that the user knows we are placing his order. Second, it starts placing the order and when its done, it sends the text following it, "here you go."
 
 And in order to connect that all you have to do is write in plain js:
+
 ```js
 const actions = {
     // for <userName />
@@ -111,6 +175,8 @@ const actions = {
     }
 }
 ```
+
+The most ipmortant part of the action spec is what the controller function returns. The return value If you want to strip it out
 
 # How to use the Fulfill API
 
@@ -160,31 +226,49 @@ Params argument provides several variables that can control its behavior.
 - **params.context**: a reference to the context object which can be updated or read
 - **params.content**: the literal text between the xml element opening and closing
 - **params.attributes**: an object where keys are the name of an attribute against the xml element and the the value is the value of that attribute.
-- **params.after**: the text immediately following the tag, up to another tag.
-- **params.before**: the text immediately preceding the tag, up to another tag.
+- **params.after**: all text and tags before the tag.
+- **params.before**: all text and tags preceding the tag.
 
-### Suggested context setup:
+### Context:
 
 **context** provides a great deal of control and allows you to pass custom dependencies down to your controllers.
 It should not be confused with the **context** variable that your NLU like IBM Conversations uses.
 
-Here's a good setup for context that will allow your actions a great deal of flexibility:
-
+For example:
 ```js
 const context = {
-    chatContext, // specific to your NLU
-    apis // configured APIs connector libraries to call in your actions
+    myEnvironment: {
+        username, password
+    }
+    myApis: {
+        dbLibrary
+    }
 }
-```
 
-To configure this in your middleware:
-```js
 botmaster.use('outgoing', outgoing({actions, context}))
 ```
 
-### Where did my NLU context go?
+Fulfill will merge these custom context with several standard context objects available when using as part of botmaster.
 
-In botmaster the fulfill context will also have **context.update** available. To get an NLU's context the update handler or one of the middleware's should have set it in **update**. So for example your context might be in **context.update.context**.
+#### Standard Context
+
+<table>
+    <thead>
+        <td>Key</td><td>Description</td>
+    </thead>
+    <tbody>
+        <tr>
+            <td>params.update</td><td>Botmaster update object</td>
+        </tr>
+        <tr>
+            <td>params.bot</td><td>Botmaster bot object</td>
+        </tr>
+    </tbody>
+</table>
+
+{{% notice info %}}
+To get an NLU's context the update handler or one of the middleware's should have set it in **update**. So for example your context might be in **context.update.context**.
+{{% /notice %}}
 
 ### Getting impatient - emitting updates before fulfill has completed
 
@@ -208,12 +292,11 @@ With the default mode you can only replace the tag. There are however other mode
 1. **= 'before'** Replace the tag and text before the tag until another tag is reached. In the example above setting **you** to this mode will have the controller control up to **hi how are <you />**.
 2. **= after** Replace the tag and text after the tag until another tag is reached. In the example above setting **after** to this mode will set the controller to control **<optional /> hi how are you**.
 3. **= adjacent** Replace the tag and text before and after the tag until other tags are reached. In the example above setting **you** to this mode will set the controller to control **hi how are <you /> today ?**.
-4. **= replaceFunction($, responses)** Under the hood fulfill uses cheerio. You can specify a replace function that receives the cheerio object representing the response and the responses. You should return a plain string that will finally go to sendMessage or downstream outgoing middleware.
 
 
 # Using botmaster-fulfill
 
-Botmaster-fulfill exports two functions. The first is **fulfill** and implements the fulfill API. The second **outgoing** produces botmaster outgoing middleware.
+Botmaster-fulfill exports two functions. The first is **fulfill** and implements the fulfill API. The second **FulfillWare** produces botmaster outgoing middleware.
 
 If you look at the quick start example the necessary steps are:
 
@@ -232,7 +315,7 @@ All of these settings are optional and have reasonable defaults.
 
 # Using standalone without botmaster
 
-```javascript
+```js
 const {fulfill} = require('botmaster-fulfill');
 // the input and context would be from your chatbot, but assume they look like this.
 // also assume actions above
