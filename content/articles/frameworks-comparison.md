@@ -11,7 +11,7 @@ weight: 10
 
 Use Botmaster If you want to build platform agnostic conversational bots using a system like Watson Conversation [or your own system] to manage 1 on 1 conversations (On Messenger, Slack, Twitter, Telegram, socket.io or more). e.g. a personal assistant, customer support etc.
 
-Use Botkit if you want to build platform dependant bots on either Slack or Twilio while managing simple conversations based on regex or also more complex ones using again Watson Conversation or wit etc. You can now also use Microsoft Bot Framework with Botkit. Although I'm not too sure why one would want to use  wouldn't just use MS Bot Framework without Botkit.
+Use Botkit if you want to build platform dependant bots on either Slack or Twilio while managing simple conversations based on regex or also more complex ones using again Watson Conversation or wit etc. You can now also use Microsoft Bot Framework with Botkit. Although I'm not too sure why one wouldn't just use MS Bot Framework without Botkit.
 
 ### Main article
 Although it might seem at first glance like the two frameworks (and other similar ones out there) were created with the same goal in mind, things are quite far from that. Let's have a look at how one of these frameworks compare, namely Botkit.

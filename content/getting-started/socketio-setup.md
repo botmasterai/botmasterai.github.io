@@ -265,7 +265,7 @@ You might be wondering how you can secure your Botmaster socket.io app. I.e. how
 socketioBot.ioServer
 ```
 
-Then you'll be able to register a middleware function to your socker.io server as such:
+Then you'll be able to register a middleware function to your socket.io server as such:
 
 ```js
 socketioBot.ioServer.use((socket, next) => {

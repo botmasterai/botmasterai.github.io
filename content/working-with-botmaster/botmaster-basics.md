@@ -222,6 +222,64 @@ app.listen(port, '0.0.0.0', () => {
 });
 ```
 
+#### Setting `botmasterSettings` to use Botmaster with your own express() app and own server object
+
+This example is what you should base your code on if you are using socket.io and your own http server object rather than the default botmaster one.
+
+Here's an example on how to do so if you are setting your credentials in your environment variables:
+
+```js
+const http = require('http');
+const express = require('express');
+const Botmaster = require('botmaster');
+
+const app = express();
+const myServer = http.createServer(app);
+const port = 3000;
+const botmasterSettings = { app: app };
+const botmaster = new Botmaster(botmasterSettings);
+
+// settings and adding those to botmaster
+const telegramSettings = {
+  credentials: {
+    authToken: process.env.TELEGRAM_TOKEN,
+  },
+  webhookEndpoint: '/webhook1234/',
+};
+
+const socketioSettings = {
+  id: 'SOME_ID',
+  server: myServer,
+};
+
+const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings);
+
+
+botmaster.addBot(messengerBot);
+botmaster.addBot(socketioBot);
+////////
+
+botmaster.on('update', (bot, update) => {
+  bot.sendMessage({
+    recipient: {
+      id: update.sender.id,
+    },
+    message: {
+      text: 'Well right back at you!',
+    },
+  });
+});
+
+// start server on the specified port and binding host
+myServer.listen(port, '0.0.0.0', () => {
+  // print a message when the server starts listening
+  console.log(`Running App on port: ${port}`);
+});
+```
+
+The difference between this example and the previous one is that in the previous, we are using the express helper `app.listen` which essentially wraps around the `http` `server.listen` and returns a server instance. Whereas here we are doing it all ourselves and use `myServer.listen`.
+
 ### Events
 
 Botmaster is built on top of the EventEmitter node.js class. Which means it can emit events and most importantly for us here, it can listen onto them. By doing any of the following:
