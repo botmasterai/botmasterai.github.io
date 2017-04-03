@@ -1,0 +1,834 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Middleware · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="writing-your-own-bot-class.html" />
+    
+    
+    <link rel="prev" href="botmaster-basics.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../getting-started/">
+            
+                <a href="../getting-started/">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../getting-started/installation.html">
+            
+                <a href="../getting-started/installation.html">
+            
+                    
+                    Installation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../getting-started/quickstart.html">
+            
+                <a href="../getting-started/quickstart.html">
+            
+                    
+                    Quickstart
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../getting-started/messenger-setup.html">
+            
+                <a href="../getting-started/messenger-setup.html">
+            
+                    
+                    Messenger setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../getting-started/slack-setup.html">
+            
+                <a href="../getting-started/slack-setup.html">
+            
+                    
+                    Slack setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../getting-started/twitter-setup.html">
+            
+                <a href="../getting-started/twitter-setup.html">
+            
+                    
+                    Twitter setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../getting-started/telegram-setup.html">
+            
+                <a href="../getting-started/telegram-setup.html">
+            
+                    
+                    Telegram setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../getting-started/socket.io-setup.html">
+            
+                <a href="../getting-started/socket.io-setup.html">
+            
+                    
+                    Socket.io setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../getting-started/webhooks.html">
+            
+                <a href="../getting-started/webhooks.html">
+            
+                    
+                    Webhooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Working With Botmaster
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="botmaster-basics.html">
+            
+                <a href="botmaster-basics.html">
+            
+                    
+                    Botmaster basics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.2" data-path="middleware.html">
+            
+                <a href="middleware.html">
+            
+                    
+                    Middleware
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="writing-your-own-bot-class.html">
+            
+                <a href="writing-your-own-bot-class.html">
+            
+                    
+                    Writing your own bot class
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../middlewares/">
+            
+                <a href="../middlewares/">
+            
+                    
+                    Middlewares
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../middlewares/fulfill.html">
+            
+                <a href="../middlewares/fulfill.html">
+            
+                    
+                    fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../tutorials/">
+            
+                <a href="../tutorials/">
+            
+                    
+                    Tutorials
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../tutorials/using-fulfill.html">
+            
+                <a href="../tutorials/using-fulfill.html">
+            
+                    
+                    Using Fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../tutorials/watson-conversation.html">
+            
+                <a href="../tutorials/watson-conversation.html">
+            
+                    
+                    Watson Conversation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../articles/">
+            
+                <a href="../articles/">
+            
+                    
+                    Articles
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../articles/frameworks-comparison.html">
+            
+                <a href="../articles/frameworks-comparison.html">
+            
+                    
+                    Framworks comparison
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../changelog.html">
+            
+                <a href="../changelog.html">
+            
+                    
+                    Changelog
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Middleware</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="middleware">Middleware</h1>
+<p>Middleware in Botmaster is designed to work similarly to  what you would expect in an express.js app. However, you might not have used express and they work slightly differently, so here&apos;s a writeup of how they work.</p>
+<p>Generally, middleware allows developers to do some preprocessing on some received data before performing some main action based on what was received (like sending a response to the client that made the request). Because the term pre-processing is fairly vague and can be interpreted as broad, developers often end up having the main parts of their code within middleware. Botmaster is no different. Here&apos;s a typical diagram flow showing how it looks like under the hood.</p>
+<p><img src="../images/middleware_diagram.png" alt="Middleware Diagram 1"></p>
+<p>Because Botmaster is a chatbot framework and not a web app framework, we go on and define two different types of middleware: <code>incoming</code> and <code>outgoing</code> middleware. Incoming middleware is akin to what you would have in a standard express middleware (if you have experience with express), whereas outgoing middleware will act on your response object.</p>
+<p>Here is the signature of <code>botmaster.use</code></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>middlewareType</td>
+<td>either <code>&apos;incoming&apos;</code> or <code>&apos;outgoing&apos;</code> depending on what middleware you are setting up.</td>
+</tr>
+<tr>
+<td>options</td>
+<td>(<strong>optional</strong>) set options for when to activate the middleware. Currently only supports a <code>type</code> parameter that takes in a space separated string of platform names (names are defined in the bot classes and values are set in <code>bot.type</code>)</td>
+</tr>
+<tr>
+<td>middlewareCallback</td>
+<td>The actual middleware function that will be called. It is of type: <code>function(bot, update, next)</code> on <code>incoming</code> and <code>function(bot, message, next)</code> on <code>outgoing</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="incoming-middleware">Incoming middleware</h2>
+<p>As mentioned briefly above, <code>incoming</code> middleware in Botmaster is similar to what you would have in express middleware and can be used similarly. They are all called in order of declaration upon receiving an update before entering the <code>on(&apos;update&apos;...)</code> function.</p>
+<h3 id="basic-incoming-middleware-example">Basic incoming middleware example</h3>
+<p>Here is a very simple example of how one would go on and use <code>incoming</code> middleware:</p>
+<pre><code class="lang-js">botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, (bot, update, next) =&gt; {
+  <span class="hljs-comment">// assumed here that some weather API is queried to get that weatherInformation</span>
+  update.weatherInfo = {
+    weather: <span class="hljs-number">23</span>,
+    unit: <span class="hljs-string">&apos;celcius&apos;</span>,
+  }
+  next(); <span class="hljs-comment">// !! always call next when done to go to next middleware function</span>
+});
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  <span class="hljs-keyword">if</span> (update.weatherInfo.weather &gt; <span class="hljs-number">20</span>) {
+    bot.reply(update, <span class="hljs-string">&apos;the weather is warm&apos;</span>);
+  } <span class="hljs-keyword">else</span> {
+    bot.reply(update, <span class="hljs-string">&apos;the weather is mild&apos;</span>);
+  }
+});
+</code></pre>
+<p>This is a very basic example. But hopefully, it gets the message through of how and why you would use <code>incoming</code> middleware. Clearly, anything can be done in a middleware function, like calling external APIs etc. You are encouraged to do so really.</p>
+<h3 id="basic-incoming-middleware-example-with-structure">Basic incoming middleware example with structure</h3>
+<p>In practice, your middleware code will really live within separate files that you would &quot;require&quot; within your main &quot;app.js&quot; file. That means that the previous example will have a tree structure similar to the following:</p>
+<pre><code>&#x251C;&#x2500;&#x2500; app.js
+&#x2514;&#x2500;&#x2500; middleware
+    &#x251C;&#x2500;&#x2500; incoming
+    &#x2502;   &#x251C;&#x2500;&#x2500; weather.js
+    &#x2502;   &#x2514;&#x2500;&#x2500; index.js
+    &#x2514;&#x2500;&#x2500; outgoing // no outgoing middleware in this example
+        &#x2514;&#x2500;&#x2500; index.js // this will remain an empty file for now
+</code></pre><p>This is only a suggested structure (the one I use). Feel free to come up with a different, potentially better, structure that suits you better.</p>
+<p>That means that the previous example&apos;s code will probably look more like this:</p>
+<p><code>middleware/incoming/weather.js</code></p>
+<pre><code class="lang-js"><span class="hljs-comment">// using eslint disallowFunctionDeclarations here. Read here: https://github.com/airbnb/javascript#functions to see why I use this syntax rather than the standard function updateText(bot,  message, next) one.</span>
+<span class="hljs-keyword">const</span> addWeatherInfoToUpdate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addWeatherInfoToUpdate</span>(<span class="hljs-params">bot, update, next</span>) </span>{
+  update.weatherInfo = {
+    weather: <span class="hljs-number">23</span>,
+    unit: <span class="hljs-string">&apos;celcius&apos;</span>,
+  }
+  next();
+}
+
+<span class="hljs-built_in">module</span>.exports = {
+  addWeatherInfoToUpdate, <span class="hljs-comment">// using shorthand here</span>
+}
+</code></pre>
+<p><code>middleware/incoming/index.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> weather = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./weather&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+  weather,
+};
+</code></pre>
+<p><code>app.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> incomingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/incoming&apos;</span>);
+
+botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, incomingMiddleware.weather.addWeatherInfoToUpdate);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
+  <span class="hljs-keyword">if</span> (update.weatherInformation.weather &gt; <span class="hljs-number">20</span>) {
+    bot.reply(update, <span class="hljs-string">&apos;the weather is warm&apos;</span>);
+  } <span class="hljs-keyword">else</span> {
+    bot.reply(update, <span class="hljs-string">&apos;the weather is mild&apos;</span>);
+  }
+});
+</code></pre>
+<h3 id="complete-incoming-middleware-example-with-structure">Complete incoming middleware example with structure</h3>
+<p>Now if I wanted to, say, add a couple of user info related middleware functions including a middleware function that would get hit only on Facebook Messenger bots (bots of type <code>messenger</code>), using the same base structure, and updating it as follows:</p>
+<pre><code>&#x251C;&#x2500;&#x2500; app.js
+&#x2514;&#x2500;&#x2500; middleware
+    &#x251C;&#x2500;&#x2500; incoming
+    &#x2502;   &#x251C;&#x2500;&#x2500; weather.js
+    &#x2502;   &#x251C;&#x2500;&#x2500; user_info.js
+    &#x2502;   &#x2514;&#x2500;&#x2500; index.js
+    &#x2514;&#x2500;&#x2500; outgoing
+        &#x2514;&#x2500;&#x2500; index.js
+</code></pre><p>I would do the following:</p>
+<p>create the file <code>middleware/incoming/user_info.js</code> as follows:</p>
+<p><code>middleware/incoming/user_info.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> addUserInfoToUpdate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addUserInfoToUpdate</span>(<span class="hljs-params">bot, update, next</span>) </span>{
+  bot.getUserInfo(update.sender.id)
+
+  .then((userInfo) =&gt; {
+    update.userInfo = userInfo;
+    next(); <span class="hljs-comment">// next is only called once the user information is gathered</span>
+  });
+}
+
+<span class="hljs-keyword">const</span> addUsernameToUpdate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addUsernameToUpdate</span>(<span class="hljs-params">bot, update, next</span>) </span>{
+  update.username = <span class="hljs-string">&apos;there&apos;</span>;
+
+  <span class="hljs-keyword">if</span> (update.userInfo) {
+    update.username = update.userInfo.first_name;
+  }
+  next();
+}
+
+<span class="hljs-built_in">module</span>.exports = {
+  addUserInfoToUpdate,
+}
+</code></pre>
+<p>Then update <code>middleware/incoming/index.js</code> and <code>app.js</code> to look like this respectively:</p>
+<p><code>middleware/incoming/index.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> weather = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./weather&apos;</span>);
+<span class="hljs-keyword">const</span> userInfo = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./user_info&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+  weather,
+  userInfo,
+};
+</code></pre>
+<p><code>app.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> incomingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/incoming&apos;</span>);
+
+botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, incomingMiddleware.weather.addWeatherInfoToUpdate);
+botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, { type: <span class="hljs-string">&apos;messenger&apos;</span> },
+              incomingMiddleware.userInfo.addUserInfoToUpdate);
+botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, incomingMiddleware.userInfo.addUsernameToUpdate);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  <span class="hljs-keyword">if</span> (update.weatherInformation.weather &gt; <span class="hljs-number">20</span>) {
+    bot.reply(update, <span class="hljs-string">`Hi <span class="hljs-subst">${update.username}</span>, the weather is warm`</span>);
+  } <span class="hljs-keyword">else</span> {
+    bot.reply(update, <span class="hljs-string">`Hi <span class="hljs-subst">${update.username}</span>, the weather is warm`</span>);
+  }
+});
+</code></pre>
+<p>In this example, I expand on the previous example and setup two new middleware functions. One that will be called only on bots of type <code>messenger</code> and the other one on all bots. The first one gets the information available on the user if the bot is of type <code>messenger</code>. The second one then sets the <code>update.username</code> according to whether it finds a name or not. As mentioned, they are called in order of declaration.</p>
+<p>It should be clear by now that this reads much clearer than the previous example. Simply by reading the <code>app.js</code> file I can have an idea of what is going on in the code. Cleary, some weather information and user information is added to the <code>update</code> object that information is then used to customize the text returned to the user.</p>
+<p>Now that we&apos;ve had a look at incoming middleware, let&apos;s have a look at how outgoing middleware works.</p>
+<h2 id="outgoing-middleware">Outgoing middleware</h2>
+<p>similar to the <code>incoming</code> middleware, the <code>outgoing</code> middleware is called in order of declaration. However, it is called on every message object sent by you the developer. To illustrate this, here&apos;s an example:</p>
+<h3 id="basic-example">Basic example</h3>
+<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
+  bot.reply(update, <span class="hljs-string">&apos;Hello world!&apos;</span>) <span class="hljs-comment">// using a helper function to send text message</span>
+});
+
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, message, next</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(message); <span class="hljs-comment">// this is a full valid messenger object.</span>
+
+  message.message.text = <span class="hljs-string">&quot;Hello you!&quot;</span>;
+  next();
+});
+</code></pre>
+<p>In this example, the first three lines are what you would expect if you were simply trying to reply &quot;Hello world&quot; to any message. However, if you try this out, you&apos;ll see that you get a &quot;Hello you!&quot; text message back. Indeed, our middleware, aside from printing the message object to show you what it looks like, replaces the text with &quot;Hello you&quot;.</p>
+<p>This is really what you&apos;ll want to be doing within outgoing middleware. First use one of the Botmaster helper functions to send a message, then edit it in your outgoing middleware functions. Botmaster simply creates the valid [messenger compatible] message object before hitting the outgoing middleware where you can play with this.</p>
+<h3 id="basic-example-with-structure">Basic example with structure</h3>
+<p>As in the incoming middleware example, in practice, your middleware code will really live within separate files that you would &quot;require: within your main &quot;app.js&quot; file. Using a structure similar to the one used in the incoming middleware example. We look at something like this:</p>
+<pre><code>&#x251C;&#x2500;&#x2500; app.js
+&#x2514;&#x2500;&#x2500; middleware
+    &#x251C;&#x2500;&#x2500; incoming // no incoming middleware in this example
+    &#x2502;   &#x2514;&#x2500;&#x2500; index.js // this will remain an empty file for now
+    &#x2514;&#x2500;&#x2500; outgoing
+        &#x251C;&#x2500;&#x2500; message_transformers.js
+        &#x2514;&#x2500;&#x2500; index.js
+</code></pre><p>Where your code will look something like this
+That means that the previous example will probably look more like this:</p>
+<p><code>middleware/outgoing/message_transformers.js</code></p>
+<pre><code class="lang-js"><span class="hljs-comment">// using eslint disallowFunctionDeclarations here. Read here: https://github.com/airbnb/javascript#functions to see why I use this syntax rather than the standard function updateText(bot,  message, next) one.</span>
+<span class="hljs-keyword">const</span> changeText = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeText</span>(<span class="hljs-params">bot, message, next</span>) </span>{ <span class="hljs-comment">// using</span>
+  <span class="hljs-built_in">console</span>.log(message); <span class="hljs-comment">// this is a full valid messenger object.</span>
+
+  message.message.text = <span class="hljs-string">&apos;Hello you!&apos;</span>;
+  next();
+}
+
+<span class="hljs-built_in">module</span>.exports = {
+  changeText, <span class="hljs-comment">// using shorthand here</span>
+}
+</code></pre>
+<p><code>middleware/outgoing/index.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> messageTransformers = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./message_transformers&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+  messageTransformers,
+};
+</code></pre>
+<p><code>app.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
+  bot.reply(update, <span class="hljs-string">&apos;Hello world!&apos;</span>) <span class="hljs-comment">// using a helper function to send text message</span>
+});
+
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.updateText);
+</code></pre>
+<p>This might seem like slight overkill at this point because of how trivial of an example this is. But this adds clear structure to our project and when reading our app.js file we can already know what is going on. It also makes it very clear regarding what is going on if you were to add another middleware function right after the <code>updateText</code> one.</p>
+<h3 id="complete-outgoing-middleware-example-with-structure">Complete outgoing middleware example with structure</h3>
+<p>Taking this one step further, you can do something like the following to, say, send buttons without using the builtin <code>sendDefaultButtonMessageTo</code> method. We&apos;ll keep our structure and simply update the files to look like this:</p>
+<p><code>middleware/outgoing/message_transformers.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> changeText = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeText</span>(<span class="hljs-params">bot, message, next</span>) </span>{ <span class="hljs-comment">// using</span>
+  <span class="hljs-built_in">console</span>.log(message);
+
+  <span class="hljs-keyword">if</span> (message.message.text === <span class="hljs-string">&apos;Thank you&apos;</span>) {
+    message.message.text = <span class="hljs-string">&apos;Thanks&apos;</span>;
+  }
+
+  next();
+}
+
+<span class="hljs-keyword">const</span> addButtonsToMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addButtonsToMessage</span>(<span class="hljs-params">bot, message, next</span>) </span>{
+  <span class="hljs-keyword">const</span> text = message.message.text;
+
+  <span class="hljs-keyword">const</span> buttonsRegexObject = text.match(<span class="hljs-regexp">/&amp;\[.+]/</span>);
+  <span class="hljs-keyword">if</span> (buttonsRegexObject) {
+    <span class="hljs-keyword">const</span> buttonTitles = <span class="hljs-built_in">JSON</span>.parse(buttonsRegexObject[<span class="hljs-number">0</span>].substring(<span class="hljs-number">1</span>));
+    <span class="hljs-keyword">const</span> cleanedText = text.replace(buttonsRegexObject[<span class="hljs-number">0</span>], <span class="hljs-string">&apos;&apos;</span>);
+
+    message.message.quick_replies = [];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> buttonTitle <span class="hljs-keyword">of</span> buttonTitles) {
+      message.message.quick_replies.push({
+        content_type: <span class="hljs-string">&apos;text&apos;</span>,
+        title: buttonTitle,
+        payload: buttonTitle,
+      });
+    }
+
+    message.message.text = cleanedText;
+  }
+
+  next();
+}
+
+<span class="hljs-built_in">module</span>.exports = {
+  changeText, <span class="hljs-comment">// using shorthand here</span>
+  addButtonsToMessage,
+}
+</code></pre>
+<p>This simple <code>addButtonsToMessage</code> function simply uses regular expressions to see if the text contains any bit of text that looks anything like the following: <code>&apos;[&quot;Button1&quot;,&quot;Button2&quot;]&apos;</code>. If any such string is found, it then proceeds to add a quick_replies component to your message object and update the text to remove those button mentions. We next have a look at <code>app.js</code> that also has to be transformed:</p>
+<p><code>app.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
+  bot.sendTextCascadeTo([<span class="hljs-string">&apos;Hi there, I`m about to ask you to press buttons:&apos;</span>,
+                         <span class="hljs-string">&apos;Please press any of: [&quot;Button1&quot;,&quot;Button2&quot;]&apos;</span>,
+                         <span class="hljs-string">&apos;Thank you&apos;</span>]);
+});
+
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.updateText);
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.addButtonsToMessage);
+</code></pre>
+<p>Now this will work great. But actually, what i want to do is show the user a typing indicator right before sending every message that goes out. Because I&apos;m using a sendCascade function, namely, <code>sendTextCascadeTo</code>, the best way to do so is to do this within an outgoing middleware function. Here&apos;s how we can edit <code>app.js</code> to achieve this goal:</p>
+<p><code>app.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
+  bot.sendTextCascadeTo([<span class="hljs-string">&apos;Hi there, I`m about to ask you to press buttons:&apos;</span>,
+                         <span class="hljs-string">&apos;Please press any of: [&quot;Button1&quot;,&quot;Button2&quot;]&apos;</span>,
+                         <span class="hljs-string">&apos;Thank you&apos;</span>]);
+});
+
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.updateText);
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.addButtonsToMessage);
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, (bot, update, next) =&gt; {
+  <span class="hljs-keyword">const</span> userId = message.recipient.id;
+
+  bot.sendIsTypingMessageTo(userId, { ignoreMiddleware: <span class="hljs-literal">true</span> })
+
+  .then(() =&gt; {
+    setTimeout(() =&gt; {
+      next();
+    }, <span class="hljs-number">1000</span>);
+  });
+})
+</code></pre>
+<p>There&apos;s a few things going on in this added bit of code here. First we make it clear again that middleware code can technically live anywhere. It would be better to have it in a separate file somewhere. But this also works. Second, We introduce the <code>ignoreMiddleware</code> option when sending a message. This will always work and simply tells Botmaster to not go through any of the middleware with this message and send it directly. This is very important as otherwise, we would be stuck in an infinite loop trying to send an &quot;is typing&quot; indicator. Second we note that we use <code>setTimeout</code> to make it look like the bot is typing for about 1 second before firing out the message by calling <code>next()</code>.</p>
+<h2 id="external-middleware">External middleware</h2>
+<p>This is all great. But Using the code in <code>addButtonsToMessage</code> to add buttons to your message is probably not the best. Indeed, external middleware packages provide better solutions to this problem. Like in any other framework that contains middleware, middleware can be put into packages. These packages are then available and downloadable via <code>npm</code> and thus easily accessible in your code.</p>
+<p>Have a look in our list of official middleware <a href="../middlewares/official-middleware">here</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="botmaster-basics.html" class="navigation navigation-prev " aria-label="Previous page: Botmaster basics">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="writing-your-own-bot-class.html" class="navigation navigation-next " aria-label="Next page: Writing your own bot class">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Middleware","level":"1.3.2","depth":2,"next":{"title":"Writing your own bot class","level":"1.3.3","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]},"previous":{"title":"Botmaster basics","level":"1.3.1","depth":2,"path":"working-with-botmaster/botmaster-basics.md","ref":"working-with-botmaster/botmaster-basics.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"working-with-botmaster/middleware.md","mtime":"2017-04-03T01:03:20.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T01:20:40.339Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

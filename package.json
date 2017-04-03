@@ -1,0 +1,19 @@
+{
+  "name": "botmaster_documentation",
+  "version": "1.0.0",
+  "description": "Documentation for Botmaster, the bot framework for your serious projects",
+  "scripts": {
+    "watch": "gitbook install && gitbook serve docs documentation",
+    "build": "gitbook build docs documentation",
+    "copy-favicon": "cp documentation/images/favicon.ico documentation/gitbook/images/favicon.ico && cp documentation/images/favicon.png documentation/gitbook/images/apple-touch-icon-precomposed-152.png",
+    "serve-all": "yarn build && yarn copy-favicon && nodemon app.js"
+  },
+  "author": "JD Wuarin <john.dwuarin@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "express": "^4.15.2",
+    "gitbook-cli": "^2.3.0",
+    "nodemon": "^1.11.0"
+  }
+}

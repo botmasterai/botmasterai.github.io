@@ -1,0 +1,715 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Using Fulfill · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="watson-conversation.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../getting-started/">
+            
+                <a href="../getting-started/">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../getting-started/installation.html">
+            
+                <a href="../getting-started/installation.html">
+            
+                    
+                    Installation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../getting-started/quickstart.html">
+            
+                <a href="../getting-started/quickstart.html">
+            
+                    
+                    Quickstart
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../getting-started/messenger-setup.html">
+            
+                <a href="../getting-started/messenger-setup.html">
+            
+                    
+                    Messenger setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../getting-started/slack-setup.html">
+            
+                <a href="../getting-started/slack-setup.html">
+            
+                    
+                    Slack setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../getting-started/twitter-setup.html">
+            
+                <a href="../getting-started/twitter-setup.html">
+            
+                    
+                    Twitter setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../getting-started/telegram-setup.html">
+            
+                <a href="../getting-started/telegram-setup.html">
+            
+                    
+                    Telegram setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../getting-started/socket.io-setup.html">
+            
+                <a href="../getting-started/socket.io-setup.html">
+            
+                    
+                    Socket.io setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../getting-started/webhooks.html">
+            
+                <a href="../getting-started/webhooks.html">
+            
+                    
+                    Webhooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../working-with-botmaster/">
+            
+                <a href="../working-with-botmaster/">
+            
+                    
+                    Working With Botmaster
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../working-with-botmaster/botmaster-basics.html">
+            
+                <a href="../working-with-botmaster/botmaster-basics.html">
+            
+                    
+                    Botmaster basics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../working-with-botmaster/middleware.html">
+            
+                <a href="../working-with-botmaster/middleware.html">
+            
+                    
+                    Middleware
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../working-with-botmaster/writing-your-own-bot-class.html">
+            
+                <a href="../working-with-botmaster/writing-your-own-bot-class.html">
+            
+                    
+                    Writing your own bot class
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../middlewares/">
+            
+                <a href="../middlewares/">
+            
+                    
+                    Middlewares
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../middlewares/fulfill.html">
+            
+                <a href="../middlewares/fulfill.html">
+            
+                    
+                    fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Tutorials
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.5.1" data-path="using-fulfill.html">
+            
+                <a href="using-fulfill.html">
+            
+                    
+                    Using Fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="watson-conversation.html">
+            
+                <a href="watson-conversation.html">
+            
+                    
+                    Watson Conversation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../articles/">
+            
+                <a href="../articles/">
+            
+                    
+                    Articles
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../articles/frameworks-comparison.html">
+            
+                <a href="../articles/frameworks-comparison.html">
+            
+                    
+                    Framworks comparison
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../changelog.html">
+            
+                <a href="../changelog.html">
+            
+                    
+                    Changelog
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Using Fulfill</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="using-botmaster-fulfill-middleware">Using Botmaster Fulfill middleware</h1>
+<p>Although many of you will be using Botmaster because of its ability to connect with message sources like Facebook Messenger, it also has a powerful middleware called Botmaster Fulfill. Fulfill helps helps greatly with building more sophisticated bots that need integrations with external data sources and more complex logic. It&apos;s task is to provide a framework for addressing tasks that are outside of the scope of a core NLU or AI engine, so it&apos;s complementary to something like Watson Conversation or Wit.ai.</p>
+<h2 id="what-can-i-do-with-botmaster-fulfill">What can I do with Botmaster Fulfill?</h2>
+<p>You hopefully want to wow your bot&apos;s users with some high-end functionality that gets them hooked on using a conversational interface to get stuff done. If so, you will need to rely on more than pre-canned static replies held within your AI engine &#x2013; such bots can get pretty boring quite quickly.</p>
+<p>Connecting your bot to more dynamic and real-time sources of information is probably high on your priority list. In addition, taking advantage of UI features like buttons and location awareness, might also be things you are interested in. These are the kind of things that Botmaster Fulfill can help with.</p>
+<p>To get specific, here is a set of things that you might use Botmaster Fulfill for:</p>
+<ul>
+<li>Specifying where various types of buttons might be used within the conversation to guide the user&apos;s response.</li>
+<li>Specifying how a longer conversational response should be broken into a series of shorter messages that appear one-after-the-other in the user&apos;s messaging app, just like we tend to do when texting a friend.</li>
+<li>Calling external API services and integrating the results into the conversation, for example adding a stock quote or weather forecast. Or a call to your organisation&apos;s core systems to retrieve a customer order or balance.</li>
+<li>Initiating transactions such as placing an order or making a payment.</li>
+<li>Making a time-of-day specific greetings (Good morning, Good afternoon, Good evening, etc).</li>
+</ul>
+<p>In short, anything you need your bot to do that your AI doesn&apos;t, is probably a candidate for Botmast Fulfill.</p>
+<h2 id="why-should-i-use-botmaster-fulfill">Why should I use Botmaster Fulfill?</h2>
+<p>&quot;Separation of concerns&quot; is generally considered a good thing. It turns out that in bot design, it&apos;s an especially good thing. Why do we say that?</p>
+<p>Designing your conversational flow and how your bot responds to questions is an analyst-type job - you need people good at understanding the problem domain and how to craft a great conversations. You these people to have a nice life, unencumbered by any technical complexities.</p>
+<p>If your bot needs to invoke programming logic, for example to call an external API and include the results into the bot&apos;s response, you surely want to keep that programming away from your conversational analysts.</p>
+<p>However, before Botmaster Fulfill it was tricky to keep your conversational design totally separate from your integration logic. Or sometimes you ended up with small pieces of logic buried in your conversational flow who flagged things to some external integration logic - which is basically unmaintainable in the long term.</p>
+<p>Botmaster Fulfill solves these problems by providing a clean separation of concerns. With it, conversational analysts use simple XML tags to markup a bot&apos;s responses. Those tags are interpreted by a series of javascript modules that implement the logic needed. The conversational analyst gets to specify when logic should be called and the engineer gets to separately specify how that logic is implemented....and we achieve a separation of concerns.</p>
+<h2 id="how-do-i-use-fulfill-in-my-conversational-flow">How do I use Fulfill in my conversational flow?</h2>
+<p>The beauty of Botmaster Fulfill is that complex logic can be specified by including very simple XML tags within a bot&apos;s response text. For example, in the following dialog response the</p>
+<weather> tag is identified by Botmaster Fulfill and replaced with the result of an API call to a weather forecast service.
+<code>I thought you might like a weather forecaset, so here it is: &lt;weather /&gt;</code></weather>
+
+<p>What is super nice here, is that your dialog designer doesn&apos;t need to worry about how the weather API works or indeed how to get the result of that API call into her conversational response. That&apos;s the engineer&apos;s job - which we will come to shortly.</p>
+<p>Here&apos;s another, more complex, example:</p>
+<pre><code>&lt;greet /&gt;&lt;pause /&gt;How are you today?&lt;buttons&gt;Good,Bad,Indifferent&lt;/buttons&gt;
+</code></pre><p>This results in two separate messages being sent:</p>
+<ol>
+<li>A message that&apos;s reflective of the time of day, such as &quot;Good morning!&quot; or &quot;Good afternoon.&quot;</li>
+<li>A second message &quot;How are you today?&quot; with three quick-reply buttons Good, Bad, Indifferent.</li>
+</ol>
+<p>As you can hopefully see, multiple XML tags can be included within the same response, building some quite sophisticated responses and integrations. It&apos;s super-simple for the conversational analyst to specify these tags and the programming logic to implement them is totally separated.</p>
+<h2 id="sounds-great-how-do-i-get-started">Sounds great, how do I get started?</h2>
+<p>The implementation of the logic needed to fulfill these XML tags is through what we call a Botmaster Fulfill action. These actions are really just standard javascript code, so any half-decent node coder should be able to get to grips with things pretty quickly.</p>
+<p>But to get us going, we&apos;re first going to use some pre-defined Botmaster Fulfill actions. We&apos;ll move on to making our own custom actions in the next step.</p>
+<p>First of all install Botmaster Fulfill using: <code>npm install botmaster-fulfill -S</code></p>
+<p>Then, install the pre-defined Botmaster Fulfill actions using: <code>npm install botmaster-fulfill-actions -S</code></p>
+<p>Now add the following code to your Botmaster <code>app.js</code> file:</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> {fulfillOutgoingWare} = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-fulfill&apos;</span>);
+<span class="hljs-keyword">const</span> actions = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-fulfill-actions&apos;</span>);
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, fulfillOutgoingWare({
+  actions
+}));
+</code></pre>
+<p>Now we&apos;re ready to go! At the time of writing, the standard actions include:</p>
+<ul>
+<li><code>&lt;pause /&gt;</code> - which breaks the message into two separate messages, one from each side of the pause tag.</li>
+<li><code>&lt;greet tz=&quot;Europe/London&quot; /&gt;</code> - which returns a location/language relevant greeting such as &quot;Good morning&quot; or &quot;Good evening&quot;, depending on the time of day and the timezone/location specified.</li>
+</ul>
+<p>Go ahead and try these out by adding something like the following as a response in whatever dialoging engine you are using: <code>&lt;greet /&gt;&lt;pause /&gt;How are you today?</code></p>
+<p>If you haven&apos;t wired up an AI engine yet, you could just add the following code to your app.js file. If you do that, it doesn&apos;t matter what you type into your bot, you&apos;ll get the same answer - but it does the job of exercising Botmaster Fulfill and its standard actions.</p>
+<pre><code class="lang-javascript">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  bot.reply(update, <span class="hljs-string">&apos;&lt;greet /&gt;&lt;pause /&gt;How are you today?&apos;</span>);
+});
+</code></pre>
+<p>How cool is that?! The Botmaster project is hoping to expand this set of standard actions, so keep an eye on the Github repo.</p>
+<h2 id="but-how-do-i-write-my-own-botmaster-fulfill-actions">But how do I write my own Botmaster Fulfill actions?</h2>
+<p>As we discussed earlier, Botmaster Fulfill actions are just javascript &#x2013; so, as you&apos;re already using Botmaster, you will already be at least vaguely competent at this task. It&apos;s OK if you&apos;re still at the vague end of the competency spectrum - you can write simple Actions with very basic knowledge.</p>
+<p>Lets start off by modifying our above code with a super-simple custom action. To do this, we define our custom action by adding the following code after the definition of standardActions in the <code>app.js</code> we used in the last step.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> checkUserState = {
+  controller: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">params</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">resolve, reject</span>) </span>{
+      resolve(<span class="hljs-string">&apos;How are you today?&apos;</span>);
+    });
+  }
+};
+</code></pre>
+<p>This is pretty self-explanatory &#x2013; checkUserState is the name of the XML tag this code implements. The variable <code>params</code> is just a placeholder for whatever text might be between the open and closing XML tags. In our case this will be empty, because we have a single open/close tag. We return a Javascript Promise that resoles to &quot;How are you today?&quot;, the text that replaces our checkUserState tag in the bot&apos;s reply. Returning a Promise means our code is executed asynchronously - which is pretty handy if you&apos;re calling an external API, for example.</p>
+<p>Next, we need to modify our <code>botmaster.use</code> statement to include <code>checkUserState</code> as follows:</p>
+<pre><code class="lang-javascript">actions.checkUserState = checkUserState;
+botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, fulfillOutgoingWare({
+  actions
+}));
+</code></pre>
+<p>And change our bot reply text to something like the following: <code>&lt;greet /&gt;&lt;pause /&gt;&lt;checkUserState /&gt;</code></p>
+<p>Now this might not be the best of example - it&apos;s a bit overkill to implement a simple question as a Fulfill Action. However, it&apos;s often good to start with something basic so as not to overwhelm ourselves. And &quot;Hello World&quot; has become a bit too ubiquitous for my liking.</p>
+<h2 id="using-fulfill-to-create-quick-reply-buttons">Using Fulfill to create Quick Reply Buttons</h2>
+<p>As we&apos;ve asked a question at this point, wouldn&apos;t it be kind of cool if we provided a <code>Yes</code> and <code>No</code> Quick Reply button as a response? Luckily this is pretty easy to do with Botmaster&apos;s Quick Reply functionality in partnership with Botmaster Fulfill.</p>
+<p>To do this we can add the following Botmaster Fulfill action for buttons:</p>
+<pre><code class="lang-javascript">buttons: {
+  controller: (params) =&gt; {
+     <span class="hljs-keyword">const</span> buttonTitles = params.content.split(<span class="hljs-string">&apos;|&apos;</span>);
+     params.update.message.quick_replies = [];
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> buttonTitle <span class="hljs-keyword">of</span> buttonTitles) {
+       params.update.message.quick_replies.push({
+         content_type: <span class="hljs-string">&apos;text&apos;</span>,
+         title: buttonTitle,
+         payload: buttonTitle,
+       });
+     }
+     <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;&apos;</span>;
+  }
+}
+</code></pre>
+<p>And update our reply to be: <code>&lt;helloWorld /&gt;&lt;pause /&gt;&lt;checkUserState /&gt;&lt;buttons&gt;Yes|No&lt;/buttons&gt;</code></p>
+<p>Do you see what we&apos;re doing here? The button titles are included between the opening/closing</p>
+<buttons> tags and separated by &#x201C;|&#x201C;. Our controller receives this in the <code>paramas</code> object and splits its contents apart to create a Botmaster quick replies array. You can hopefully see how you might use the same principle to create other types of Botmaster reply objects.</buttons>
+
+<h2 id="finding-the-users-location">Finding the user&apos;s location</h2>
+<p>If the user is using Facebook Messenger, we can extend the above example to generate a special button asking for the user&apos;s location, which results in us receiving the user&apos;s latitude/longitude.</p>
+<pre><code class="lang-javascript">locButton: {
+  controller: (params) =&gt; {
+     params.update.message.quick_replies = [];
+     params.update.message.quick_replies.push({
+      content_type: <span class="hljs-string">&apos;location&apos;</span>,
+     });
+     <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;&apos;</span>;
+   }
+}
+</code></pre>
+<p>and change the returned text to:</p>
+<pre><code class="lang-javascript">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  <span class="hljs-keyword">if</span> (update.message.text != (<span class="hljs-string">&apos;Good&apos;</span> || <span class="hljs-string">&apos;Bad&apos;</span> || <span class="hljs-string">&apos;Indifferent&apos;</span>)) {
+    bot.reply(update, <span class="hljs-string">&apos;&lt;greet tz=&quot;Europe/London&quot; /&gt; &lt;userName /&gt;&lt;pause /&gt;How are you today?&lt;pause /&gt;&lt;buttons&gt;Good,Bad,Indifferent&lt;/buttons&gt;&apos;</span>);
+  } <span class="hljs-keyword">else</span> {
+    bot.reply(update, <span class="hljs-string">&apos;OK. It would be interesting to know where you are.&lt;pause /&gt;&lt;locButton /&gt;&apos;</span>);
+  }
+});
+</code></pre>
+<p>So now we have a message returned to us that has the user&apos;s location embedded within in it. How about we use that latitude/longitude to get a weather forecast using a Fulfill action and return that to the user?</p>
+<h2 id="calling-an-external-api-in-a-fulfill-action">Calling an external API in a Fulfill Action</h2>
+<p>So far our examples have been quite trivial. But Fulfill can do some pretty sophisticated things. One thing we find particularly useful is the ability to call an external API and integrate it&apos;s results into the conversational response.</p>
+<p>For this exercise we&apos;re going to integrate the results of a weather forecast API call into our bot&apos;s response.</p>
+<p>Here&apos;s the function that calls the weather API service. You&apos;ll need to register <a href="https://console.ng.bluemix.net/catalog/services/weather-company-data/" target="_blank">here</a> in Bluemix and provide the required userID and password fields to make it work.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getWeather</span>(<span class="hljs-params">params</span>) </span>{
+  <span class="hljs-keyword">const</span> lat = params.content.split(<span class="hljs-string">&apos;,&apos;</span>)[<span class="hljs-number">0</span>];
+  <span class="hljs-keyword">const</span> long = params.content.split(<span class="hljs-string">&apos;,&apos;</span>)[<span class="hljs-number">1</span>];
+  <span class="hljs-keyword">const</span> requestOptions = {
+    url: <span class="hljs-string">&apos;https://twcservice.mybluemix.net/api/weather/v1/geocode/&apos;</span> + lat + <span class="hljs-string">&apos;/&apos;</span> + long + <span class="hljs-string">&apos;/forecast/daily/3day.json?language=en-US&amp;units=e&apos;</span>,
+    auth: {
+      user: <span class="hljs-string">&apos;[enter user-id here]&apos;</span>,
+      pass: <span class="hljs-string">&apos;[enter password here]&apos;</span>,
+      sendImmediately: <span class="hljs-literal">true</span>
+    },
+    json: <span class="hljs-literal">true</span>
+  };
+  <span class="hljs-keyword">return</span> request(requestOptions)
+    .then((body) =&gt; body.forecasts[<span class="hljs-number">0</span>].narrative);
+}
+</code></pre>
+<p>And here&apos;s our weather Action definition:</p>
+<pre><code class="lang-javascript">weather: {
+  controller: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">params</span>) </span>{
+     <span class="hljs-keyword">return</span> getWeather(params)
+       .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+          <span class="hljs-built_in">console</span>.log(result);
+          <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;I thought you might like a weather forecast for that location.&lt;pause /&gt;&apos;</span> + result;
+        })
+       .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+         <span class="hljs-built_in">console</span>.log(err);
+         <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;Sorry, no weather forecast available at the moment.&apos;</span>;
+       });
+  }
+}
+</code></pre>
+<p>If we update our bot message return logic to the following, we should be able to get a weather forecast sent back to the user when they click on one of the Good, Bad, Indifferent buttons:</p>
+<pre><code class="lang-javascript">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> update.message.attachments != <span class="hljs-string">&apos;undefined&apos;</span>) {
+    <span class="hljs-keyword">if</span> (update.message.attachments[<span class="hljs-number">0</span>].type == <span class="hljs-string">&apos;location&apos;</span>) {
+      <span class="hljs-keyword">const</span> lat = update.message.attachments[<span class="hljs-number">0</span>].payload.coordinates.lat;
+      <span class="hljs-keyword">const</span> long = update.message.attachments[<span class="hljs-number">0</span>].payload.coordinates.long;
+      bot.reply(update, <span class="hljs-string">&apos;&lt;weather&gt;&apos;</span> + lat + <span class="hljs-string">&apos;,&apos;</span> + long + <span class="hljs-string">&apos;&lt;/weather&gt;&apos;</span>);
+    }
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (update.message.text != (<span class="hljs-string">&apos;Good&apos;</span> || <span class="hljs-string">&apos;Bad&apos;</span> || <span class="hljs-string">&apos;Indifferent&apos;</span>)) {
+      bot.reply(update, <span class="hljs-string">&apos;&lt;greet tz=&quot;Europe/London&quot; /&gt; &lt;userName /&gt;&lt;pause /&gt;How are you today?&lt;pause /&gt;&lt;buttons&gt;Good,Bad,Indifferent&lt;/buttons&gt;&apos;</span>);
+    } <span class="hljs-keyword">else</span> {
+      bot.reply(update, <span class="hljs-string">&apos;OK. It would be interesting to know where you are.&lt;pause /&gt;&lt;locButton /&gt;&apos;</span>);
+    }
+  }
+});
+</code></pre>
+<p>So there you have it. Using Botmaster Fulfill to execute standard actions that generate a greeting and break messages up. Using Botmaster Fulfill to generate quick reply buttons, get the user&apos;s location and then call an external weather forecast API. Hopefully your scenario is similar to at least one of these examples and you can find a way of using Fulfill to separate the concerns of your developer and conversational analyst.</p>
+<!--
+If you want to just skip to a working version of this tutorial, just download [this](app.js) pre-built `app.js` file.
+-->
+<p>If you&apos;re inspired by this tutorial to develop your own actions, please consider submitting them to the Botmaster community through a <code>Pull</code> request. We want to foster the development of a library of these functions to simplify everyone&apos;s jobs - and you can help!</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Tutorials">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="watson-conversation.html" class="navigation navigation-next " aria-label="Next page: Watson Conversation">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Using Fulfill","level":"1.5.1","depth":2,"next":{"title":"Watson Conversation","level":"1.5.2","depth":2,"path":"tutorials/watson-conversation.md","ref":"tutorials/watson-conversation.md","articles":[]},"previous":{"title":"Tutorials","level":"1.5","depth":1,"path":"tutorials/index.md","ref":"tutorials/index.md","articles":[{"title":"Using Fulfill","level":"1.5.1","depth":2,"path":"tutorials/using-fulfill.md","ref":"tutorials/using-fulfill.md","articles":[]},{"title":"Watson Conversation","level":"1.5.2","depth":2,"path":"tutorials/watson-conversation.md","ref":"tutorials/watson-conversation.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"tutorials/using-fulfill.md","mtime":"2017-04-03T01:02:32.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T01:20:40.339Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
