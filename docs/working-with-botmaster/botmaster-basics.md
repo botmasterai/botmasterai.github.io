@@ -2,33 +2,39 @@
 
 ### Bot object
 
-Hopefully, by now you've gathered your credentials for at least one platform and got some basic bot running. We remember from the [quickstart](/getting-started/quickstart) and the various Setup guides in [getting-started](/getting-started) that we can start a botmaster project like this:
+This guide is meant to be read after going through the [quickstart](/getting-sarted/quickstart.md).
+We remember from the [quickstart](/getting-started/quickstart) that we can start a botmaster project like this:
 
 
 ```js
 const Botmaster = require('botmaster');
+const MessengerBot = require('botmaster-messenger');
+const SlackBot = require('botmaster-slack');
+const SocketIoBot = require('botmaster-socket.io');
+const TwitterDmBot = require('botmaster-twitter-dm');
+const TelegramBot = require('botmaster-telegram');
 
 const botmaster = new Botmaster();
 .
 . // full settings objects omitted for brevity
 .
-const messengerBot = new Botmaster.botTypes.MessengerBot(messengerSettings);
-const slackBot = new Botmaster.botTypes.SlackBot(slackSettings);
-const socketioBot = new Botmaster.botTypes.SocketioBot(socketioSettings));
-const twitterBot = new Botmaster.botTypes.TwitterBot(twitterSettings);
-const telegramBot = new Botmaster.botTypes.TelegramBot(telegramSettings);
+botmaster.addBot(new MessengerBot(messengerSettings));
+botmaster.addBot(new SlackBot(slackSettings));
+botmaster.addBot(new SocketioBot(socketioSettings)));
+botmaster.addBot(new TwitterBDmot(twitterSettings));
+botmaster.addBot(new TelegramBot(telegramSettings));
 
-botmaster.addBot(messengerBot);
-botmaster.addBot(slackBot);
-botmaster.addBot(twitterBot);
-botmaster.addBot(socketioBot);
-botmaster.addBot(telegramBot);
 .
 .
 .
 ```
+That is, assuming we have added the necessary packages to our dependencies. Installing them either via `yarn add` or via `npm install --save`
 
-As it turns out, bot objects are really the ones running the show in the Botmaster framework. Your `botmaster` object is simply a central point of control for you to manage all of your bots. Botmaster assumes that most of your bots will have a central bit of code that you don't want to have to replicate for every platform/bot instance. Which should make sense.
+As it turns out, bot objects are really the ones running the show in the Botmaster framework. Your `botmaster` object is simply a central point of control for you to manage all of your bots. Bot classes are built on top of the Botmaster BaseBot class that exposes all the actions one will want to take using Botmaster.
+
+No initial write-up on Botmaster would be complete without addressing middleware as Botmaster is built around the concept or middleware. Similar to what you might find in express, Koa or other app-development frameworks. However, because it is a bot framework, it comes with 2 main types of middleware. Incoming and outgoing.
+
+  * incoming Middleware:
 
 Although the point of botmaster is for developers to do something like this after declaring the botmaster instance:
 

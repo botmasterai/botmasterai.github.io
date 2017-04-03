@@ -1,23 +1,23 @@
 # Webhooks
 
-Most platforms rely on webhooks to work. As such, you are expected to setup webhooks on the various platforms that use them in order to use Botmaster with these platforms. In the 'Getting started' part of this documentation, we briefly touched onto that for Telegram and Messenger and more deeply for Slack.
+Most platforms rely on webhooks to work. As such, you are expected to setup webhooks on the various platforms that use them in order to use Botmaster with these platforms. In the 'Message platforms' part of this documentation, we briefly mention webhooks for Telegram and Messenger and more deeply for Slack.
 
-If you are still unsure what webhooks are and how they work, within the context of chatbots, they are simply a URL provided by you pointing to where you expect messages and other updates to come in.
+If you are still unsure what webhooks are and how they work, within the context of chatbots, think of them as such: URL provided by you, pointing to where you expect messages and other updates to come in.
 
-Any platform that requires webhooks won't work without a webhookEndpoint parameter in their settings. E.g. for Telegram:
+Any platform that requires webhooks won't work without a webhookEndpoint parameter in their settings. E.g. for Telegram (using `botmaster-telegram`):
 
 ```js
 const telegramSettings = {
   credentials: {
     authToken: 'YOUR authToken',
   },
-  webhookEndpoint: '/webhook1234/',
+  webhookEndpoint: 'webhook1234/',
 };
 ```
 
-This will mount your telegram webhook on: `https://Your_Domain_Name:3000/messenger/webhook1234`. And yes, you will need ssl in order to work with most platforms.
+This will mount your telegram webhook on: `https://Your_Domain_Name:3000/telegram/webhook1234`. And yes, you will need ssl in order to work with most platforms.
 
-As an added layer of security, it is highly recommended that you include a sort of a code in your webhookEndpoint. I.e., rather that having this: `webhookEndpoint: '/webhook/'`, do something more like this: `webhookEndpoint: '/webhook92ywrnc9qm4qoiuthecvasdf42FG/'`. This will assure that you know where the request is coming from. It is more important on Telegram than on other platforms as Telegram doesn't give us any way to verify the source of the message.
+As an added layer of security, it is highly recommended that you include a sort of a code in your webhookEndpoint. I.e., rather that having this: `webhookEndpoint: 'webhook/'`, do something more like this: `webhookEndpoint: 'webhook92ywrnc9qm4qoiuthecvasdf42FG/'`. This will assure that you know where the request is coming from. It is more important on Telegram than on other platforms as Telegram doesn't give us any way to verify the source of the message.
 
 Now we realize you will want to develop and test your code without always deploying to a server with a valid url that supports ssl.
 
@@ -42,7 +42,7 @@ lt -p 3000 -s botmastersubdomain //for example
 
 In the example above, url will be: `http://botmastersubdomain.localtunnel.me`. Localtunnel is great and supports both ssl and non ssl request, which means we will actually wan to use: `https://botmastersubdomain.localtunnel.me`
 
-So if you specified your messenger's bot webhook endpoint to, say, /webhook1234/, you will have to set up the webhook for your demo app at:
+So if you specified your messenger's bot webhook endpoint to, say, webhook1234/, you will have to set up the webhook for your demo app at:
 
 ```
 https://botmastersubdomain.localtunnel.me/messenger/webhook1234/
@@ -113,3 +113,7 @@ I can then simply run the runnel as follows (most likely in another console tab)
 ```bash
 npm run tunnel
 ```
+
+Many people also use `ngrok` instead of localtunnel. Although it is a paying service to get your own subdomain,
+you can use it without paying and using a randomly allocated subdomain. Ngrok comes with a lot of goodies like a user interface
+where you can see exactly what requests came in etc.

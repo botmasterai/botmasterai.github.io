@@ -6,5 +6,5 @@ Middleware extends botmaster with additional functionality. Because of their mod
 
 ## Outgoing
 
-1. [Fulfill](/middlewares/fulfill) - Declarative markup API and engine to integrate internal or external APIs with botmaster.
+1. [Fulfill](/middlewares/fulfill.md) - Declarative markup API and engine to integrate internal or external APIs with botmaster.
  `npm i botmaster-fulfill -S`

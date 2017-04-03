@@ -381,6 +381,92 @@ All values will either be falsy or truthy. Ideally, they will even either be `tr
 
 And `bot.retrievesUserInfo` which will either be truthy or falsy.
 
+##### 7. OutgoingMessage class has been added
+
+In order to make it easier to compose outgoing messages without having to mess about with the object directly, Botmaster
+now sends instances of OutgoingMessage to the outgoing middleware. These objects are just like old message objects in 2.x.x.
+(go ahead, you can console log them to see for yourselves), but they just come with a few helper methods to add and remove
+stuff from the object. Have a look at the [API reference](/api-reference/outgoing-message.md) for them to see how you can leverage that.
+
+##### 8. SendMessage type methods
+
+There are THREE big changes in the way the sendMessage type methods now work. 
+
+###### 1. You can't use them with callbacks anymore. The only supported way to do anything after the message is sent is to `then` them using promises.
+
+So if you had code like this:
+
+```js
+bot.sendMessage(someMessage, (body) => {
+  console.log(body);
+});
+```
+
+you'll need to make it look like this:
+
+```js
+bot.sendMessage(someMessage).then((body) => {
+  console.log(body);
+});
+```
+
+This was done because forcing promises means that using async-await syntax will be a breeze with Botmaster.
+And async-await is the future. So we didn't want to have you miss on that.
+
+###### 2. You can now use `sendRaw` with all bot classes
+
+Any bot class will have a valid `sendRaw` method (that is just sugar for the underlying Bot class's `__sendMessage` method). This method
+allows you to send a message to the platform your bot object is based from without going through any formatting or outgoing middleware.
+I.e. it could be used as such:
+
+```js
+// within a middleware controller
+if (bot.type === 'slack') { // for example
+  rawSlackMessage = {
+    token: 'someToken',
+    channel: 'someChannel',
+    as_user: true,
+    text: 'someText',
+    .
+    .
+    .
+  };
+
+  return bot.sendRaw(rawSlackMessage);
+} else {
+  return bot.reply(update, 'Thank you for subscribing');
+}
+```
+
+###### 3. The resolved body from sendMessage type functions now contains much more information. It is now composed of the following:
+
+  * sentOutgoingMessage - the object before going through its formatting
+  * sentRawMessage - the sentOutgoinMessage after its formatting
+  * raw - the raw response from the platform after sending the obejct
+  * recipient_id - the id of the recipient
+  * message_id - the id of the sent message (if available)
+
+##### 9. WebhookEndpoint has no initial slash anymore.
+
+When using a bot class that uses webhooks, no need to add a slash at the beginning of the webhookEnpoint paramter.
+I.e. if you had something that looked like this:
+
+```js
+const messengerSettings = {
+  credentials: someCredentials,
+  webhookEndpoint: '/webhook1234',
+};
+```
+
+Change it to:
+
+```js
+const messengerSettings = {
+  credentials: someCredentials,
+  webhookEndpoint: 'webhook1234',
+};
+```
+
 ### MINOR 2.3.0
 
 Outgoing middleware now has access to the incoming update. I.e. outgoing middleware can be used like this:

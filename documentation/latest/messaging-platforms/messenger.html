@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Installation · GitBook</title>
+        <title>Messenger · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,7 +61,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="quickstart.html" />
+    <link rel="next" href="slack.html" />
     
     
     <link rel="prev" href="./" />
@@ -106,9 +106,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="./">
+        <li class="chapter " data-level="1.2" data-path="../getting-started/">
             
-                <a href="./">
+                <a href="../getting-started/">
             
                     
                     Getting started
@@ -120,9 +120,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="installation.html">
+        <li class="chapter " data-level="1.2.1" data-path="../getting-started/installation.html">
             
-                <a href="installation.html">
+                <a href="../getting-started/installation.html">
             
                     
                     Installation
@@ -133,9 +133,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="quickstart.html">
+        <li class="chapter " data-level="1.2.2" data-path="../getting-started/quickstart.html">
             
-                <a href="quickstart.html">
+                <a href="../getting-started/quickstart.html">
             
                     
                     Quickstart
@@ -146,9 +146,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3" data-path="webhooks.html">
+        <li class="chapter " data-level="1.2.3" data-path="../getting-started/webhooks.html">
             
-                <a href="webhooks.html">
+                <a href="../getting-started/webhooks.html">
             
                     
                     Webhooks
@@ -222,9 +222,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../messaging-platforms/">
+        <li class="chapter " data-level="1.4" data-path="./">
             
-                <a href="../messaging-platforms/">
+                <a href="./">
             
                     
                     Messaging Platforms
@@ -236,9 +236,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../messaging-platforms/messenger.html">
+        <li class="chapter active" data-level="1.4.1" data-path="messenger.html">
             
-                <a href="../messaging-platforms/messenger.html">
+                <a href="messenger.html">
             
                     
                     Messenger
@@ -249,9 +249,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../messaging-platforms/slack.html">
+        <li class="chapter " data-level="1.4.2" data-path="slack.html">
             
-                <a href="../messaging-platforms/slack.html">
+                <a href="slack.html">
             
                     
                     Slack
@@ -262,9 +262,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="../messaging-platforms/socket.io.html">
+        <li class="chapter " data-level="1.4.3" data-path="socket.io.html">
             
-                <a href="../messaging-platforms/socket.io.html">
+                <a href="socket.io.html">
             
                     
                     Socket.io
@@ -275,9 +275,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="../messaging-platforms/telegram.html">
+        <li class="chapter " data-level="1.4.4" data-path="telegram.html">
             
-                <a href="../messaging-platforms/telegram.html">
+                <a href="telegram.html">
             
                     
                     Telegram
@@ -288,9 +288,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.5" data-path="../messaging-platforms/twitter-dm.html">
+        <li class="chapter " data-level="1.4.5" data-path="twitter-dm.html">
             
-                <a href="../messaging-platforms/twitter-dm.html">
+                <a href="twitter-dm.html">
             
                     
                     Twitter DM
@@ -516,7 +516,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Installation</a>
+        <a href=".." >Messenger</a>
     </h1>
 </div>
 
@@ -531,18 +531,34 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="installation">Installation</h1>
-<p>Make sure you have <a href="https://nodejs.org/en/" target="_blank">Node.js</a> and npm installed on your machine. If you don&apos;t, I recommend using nvm to manage your node versions. Find out more about it <a href="https://github.com/creationix/nvm/blob/master/README.markdown" target="_blank">here</a></p>
-<p>Once you have node, create a new project directory and go into it:</p>
-<pre><code class="lang-bash">mkdir my_botmaster_project &amp;&amp; <span class="hljs-built_in">cd</span> my_botmaster_project
+                                <h1 id="messenger-setup">Messenger Setup</h1>
+<h2 id="getting-your-credentials">Getting your Credentials</h2>
+<p>If you don&apos;t already have these, follow the steps <strong>1-4</strong> on the Facebook Messenger guide:
+<a href="https://developers.facebook.com/docs/messenger-platform/guides/quick-start" target="_blank">https://developers.facebook.com/docs/messenger-platform/guides/quick-start</a></p>
+<p>In <strong>step 2</strong>, where you setup your webhook, no need to code anything. Just specify the webhook, enter any secure string you want as a verify token(<code>verifyToken</code>) and copy that value in the settings object. Also, click on whichever message [those are &quot;update&quot;s using botmaster semantics] type you want to receive from Messenger (<code>message_deliveries</code>, <code>messages</code>, <code>message_postbacks</code> etc...).</p>
+<p>To find your Facebook App Secret (<code>fbAppSecret</code>), navigate to your apps dashboard and under <code>App Secret</code> click show, enter your password if prompted and then there it is.</p>
+<h2 id="code">Code</h2>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster();
+
+<span class="hljs-keyword">const</span> messengerSettings = {
+  credentials: {
+    verifyToken: <span class="hljs-string">&apos;YOUR verifyToken&apos;</span>,
+    pageToken: <span class="hljs-string">&apos;YOUR pageToken&apos;</span>,
+    fbAppSecret: <span class="hljs-string">&apos;YOUR fbAppSecret&apos;</span>,
+  },
+  webhookEndpoint: <span class="hljs-string">&apos;/webhook1234&apos;</span>,
+};
+
+<span class="hljs-keyword">const</span> messengerBot = <span class="hljs-keyword">new</span> Botmaster.botTypes.MessengerBot(messengerSettings);
+botmaster.addBot(messengerBot);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  bot.reply(update, <span class="hljs-string">&apos;Hello world!&apos;</span>);
+});
 </code></pre>
-<p>Make sure you initialize a node project in the new directory and going through the prompt by doing:</p>
-<pre><code class="lang-bash">npm init
-</code></pre>
-<p>Finally, install the botmaster npm package.</p>
-<pre><code class="lang-bash">npm install --save botmaster
-</code></pre>
-<p>That should do!</p>
+<h2 id="webhooks">Webhooks</h2>
+<p>If you are not too sure how webhooks work and/or how to get them to run locally, go to <a href="../getting-started/webhooks">webhooks</a> to read some more.</p>
 
                                 
                                 </section>
@@ -570,12 +586,12 @@
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Getting started">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Messaging Platforms">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="quickstart.html" class="navigation navigation-next " aria-label="Next page: Quickstart">
+                <a href="slack.html" class="navigation navigation-next " aria-label="Next page: Slack">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -586,7 +602,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Installation","level":"1.2.1","depth":2,"next":{"title":"Quickstart","level":"1.2.2","depth":2,"path":"getting-started/quickstart.md","ref":"getting-started/quickstart.md","articles":[]},"previous":{"title":"Getting started","level":"1.2","depth":1,"path":"getting-started/index.md","ref":"getting-started/index.md","articles":[{"title":"Installation","level":"1.2.1","depth":2,"path":"getting-started/installation.md","ref":"getting-started/installation.md","articles":[]},{"title":"Quickstart","level":"1.2.2","depth":2,"path":"getting-started/quickstart.md","ref":"getting-started/quickstart.md","articles":[]},{"title":"Webhooks","level":"1.2.3","depth":2,"path":"getting-started/webhooks.md","ref":"getting-started/webhooks.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"getting-started/installation.md","mtime":"2017-04-03T01:25:27.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T15:50:16.402Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Messenger","level":"1.4.1","depth":2,"next":{"title":"Slack","level":"1.4.2","depth":2,"path":"messaging-platforms/slack.md","ref":"messaging-platforms//slack.md","articles":[]},"previous":{"title":"Messaging Platforms","level":"1.4","depth":1,"path":"messaging-platforms/index.md","ref":"messaging-platforms/index.md","articles":[{"title":"Messenger","level":"1.4.1","depth":2,"path":"messaging-platforms/messenger.md","ref":"messaging-platforms/messenger.md","articles":[]},{"title":"Slack","level":"1.4.2","depth":2,"path":"messaging-platforms/slack.md","ref":"messaging-platforms//slack.md","articles":[]},{"title":"Socket.io","level":"1.4.3","depth":2,"path":"messaging-platforms/socket.io.md","ref":"messaging-platforms/socket.io.md","articles":[]},{"title":"Telegram","level":"1.4.4","depth":2,"path":"messaging-platforms/telegram.md","ref":"messaging-platforms/telegram.md","articles":[]},{"title":"Twitter DM","level":"1.4.5","depth":2,"path":"messaging-platforms/twitter-dm.md","ref":"messaging-platforms/twitter-dm.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"messaging-platforms/messenger.md","mtime":"2017-04-03T13:56:16.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T15:50:16.402Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
