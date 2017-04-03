@@ -7,12 +7,12 @@
       "options": [
         {
           "value": "http://botmasterai.com/documentation/latest/",
-          "text": "latest",
-          "selected": true
+          "text": "latest"
         },
         {
-          "value": "http://botmasterai.com/documentation/v3.0.7/",
-          "text": "Version 3.0.7"
+          "value": "http://botmasterai.com/documentation/v3.0.8/",
+          "text": "Version 3.0.8",
+          "selected": true
         },
         {
           "value": "http://botmasterai.com/documentation/v2.3.1/",

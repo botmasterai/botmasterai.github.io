@@ -1,5 +1,85 @@
 # Changelog
 
+### MAJOR 3.0.8
+
+Botmaster v3 is almost a complete rewrite of botmaster. Although much of the philosophy is the same, a lot of breaking changes have been introduced. Surely, you will find that they are for the better. This changelog doubles as a migration help.
+
+##### 0. Upgrading to botmastser v3
+
+You most likely have a line 
+
+##### 1. Bot classes now have their own packages
+
+Firstly, all the bot classes have been taken out and put in their own packages. This means if you want to write a bot that only works on, say, socket.io and Messenger, you don't actually have the code for the other bot classes anymore. You would need to do something like this:
+
+```bash
+yarn add botmaster
+yarn add botmaster-messenger
+yarn add botmaster-socket.io
+```
+
+or if still using npm
+
+```bash
+npm install --save botmaster
+npm install --save botmaster-messenger
+npm install --save botmaster-socket.io
+```
+
+then in your code:
+
+```js
+const Botmaster = require('botmaster');
+const MessengerBot = require('botmaster-messenger');
+const SocketioBot = require('botmaster-socket.io');
+.
+.
+.
+// then rest of code
+```
+
+##### 2. Botmaster is not built on top of express anymore
+
+In order to make botmaster really flexible, moving away from depending on express was important.
+This means that you can now either just let botmaster create its own server as it used to in 2.x.x.
+Or, you can completely manage your own server (using express, koa or other).
+
+This means that doing this will now throw an error:
+
+```js
+// DON'T DO THIS ANYMORE!!!
+const Botmaster = require('botmaster');
+const express = require('express');
+
+const app = express();
+const botmaster = new Botmaster({
+  app
+});
+```
+
+Instead, if you want to manage your own app object, you will need to do something like this
+```js
+// DO THIS INSTEAD!!
+const Botmaster = require('botmaster');
+const express = require('express');
+
+const app = express();
+const botmaster = new Botmaster({
+  app
+});
+```
+
+### MINOR 2.3.0
+
+Outgoing middleware now has access to the incoming update. I.e. outgoing middleware can be used like this:
+
+```js
+botmaster.use('outgoing', (bot, update, message, next) => {
+  console.log(update);
+  console.log(message);
+})
+```
+
 ### PATCH 2.2.7
 
 Add the concept of `implements` for bot classes. Now every bot object has a `bot.implements` object that specifies which functionalities are implemented by the bot class. Currently, the values that exist and can be tested against are:

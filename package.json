@@ -6,7 +6,7 @@
     "watch": "gitbook install && gitbook serve",
     "build": "rm -r documentation/latest && gitbook build && mv _book documentation/latest",
     "copy-favicon": "cp documentation/latest/images/favicon.ico documentation/latest/gitbook/images/favicon.ico && cp documentation/latest/images/favicon.png documentation/latest/gitbook/images/apple-touch-icon-precomposed-152.png",
-    "build-final": "yarn build && yarn copy-favicon",
+    "build-final": "gitbook install && yarn build && yarn copy-favicon",
     "serve-all": "yarn build && yarn copy-favicon && nodemon app.js",
     "build-tag": "./tag.sh"
   },

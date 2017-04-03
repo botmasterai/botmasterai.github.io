@@ -62,7 +62,7 @@
 
     
     
-    <link rel="prev" href="articles/frameworks-comparison.html" />
+    <link rel="prev" href="api-reference/outgoing-message.html" />
     
 
     </head>
@@ -394,7 +394,65 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.7" data-path="changelog.html">
+        <li class="chapter " data-level="1.7" data-path="api-reference/">
+            
+                <a href="api-reference/">
+            
+                    
+                    API reference
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="api-reference/botmaster.html">
+            
+                <a href="api-reference/botmaster.html">
+            
+                    
+                    Botmaster
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="api-reference/base-bot.html">
+            
+                <a href="api-reference/base-bot.html">
+            
+                    
+                    BaseBot
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="api-reference/outgoing-message.html">
+            
+                <a href="api-reference/outgoing-message.html">
+            
+                    
+                    OutgoingMessage
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.8" data-path="changelog.html">
             
                 <a href="changelog.html">
             
@@ -453,6 +511,61 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="changelog">Changelog</h1>
+<h3 id="major-308">MAJOR 3.0.8</h3>
+<p>Botmaster v3 is almost a complete rewrite of botmaster. Although much of the philosophy is the same, a lot of breaking changes have been introduced. Surely, you will find that they are for the better. This changelog doubles as a migration help.</p>
+<h5 id="0-upgrading-to-botmastser-v3">0. Upgrading to botmastser v3</h5>
+<p>You most likely have a line </p>
+<h5 id="1-bot-classes-now-have-their-own-packages">1. Bot classes now have their own packages</h5>
+<p>Firstly, all the bot classes have been taken out and put in their own packages. This means if you want to write a bot that only works on, say, socket.io and Messenger, you don&apos;t actually have the code for the other bot classes anymore. You would need to do something like this:</p>
+<pre><code class="lang-bash">yarn add botmaster
+yarn add botmaster-messenger
+yarn add botmaster-socket.io
+</code></pre>
+<p>or if still using npm</p>
+<pre><code class="lang-bash">npm install --save botmaster
+npm install --save botmaster-messenger
+npm install --save botmaster-socket.io
+</code></pre>
+<p>then in your code:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> MessengerBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-messenger&apos;</span>);
+<span class="hljs-keyword">const</span> SocketioBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-socket.io&apos;</span>);
+.
+.
+.
+<span class="hljs-comment">// then rest of code</span>
+</code></pre>
+<h5 id="2-botmaster-is-not-built-on-top-of-express-anymore">2. Botmaster is not built on top of express anymore</h5>
+<p>In order to make botmaster really flexible, moving away from depending on express was important.
+This means that you can now either just let botmaster create its own server as it used to in 2.x.x.
+Or, you can completely manage your own server (using express, koa or other).</p>
+<p>This means that doing this will now throw an error:</p>
+<pre><code class="lang-js"><span class="hljs-comment">// DON&apos;T DO THIS ANYMORE!!!</span>
+<span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
+  app
+});
+</code></pre>
+<p>Instead, if you want to manage your own app object, you will need to do something like this</p>
+<pre><code class="lang-js"><span class="hljs-comment">// DO THIS INSTEAD!!</span>
+<span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
+  app
+});
+</code></pre>
+<h3 id="minor-230">MINOR 2.3.0</h3>
+<p>Outgoing middleware now has access to the incoming update. I.e. outgoing middleware can be used like this:</p>
+<pre><code class="lang-js">botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, (bot, update, message, next) =&gt; {
+  <span class="hljs-built_in">console</span>.log(update);
+  <span class="hljs-built_in">console</span>.log(message);
+})
+</code></pre>
 <h3 id="patch-227">PATCH 2.2.7</h3>
 <p>Add the concept of <code>implements</code> for bot classes. Now every bot object has a <code>bot.implements</code> object that specifies which functionalities are implemented by the bot class. Currently, the values that exist and can be tested against are:</p>
 <p><code>quickReply</code> // for quick replies
@@ -559,7 +672,7 @@ bot class that will be in the core</p>
 
             
                 
-                <a href="articles/frameworks-comparison.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Framworks comparison">
+                <a href="api-reference/outgoing-message.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: OutgoingMessage">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -571,7 +684,7 @@ bot class that will be in the core</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Changelog","level":"1.7","depth":1,"previous":{"title":"Framworks comparison","level":"1.6.1","depth":2,"path":"articles/frameworks-comparison.md","ref":"articles/frameworks-comparison.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest","selected":true},{"value":"http://botmasterai.com/documentation/v3.0.7/","text":"Version 3.0.7"},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"changelog.md","mtime":"2017-04-03T01:25:27.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T03:28:03.481Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Changelog","level":"1.8","depth":1,"previous":{"title":"OutgoingMessage","level":"1.7.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/v3.0.8/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"changelog.md","mtime":"2017-04-03T12:08:00.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T12:08:31.450Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
