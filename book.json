@@ -1,3 +1,20 @@
 {
-  "root": "./docs"
+  "root": "./docs",
+  "plugins": [ "versions" ],
+  "pluginsConfig": {
+    "versions": {
+      "gitbookConfigURL": "https://github.com/botmasterai/botmasterai.github.io/blob/master/book.json",
+      "options": [
+        {
+          "value": "https://github.com/botmasterai/botmasterai.github.io/tree/v3.0.6/",
+          "text": "Version 3.0.6",
+          "selected": true
+        },
+        {
+          "value": "https://github.com/botmasterai/botmasterai.github.io/tree/v2.3.1/",
+          "text": "Version 2.3.1"
+        }
+      ]
+    }
+  }
 }
