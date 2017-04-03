@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Documentation for Botmaster, the bot framework for your serious projects",
   "scripts": {
-    "watch": "gitbook install && gitbook serve docs documentation",
-    "build": "gitbook build docs documentation",
-    "copy-favicon": "cp documentation/images/favicon.ico documentation/gitbook/images/favicon.ico && cp documentation/images/favicon.png documentation/gitbook/images/apple-touch-icon-precomposed-152.png",
-    "serve-all": "yarn build && yarn copy-favicon && nodemon app.js"
+    "watch": "gitbook install && gitbook serve",
+    "build": "rm -r documentation/latest && gitbook build && mv _book documentation/latest",
+    "copy-favicon": "cp documentation/latest/images/favicon.ico documentation/latest/gitbook/images/favicon.ico && cp documentation/latest/images/favicon.png documentation/latest/gitbook/images/apple-touch-icon-precomposed-152.png",
+    "serve-all": "yarn build && yarn copy-favicon && nodemon app.js",
+    "build-tag": "./tag.sh"
   },
   "author": "JD Wuarin <john.dwuarin@gmail.com>",
   "license": "MIT",

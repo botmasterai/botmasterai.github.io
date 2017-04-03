@@ -1,20 +1,21 @@
 {
+  "root": "./docs",
   "plugins": [ "versions" ],
   "pluginsConfig": {
     "versions": {
       "gitbookConfigURL": "https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json",
       "options": [
         {
-          "value": "https://github.com/botmasterai/botmasterai.github.io/",
+          "value": "http://botmasterai.com/documentation/latest/",
           "text": "latest"
         },
         {
-          "value": "https://github.com/botmasterai/botmasterai.github.io/tree/v3.0.7/",
+          "value": "http://botmasterai.com/documentation/v3.0.7/",
           "text": "Version 3.0.7",
           "selected": true
         },
         {
-          "value": "https://github.com/botmasterai/botmasterai.github.io/tree/v2.3.1/",
+          "value": "http://botmasterai.com/documentation/v2.3.1/",
           "text": "Version 2.3.1"
         }
       ]
