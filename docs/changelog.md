@@ -4,11 +4,41 @@
 
 Botmaster v3 is almost a complete rewrite of botmaster. Although much of the philosophy is the same, a lot of breaking changes have been introduced. Surely, you will find that they are for the better. This changelog doubles as a migration help.
 
-##### 0. Upgrading to botmastser v3
+##### 1. Upgrading to botmastser v3
 
-You most likely have a line 
+You most likely have a line that looks like this in your package.json:
 
-##### 1. Bot classes now have their own packages
+```json
+  "dependencies": {
+    "botmaster": "^2.x.x",
+  }
+```
+
+In order to change that, either do a 
+
+```bash
+yarn upgrade botmaster
+```
+if using yarn
+
+or:
+
+```bash
+npm install --save botmaster@3
+```
+if using npm
+
+This will change that line in your dependencies to something like:
+
+```json
+  "dependencies": {
+    "botmaster": "^3.0.8",
+  }
+```
+
+Or newer if newer versions were released recently.
+
+##### 2. Bot classes now have their own packages
 
 Firstly, all the bot classes have been taken out and put in their own packages. This means if you want to write a bot that only works on, say, socket.io and Messenger, you don't actually have the code for the other bot classes anymore. You would need to do something like this:
 
@@ -38,11 +68,19 @@ const SocketioBot = require('botmaster-socket.io');
 // then rest of code
 ```
 
-##### 2. Botmaster is not built on top of express anymore
+The other bot classes that were available in 2.x.x can be found at:
+`botmaster-slack`
+`botmaster-telegram`
+`botmaster-twitter-dm`
 
-In order to make botmaster really flexible, moving away from depending on express was important.
-This means that you can now either just let botmaster create its own server as it used to in 2.x.x.
-Or, you can completely manage your own server (using express, koa or other).
+##### 3. Botmaster is not built on top of express anymore
+
+First of all, this is only important for you to note if you were using your own express app and not
+letting Botmaster create it for you. If that isn't your case, you won't need to change anything here.
+
+In order to make Botmaster really flexible, moving away from a dependency on express was important.
+This means that you can now either just let botmaster create its own server as it used to do via express in 2.x.x.
+Or, you can completely manage your own server (using express, koa, plain http or other).
 
 This means that doing this will now throw an error:
 
@@ -52,9 +90,11 @@ const Botmaster = require('botmaster');
 const express = require('express');
 
 const app = express();
-const botmaster = new Botmaster({
-  app
-});
+const botmaster = new Botmaster({ app });
+
+app.listen(3000, '0.0.0.0', () => { // remember this creates an http server under the hood
+  console.log('My express app is listening and its server is used in Botmaster');
+})
 ```
 
 Instead, if you want to manage your own app object, you will need to do something like this
@@ -64,10 +104,282 @@ const Botmaster = require('botmaster');
 const express = require('express');
 
 const app = express();
-const botmaster = new Botmaster({
-  app
+const myServer = app.listen(3000, '0.0.0.0');
+const botmaster = new Botmaster({ server: myServer });
+
+myServer.on('listening', () => {
+  console.log('My express app is listening and its server is used in Botmaster');
+})
+```
+
+Now, this might look like nothing much has changed, but here's why this is an important change. If instead of
+having an express app, you have a Koa app (or other), this will essentially still work as all that Botmaster now asks of you
+is an instance of http server.
+
+```js
+// DO THIS TO USE KOA!!
+const Botmaster = require('botmaster');
+const Koa = require('koa');
+
+const app = new Koa();
+const myServer = app.listen(3000, '0.0.0.0');
+const botmaster = new Botmaster({ server: myServer });
+
+myServer.on('listening', () => {
+  console.log('My Koa app is listening and its server is used in Botmaster too');
+})
+```
+
+This was not possible in Botmaster 2.x.x.
+
+##### 4. Middleware
+
+The biggest changes have been made with respect to middleware. Although your middleware functions will still work, they will need to be moved into a slightly new syntax.
+
+Where you had something like this in 2.x.x:
+
+```js
+botmaster.use('incoming', (bot, update, next) => {
+  // your stuff
 });
 ```
+
+You will now have something like this in 3.x.x:
+
+```js
+botmaster.use({
+  type: 'incoming',
+  name: 'some name of your choosing', // this is optional, but nice for debugging
+  controller: (bot, update, next) => {
+    // your stuff
+  }
+});
+```
+
+Essentially, the callback has been moved to a controller within an object that describes the middleware in general.
+You'll need to do the same thing for your outgoing middleware.
+
+This is what needs to be changed. However, the core of middleware has changes quite a bit. Middleware can now either use the old syntax using next (as it used to in 2.x.x). Or it can leverage newer syntax by returning a promise. I.e. this is now valid middleware
+
+```js
+botmaster.use({
+  type: 'incoming',
+  controller: (bot, update) => {
+    return bot.reply(update, 'Hey there')
+    .then((body) => {
+      // this is run after the message is sent. I.e. also after all the outgoing middleware has been executed
+    })
+  }
+});
+```
+
+This means that you can now write your code in a very synchronous looking manner if using node 7+ and running node
+with the `--harmony-async-await` flag or simply if you use a transpiler like Babel. Code like this will be valid
+
+```js
+botmaster.use({
+  type: 'incoming',
+  controller: async (bot, update) => {
+    const body = await bot.reply(update, 'Hey there')
+    // this is run after the message is sent. I.e. also after all the outgoing middleware has been executed
+  }
+});
+```
+
+>If returning a promise, using next within this promise will emit/throw an error depending on if you are in incoming or outgoing middleware. It will emit in incoming middleware and throw in outgoing middleware.
+
+Please note that the returned promise's resolved value (whether you use async-await or not) will not be used
+I.e. if in the last example after the `const body = ...` line, you return any value. This will be used nowhere.
+Like in the old middleware, you are expected to make changes to the `update` object. Those changes will be available
+in the following middleware. All that botmaster assures you with is that the next middleware in the stack will be called
+only after the promise from the previous one has resolved. Here's an example using promises:
+
+```js
+botmaster.use({
+  type: 'incoming',
+  name: 'first middleware',
+  controller: (bot, update) => {
+    return useSomePromiseBasedFunction('something')
+    .then((valueFromFunction) => {
+      update.value = valueFromFunction;
+    })
+  }
+});
+
+botmaster.use({
+  type: 'incoming',
+  name: 'second middleware',
+  controller: (bot, update, next) => {
+    console.log(update.value); // prints valueFromFunction
+    next();
+  }
+});
+```
+
+Note how in this example, we are mixing both types of syntax (using promises and next). This is completely fine and even
+suggested if, say, your second middleware here is synchronous.
+
+Another addition has been made to middleware. As it turns out, I lied when I said that values resolved by promise-based middleware will be ignored.
+There are two cases where they won't be ignored. That's if you return `skip` or `cancel`.
+
+In the previous example, it would look like this:
+
+```js
+botmaster.use({
+  type: 'incoming',
+  name: 'first middleware',
+  controller: (bot, update) => {
+    return useSomePromiseBasedFunction('something')
+    .then((valueFromFunction) => {
+      update.value = valueFromFunction;
+      return 'skip';
+    })
+  }
+});
+
+botmaster.use({
+  type: 'incoming',
+  name: 'second middleware',
+  controller: (bot, update, next) => {
+    // this will never get hit and nothing really will hapen as `first middleware` does not send any message
+  }
+});
+```
+
+`skip` can also be used by outgoing middleware along with `cancel`. Here is an example of using `cancel`:
+
+
+```js
+botmaster.use({
+  type: 'incoming',
+  name: 'incoming middleware',
+  controller: (bot, update) => {
+    return bot.reply(update, 'Hey there');
+  }
+});
+
+botmaster.use({
+  type: 'outgoing',
+  name: 'first outgoing middleware',
+  controller: (bot, update, message) => {
+    if (update.message.text === 'Hey there') { // for some arbitrary reason
+      return Promise.resolve('cancel');
+    }
+  }
+});
+
+botmaster.use({
+  type: 'outgoing',
+  name: 'second outgoing middleware',
+  controller: (bot, update, message) => {
+    // this will not get hit
+  }
+});
+```
+
+In this last example, not only will "second outgoing middleware" not get hit, the message will also not get sent out.
+Please note, valid syntax for our "first outgoing middleware are also the following two"
+
+```js
+botmaster.use({
+  type: 'outgoing',
+  name: 'first outgoing middleware',
+  controller: async (bot, update, message) => { // if using transpiler or node 7.x with harmony flag
+    if (update.message.text === 'Hey there') { // for some arbitrary reason
+      return 'cancel';
+    }
+  }
+});
+```
+
+and
+
+```js
+botmaster.use({
+  type: 'outgoing',
+  name: 'first outgoing middleware',
+  controller: (bot, update, message, next) => {
+    if (update.message.text === 'Hey there') { // for some arbitrary reason
+      next('cancel');
+    }
+  }
+});
+```
+
+Botmaster 3 also add support for using the `useWrapped` method for adding middleware. This method when used
+will add an incoming middleware at the beginning of the middleware incoming stack and another outgoing middleware at the end
+of the outgoing middeware stack. It'll look something like this:
+
+```js
+botmaster.useWrapped(incomingMiddleware, outgoingMiddleware);
+```
+
+Where `incomingMiddleware` and `outgoingMiddleware` are valid middlewares of their respective types.
+This is useful if writing a middleware package that want to be first to get the update object and last to see it when it goes out.
+It is used in `botmaster-session-ware` for instance.
+
+##### 5. `.on('update')` no longer exists.
+
+As it says. You are now expected to move your code that lived in there to an incoming middleware. Should be the last one you declare
+so it is run at the end of all your incoming middleware.
+
+##### 6. Bot classes are better defined.
+
+Bot classes now come with 3 new settings that help you know whether you want to execute a middleware or not on an specific update from a bot.
+They are:
+
+`bot.receives`. Will look something like this:
+
+```js
+this.receives = {
+  text: false,
+  attachment: {
+    audio: false,
+    file: false,
+    image: false,
+    video: false,
+    location: false,
+    // can occur in FB messenger when user sends a message which only contains a URL
+    // most platforms won't support that
+    fallback: false,
+  },
+  echo: false,
+  read: false,
+  delivery: false,
+  postback: false,
+  // in FB Messenger, this will exist whenever a user clicks on
+  // a quick_reply button. It will contain the payload set by the developer
+  // when sending the outgoing message. Bot classes should only set this
+  // value to true if the platform they are building for has an equivalent
+  // to this.
+  quickReply: false,
+};
+```
+
+`bot.sends`. Will look something like this:
+
+```js
+this.sends = {
+  text: false,
+  quickReply: false,
+  locationQuickReply: false,
+  senderAction: {
+    typingOn: false,
+    typingOff: false,
+    markSeen: false,
+  },
+  attachment: {
+    audio: false,
+    file: false,
+    image: false,
+    video: false,
+  },
+};
+```
+
+All values will either be falsy or truthy. Ideally, they will even either be `true` or `false`.
+
+And `bot.retrievesUserInfo` which will either be truthy or falsy.
 
 ### MINOR 2.3.0
 

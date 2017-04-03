@@ -513,9 +513,27 @@
                                 <h1 id="changelog">Changelog</h1>
 <h3 id="major-308">MAJOR 3.0.8</h3>
 <p>Botmaster v3 is almost a complete rewrite of botmaster. Although much of the philosophy is the same, a lot of breaking changes have been introduced. Surely, you will find that they are for the better. This changelog doubles as a migration help.</p>
-<h5 id="0-upgrading-to-botmastser-v3">0. Upgrading to botmastser v3</h5>
-<p>You most likely have a line </p>
-<h5 id="1-bot-classes-now-have-their-own-packages">1. Bot classes now have their own packages</h5>
+<h5 id="1-upgrading-to-botmastser-v3">1. Upgrading to botmastser v3</h5>
+<p>You most likely have a line that looks like this in your package.json:</p>
+<pre><code class="lang-json">  <span class="hljs-string">&quot;dependencies&quot;</span>: {
+    <span class="hljs-string">&quot;botmaster&quot;</span>: <span class="hljs-string">&quot;^2.x.x&quot;</span>,
+  }
+</code></pre>
+<p>In order to change that, either do a </p>
+<pre><code class="lang-bash">yarn upgrade botmaster
+</code></pre>
+<p>if using yarn</p>
+<p>or:</p>
+<pre><code class="lang-bash">npm install --save botmaster@3
+</code></pre>
+<p>if using npm</p>
+<p>This will change that line in your dependencies to something like:</p>
+<pre><code class="lang-json">  <span class="hljs-string">&quot;dependencies&quot;</span>: {
+    <span class="hljs-string">&quot;botmaster&quot;</span>: <span class="hljs-string">&quot;^3.0.8&quot;</span>,
+  }
+</code></pre>
+<p>Or newer if newer versions were released recently.</p>
+<h5 id="2-bot-classes-now-have-their-own-packages">2. Bot classes now have their own packages</h5>
 <p>Firstly, all the bot classes have been taken out and put in their own packages. This means if you want to write a bot that only works on, say, socket.io and Messenger, you don&apos;t actually have the code for the other bot classes anymore. You would need to do something like this:</p>
 <pre><code class="lang-bash">yarn add botmaster
 yarn add botmaster-messenger
@@ -535,19 +553,27 @@ npm install --save botmaster-socket.io
 .
 <span class="hljs-comment">// then rest of code</span>
 </code></pre>
-<h5 id="2-botmaster-is-not-built-on-top-of-express-anymore">2. Botmaster is not built on top of express anymore</h5>
-<p>In order to make botmaster really flexible, moving away from depending on express was important.
-This means that you can now either just let botmaster create its own server as it used to in 2.x.x.
-Or, you can completely manage your own server (using express, koa or other).</p>
+<p>The other bot classes that were available in 2.x.x can be found at:
+<code>botmaster-slack</code>
+<code>botmaster-telegram</code>
+<code>botmaster-twitter-dm</code></p>
+<h5 id="3-botmaster-is-not-built-on-top-of-express-anymore">3. Botmaster is not built on top of express anymore</h5>
+<p>First of all, this is only important for you to note if you were using your own express app and not
+letting Botmaster create it for you. If that isn&apos;t your case, you won&apos;t need to change anything here.</p>
+<p>In order to make Botmaster really flexible, moving away from a dependency on express was important.
+This means that you can now either just let botmaster create its own server as it used to do via express in 2.x.x.
+Or, you can completely manage your own server (using express, koa, plain http or other).</p>
 <p>This means that doing this will now throw an error:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// DON&apos;T DO THIS ANYMORE!!!</span>
 <span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
 <span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>);
 
 <span class="hljs-keyword">const</span> app = express();
-<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
-  app
-});
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({ app });
+
+app.listen(<span class="hljs-number">3000</span>, <span class="hljs-string">&apos;0.0.0.0&apos;</span>, () =&gt; { <span class="hljs-comment">// remember this creates an http server under the hood</span>
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;My express app is listening and its server is used in Botmaster&apos;</span>);
+})
 </code></pre>
 <p>Instead, if you want to manage your own app object, you will need to do something like this</p>
 <pre><code class="lang-js"><span class="hljs-comment">// DO THIS INSTEAD!!</span>
@@ -555,10 +581,230 @@ Or, you can completely manage your own server (using express, koa or other).</p>
 <span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>);
 
 <span class="hljs-keyword">const</span> app = express();
-<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
-  app
+<span class="hljs-keyword">const</span> myServer = app.listen(<span class="hljs-number">3000</span>, <span class="hljs-string">&apos;0.0.0.0&apos;</span>);
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({ server: myServer });
+
+myServer.on(<span class="hljs-string">&apos;listening&apos;</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;My express app is listening and its server is used in Botmaster&apos;</span>);
+})
+</code></pre>
+<p>Now, this might look like nothing much has changed, but here&apos;s why this is an important change. If instead of
+having an express app, you have a Koa app (or other), this will essentially still work as all that Botmaster now asks of you
+is an instance of http server.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// DO THIS TO USE KOA!!</span>
+<span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> Koa = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;koa&apos;</span>);
+
+<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Koa();
+<span class="hljs-keyword">const</span> myServer = app.listen(<span class="hljs-number">3000</span>, <span class="hljs-string">&apos;0.0.0.0&apos;</span>);
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({ server: myServer });
+
+myServer.on(<span class="hljs-string">&apos;listening&apos;</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;My Koa app is listening and its server is used in Botmaster too&apos;</span>);
+})
+</code></pre>
+<p>This was not possible in Botmaster 2.x.x.</p>
+<h5 id="4-middleware">4. Middleware</h5>
+<p>The biggest changes have been made with respect to middleware. Although your middleware functions will still work, they will need to be moved into a slightly new syntax.</p>
+<p>Where you had something like this in 2.x.x:</p>
+<pre><code class="lang-js">botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, (bot, update, next) =&gt; {
+  <span class="hljs-comment">// your stuff</span>
 });
 </code></pre>
+<p>You will now have something like this in 3.x.x:</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;some name of your choosing&apos;</span>, <span class="hljs-comment">// this is optional, but nice for debugging</span>
+  controller: (bot, update, next) =&gt; {
+    <span class="hljs-comment">// your stuff</span>
+  }
+});
+</code></pre>
+<p>Essentially, the callback has been moved to a controller within an object that describes the middleware in general.
+You&apos;ll need to do the same thing for your outgoing middleware.</p>
+<p>This is what needs to be changed. However, the core of middleware has changes quite a bit. Middleware can now either use the old syntax using next (as it used to in 2.x.x). Or it can leverage newer syntax by returning a promise. I.e. this is now valid middleware</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Hey there&apos;</span>)
+    .then((body) =&gt; {
+      <span class="hljs-comment">// this is run after the message is sent. I.e. also after all the outgoing middleware has been executed</span>
+    })
+  }
+});
+</code></pre>
+<p>This means that you can now write your code in a very synchronous looking manner if using node 7+ and running node
+with the <code>--harmony-async-await</code> flag or simply if you use a transpiler like Babel. Code like this will be valid</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  controller: <span class="hljs-keyword">async</span> (bot, update) =&gt; {
+    <span class="hljs-keyword">const</span> body = <span class="hljs-keyword">await</span> bot.reply(update, <span class="hljs-string">&apos;Hey there&apos;</span>)
+    <span class="hljs-comment">// this is run after the message is sent. I.e. also after all the outgoing middleware has been executed</span>
+  }
+});
+</code></pre>
+<blockquote>
+<p>If returning a promise, using next within this promise will emit/throw an error depending on if you are in incoming or outgoing middleware. It will emit in incoming middleware and throw in outgoing middleware.</p>
+</blockquote>
+<p>Please note that the returned promise&apos;s resolved value (whether you use async-await or not) will not be used
+I.e. if in the last example after the <code>const body = ...</code> line, you return any value. This will be used nowhere.
+Like in the old middleware, you are expected to make changes to the <code>update</code> object. Those changes will be available
+in the following middleware. All that botmaster assures you with is that the next middleware in the stack will be called
+only after the promise from the previous one has resolved. Here&apos;s an example using promises:</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;first middleware&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> useSomePromiseBasedFunction(<span class="hljs-string">&apos;something&apos;</span>)
+    .then((valueFromFunction) =&gt; {
+      update.value = valueFromFunction;
+    })
+  }
+});
+
+botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;second middleware&apos;</span>,
+  controller: (bot, update, next) =&gt; {
+    <span class="hljs-built_in">console</span>.log(update.value); <span class="hljs-comment">// prints valueFromFunction</span>
+    next();
+  }
+});
+</code></pre>
+<p>Note how in this example, we are mixing both types of syntax (using promises and next). This is completely fine and even
+suggested if, say, your second middleware here is synchronous.</p>
+<p>Another addition has been made to middleware. As it turns out, I lied when I said that values resolved by promise-based middleware will be ignored.
+There are two cases where they won&apos;t be ignored. That&apos;s if you return <code>skip</code> or <code>cancel</code>.</p>
+<p>In the previous example, it would look like this:</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;first middleware&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> useSomePromiseBasedFunction(<span class="hljs-string">&apos;something&apos;</span>)
+    .then((valueFromFunction) =&gt; {
+      update.value = valueFromFunction;
+      <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;skip&apos;</span>;
+    })
+  }
+});
+
+botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;second middleware&apos;</span>,
+  controller: (bot, update, next) =&gt; {
+    <span class="hljs-comment">// this will never get hit and nothing really will hapen as `first middleware` does not send any message</span>
+  }
+});
+</code></pre>
+<p><code>skip</code> can also be used by outgoing middleware along with <code>cancel</code>. Here is an example of using <code>cancel</code>:</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;incoming middleware&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Hey there&apos;</span>);
+  }
+});
+
+botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;first outgoing middleware&apos;</span>,
+  controller: (bot, update, message) =&gt; {
+    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) { <span class="hljs-comment">// for some arbitrary reason</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(<span class="hljs-string">&apos;cancel&apos;</span>);
+    }
+  }
+});
+
+botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;second outgoing middleware&apos;</span>,
+  controller: (bot, update, message) =&gt; {
+    <span class="hljs-comment">// this will not get hit</span>
+  }
+});
+</code></pre>
+<p>In this last example, not only will &quot;second outgoing middleware&quot; not get hit, the message will also not get sent out.
+Please note, valid syntax for our &quot;first outgoing middleware are also the following two&quot;</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;first outgoing middleware&apos;</span>,
+  controller: <span class="hljs-keyword">async</span> (bot, update, message) =&gt; { <span class="hljs-comment">// if using transpiler or node 7.x with harmony flag</span>
+    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) { <span class="hljs-comment">// for some arbitrary reason</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;cancel&apos;</span>;
+    }
+  }
+});
+</code></pre>
+<p>and</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;first outgoing middleware&apos;</span>,
+  controller: (bot, update, message, next) =&gt; {
+    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) { <span class="hljs-comment">// for some arbitrary reason</span>
+      next(<span class="hljs-string">&apos;cancel&apos;</span>);
+    }
+  }
+});
+</code></pre>
+<p>Botmaster 3 also add support for using the <code>useWrapped</code> method for adding middleware. This method when used
+will add an incoming middleware at the beginning of the middleware incoming stack and another outgoing middleware at the end
+of the outgoing middeware stack. It&apos;ll look something like this:</p>
+<pre><code class="lang-js">botmaster.useWrapped(incomingMiddleware, outgoingMiddleware);
+</code></pre>
+<p>Where <code>incomingMiddleware</code> and <code>outgoingMiddleware</code> are valid middlewares of their respective types.
+This is useful if writing a middleware package that want to be first to get the update object and last to see it when it goes out.
+It is used in <code>botmaster-session-ware</code> for instance.</p>
+<h5 id="5-onupdate-no-longer-exists">5. <code>.on(&apos;update&apos;)</code> no longer exists.</h5>
+<p>As it says. You are now expected to move your code that lived in there to an incoming middleware. Should be the last one you declare
+so it is run at the end of all your incoming middleware.</p>
+<h5 id="6-bot-classes-are-better-defined">6. Bot classes are better defined.</h5>
+<p>Bot classes now come with 3 new settings that help you know whether you want to execute a middleware or not on an specific update from a bot.
+They are:</p>
+<p><code>bot.receives</code>. Will look something like this:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">this</span>.receives = {
+  text: <span class="hljs-literal">false</span>,
+  attachment: {
+    audio: <span class="hljs-literal">false</span>,
+    file: <span class="hljs-literal">false</span>,
+    image: <span class="hljs-literal">false</span>,
+    video: <span class="hljs-literal">false</span>,
+    location: <span class="hljs-literal">false</span>,
+    <span class="hljs-comment">// can occur in FB messenger when user sends a message which only contains a URL</span>
+    <span class="hljs-comment">// most platforms won&apos;t support that</span>
+    fallback: <span class="hljs-literal">false</span>,
+  },
+  echo: <span class="hljs-literal">false</span>,
+  read: <span class="hljs-literal">false</span>,
+  delivery: <span class="hljs-literal">false</span>,
+  postback: <span class="hljs-literal">false</span>,
+  <span class="hljs-comment">// in FB Messenger, this will exist whenever a user clicks on</span>
+  <span class="hljs-comment">// a quick_reply button. It will contain the payload set by the developer</span>
+  <span class="hljs-comment">// when sending the outgoing message. Bot classes should only set this</span>
+  <span class="hljs-comment">// value to true if the platform they are building for has an equivalent</span>
+  <span class="hljs-comment">// to this.</span>
+  quickReply: <span class="hljs-literal">false</span>,
+};
+</code></pre>
+<p><code>bot.sends</code>. Will look something like this:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">this</span>.sends = {
+  text: <span class="hljs-literal">false</span>,
+  quickReply: <span class="hljs-literal">false</span>,
+  locationQuickReply: <span class="hljs-literal">false</span>,
+  senderAction: {
+    typingOn: <span class="hljs-literal">false</span>,
+    typingOff: <span class="hljs-literal">false</span>,
+    markSeen: <span class="hljs-literal">false</span>,
+  },
+  attachment: {
+    audio: <span class="hljs-literal">false</span>,
+    file: <span class="hljs-literal">false</span>,
+    image: <span class="hljs-literal">false</span>,
+    video: <span class="hljs-literal">false</span>,
+  },
+};
+</code></pre>
+<p>All values will either be falsy or truthy. Ideally, they will even either be <code>true</code> or <code>false</code>.</p>
+<p>And <code>bot.retrievesUserInfo</code> which will either be truthy or falsy.</p>
 <h3 id="minor-230">MINOR 2.3.0</h3>
 <p>Outgoing middleware now has access to the incoming update. I.e. outgoing middleware can be used like this:</p>
 <pre><code class="lang-js">botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, (bot, update, message, next) =&gt; {
@@ -684,7 +930,7 @@ bot class that will be in the core</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Changelog","level":"1.8","depth":1,"previous":{"title":"OutgoingMessage","level":"1.7.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/v3.0.8/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"changelog.md","mtime":"2017-04-03T12:08:00.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T12:08:31.450Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Changelog","level":"1.8","depth":1,"previous":{"title":"OutgoingMessage","level":"1.7.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"changelog.md","mtime":"2017-04-03T13:35:33.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T13:36:06.979Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
