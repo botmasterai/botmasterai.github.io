@@ -1,0 +1,601 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Webhooks · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../working-with-botmaster/" />
+    
+    
+    <link rel="prev" href="socket.io-setup.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="installation.html">
+            
+                <a href="installation.html">
+            
+                    
+                    Installation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="quickstart.html">
+            
+                <a href="quickstart.html">
+            
+                    
+                    Quickstart
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="messenger-setup.html">
+            
+                <a href="messenger-setup.html">
+            
+                    
+                    Messenger setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="slack-setup.html">
+            
+                <a href="slack-setup.html">
+            
+                    
+                    Slack setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="twitter-setup.html">
+            
+                <a href="twitter-setup.html">
+            
+                    
+                    Twitter setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="telegram-setup.html">
+            
+                <a href="telegram-setup.html">
+            
+                    
+                    Telegram setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="socket.io-setup.html">
+            
+                <a href="socket.io-setup.html">
+            
+                    
+                    Socket.io setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.8" data-path="webhooks.html">
+            
+                <a href="webhooks.html">
+            
+                    
+                    Webhooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../working-with-botmaster/">
+            
+                <a href="../working-with-botmaster/">
+            
+                    
+                    Working With Botmaster
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../working-with-botmaster/botmaster-basics.html">
+            
+                <a href="../working-with-botmaster/botmaster-basics.html">
+            
+                    
+                    Botmaster basics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../working-with-botmaster/middleware.html">
+            
+                <a href="../working-with-botmaster/middleware.html">
+            
+                    
+                    Middleware
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../working-with-botmaster/writing-your-own-bot-class.html">
+            
+                <a href="../working-with-botmaster/writing-your-own-bot-class.html">
+            
+                    
+                    Writing your own bot class
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../middlewares/">
+            
+                <a href="../middlewares/">
+            
+                    
+                    Middlewares
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../middlewares/fulfill.html">
+            
+                <a href="../middlewares/fulfill.html">
+            
+                    
+                    fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../tutorials/">
+            
+                <a href="../tutorials/">
+            
+                    
+                    Tutorials
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../tutorials/using-fulfill.html">
+            
+                <a href="../tutorials/using-fulfill.html">
+            
+                    
+                    Using Fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../tutorials/watson-conversation.html">
+            
+                <a href="../tutorials/watson-conversation.html">
+            
+                    
+                    Watson Conversation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../articles/">
+            
+                <a href="../articles/">
+            
+                    
+                    Articles
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../articles/frameworks-comparison.html">
+            
+                <a href="../articles/frameworks-comparison.html">
+            
+                    
+                    Framworks comparison
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../changelog.html">
+            
+                <a href="../changelog.html">
+            
+                    
+                    Changelog
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Webhooks</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="webhooks">Webhooks</h1>
+<p>Most platforms rely on webhooks to work. As such, you are expected to setup webhooks on the various platforms that use them in order to use Botmaster with these platforms. In the &apos;Getting started&apos; part of this documentation, we briefly touched onto that for Telegram and Messenger and more deeply for Slack.</p>
+<p>If you are still unsure what webhooks are and how they work, within the context of chatbots, they are simply a URL provided by you pointing to where you expect messages and other updates to come in.</p>
+<p>Any platform that requires webhooks won&apos;t work without a webhookEndpoint parameter in their settings. E.g. for Telegram:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> telegramSettings = {
+  credentials: {
+    authToken: <span class="hljs-string">&apos;YOUR authToken&apos;</span>,
+  },
+  webhookEndpoint: <span class="hljs-string">&apos;/webhook1234/&apos;</span>,
+};
+</code></pre>
+<p>This will mount your telegram webhook on: <code>https://Your_Domain_Name:3000/messenger/webhook1234</code>. And yes, you will need ssl in order to work with most platforms.</p>
+<p>As an added layer of security, it is highly recommended that you include a sort of a code in your webhookEndpoint. I.e., rather that having this: <code>webhookEndpoint: &apos;/webhook/&apos;</code>, do something more like this: <code>webhookEndpoint: &apos;/webhook92ywrnc9qm4qoiuthecvasdf42FG/&apos;</code>. This will assure that you know where the request is coming from. It is more important on Telegram than on other platforms as Telegram doesn&apos;t give us any way to verify the source of the message.</p>
+<p>Now we realize you will want to develop and test your code without always deploying to a server with a valid url that supports ssl.</p>
+<h3 id="on-a-local-machine">On a local machine:</h3>
+<p>We recommend using the great localtunnel tool that proxies one of your ports to their url (with a potential wanted subdomain) using ssh.</p>
+<p>Simply install localtunnel on local machine:</p>
+<pre><code class="lang-bash">npm install -g localtunnel
+</code></pre>
+<p>Then run the localtunnel with a predetermined subdomain. e.g:</p>
+<pre><code class="lang-bash">lt -p 3000 <span class="hljs-_">-s</span> botmastersubdomain //<span class="hljs-keyword">for</span> example
+</code></pre>
+<p><code>-p</code> is the port and <code>-s</code> is the subdomain we want.
+<code>-l</code> is for the localhost we want to point to. This is useful is you are using botmaster inside of a container. For instance if using docker-machine, simply <code>-l</code> to your docker-machines ip and <code>-p</code> to the port that your container exposes.</p>
+<p>In the example above, url will be: <code>http://botmastersubdomain.localtunnel.me</code>. Localtunnel is great and supports both ssl and non ssl request, which means we will actually wan to use: <code>https://botmastersubdomain.localtunnel.me</code></p>
+<p>So if you specified your messenger&apos;s bot webhook endpoint to, say, /webhook1234/, you will have to set up the webhook for your demo app at:</p>
+<pre><code>https://botmastersubdomain.localtunnel.me/messenger/webhook1234/
+</code></pre><p>For Telegram, it would look something like this:</p>
+<pre><code>https://botmastersubdomain.localtunnel.me/telegram/webhook1234/
+</code></pre><p>If you keep on getting an error that looks like this:</p>
+<pre><code class="lang-bash">your url is: https://customname.localtunnel.me
+/usr/<span class="hljs-built_in">local</span>/lib/node_modules/localtunnel/bin/client:58
+        throw err;
+        ^
+
+Error: connection refused: localtunnel.me:44404 (check your firewall settings)
+    at Socket.&lt;anonymous&gt; (/usr/<span class="hljs-built_in">local</span>/lib/node_modules/localtunnel/lib/TunnelCluster.js:47:32)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at emitErrorNT (net.js:1272:8)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickCallback (internal/process/next_tick.js:98:9)
+</code></pre>
+<p>This is due to a bug in localtunnel. You can either go try out ngrok (which you will have to pay for), or try this workaround in the terminal:</p>
+<pre><code class="lang-bash">(<span class="hljs-keyword">while</span> <span class="hljs-literal">true</span>; <span class="hljs-keyword">do</span>
+  lt -p 3000 <span class="hljs-_">-s</span> botmastersubdomain
+<span class="hljs-keyword">done</span>)
+</code></pre>
+<p>or:</p>
+<pre><code class="lang-bash">( <span class="hljs-keyword">while</span> <span class="hljs-literal">true</span>; <span class="hljs-keyword">do</span> lt -p 3000 <span class="hljs-_">-s</span> botmastersubdomain; <span class="hljs-keyword">done</span>; )
+</code></pre>
+<p>If you prefer a one liner.</p>
+<p>This will just restart the process whenever it crashes (which can happen very often...), making sure your webhook will always be up and listening for incoming requests.</p>
+<p>What I do in my projects is the following:</p>
+<p>Install localtunnel in the project and save to dev-dependencies</p>
+<pre><code class="lang-js">npm install --save-dev localtunnel
+</code></pre>
+<p>Then in my <code>package.json</code>, add something like this in my &apos;scripts&apos;:</p>
+<pre><code class="lang-json"><span class="hljs-string">&quot;scripts&quot;</span>: {
+  .
+  .
+  <span class="hljs-string">&quot;tunnel&quot;</span>: <span class="hljs-string">&quot;( while true; do lt -p 3000 -s botmastersubdomain; done; )&quot;</span>,
+  .
+  .
+},
+</code></pre>
+<p>I can then simply run the runnel as follows (most likely in another console tab):</p>
+<pre><code class="lang-bash">npm run tunnel
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="socket.io-setup.html" class="navigation navigation-prev " aria-label="Previous page: Socket.io setup">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../working-with-botmaster/" class="navigation navigation-next " aria-label="Next page: Working With Botmaster">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Webhooks","level":"1.2.8","depth":2,"next":{"title":"Working With Botmaster","level":"1.3","depth":1,"path":"working-with-botmaster/index.md","ref":"working-with-botmaster/index.md","articles":[{"title":"Botmaster basics","level":"1.3.1","depth":2,"path":"working-with-botmaster/botmaster-basics.md","ref":"working-with-botmaster/botmaster-basics.md","articles":[]},{"title":"Middleware","level":"1.3.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},{"title":"Writing your own bot class","level":"1.3.3","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]}]},"previous":{"title":"Socket.io setup","level":"1.2.7","depth":2,"path":"getting-started/socket.io-setup.md","ref":"getting-started/socket.io-setup.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"getting-started/webhooks.md","mtime":"2017-04-03T01:02:06.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T01:04:43.160Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
