@@ -1,0 +1,761 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Socket.io setup · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-versions/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="webhooks.html" />
+    
+    
+    <link rel="prev" href="telegram-setup.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="installation.html">
+            
+                <a href="installation.html">
+            
+                    
+                    Installation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="quickstart.html">
+            
+                <a href="quickstart.html">
+            
+                    
+                    Quickstart
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="messenger-setup.html">
+            
+                <a href="messenger-setup.html">
+            
+                    
+                    Messenger setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="slack-setup.html">
+            
+                <a href="slack-setup.html">
+            
+                    
+                    Slack setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="twitter-setup.html">
+            
+                <a href="twitter-setup.html">
+            
+                    
+                    Twitter setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="telegram-setup.html">
+            
+                <a href="telegram-setup.html">
+            
+                    
+                    Telegram setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.7" data-path="socket.io-setup.html">
+            
+                <a href="socket.io-setup.html">
+            
+                    
+                    Socket.io setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="webhooks.html">
+            
+                <a href="webhooks.html">
+            
+                    
+                    Webhooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../working-with-botmaster/">
+            
+                <a href="../working-with-botmaster/">
+            
+                    
+                    Working With Botmaster
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../working-with-botmaster/botmaster-basics.html">
+            
+                <a href="../working-with-botmaster/botmaster-basics.html">
+            
+                    
+                    Botmaster basics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../working-with-botmaster/middleware.html">
+            
+                <a href="../working-with-botmaster/middleware.html">
+            
+                    
+                    Middleware
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../working-with-botmaster/writing-your-own-bot-class.html">
+            
+                <a href="../working-with-botmaster/writing-your-own-bot-class.html">
+            
+                    
+                    Writing your own bot class
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../middlewares/">
+            
+                <a href="../middlewares/">
+            
+                    
+                    Middlewares
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../middlewares/fulfill.html">
+            
+                <a href="../middlewares/fulfill.html">
+            
+                    
+                    fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../tutorials/">
+            
+                <a href="../tutorials/">
+            
+                    
+                    Tutorials
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../tutorials/using-fulfill.html">
+            
+                <a href="../tutorials/using-fulfill.html">
+            
+                    
+                    Using Fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../tutorials/watson-conversation.html">
+            
+                <a href="../tutorials/watson-conversation.html">
+            
+                    
+                    Watson Conversation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../articles/">
+            
+                <a href="../articles/">
+            
+                    
+                    Articles
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../articles/frameworks-comparison.html">
+            
+                <a href="../articles/frameworks-comparison.html">
+            
+                    
+                    Framworks comparison
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../changelog.html">
+            
+                <a href="../changelog.html">
+            
+                    
+                    Changelog
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Socket.io setup</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="socketio-setup">Socket.io setup</h1>
+<h2 id="code">Code</h2>
+<h4 id="server">Server</h4>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster();
+
+<span class="hljs-keyword">const</span> socketioSettings = {
+  id: <span class="hljs-string">&apos;SOME_BOT_ID_OF_YOUR_CHOOSING&apos;</span>,
+  server: botmaster.server, <span class="hljs-comment">// this is required for socket.io. You can set it to another node server object if you wish to. But in this example, we will use the one created by botmaster under the hood</span>
+};
+
+<span class="hljs-keyword">const</span> socketioBot = <span class="hljs-keyword">new</span> Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  bot.reply(update, <span class="hljs-string">&apos;Right back at you&apos;</span>);
+});
+</code></pre>
+<h4 id="client">Client</h4>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> io = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;socket.io-client&apos;</span>);
+
+<span class="hljs-keyword">const</span> socket = io(<span class="hljs-string">&apos;ws://localhost:3000&apos;</span>);
+
+socket.on(<span class="hljs-string">&apos;connect&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> message = {
+    text: <span class="hljs-string">&apos;Hey there botmaster!&apos;</span>
+  };
+
+  socket.send(message);
+});
+</code></pre>
+<h2 id="the-botmaster-socketio-bot">The Botmaster Socket.io bot</h2>
+<p>Socket.io is a great library that allows developers to write apps using webSockets (with fallbacks to http long-polling and others when webSockets aren&apos;t available on the client). You can read more about it on their own website here: <a href="http://socket.io" target="_blank">http://socket.io</a>.</p>
+<p>Because you might want to have a bot that not only works on some arbitrary platform but also on your own webapp/app, support for socket.io was added to the Botmaster core. Although Socket.io enables developers to use their technology in a bunch of different applications, the fact that you want to use it in Botmaster means that you want to handle 1-1 conversations between users and your bot (managed by botmaster).</p>
+<p>If you&apos;ve never used both botmaster and socket.io, It&apos;s probably still pretty unclear how all of this fits in together. Hopefully the next section will help you understand and get started with this.</p>
+<h2 id="botmaster-socketio-bot-mini-tutorial">Botmaster Socket.io bot mini-tutorial</h2>
+<p>By following these steps, you will have a fully functional Socket.io bot using botmaster. The client will live in a tiny web-page. The point of this tutorial is to get you started so that you can develop it further in any way you wish. This is completely based on the socket.io web &quot;get started&quot; guide found here: <a href="http://socket.io/get-started/chat/" target="_blank">http://socket.io/get-started/chat/</a>.</p>
+<h4 id="server">Server</h4>
+<p>After making sure that we have a project folder with a node.js project initialised and the botmaster package in it as per the <a href="installation">installation</a> guide.
+We want to make sure botmaster is setup and make sure that messages coming from a websocket connection are received. So in our poject folder, in our <code>app.js</code> file, we simply copy the code found at the top of this page:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster();
+
+<span class="hljs-keyword">const</span> socketioSettings = {
+  id: <span class="hljs-string">&apos;SOME_BOT_ID_OF_YOUR_CHOOSING&apos;</span>,
+  server: botmaster.server,
+};
+
+<span class="hljs-keyword">const</span> socketioBot = <span class="hljs-keyword">new</span> Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  bot.reply(update, <span class="hljs-string">&apos;Right back at you&apos;</span>);
+});
+</code></pre>
+<p>We will need to add a couple of lines to this code because we will be serving a webpage from our server. Not just listening on for botmaster messages. To do so, we take advantage of the fact that botmaster is built on top of express and that this app es exposed via <code>botmaster.app</code>. We also assume that we will be serving our static assets (the components of our webpage) from a folder called &apos;public&apos; within our project directory. Our updated code looks like this:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>); <span class="hljs-comment">//added</span>
+<span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster();
+botmaster.app.use(express.static(<span class="hljs-string">`<span class="hljs-subst">${__dirname}</span>/public`</span>)); <span class="hljs-comment">//added</span>
+
+
+<span class="hljs-keyword">const</span> socketioSettings = {
+  id: <span class="hljs-string">&apos;SOME_BOT_ID_OF_YOUR_CHOOSING&apos;</span>,
+  server: botmaster.server,
+};
+
+<span class="hljs-keyword">const</span> socketioBot = <span class="hljs-keyword">new</span> Botmaster.botTypes.SocketioBot(socketioSettings);
+botmaster.addBot(socketioBot);
+
+botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
+  bot.reply(update, <span class="hljs-string">&apos;Right back at you&apos;</span>);
+});
+
+botmaster.on(<span class="hljs-string">&apos;error&apos;</span>, (bot, err) =&gt; {
+  <span class="hljs-built_in">console</span>.log(err.stack);
+});
+</code></pre>
+<p>We also added the botmaster &apos;error&apos; event listener, because that&apos;s just always good to do.</p>
+<h3 id="client-side">Client side</h3>
+<p>As mentioned in the Server side, we will create a folder named &apos;public&apos; within our poject dir. In it, we will have the following three files:</p>
+<ul>
+<li>index.html</li>
+<li>style.css</li>
+<li>client_app.js</li>
+</ul>
+<p>So that your final tree structure looks like this:</p>
+<pre><code>your_project_folder
+&#x251C;&#x2500;&#x2500; app.js
+&#x2514;&#x2500;&#x2500; public
+    &#x251C;&#x2500;&#x2500; client_app.js
+    &#x251C;&#x2500;&#x2500; index.html
+    &#x2514;&#x2500;&#x2500; style.css
+</code></pre><p>In the <code>index.html</code> file, we will put some very basic html that looks like this:</p>
+<pre><code class="lang-html"><span class="hljs-meta">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Botmaster bot<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;style.css&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;chat&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;messages&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;form&quot;</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;text-input&quot;</span> <span class="hljs-attr">autocomplete</span>=<span class="hljs-string">&quot;off&quot;</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Send<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/socket.io/socket.io.js&quot;</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;client_app.js&quot;</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<p>The important line here is the line where we are importing socket.io. This works because socket.io adds a path to our server (in this case, a server created by botmaster under the hood) to serve this exact endpoint.
+The other imports are simply the ones we will be creating.</p>
+<p>In the <code>style.css</code> file, simply add the following:</p>
+<pre><code class="lang-css">* {
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">box-sizing</span>:
+  border-box;
+}
+
+<span class="hljs-selector-tag">body</span> {
+  <span class="hljs-attribute">font</span>: <span class="hljs-number">13px</span> Helvetica, Arial;
+}
+
+<span class="hljs-selector-tag">form</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#000</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">3px</span>;
+  <span class="hljs-attribute">position</span>: fixed;
+  <span class="hljs-attribute">bottom</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+}
+
+<span class="hljs-selector-tag">form</span> <span class="hljs-selector-tag">input</span> {
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">90%</span>;
+  <span class="hljs-attribute">margin-right</span>: .<span class="hljs-number">5%</span>;
+}
+
+<span class="hljs-selector-tag">form</span> <span class="hljs-selector-tag">button</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">9%</span>; <span class="hljs-attribute">background</span>: <span class="hljs-built_in">rgb</span>(130, 224, 255);
+  <span class="hljs-attribute">border</span>: none; <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;
+}
+
+<span class="hljs-selector-id">#messages</span> {
+  <span class="hljs-attribute">list-style-type</span>: none;
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-selector-id">#messages</span> <span class="hljs-selector-tag">li</span> {
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">5px</span> <span class="hljs-number">10px</span>;
+}
+
+<span class="hljs-selector-id">#messages</span> <span class="hljs-selector-class">.botmaster-message</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#eee</span>;
+}
+</code></pre>
+<p>This is the exact look from the socket.io tutorial mentioned above (and mostly their code too).</p>
+<p>Finally, in the <code>client_app.js</code> file, you should include the following:</p>
+<pre><code class="lang-js"><span class="hljs-comment">// the following line could also be: &quot;var socket = io(&apos;ws://&lt;URL&gt;:&lt;PORT_Number&gt;?botmasterUserId=wantedUserId&apos;);&quot;</span>
+<span class="hljs-comment">// if you know you will be communicating with a server different from the one that served you the page you are on.</span>
+<span class="hljs-comment">// this only works because the socket.io library assumes with this syntax that the socket.io server</span>
+<span class="hljs-comment">// lives at the same address as the server that served this page (this should mostly be your case)</span>
+<span class="hljs-keyword">var</span> socket = io(<span class="hljs-string">&apos;?botmasterUserId=wantedUserId&apos;</span>);
+
+<span class="hljs-comment">// just get the html elements we will be needing by ID</span>
+<span class="hljs-keyword">var</span> form = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&apos;form&apos;</span>);
+<span class="hljs-keyword">var</span> textInput = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&apos;text-input&apos;</span>);
+<span class="hljs-keyword">var</span> messages = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&apos;messages&apos;</span>);
+
+form.onsubmit = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+  <span class="hljs-comment">// just making sure the page isn&apos;t refreshed</span>
+  event.preventDefault();
+  <span class="hljs-comment">// don&apos;t do anything if there is no text</span>
+  <span class="hljs-keyword">if</span> (!textInput.value) {
+    <span class="hljs-keyword">return</span>;
+  }
+  <span class="hljs-comment">// Add the user message to the web page</span>
+  messages.insertAdjacentHTML(<span class="hljs-string">&apos;beforeend&apos;</span>,
+    <span class="hljs-string">`&lt;li class=&quot;user-message&quot;&gt;<span class="hljs-subst">${textInput.value}</span>&lt;/li&gt;`</span>);
+  <span class="hljs-comment">// create a botmaster compatible message from the text input by the user</span>
+  <span class="hljs-keyword">const</span> message = {
+    text: textInput.value,
+  };
+  <span class="hljs-comment">// send the message over the webSocket</span>
+  socket.send(message);
+  <span class="hljs-comment">// finally, clear the user textInput field</span>
+  textInput.value = <span class="hljs-string">&apos;&apos;</span>;
+};
+
+socket.on(<span class="hljs-string">&apos;message&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">botmasterMessage</span>)</span>{
+  <span class="hljs-keyword">var</span> textMessage = botmasterMessage.message.text;
+
+  messages.insertAdjacentHTML(<span class="hljs-string">&apos;beforeend&apos;</span>,
+    <span class="hljs-string">`&lt;li class=&quot;botmaster-message&quot;&gt;<span class="hljs-subst">${textMessage}</span>&lt;/li&gt;`</span>);
+});
+</code></pre>
+<p>You should have a read through this code to make sure you understand it as that is the code communicating with our botmaster backend.</p>
+<p>On the first line, we call: <code>var socket = io(&apos;?botmasterUserId=wantedUserId&apos;);</code>. This effectively opens up a socket connection with our backend by making a request to something like this: <code>io(&apos;ws://localhost:3000?botmasterUserId=wantedUserId&apos;);</code>. Here as you can see, we are setting a query param called <strong>botmasterUserId</strong> to &quot;wantedUserId&quot;. This is done because we want to make sure that when we are getting updates in our backend, the <code>update.sender.id</code> part will be what we set it to here and not anything else (by default the randomly allocated socket.id value). This is even more important when your users can connect from different clients and you want to make sure the botmaster reply is propagated to all the clients.</p>
+<p>In the <code>form.onsubmit</code> part, we make sure that the text contained in the input cell is correctly formatted then sent to botmaster via the websocket. We also make sure to display it in our page and to then clear the input.</p>
+<p>In the <code>socket.on(&apos;message&apos;)</code> part, we simply display the received message.</p>
+<p>Now that our code is here, simply go to your command line and run <code>node app.js</code>. If you now open a browser to 127.0.0.1:3000 you should be able to chat with your pretty useless (for now) bot. Just like this:</p>
+<p><img src="../images/socket.io_setup_1.png?width=90%" alt="Socket.io Setup 1"></p>
+<h2 id="security">Security</h2>
+<p>You might be wondering how you can secure your Botmaster socket.io app. I.e. how can you make sure that a client connecting with a certain id really is who they claim they are. Well, this part is actually left to you, the developer to do. I didn&apos;t want to make any assumptions with regards to what people would want to use to secure their app. So what I do is expose the <code>socket.io</code> server object through the bot object. It can be accessed in the following way</p>
+<pre><code class="lang-js">socketioBot.ioServer
+</code></pre>
+<p>Then you&apos;ll be able to register a middleware function to your socket.io server as such:</p>
+<pre><code class="lang-js">socketioBot.ioServer.use((socket, next) =&gt; {
+  <span class="hljs-keyword">if</span> (socket.request.headers.cookie) <span class="hljs-keyword">return</span> next();
+  next(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;Authentication error&apos;</span>));
+});
+</code></pre>
+<p>This is shamelessly stolen from the socket.io documentation here: <a href="http://socket.io/docs/server-api/#namespace#use(fn:function):namespace" target="_blank">http://socket.io/docs/server-api/#namespace#use(fn:function):namespace</a></p>
+<p>This function will be executed every time there is an incoming socket connection. Indeed, no need to do so on every message as once the connection is made, all transfers are secured on the open socket. That&apos;s really the whole point of webSockets.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="telegram-setup.html" class="navigation navigation-prev " aria-label="Previous page: Telegram setup">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="webhooks.html" class="navigation navigation-next " aria-label="Next page: Webhooks">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Socket.io setup","level":"1.2.7","depth":2,"next":{"title":"Webhooks","level":"1.2.8","depth":2,"path":"getting-started/webhooks.md","ref":"getting-started/webhooks.md","articles":[]},"previous":{"title":"Telegram setup","level":"1.2.6","depth":2,"path":"getting-started/telegram-setup.md","ref":"getting-started/telegram-setup.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/v3.0.7/","text":"Version 3.0.7","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"getting-started/socket.io-setup.md","mtime":"2017-04-03T01:25:27.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T02:45:29.558Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-versions/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,759 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Writing your own bot class · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-versions/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../middlewares/" />
+    
+    
+    <link rel="prev" href="middleware.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../getting-started/">
+            
+                <a href="../getting-started/">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../getting-started/installation.html">
+            
+                <a href="../getting-started/installation.html">
+            
+                    
+                    Installation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../getting-started/quickstart.html">
+            
+                <a href="../getting-started/quickstart.html">
+            
+                    
+                    Quickstart
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../getting-started/messenger-setup.html">
+            
+                <a href="../getting-started/messenger-setup.html">
+            
+                    
+                    Messenger setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../getting-started/slack-setup.html">
+            
+                <a href="../getting-started/slack-setup.html">
+            
+                    
+                    Slack setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../getting-started/twitter-setup.html">
+            
+                <a href="../getting-started/twitter-setup.html">
+            
+                    
+                    Twitter setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../getting-started/telegram-setup.html">
+            
+                <a href="../getting-started/telegram-setup.html">
+            
+                    
+                    Telegram setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../getting-started/socket.io-setup.html">
+            
+                <a href="../getting-started/socket.io-setup.html">
+            
+                    
+                    Socket.io setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../getting-started/webhooks.html">
+            
+                <a href="../getting-started/webhooks.html">
+            
+                    
+                    Webhooks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Working With Botmaster
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="botmaster-basics.html">
+            
+                <a href="botmaster-basics.html">
+            
+                    
+                    Botmaster basics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="middleware.html">
+            
+                <a href="middleware.html">
+            
+                    
+                    Middleware
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.3" data-path="writing-your-own-bot-class.html">
+            
+                <a href="writing-your-own-bot-class.html">
+            
+                    
+                    Writing your own bot class
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../middlewares/">
+            
+                <a href="../middlewares/">
+            
+                    
+                    Middlewares
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../middlewares/fulfill.html">
+            
+                <a href="../middlewares/fulfill.html">
+            
+                    
+                    fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../tutorials/">
+            
+                <a href="../tutorials/">
+            
+                    
+                    Tutorials
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../tutorials/using-fulfill.html">
+            
+                <a href="../tutorials/using-fulfill.html">
+            
+                    
+                    Using Fulfill
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../tutorials/watson-conversation.html">
+            
+                <a href="../tutorials/watson-conversation.html">
+            
+                    
+                    Watson Conversation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../articles/">
+            
+                <a href="../articles/">
+            
+                    
+                    Articles
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../articles/frameworks-comparison.html">
+            
+                <a href="../articles/frameworks-comparison.html">
+            
+                    
+                    Framworks comparison
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../changelog.html">
+            
+                <a href="../changelog.html">
+            
+                    
+                    Changelog
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Writing your own bot class</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="writing-your-own-bot-class">Writing your own bot class</h1>
+<h2 id="bot-classes">Bot classes</h2>
+<p>The following document assumes that you have read the main documentation in &quot;getting started&quot; and in &quot;botmaster basics&quot;. A general understand of how Botmaster and more generally how chatbots work is also assumed.</p>
+<p>Because of that, we will pick up right from there and start looking into the bot classes Botmaster comes bundled with.</p>
+<p>Botmaster makes five usable bot classes available to developers out of the box. <code>MessengerBot</code>, <code>SlackBot</code>, <code>SocketioBot</code>, <code>TelegramBot</code> and <code>TwitterBot</code>.</p>
+<p>For example, you can instantiate a new <code>MessengerBot</code> object as such:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> MessengerBot = Botmaster.botTypes.MessengerBot;
+
+<span class="hljs-keyword">const</span> messengerSettings = {
+  credentials: {
+    verifyToken: <span class="hljs-string">&apos;YOUR verifyToken&apos;</span>,
+    pageToken: <span class="hljs-string">&apos;YOUR pageToken&apos;</span>,
+    fbAppSecret: <span class="hljs-string">&apos;YOUR fbAppSecret&apos;</span>
+  },
+  webhookEndpoint: <span class="hljs-string">&apos;/webhook1234&apos;</span>,
+};
+
+<span class="hljs-keyword">const</span> messengerBot = <span class="hljs-keyword">new</span> MessengerBot(messengerSettings);
+</code></pre>
+<p>In order to get updates from Messenger, you would then be expected to mount your bot&apos;s express mini-app <code>messengerBot.app</code> onto your own express <code>app</code> by doing something like this:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> app = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>)();
+app.use(<span class="hljs-string">&apos;/&apos;</span>, messengerBot.app);
+app.listen(<span class="hljs-number">3001</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{});
+</code></pre>
+<p>Or even better:</p>
+<pre><code class="lang-js">messengerBot.app.listen(<span class="hljs-number">3001</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{});
+</code></pre>
+<p>This will mount your bot onto: <code>https://Your_Domain_Name:3001/webhook1234</code>. Note how the bot type <strong>is not</strong> part of the URL here.</p>
+<h2 id="making-botmaster-objects-and-bot-objects-work-together">Making Botmaster objects and bot objects work together</h2>
+<p>Doing this is really trivial and as it turns out, you do this every time you use the <code>addBot</code> method.</p>
+<p>We recall from the various guides that to create a botmaster object the following is needed:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster();
+</code></pre>
+<p>As usual, we create a botmaster object. This one supports Twitter and Telegram, but not Messenger. We create it as such:</p>
+<p>In this example the <code>botmaster</code> object will start a new <code>express()</code> <code>app</code> server running locally on port <code>3000</code> as expected by default (see <a href="botmaster-basics#using-botmaster-with-your-own-express-app">here</a> to see how to change that).</p>
+<p>As usual, we add the messenegrBot as follows:</p>
+<pre><code class="lang-js">botmaster.addBot(messengerBot);
+</code></pre>
+<p>This will mount your bot onto: <code>https://Your_Domain_Name:3000/messenger/webhook1234</code>. Note how the bot type <strong>is</strong> part of the endpoint here. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.</p>
+<p>You will then get updates from the botmaster object as if you had instantiated it with the messenger settings too if your endpoint is setup properly.</p>
+<blockquote>
+<p>Please note, if you followed these steps and put all this code in one file. You will actually have two express servers running along side each other. One on port 3001 and one on port 3000. Both endpoints mentioned above would work. This is definitely not what you want to do in production. Pick one of the methods and stick to it in production.</p>
+</blockquote>
+<p><strong>The main takeaway from all this is that any bot class that follows a  certain set of rules will be able to be added to a botmaster object.</strong></p>
+<h2 id="creating-your-own-bot-classes">Creating your own bot classes</h2>
+<p>Before defining the rules that have to be respected in order to write a Botmaster compatible bot class let&apos;s look at the constructor of one of the existing one, <code>TelegramBot</code>:</p>
+<h3 id="constructorsettings"><code>#constructor(settings)</code></h3>
+<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TelegramBot</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseBot</span> </span>{
+
+  <span class="hljs-keyword">constructor</span>(settings) {
+    <span class="hljs-keyword">super</span>(settings);
+    <span class="hljs-keyword">this</span>.type = <span class="hljs-string">&apos;telegram&apos;</span>;
+    <span class="hljs-keyword">this</span>.requiresWebhook = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">this</span>.requiredCredentials = [<span class="hljs-string">&apos;authToken&apos;</span>];
+
+    <span class="hljs-keyword">this</span>.__applySettings(settings);
+    .
+    .
+    .
+    this.__createMountPoints();
+  }
+
+ }
+</code></pre>
+<p>Let&apos;s look into this line by line. The first line reads <code>super(settings)</code>. Which of course just means it calls the constructor of <code>TelegramBot</code>&apos;s superclass, namely, <code>BaseBot</code>. <code>BaseBot</code>&apos;s constructor doesn&apos;t actually do anything fancy a part from calling its own superclass&apos;s constructor and setting a few default values [as pointers for you, the developer]. BaseBot calls its own superclass&apos;s constructor as it inherits from node.js&apos;s <code>EventEmitter</code> which will allow your bot&apos;s classes to listen to events as well as emit them.</p>
+<p>The following three lines setup some important values.</p>
+<ol>
+<li><code>this.type</code>: the type of bot that is being instantiated. It&apos;s important to specify that as developers might want to condition some code on the type of bot you are writing.</li>
+<li><code>this.requiresWebhook</code>: whether the bot requires webhooks. If the platform you are coding for requires webhooks, you will be expected to set a <code>this.app</code> variable at some point in the setup. We&apos;ll look into this when we have a look at what the <code>this.__createMountPoints();</code> does.</li>
+<li><code>this.requiredCredentials</code>: sets up an array of credentials that are expected to be defined for the platform you are coding your class for. Telegram only takes in 1, so we just have an array with the value <code>&apos;authToken&apos;</code>.</li>
+</ol>
+<h3 id="applysettingssettings"><code>#__applySettings(settings)</code></h3>
+<p>The next line calls the <code>this.__applySettings(settings)</code> function. This function is implemented in BaseBot and will just make sure that the settings passed on to the bot constructor are valid with respect to the parameters you defined. You should always call this function directly after setting the three [or more or less depending on your bot] parameters specific to the platform you are coding for. If valid, the settings will then be applied to the bot object. e.g. <code>this.webhookEndpoint</code> will be set to <code>settings.webhookEndpoint</code>.</p>
+<h3 id="createmountpoints"><code>#__createMountPoints()</code></h3>
+<p>The last line of our controller makes a call to <code>this.__createMountPoints();</code>. This line should only be present if your bot class requires webhooks. If this is the case, you will be expected to define a class member function that looks something like:</p>
+<pre><code class="lang-js">  __createMountPoints() {
+    <span class="hljs-keyword">this</span>.app = express();
+    <span class="hljs-comment">// for parsing application/json</span>
+    <span class="hljs-keyword">this</span>.app.use(bodyParser.json());
+    <span class="hljs-comment">// for parsing application/x-www-form-urlencoded</span>
+    <span class="hljs-keyword">this</span>.app.use(bodyParser.urlencoded({ extended: <span class="hljs-literal">true</span> }));
+
+    <span class="hljs-keyword">this</span>.app.post(<span class="hljs-keyword">this</span>.webhookEndpoint, (req, res) =&gt; {
+      <span class="hljs-keyword">this</span>.__formatUpdate(req.body)
+
+      .then((update) =&gt; {
+        <span class="hljs-keyword">this</span>.__emitUpdate(update);
+      }, (err) =&gt; {
+        err.message = <span class="hljs-string">`Error in __formatUpdate &quot;<span class="hljs-subst">${err.message}</span>&quot;. Please report this.`</span>;
+        <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">&apos;error&apos;</span>, err);
+      });
+
+      <span class="hljs-comment">// just letting telegram know we got the update</span>
+      res.sendStatus(<span class="hljs-number">200</span>);
+    });
+  }
+</code></pre>
+<p>Very importantly, this function creates an express router <code>this.app</code> that will be mounted onto the main <code>app</code> router from the botmaster object if <code>botmaster.addBot</code> is used.</p>
+<p>It then sets up the post endpoint that listens onto <code>this.webhookEnpoint</code>. No further assumption is made here.</p>
+<p>Please note that you might have another function that needs to be called at this point. For instance, in the <code>socketioBot</code> class, I make a call to: <code>this.__setupSocketioServer();</code> and that function looks like this:</p>
+<pre><code class="lang-js">__setupSocketioServer() {
+  <span class="hljs-keyword">this</span>.ioServer = io(<span class="hljs-keyword">this</span>.server);
+
+  <span class="hljs-keyword">this</span>.ioServer.on(<span class="hljs-string">&apos;connection&apos;</span>, (socket) =&gt; {
+    socket.join(SocketioBot.__getBotmasteruserId(socket));
+
+    socket.on(<span class="hljs-string">&apos;message&apos;</span>, (message) =&gt; {
+      <span class="hljs-comment">// just broadcast the message to other connected clients with same user id</span>
+      <span class="hljs-keyword">const</span> botmasterUserId = SocketioBot.__getBotmasteruserId(socket);
+      socket.broadcast.to(botmasterUserId).emit(<span class="hljs-string">&apos;own message&apos;</span>, message);
+      <span class="hljs-comment">// console.log(JSON.stringify(socket.rooms, null, 2));</span>
+      <span class="hljs-keyword">const</span> rawUpdate = message;
+      <span class="hljs-keyword">try</span> {
+        rawUpdate.socket = socket;
+      } <span class="hljs-keyword">catch</span> (err) {
+        err.message = <span class="hljs-string">`ERROR: &quot;Expected JSON object but got &apos;<span class="hljs-subst">${typeof message}</span>&apos; <span class="hljs-subst">${message}</span> instead&quot;`</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">&apos;error&apos;</span>, err);
+      }
+      <span class="hljs-keyword">const</span> update = <span class="hljs-keyword">this</span>.__formatUpdate(rawUpdate, botmasterUserId);
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.__emitUpdate(update);
+    });
+  });
+}
+</code></pre>
+<p>Feel free to have a thorough read at this to understand what is going on here. Because it isn&apos;t necessary to understand this in order to build your own bot class, I won&apos;t explain what is going on here.</p>
+<h3 id="formatupdaterawupdate"><code>#__formatUpdate(rawUpdate)</code></h3>
+<p>Although you can technically handle the body of the request as you wish. In our <code>__createMountPoints</code> example here (from TelegramBot code), we make a call to the <code>__formatUpdate</code> function with the body of the request.
+It would make sense for you to do so for consistency and because it has to be defined if you want your bot class to eventually be referenced in the Botmaster project.</p>
+<p>This function is expected to transform the <code>rawUpdate</code> into an object which is of the format of Messenger updates, while having an <code>update.raw</code> bit that references that <code>rawUpdate</code> received.</p>
+<p>Typically, it would look something like this for a message with an image attachment. Independent of what platform the message comes from:</p>
+<pre><code>{
+  raw: &lt;platform_specific_raw_update&gt;,
+  sender: {
+    id: &lt;id_of_sender&gt;
+  },
+  recipient: {
+    id: &lt;id_of_the_recipent&gt; // will typically be the bot&apos;s id
+  },
+  timestamp: &lt;unix_miliseconds_timestamp&gt;,
+  message: {
+    mid: &lt;message_id&gt;,
+    seq: &lt;message_sequence_id&gt;,
+    attachments: [
+      {
+        type: &apos;image&apos;,
+        payload: {
+          url: &apos;SOME_IMAGE_URL&apos;
+        }
+      }
+    ]
+  }
+};
+</code></pre><p>Your function should return the update object(or a promise that resolves a formatted update object) in order to then call <code>__emitUpdate</code> with it as a parameter.</p>
+<h3 id="emitupdateupdate"><code>#__emitUpdate(update)</code></h3>
+<p>Like <code>__applySettings</code>, this method is implemented in <code>BaseBot</code>. It handles errors, calling the <code>incoming</code> middleware stack, and most importantly, actually calling <code>this.emit(update)</code> to emit the actual update. You can overwrite this method if you wish, but in its current state, it handles the most important cases you will want to deal with. You should call this method with the formatted <code>update</code> object created by calling <code>formatUpdate()</code>;</p>
+<h3 id="sendmessagemessage"><code>#__sendMessage(message)</code></h3>
+<p>All previous methods had either something to do with object instantiation or with incoming messages. We&apos;ll now have a look at what needs to be done within your bot class to send messages.</p>
+<p>The <code>__sendMessage</code> method needs to be implemented. The method should take in a Messenger style message and send a formatted message to the bot platform. It should return a <code>Promise</code> that resolves to something like this:</p>
+<pre><code class="lang-js">  {
+   raw: rawBody,
+   recipient_id: &lt;id_of_user&gt;,
+   message_id: &lt;message_id_of_what_was_just_sent&gt;
+  }
+</code></pre>
+<p> Code for it might look like this simplified one from <code>TelegramBot</code>:</p>
+<pre><code class="lang-js"> __sendMessage(message) {
+  <span class="hljs-keyword">const</span> options = {
+    url: <span class="hljs-string">&apos;https://api.telegram.org/sendMessage&apos;</span>,
+    method: <span class="hljs-string">&apos;POST&apos;</span>,
+  };
+  options.json = <span class="hljs-keyword">this</span>.__formatOutgoingMessage(message);
+
+  <span class="hljs-keyword">return</span> request(options) <span class="hljs-comment">// using request-promise package and not request here</span>
+
+  .then((body) =&gt; {
+    <span class="hljs-keyword">if</span> (body.error) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-built_in">JSON</span>.stringify(body.error));
+    }
+
+    <span class="hljs-keyword">const</span> standardizedBody = {
+      raw: body,
+      recipient_id: body.result.chat.id,
+      <span class="hljs-comment">// this is really the equivalent to a Messenger seq.</span>
+      <span class="hljs-comment">// But it&apos;s either that or null for telegram</span>
+      message_id: body.result.message_id,
+    };
+    <span class="hljs-keyword">return</span> standardizedBody;
+  });
+}
+</code></pre>
+<p>See how we are returning a promise that resolves to an object as specified above!</p>
+<p>It is important to note that this be a promise and not a callback. Although developers using Botmaster can use <code>sendMessage</code> type methods with callbacks. The internals of Botmaster use Promises and therefore, so should your bot class.</p>
+<p>Please note that the <code>BaseBot</code> superclass defines a set of methods that allow developers to more easily send messages to all platforms without having to build the whole Messenger compatible object themselves. These methods are the following:</p>
+<p><code>sendMessage</code>
+<code>sendMessageTo</code>
+<code>sendTextMessageTo</code>
+<code>reply</code>
+<code>sendAttachmentTo</code>
+<code>sendAttachmentFromURLTo</code>
+<code>sendDefaultButtonMessageTo</code>
+<code>sendIsTypingMessageTo</code>
+<code>sendCascadeTo</code>
+<code>sendTextCascadeTo</code></p>
+<p>All these methods will convert a developer specified input into a Facebook Messenger compatible message that will be called as a parameter to <code>__sendMessage</code>. That is, they all eventually will call your <code>__sendMessage</code> method. You can however overwrite them if need be.</p>
+<h3 id="formatoutgoingmessagemessage"><code>#__formatOutgoingMessage(message)</code></h3>
+<p>Your <code>sendMessage</code> method is expected to call a <code>__formatOutgoingMessage(message)</code> method that will format the Messenger style message into one that is compatible with the platform you are coding your bot class for.</p>
+<p>You can have a look at the ones defined in the <code>TelegramBot</code> and the <code>TwitterBot</code> classes for inspiration.</p>
+<h3 id="setbotidifnotsetupdate"><code>#__setBotIdIfNotSet(update)</code></h3>
+<p>In order to help you identify between bots of different types, you will want each bot instance to have a <code>this.id</code> value. This should typically be the same as <code>update.recipient.id</code> when getting updates. If these aren&apos;t set upon instantiation (as with Facebook Messenger bots), you can write a function like this <code>MessengerBot</code> one that gets called upon receiving a message.</p>
+<pre><code class="lang-js">__setBotIdIfNotSet(update) {
+  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.id) {
+      <span class="hljs-keyword">this</span>.id = update.recipient.id;
+  }
+}
+</code></pre>
+<h2 id="is-this-really-all-there-is-to-it">Is this really all there is to it?</h2>
+<p>Yes it is! These few basic steps are the steps that should be followed in order to build your own bot classes. Nothing more is required. Of course, formatting the incoming updates and the outgoing messages won&apos;t always be as trivial as we&apos;d wish, but this guide should help you into doing this.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="middleware.html" class="navigation navigation-prev " aria-label="Previous page: Middleware">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../middlewares/" class="navigation navigation-next " aria-label="Next page: Middlewares">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Writing your own bot class","level":"1.3.3","depth":2,"next":{"title":"Middlewares","level":"1.4","depth":1,"path":"middlewares/index.md","ref":"middlewares/index.md","articles":[{"title":"fulfill","level":"1.4.1","depth":2,"path":"middlewares/fulfill.md","ref":"middlewares/fulfill.md","articles":[]}]},"previous":{"title":"Middleware","level":"1.3.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/v3.0.7/","text":"Version 3.0.7","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/writing-your-own-bot-class.md","mtime":"2017-04-03T01:25:27.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T02:45:29.558Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-versions/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
