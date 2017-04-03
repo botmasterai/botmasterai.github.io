@@ -1,4 +1,4 @@
-![LOGO](/images/botmaster_light.svg)
+[![LOGO](/images/botmaster_light.svg)](http://botmasterai.com)
 
 ## What is Botmaster?
 
