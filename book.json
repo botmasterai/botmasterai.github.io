@@ -6,8 +6,13 @@
       "gitbookConfigURL": "https://github.com/botmasterai/botmasterai.github.io/blob/master/book.json",
       "options": [
         {
-          "value": "https://github.com/botmasterai/botmasterai.github.io/tree/v3.0.6/",
-          "text": "Version 3.0.6",
+          "value": "https://github.com/botmasterai/botmasterai.github.io",
+          "text": "latest",
+          "selected": true
+        },
+        {
+          "value": "https://github.com/botmasterai/botmasterai.github.io/tree/v3.0.7/",
+          "text": "Version 3.0.7",
           "selected": true
         },
         {
