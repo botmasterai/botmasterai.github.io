@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Messaging Platforms · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -65,8 +65,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="getting-started/" />
+    <link rel="next" href="working-with-botmaster/" />
     
+    
+    <link rel="prev" href="getting-started/webhooks.html" />
     
 
     </head>
@@ -95,7 +97,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -166,7 +168,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="messaging-platforms.html">
+        <li class="chapter active" data-level="1.3" data-path="messaging-platforms.html">
             
                 <a href="messaging-platforms.html">
             
@@ -486,7 +488,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Messaging Platforms</a>
     </h1>
 </div>
 
@@ -501,45 +503,37 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p><a href="http://botmasterai.com" target="_blank"><img src="images/botmaster_light.svg" alt="LOGO"></a></p>
-<h2 id="botmaster-v3-is-here">Botmaster v3 is here</h2>
-<p>Please note, this is the documentation for Botmaster v3 (3.0.7 and above).
-To read the documentation for Botmaster v2, please change the version to 2.3.1 in the left pane.</p>
-<p>Want to migrate from version 2.x.x to version 3? Have a look at the 3.0.7 changelog that doubles as a migration documentation:
-<a href="changelog.html#major-307">here</a></p>
-<h2 id="what-is-botmaster">What is Botmaster?</h2>
-<p>Botmaster is a lightweight highly extendable, highly configurable chatbot framework. It was meant to be used both in small scale and large scale projects. Its purpose is to integrate your chatbot into a variety of messaging channels - currently packages have been written for Facebook Messenger, Slack, Twitter DM, Telegram and socket.io. Using botmaster will look something like this in code:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
-<span class="hljs-keyword">const</span> MessengerBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-messenger&apos;</span>);
-<span class="hljs-keyword">const</span> SlackBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-slack&apos;</span>);
-<span class="hljs-keyword">const</span> SocketIoBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-socket.io&apos;</span>);
-<span class="hljs-keyword">const</span> TwitterBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-twitter-dm&apos;</span>);
-<span class="hljs-keyword">const</span> TelegramBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-telegram&apos;</span>);
-
-<span class="hljs-keyword">const</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./config&apos;</span>); <span class="hljs-comment">// your config file with your credentials etc</span>
-
-<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster();
-
-botmaster.addBot(<span class="hljs-keyword">new</span> MessengerBot(config.messengerSettings));
-botmaster.addBot(<span class="hljs-keyword">new</span> SlackBot(config.slackSettings));
-botmaster.addBot(<span class="hljs-keyword">new</span> SocketioBot({
-  id: <span class="hljs-string">&apos;mySocket.ioId&apos;</span>, <span class="hljs-comment">// whatever you want it to be for socket.io bots</span>
-}));
-botmaster.addBot(<span class="hljs-keyword">new</span> TwitterBot(config.twitterSettings));
-botmaster.addBot(<span class="hljs-keyword">new</span> TelegramBot(config.telegramSettings));
-
-botmaster.use({
-  type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;Update replier&apos;</span>, <span class="hljs-comment">// this is optional, but should ideally describe what your middleware does</span>
-  controller: (bot, update) =&gt; {
-    <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Right back at you!&apos;</span>);
-  }
-});
+                                <h1 id="messaging-platforms">Messaging Platforms</h1>
+<p>Botmaster v3 is very minimal. This means it comes with the support for no messaging platform out of the box.
+Support for platforms has to be added via external packages.</p>
+<h2 id="official-bot-classes">Official Bot classes</h2>
+<ol>
+<li><a href="https://github.com/botmasterai/botmaster-messenger" target="_blank">Messenger</a></li>
+<li><a href="https://github.com/botmasterai/botmaster-slack" target="_blank">Slack</a></li>
+<li><a href="https://github.com/botmasterai/botmaster-socket.io" target="_blank">Socket.io</a></li>
+<li><a href="https://github.com/botmasterai/botmaster-telegram" target="_blank">Telegram</a></li>
+<li><a href="https://github.com/botmasterai/botmaster-twitter-dm" target="_blank">Twitter DM</a></li>
+</ol>
+<h2 id="installing">Installing</h2>
+<p>It looks something like this to install them:</p>
+<pre><code class="lang-bash">yarn add botmaster-messenger
 </code></pre>
-<h2 id="botmaster-is-platform-agnostic">Botmaster is platform agnostic</h2>
-<p>Botmaster is platform agnostic in two important ways. Firstly, out of the box, developers can have bots running on Facebook Messenger, Slack, Twitter DM, Telegram and their personal webapp/app via socket.io with not only a standardized text message format, but also a standardized attachment format. Secondly, BotMaster makes no assumptions about the back-end bot itself - you can write code that allows BotMaster to call conversational engines such as IBM Watson&apos;s conversation API, open source frameworks or even write the conversation engine yourself.</p>
-<h2 id="botmasters-philosophy">Botmaster&apos;s Philosophy</h2>
-<p>Its philosophy is to minimize the amount of code developers have to write in order to create 1-on-1 conversational chatbots that work on multiple platforms. It does so by defining a standard with respect to what format messages take and how 1-on-1 conversations occur. Messages to/from the various messaging channels supported are all mapped onto this botmaster standard, meaning the code you write is much reduced when compared to a set of point:point integrations.</p>
+<p>or</p>
+<pre><code class="lang-bash">npm install --save botmaster-messenger
+</code></pre>
+<h2 id="using-a-botmaster-botclass-package">Using a botmaster-botClass package</h2>
+<p>These &quot;messaging platforms&quot; come in the the form of Bot Classes in Botmaster semantic. and they can the be used in code like such:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> MessengerBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;messenger-bot&apos;</span>);
+<span class="hljs-keyword">const</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./config&apos;</span>); <span class="hljs-comment">// where I keep my credentials</span>
+
+<span class="hljs-keyword">const</span> messengerBot = newMessengerBot({
+  credentials: config.messengerCredentials,
+  webhookEndpoint: <span class="hljs-string">&apos;webhook&apos;</span>,
+})
+
+botmaster.addBot(messengerBot);
+</code></pre>
 
                                 
                                 </section>
@@ -567,8 +561,12 @@ botmaster.use({
 
             
                 
+                <a href="getting-started/webhooks.html" class="navigation navigation-prev " aria-label="Previous page: Webhooks">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="getting-started/" class="navigation navigation-next navigation-unique" aria-label="Next page: Getting started">
+                
+                <a href="working-with-botmaster/" class="navigation navigation-next " aria-label="Next page: Working With Botmaster">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -579,7 +577,7 @@ botmaster.use({
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Getting started","level":"1.2","depth":1,"path":"getting-started/index.md","ref":"getting-started/index.md","articles":[{"title":"Installation","level":"1.2.1","depth":2,"path":"getting-started/installation.md","ref":"getting-started/installation.md","articles":[]},{"title":"Quickstart","level":"1.2.2","depth":2,"path":"getting-started/quickstart.md","ref":"getting-started/quickstart.md","articles":[]},{"title":"Webhooks","level":"1.2.3","depth":2,"path":"getting-started/webhooks.md","ref":"getting-started/webhooks.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"README.md","mtime":"2017-04-03T12:01:53.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T21:49:27.624Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Messaging Platforms","level":"1.3","depth":1,"next":{"title":"Working With Botmaster","level":"1.4","depth":1,"path":"working-with-botmaster/index.md","ref":"working-with-botmaster/index.md","articles":[{"title":"Bot object","level":"1.4.1","depth":2,"path":"working-with-botmaster/bot-object.md","ref":"working-with-botmaster/bot-object.md","articles":[]},{"title":"Middleware","level":"1.4.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},{"title":"Incoming update","level":"1.4.3","depth":2,"path":"working-with-botmaster/incoming-update.md","ref":"working-with-botmaster/incoming-update.md","articles":[]},{"title":"Outgoing message","level":"1.4.4","depth":2,"path":"working-with-botmaster/outgoing-message.md","ref":"working-with-botmaster/outgoing-message.md","articles":[]},{"title":"Botmaster object","level":"1.4.5","depth":2,"path":"working-with-botmaster/botmaster-object.md","ref":"working-with-botmaster/botmaster-object.md","articles":[]},{"title":"Writing your own bot class","level":"1.4.6","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]}]},"previous":{"title":"Webhooks","level":"1.2.3","depth":2,"path":"getting-started/webhooks.md","ref":"getting-started/webhooks.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"messaging-platforms.md","mtime":"2017-04-04T21:48:53.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T21:49:27.624Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
