@@ -44,3 +44,18 @@ botmaster.on('update', (bot, update) => {
   bot.reply(update, 'Right back at you');
 });
 ```
+
+#### Note on attachment types and conversions
+Attachment type conversion on incoming updates works as such for __Twitter__:
+
+| Twitter Type | Botmaster conversion
+|--- |---
+| photo | image
+| video  | video
+| gif  | video
+
+!!!Yes `gif` becomes a `video`. because Twitter doesn't actually use gifs the way you would expect it to. It simply loops over a short `.mp4` video.
+
+Also, here's an important caveat for Twitter bot developers who are receiving attachments. Image links that come in from the Twitter API will be private and not public, which makes using them quite tricky. You might need to make authenticated requests to do so. The twitterBot objects you will receive in the update will have a `bot.twit` object. Documentation for how to use this is available [here](https://github.com/ttezel/twit).
+
+Receiving and sending attachments [the Botmaster way] is not yet supported on **Slack** as of version 2.2.3. However, Slack supports url unfurling (meaning if you send images and other types of media urls in your message, this will be shown in the messages and users won't just see a url). Also, because of how Botmaster is built (i.e. keep all information from the original message) you can find all the necessary information in the `update.raw` object of the update.

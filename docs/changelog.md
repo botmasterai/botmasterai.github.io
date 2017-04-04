@@ -366,6 +366,17 @@ if (bot.type === 'slack') { // for example
   * recipient_id - the id of the recipient
   * message_id - the id of the sent message (if available)
 
+On top of that the following two methods have changed:
+
+###### 1. sendDefaultButtonMessageTo()
+Now has recipientId as last argument
+
+###### 2. sendCascade()
+Now only accepts raw or full message objects. You are expected to compose the
+messages you are sending with the OutgoingMessage helper methods
+
+Have a look at the [api-reference](/api-reference/index.md) to see examples of these methods now
+
 ##### 9. WebhookEndpoint has no initial slash anymore.
 
 When using a bot class that uses webhooks, no need to add a slash at the beginning of the webhookEnpoint paramter.

@@ -602,72 +602,7 @@
 };
 </code></pre>
 <p>This allows developers to handle these messages in one place only rather than doing it in multiple places. For more info on the various incoming messages formats, read the messenger bot doc on webhooks at: <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-received" target="_blank">https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-received</a>.</p>
-<p>Currently, you will only get updates for <code>Messages</code> (and not delivery, echo notification etc) for all platforms. On Messenger, it is assumed that you don&apos;t want to get updates for delivery, read and echo. This can&apos;t be turned on at the moment, but will be in later versions as it might be a requirement.</p>
-<h4 id="note-on-attachment-types-and-conversions">Note on attachment types and conversions</h4>
-<p>Attachment type conversion on incoming updates works as such for <strong>Twitter</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Twitter Type</th>
-<th>Botmaster conversion</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>photo</td>
-<td>image</td>
-</tr>
-<tr>
-<td>video</td>
-<td>video</td>
-</tr>
-<tr>
-<td>gif</td>
-<td>video</td>
-</tr>
-</tbody>
-</table>
-<p>!!!Yes <code>gif</code> becomes a <code>video</code>. because Twitter doesn&apos;t actually use gifs the way you would expect it to. It simply loops over a short <code>.mp4</code> video.</p>
-<p>Also, here&apos;s an important caveat for Twitter bot developers who are receiving attachments. Image links that come in from the Twitter API will be private and not public, which makes using them quite tricky. You might need to make authenticated requests to do so. The twitterBot objects you will receive in the update will have a <code>bot.twit</code> object. Documentation for how to use this is available <a href="https://github.com/ttezel/twit" target="_blank">here</a>.</p>
-<p>Receiving and sending attachments [the Botmaster way] is not yet supported on <strong>Slack</strong> as of version 2.2.3. However, Slack supports url unfurling (meaning if you send images and other types of media urls in your message, this will be shown in the messages and users won&apos;t just see a url). Also, because of how Botmaster is built (i.e. keep all information from the original message) you can find all the necessary information in the <code>update.raw</code> object of the update.</p>
-<p>Attachment type conversion works as such for <strong>Telegram</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Telegram Type</th>
-<th>Botmaster conversion</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>audio</td>
-<td>audio</td>
-</tr>
-<tr>
-<td>voice</td>
-<td>audio</td>
-</tr>
-<tr>
-<td>photo</td>
-<td>image</td>
-</tr>
-<tr>
-<td>video</td>
-<td>video</td>
-</tr>
-<tr>
-<td>location</td>
-<td>location</td>
-</tr>
-<tr>
-<td>venue</td>
-<td>location</td>
-</tr>
-</tbody>
-</table>
-<p><code>contact</code> attachment types aren&apos;t supported in Messenger. So in order to deal with them in Botmaster, you will have to look into your <code>update.raw</code> object which is the standard Telegram update. You will find your contact object in <code>update.raw.contact</code>.</p>
-<p>Also, concerning <code>location</code> and <code>venue</code> attachments. The url received in Botmaster for Telegram is a google maps one with the coordinates as query parameters. It looks something like this: <code>https://maps.google.com/?q=&lt;lat&gt;,&lt;long&gt;</code></p>
-<p>A few of you will want to use attachments with your <code>socket.io</code> bots. Because the Botmaster message standard is the Facebook Messenger one, everything is URL based. Which means it is left to the developer to store both incoming and outgoing attachments. A tutorial on how to deal with this will be up soon in the <a href="../tutorials">Tutorials</a> section.</p>
+<p>To know which kind of updates you&apos;ll get from the various platforms, have a look at the <code>bot.receives</code> values. See <a href="bot-object.html#1-botreceives">here</a>. This will help you discriminate between which bot you receive what kind of updates from. And thus in turn where you want to send which messages.</p>
 
                                 
                                 </section>
@@ -711,7 +646,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Incoming update","level":"1.4.3","depth":2,"next":{"title":"Outgoing message","level":"1.4.4","depth":2,"path":"working-with-botmaster/outgoing-message.md","ref":"working-with-botmaster/outgoing-message.md","articles":[]},"previous":{"title":"Middleware","level":"1.4.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/incoming-update.md","mtime":"2017-04-04T16:56:25.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T17:00:41.508Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Incoming update","level":"1.4.3","depth":2,"next":{"title":"Outgoing message","level":"1.4.4","depth":2,"path":"working-with-botmaster/outgoing-message.md","ref":"working-with-botmaster/outgoing-message.md","articles":[]},"previous":{"title":"Middleware","level":"1.4.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/incoming-update.md","mtime":"2017-04-04T17:09:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T18:49:19.916Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

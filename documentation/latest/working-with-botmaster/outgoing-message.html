@@ -575,7 +575,8 @@
                                 <section class="normal markdown-section">
                                 
                                 <h3 id="outgoing-messages">Outgoing messages</h3>
-<p>Again, outgoing messages are expected to be formatted like messages the Messenger platform would expect. They will typically look something like this for a text message:</p>
+<p>As with incoming updates, in order to achieve standardization, Botmaster&apos;s <code>OutgoingMessage</code>s  follow the <strong>Facebook Messenger update/message format</strong>.</p>
+<p>This means that outgoing messages are expected to be formatted like messages the Messenger platform would expect. They will typically look something like this for a text message:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> message = {
   recipient: {
     id: update.sender.id,
@@ -586,455 +587,43 @@
 }
 </code></pre>
 <p>and you would use this as such in code:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  <span class="hljs-keyword">const</span> message = {
-    recipient: {
-      id: update.sender.id,
-    },
-    message: {
-      text: <span class="hljs-string">&apos;Some arbitrary text of yours&apos;</span>
-    },
-  };
-  bot.sendMessage(message);
-});
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;my-middleware&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">const</span> message = {
+      recipient: {
+        id: update.sender.id,
+      },
+      message: {
+        text: <span class="hljs-string">&apos;Some arbitrary text of yours&apos;</span>
+      },
+    };
+    <span class="hljs-keyword">return</span> bot.sendMessage(message);
+  }
+})
 </code></pre>
-<p>typically, you would want to perform some action upon confirmation that the message was sent or catch a potential error. doing so is done like this:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  .
-  .
-  bot.sendMessage(message)
+<p>To see the available methods we expose via all bot object, such as al the <code>sendMessage</code> helper methods, see the <a href="../api-reference/base-bot.html">api-reference for BaseBot</a></p>
+<p>All these helper methods will end up in creating an instance of <code>OutgoingMessage</code> which will then be exposed in your outgoing middleware. For example:</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;my-incoming-middleware&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> reply(udpate, <span class="hljs-string">&apos;Hello there&apos;</span>);
+  }
+});
 
-  .then((body) =&gt; {
-    <span class="hljs-built_in">console</span>.log(body);
-  })
-
-  .catch((err) =&gt; {
-    <span class="hljs-built_in">console</span>.log(err.message);
-  })
-});
+botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;my-outgoing-middleware&apos;</span>,
+  controller: (bot, update, message) =&gt; {
+    <span class="hljs-comment">// message will now be of type OutgoingMessage</span>
+    <span class="hljs-built_in">console</span>.log(message.constructor);
+  }
+})
 </code></pre>
-<p>The <code>body</code> part of the response has the following structure:</p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>raw</td>
-<td>raw response body (response from the platform).</td>
-</tr>
-<tr>
-<td>recipient_id</td>
-<td>id of user who sent the message</td>
-</tr>
-<tr>
-<td>message_id</td>
-<td>id of message that was just sent</td>
-</tr>
-<tr>
-<td>sent_message</td>
-<td>full object that was just sent after going through all the outgoing middlewares</td>
-</tr>
-</tbody>
-</table>
-<p>You can also opt to use callbacks rather than promises and this would work as such:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  .
-  .
-  bot.sendMessage(message, (err, body) =&gt; {
-    <span class="hljs-keyword">if</span> (err) {
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.log(err.message);
-    }
-
-    <span class="hljs-built_in">console</span>.log(body);
-  });
-});
-</code></pre>
-<p>Typically, this method (and all its accompanying helper ones that follow) will hit all your setup outgoing middleware (read more about middleware <a href="middleware">here</a> if you don&apos;t know about them yet). If you want to avoid that and ignore your setup middleware in certain situations, do something like this:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  .
-  .
-  bot.sendMessage(message, { ignoreMiddleware: <span class="hljs-literal">true</span> })
-});
-</code></pre>
-<p>And its signature is as follows:</p>
-<p><code>bot.sendMessage</code></p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>message</td>
-<td>a full valid messenger message object.</td>
-</tr>
-<tr>
-<td>sendOptions</td>
-<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
-</tr>
-<tr>
-<td>cb</td>
-<td>(<strong>optional</strong>) callback function if you don&apos;t want to use botmaster with promises.</td>
-</tr>
-</tbody>
-</table>
-<p>As you can see, the <code>sendMessage</code> method used is used directly from the bot object and not using the botmaster one.</p>
-<p>Because you might not always want to code in a complex json object just to send in a simple text message or photo attachment, Botmaster comes with a few helper methods that can be used to send messages with less code:</p>
-<p><code>bot.sendMessageTo</code></p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>message</td>
-<td>an object without the recipient part. In the previous example, it would be <code>message.message</code>.</td>
-</tr>
-<tr>
-<td>recipientId</td>
-<td>a string representing the id of the user to whom you want to send the message.</td>
-</tr>
-<tr>
-<td>sendOptions</td>
-<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
-</tr>
-<tr>
-<td>cb</td>
-<td>(<strong>optional</strong>) callback function if you don&apos;t want to use botmaster with promises.</td>
-</tr>
-</tbody>
-</table>
-<p><code>bot.sendTextMessageTo</code></p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>text</td>
-<td>just a string with the text you want to send to your user</td>
-</tr>
-<tr>
-<td>recipientId</td>
-<td>a string representing the id of the user to whom you want to send the message.</td>
-</tr>
-<tr>
-<td>sendOptions</td>
-<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
-</tr>
-<tr>
-<td>cb</td>
-<td>(<strong>optional</strong>) callback function if you don&apos;t want to use botmaster with promises.</td>
-</tr>
-</tbody>
-</table>
-<p>Typically used like so to send a text message to the user who just spoke to the bot:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  bot.sendTextMessageTo(<span class="hljs-string">&apos;something super important&apos;</span>, update.sender.id);
-});
-</code></pre>
-<p><code>bot.reply</code></p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>update</td>
-<td>an update object with a valid <code>update.sender.id</code>.</td>
-</tr>
-<tr>
-<td>text</td>
-<td>just a string with the text you want to send to your user</td>
-</tr>
-<tr>
-<td>sendOptions</td>
-<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
-</tr>
-<tr>
-<td>cb</td>
-<td>(<strong>optional</strong>) callback function if you don&apos;t want to use botmaster with promises.</td>
-</tr>
-</tbody>
-</table>
-<p>This is is typically used like so:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  bot.reply(update, <span class="hljs-string">&apos;something super important!&apos;</span>);
-});
-</code></pre>
-<h4 id="attachments">Attachments</h4>
-<p><code>bot.sendAttachmentTo</code></p>
-<p>We&apos;ll note here really quickly that Messenger only takes in urls for file attachment (image, video, audio, file). Most other platforms don&apos;t support sending attachments in this way. So we fall back to sending the url in text which really results in a very similar output. Same goes for Twitter that doesn&apos;t support attachments at all.</p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>attachment</td>
-<td>a valid Messenger style attachment. See <a href="https://developers.facebook.com/docs/messenger-platform/send-api-reference" target="_blank">here</a> for more on that.</td>
-</tr>
-<tr>
-<td>recipientId</td>
-<td>a string representing the id of the user to whom you want to send the message.</td>
-</tr>
-<tr>
-<td>sendOptions</td>
-<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
-</tr>
-<tr>
-<td>cb</td>
-<td>(<strong>optional</strong>) callback function if you don&apos;t want to use botmaster with promises.</td>
-</tr>
-</tbody>
-</table>
-<p>This is the general attachment sending method that will always work for Messenger but not necessarily for other platforms as Facebook Messenger supports all sorts of attachments that other platforms don&apos;t necessarily support. So beware when using it. To assure your attachment will be sent to all platforms, use <code>bot.sendAttachmentFromURLTo</code>.</p>
-<p>This is typically used as such for sending an image url.</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  <span class="hljs-keyword">const</span> attachment = {
-    type: <span class="hljs-string">&apos;image&apos;</span>
-    payload: {
-      url: <span class="hljs-string">&quot;some image url you&apos;ve got&quot;</span>,
-    },
-  };
-  bot.sendAttachment(attachment, update.sender.id);
-});
-</code></pre>
-<p><code>bot.sendAttachmentFromURLTo</code></p>
-<p>Just easier to use this to send standard url attachments. And URL attachments if used properly should work on all out-of-the-box platforms:</p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>type</td>
-<td>string representing the type of attachment (audio, video, image or file)</td>
-</tr>
-<tr>
-<td>url</td>
-<td>the url to your file</td>
-</tr>
-<tr>
-<td>recipientId</td>
-<td>a string representing the id of the user to whom you want to send the message.</td>
-</tr>
-<tr>
-<td>sendOptions</td>
-<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
-</tr>
-<tr>
-<td>cb</td>
-<td>(<strong>optional</strong>) callback function if you don&apos;t want to use botmaster with promises.</td>
-</tr>
-</tbody>
-</table>
-<p>This is typically used as such for sending an image url.</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  bot.sendAttachmentFromURLTo(<span class="hljs-string">&apos;image&apos;</span>, <span class="hljs-string">&quot;some image url you&apos;ve got&quot;</span>, update.sender.id);
-});
-</code></pre>
-<h4 id="status">Status</h4>
-<p><code>bot.sendIsTypingMessageTo</code></p>
-<p>To indicate that something is happening on your bots end, you can show your users that the bot is &apos;working&apos; or &apos;typing&apos; something. to do so, simply invoke sendIsTypingMessageTo.</p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>recipientId</td>
-<td>a string representing the id of the user to whom you want to send the message.</td>
-</tr>
-<tr>
-<td>sendOptions</td>
-<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
-</tr>
-<tr>
-<td>cb</td>
-<td>(<strong>optional</strong>) callback function if you don&apos;t want to use botmaster with promises.</td>
-</tr>
-</tbody>
-</table>
-<p>It is used as such:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  bot.sendIsTypingMessageTo(update.sender.id);
-});
-</code></pre>
-<p>It will only send a request to the platforms that support it. If unsupported, nothing will happen.</p>
-<h4 id="buttons">Buttons</h4>
-<p>Buttons will almost surely be part of your bot. Botmaster provides a method that will send what is assumed to be a decent way to display buttons throughout all platforms.</p>
-<p><code>bot.sendDefaultButtonMessageTo</code></p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>buttonTitles</td>
-<td>array of button titles (no longer than 10 in size).</td>
-</tr>
-<tr>
-<td>recipientId</td>
-<td>a string representing the id of the user to whom you want to send the message.</td>
-</tr>
-<tr>
-<td>textOrAttachment</td>
-<td>(<strong>optional</strong>) a string or an attachment object similar to the ones required in <code>bot.sendAttachmentTo</code>. This is meant to provide context to the buttons. I.e. why are there buttons here. A piece of text or an attachment could detail that. If not provided,  text will be added that reads: &apos;Please select one of:&apos;. This is only optional if none of sendOptions and cb is specified</td>
-</tr>
-<tr>
-<td>sendOptions</td>
-<td>(<strong>optional</strong>) an object containing options regarding the sending of the message. One of those options is: <code>ignoreMiddleware</code>.</td>
-</tr>
-<tr>
-<td>cb</td>
-<td>(<strong>optional</strong>) callback function if you don&apos;t want to use botmaster with promises.</td>
-</tr>
-</tbody>
-</table>
-<p>The function defaults to sending <code>quick_replies</code> in Messenger, setting <code>Keyboard buttons</code> in Telegram, buttons in Slack and simply prints button titles one on each line in Twitter as it doesn&apos;t support buttons. The user is expecting to type in their choice in Twitter. In the socketio implementation, the front-end/app developer is expected to write the code that would display the buttons on their front-end.</p>
-<p>It is used as such:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  <span class="hljs-keyword">const</span> buttonArray = [<span class="hljs-string">&apos;button1&apos;</span>, <span class="hljs-string">&apos;button2&apos;</span>];
-  bot.sendDefaultButtonMessageTo(buttonArray, update.sender.id,
-    <span class="hljs-string">&apos;Please select &quot;button1&quot; or &quot;button2&quot;&apos;</span>);
-});
-</code></pre>
-<blockquote>
-<p>If you will be using either of <code>sendOptions</code> or <code>cb</code>, you will need to specify <code>textOrAttachment</code>.</p>
-</blockquote>
-<h4 id="cascade">Cascade</h4>
-<p>In order to send a cascade of messages (i.e. multiple messages one after another), you might want to have a look at both of these methods:</p>
-<p><code>bot.sendCascadeTo</code></p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>messageArray</td>
-<td>Array of messages in a format as such: [{text: &apos;something&apos;}, {message: someMessengerValidMessage}] read below to see valid keys.</td>
-</tr>
-<tr>
-<td>recipientId</td>
-<td>a string representing the id of the user to whom you want to send the message.</td>
-</tr>
-</tbody>
-</table>
-<p>As you might have guessed, Botmaster assures you that the objects in the messageArray will be sent in order. Furthermore, the objects of the messageArray must be of a certain form where valid params are the following:</p>
-<pre><code class="lang-js">{
-  raw: SOME_VALID_RAW_MESSAGE, <span class="hljs-comment">// the same object as one you would send with sendRaw()</span>
-  message: SOME_VALID_MESSENGER_MESSAGE, <span class="hljs-comment">// the same object as one you would send with sendMessage() (i.e. the recipientId won&apos;t be taken into account!)</span>
-  buttons: SOME_ARRAY_OF_BUTTON_TITLES, <span class="hljs-comment">// same as what you would do with: sendDefaultButtonMessageTo. If you will be sending attachments/text alongside it, add them in the following fields. If both are present, the attachment will be used.</span>
-  attachment: SOME_ATTACHMENT, <span class="hljs-comment">// same object format as in: sendAttachmentTo()</span>
-  text: <span class="hljs-string">&apos;some text&apos;</span>, <span class="hljs-comment">// same as when using sendTextMessageTo()</span>
-  isTyping: SOME_TRUTHY_VALUE, <span class="hljs-comment">// will call sendIsTypingMessageTo() on the recipientId used in sendCascade.</span>
-}
-</code></pre>
-<blockquote>
-<p>It is important to note that all these parameters will be hit in the shown order if present. I.e. if <code>raw</code> is present, <code>message</code> will not be hit nor will <code>buttons</code> be hit etc.</p>
-</blockquote>
-<p>You could typically use this as such:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  <span class="hljs-keyword">const</span> rawMessage = SOME_RAW_PLATFORM_MESSAGE;
-
-  <span class="hljs-keyword">const</span> fullMessage = {
-    recipient: {
-      id: someUserId, <span class="hljs-comment">// note that I am not using update.sender.id on purpose here, so as to show that this overrides the recipientId from the sendCascade Method</span>
-    },
-    message: {
-      text: <span class="hljs-string">&apos;Some arbitrary text of yours&apos;</span>
-    },
-  };
-
-  <span class="hljs-keyword">const</span> buttonsArray = [<span class="hljs-string">&apos;button1&apos;</span>, <span class="hljs-string">&apos;button2&apos;</span>];
-  <span class="hljs-keyword">const</span> textForButtons = <span class="hljs-string">&apos;Please select one of the two buttons&apos;</span>;
-
-  <span class="hljs-keyword">const</span> someText = <span class="hljs-string">&apos;some text message after all this&apos;</span>;
-
-  bot.sendCascadeTo([
-    { raw: rawMessage},
-    { message: fullMessage },
-    { isTyping: <span class="hljs-literal">true</span> },
-    { buttons: buttonsArray,
-      text: textForButtons
-    },
-    { isTyping: <span class="hljs-literal">true</span> },
-    { text: someText },
-  ], update.sender.id)
-});
-</code></pre>
-<p>Where our <code>recipientId</code> is set to <code>update.sender.id</code>.</p>
-<p>In this example, the bot will send a rawMessage and then a botmaster supported message to the platform (both these messages will not take into consideration the recipientId (update.sender.id) set in sendCascade). Then it will send a button message and then a standard text message. Both these last messages will be sent to the specified recipientId (again, update.sender.id). Note that before each message sent to the recipient, I also send an &apos;isTyping&apos; message to the recipient. I purposefully do not do so for the first two messages as it is assumed here that those messages are not being sent to the recipient, but to some other user.</p>
-<p><code>bot.sendTextCascadeTo</code></p>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>textMessageArray</td>
-<td>Array of strings that you want to send to the user in sequences.</td>
-</tr>
-<tr>
-<td>recipientId</td>
-<td>a string representing the id of the user to whom you want to send the message.</td>
-</tr>
-</tbody>
-</table>
-<p>This method is really just a helper for calling <code>bot.sendCascadeTo</code>. It just allows developers to use the method with an array of texts rather than an array of objects.</p>
-<p>Something like this will do:</p>
-<pre><code class="lang-js">bot.sendTextCascadeTo([<span class="hljs-string">&apos;message1&apos;</span>, <span class="hljs-string">&apos;message2&apos;</span>], user.sender.id);
-</code></pre>
-<p><code>sendOptions</code> is an optional argument that can take in the following parameters (for now)</p>
-<table>
-<thead>
-<tr>
-<th>key/option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ignoreMiddleware</td>
-<td>outgoing middleware will not be hit if this parameter is set to true (or any truthy value)</td>
-</tr>
-</tbody>
-</table>
-<p>If you want to learn more about middleware and why you might want to use any of these options, read more about middleware <a href="middleware">here</a></p>
+<p>Because the message object is of type <code>OutgoingMessage</code>, this means that all the helper functions to compose said object are now available to you. See what functions are made available in the API reference: <a href="../api-reference/outgoing-message.html">here</a></p>
+<p>Now I realise you might not actually want to wait until you are inside of an outgoing middleware controller to have access to those OutgoingMessage helper functions. This is why you can create them from your bot object directly using the <code>createOutgoingMessage</code> helper methods that come with all bot instances. Again, checkout the <a href="../api-reference/base-bot.html">api-reference for BaseBot</a> to see how to use them.</p>
 
                                 
                                 </section>
@@ -1078,7 +667,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Outgoing message","level":"1.4.4","depth":2,"next":{"title":"Botmaster object","level":"1.4.5","depth":2,"path":"working-with-botmaster/botmaster-object.md","ref":"working-with-botmaster/botmaster-object.md","articles":[]},"previous":{"title":"Incoming update","level":"1.4.3","depth":2,"path":"working-with-botmaster/incoming-update.md","ref":"working-with-botmaster/incoming-update.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/outgoing-message.md","mtime":"2017-04-04T16:41:14.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T17:00:41.508Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Outgoing message","level":"1.4.4","depth":2,"next":{"title":"Botmaster object","level":"1.4.5","depth":2,"path":"working-with-botmaster/botmaster-object.md","ref":"working-with-botmaster/botmaster-object.md","articles":[]},"previous":{"title":"Incoming update","level":"1.4.3","depth":2,"path":"working-with-botmaster/incoming-update.md","ref":"working-with-botmaster/incoming-update.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/outgoing-message.md","mtime":"2017-04-04T18:37:24.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T18:49:19.916Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

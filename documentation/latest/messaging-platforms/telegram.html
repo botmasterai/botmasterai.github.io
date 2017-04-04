@@ -605,6 +605,45 @@ botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) 
   bot.reply(update, <span class="hljs-string">&apos;Right back at you&apos;</span>);
 });
 </code></pre>
+<h4 id="note-on-attachment-types-and-conversions">Note on attachment types and conversions</h4>
+<p>Attachment type conversion works as such for <strong>Telegram</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Telegram Type</th>
+<th>Botmaster conversion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>audio</td>
+<td>audio</td>
+</tr>
+<tr>
+<td>voice</td>
+<td>audio</td>
+</tr>
+<tr>
+<td>photo</td>
+<td>image</td>
+</tr>
+<tr>
+<td>video</td>
+<td>video</td>
+</tr>
+<tr>
+<td>location</td>
+<td>location</td>
+</tr>
+<tr>
+<td>venue</td>
+<td>location</td>
+</tr>
+</tbody>
+</table>
+<p><code>contact</code> attachment types aren&apos;t supported in Messenger. So in order to deal with them in Botmaster, you will have to look into your <code>update.raw</code> object which is the standard Telegram update. You will find your contact object in <code>update.raw.contact</code>.</p>
+<p>Also, concerning <code>location</code> and <code>venue</code> attachments. The url received in Botmaster for Telegram is a google maps one with the coordinates as query parameters. It looks something like this: <code>https://maps.google.com/?q=&lt;lat&gt;,&lt;long&gt;</code></p>
+<p>A few of you will want to use attachments with your <code>socket.io</code> bots. Because the Botmaster message standard is the Facebook Messenger one, everything is URL based. Which means it is left to the developer to store both incoming and outgoing attachments. A tutorial on how to deal with this will be up soon in the <a href="../tutorials">Tutorials</a> section.</p>
 
                                 
                                 </section>
@@ -648,7 +687,7 @@ botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Telegram","level":"1.3.4","depth":2,"next":{"title":"Twitter DM","level":"1.3.5","depth":2,"path":"messaging-platforms/twitter-dm.md","ref":"messaging-platforms/twitter-dm.md","articles":[]},"previous":{"title":"Socket.io","level":"1.3.3","depth":2,"path":"messaging-platforms/socket.io.md","ref":"messaging-platforms/socket.io.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"messaging-platforms/telegram.md","mtime":"2017-04-03T13:56:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T17:00:41.508Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Telegram","level":"1.3.4","depth":2,"next":{"title":"Twitter DM","level":"1.3.5","depth":2,"path":"messaging-platforms/twitter-dm.md","ref":"messaging-platforms/twitter-dm.md","articles":[]},"previous":{"title":"Socket.io","level":"1.3.3","depth":2,"path":"messaging-platforms/socket.io.md","ref":"messaging-platforms/socket.io.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"messaging-platforms/telegram.md","mtime":"2017-04-04T17:07:51.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T18:49:19.916Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -588,19 +588,16 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 <tbody>
 <tr>
 <td>port</td>
-<td>(<strong>optional</strong>) The port to use for your webhooks (see <a href="#webhooks">webhooks</a> to understand more about webhooks). This will only be used if the <code>app</code> parameter is not provided. Otherwise, it will be ignored</td>
+<td>(<strong>optional</strong>) The port to use for your webhooks (see <a href="../getting-started/webhooks.html">webhooks</a> to understand more about webhooks). This will only be used if the <code>server</code> parameter is not provided. Otherwise, it will be ignored.</td>
 </tr>
 <tr>
-<td>app</td>
-<td>(<strong>optional</strong>) An <code>express.js</code> app object to mount the <code>webhookEnpoints</code> onto. If you choose to do this, it is assumed that you will be starting your own express server and this won&apos;t be done by Botmaster. Unless you also specify a <code>server</code> parameter, <code>botmaster.server</code> will be <code>undefined</code></td>
+<td>server</td>
+<td>(<strong>optional</strong>) A valid node http server app object to mount the <code>webhookEnpoints</code> onto. If you choose to do this, it is assumed that you will be managing your own server instance (possibly via express of Koa or other). Thus, Botmaster won&apos;t start the server.</td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><code>botsSettings</code> and <code>server</code> parameters have been deprecated in version 2.2.3. Please use <code>addBot</code> instead of botsSettings and set the socketio server in your socketSettings object.</p>
-</blockquote>
 <p>Using botsSettings would look something like this if you want to set the port:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> botmasterSettings = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
 
 <span class="hljs-keyword">const</span> botmasterSettings = {
   <span class="hljs-comment">// by default botmaster will start an express server that listens on port 3000</span>
@@ -615,120 +612,40 @@ The <code>botmasterSettings</code> object has the following parameters:</p>
 .
 </code></pre>
 <blockquote>
-<p>Please note, unless you are passing in an <code>app</code> object to the settings, it is assumed that you don&apos;t want to deal with anything relating to an http server. That is, botmaster will create an express server under the hood and expose both: <code>botmaster.app</code> and <code>botmaster.server</code>.</p>
+<p>Please note, unless you are passing in a <code>server</code> object to the settings, it is assumed that you don&apos;t want to deal with anything relating to an http server. That is, botmaster will create an express server under the hood and expose <code>botmaster.server</code> back.</p>
 </blockquote>
-<h4 id="setting-botmastersettings-to-use-botmaster-with-your-own-express-app">Setting <code>botmasterSettings</code> to use Botmaster with your own express() app</h4>
+<h4 id="example-1-using-botmaster-with-your-own-express-app">Example 1: Using Botmaster with your own express app</h4>
 <p>Here&apos;s an example on how to do so if you are setting your credentials in your environment variables:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>);
-<span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
-
-<span class="hljs-keyword">const</span> app = express();
-<span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>;
-<span class="hljs-keyword">const</span> botmasterSettings = { app: app };
-<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster(botmasterSettings);
-
-<span class="hljs-comment">// settings and adding those to botmaster</span>
-<span class="hljs-keyword">const</span> telegramSettings = {
-  credentials: {
-    authToken: process.env.TELEGRAM_TOKEN,
-  },
-  webhookEndpoint: <span class="hljs-string">&apos;/webhook1234/&apos;</span>,
-};
-
-<span class="hljs-keyword">const</span> messengerSettings = {
-  credentials: {
-    verifyToken: process.env.MESSENGER_VERIFY_TOKEN,
-    pageToken: process.env.MESSENGER_PAGE_TOKEN,
-    fbAppSecret: process.env.FACEBOOK_APP_SECRET,
-  },
-  webhookEndpoint: <span class="hljs-string">&apos;/webhook1234/&apos;</span>,
-};
-
-<span class="hljs-keyword">const</span> messengerBot = <span class="hljs-keyword">new</span> Botmaster.botTypes.MessengerBot(messengerSettings);
-<span class="hljs-keyword">const</span> telegramBot = <span class="hljs-keyword">new</span> Botmaster.botTypes.TelegramBot(telegramSettings);
-
-botmaster.addBot(messengerBot);
-botmaster.addBot(telegramBot);
-<span class="hljs-comment">////////</span>
-
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  bot.sendMessage({
-    recipient: {
-      id: update.sender.id,
-    },
-    message: {
-      text: <span class="hljs-string">&apos;Well right back at you!&apos;</span>,
-    },
-  });
-});
-
-<span class="hljs-comment">// start server on the specified port and binding host</span>
-app.listen(port, <span class="hljs-string">&apos;0.0.0.0&apos;</span>, () =&gt; {
-  <span class="hljs-comment">// print a message when the server starts listening</span>
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Running App on port: <span class="hljs-subst">${port}</span>`</span>);
-});
-</code></pre>
-<h4 id="setting-botmastersettings-to-use-botmaster-with-your-own-express-app-and-own-server-object">Setting <code>botmasterSettings</code> to use Botmaster with your own express() app and own server object</h4>
-<p>This example is what you should base your code on if you are using socket.io and your own http server object rather than the default botmaster one.</p>
-<p>Here&apos;s an example on how to do so if you are setting your credentials in your environment variables:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;http&apos;</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
 <span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>);
-<span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
 
 <span class="hljs-keyword">const</span> app = express();
-<span class="hljs-keyword">const</span> myServer = http.createServer(app);
 <span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>;
-<span class="hljs-keyword">const</span> botmasterSettings = { app: app };
-<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster(botmasterSettings);
+<span class="hljs-keyword">const</span> myServer = app.listen(port, <span class="hljs-string">&apos;0.0.0.0&apos;</span>);
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({ server: myServer });
 
-<span class="hljs-comment">// settings and adding those to botmaster</span>
-<span class="hljs-keyword">const</span> telegramSettings = {
-  credentials: {
-    authToken: process.env.TELEGRAM_TOKEN,
-  },
-  webhookEndpoint: <span class="hljs-string">&apos;/webhook1234/&apos;</span>,
-};
-
-<span class="hljs-keyword">const</span> socketioSettings = {
-  id: <span class="hljs-string">&apos;SOME_ID&apos;</span>,
-  server: myServer,
-};
-
-<span class="hljs-keyword">const</span> telegramBot = <span class="hljs-keyword">new</span> Botmaster.botTypes.TelegramBot(telegramSettings);
-<span class="hljs-keyword">const</span> socketioBot = <span class="hljs-keyword">new</span> Botmaster.botTypes.SocketioBot(socketioSettings);
-
-
-botmaster.addBot(messengerBot);
-botmaster.addBot(socketioBot);
-<span class="hljs-comment">////////</span>
-
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  bot.sendMessage({
-    recipient: {
-      id: update.sender.id,
-    },
-    message: {
-      text: <span class="hljs-string">&apos;Well right back at you!&apos;</span>,
-    },
-  });
-});
-
-<span class="hljs-comment">// start server on the specified port and binding host</span>
-myServer.listen(port, <span class="hljs-string">&apos;0.0.0.0&apos;</span>, () =&gt; {
-  <span class="hljs-comment">// print a message when the server starts listening</span>
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Running App on port: <span class="hljs-subst">${port}</span>`</span>);
-});
+myServer.on(<span class="hljs-string">&apos;listening&apos;</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;My express app is listening and its server is used in Botmaster&apos;</span>);
+})
 </code></pre>
-<p>The difference between this example and the previous one is that in the previous, we are using the express helper <code>app.listen</code> which essentially wraps around the <code>http</code> <code>server.listen</code> and returns a server instance. Whereas here we are doing it all ourselves and use <code>myServer.listen</code>.</p>
+<h4 id="example-2-using-botmaster-with-your-own-koa-app">Example 2: Using Botmaster with your own Koa app</h4>
+<p>Here&apos;s an example on how to do so if you are setting your credentials in your environment variables:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
+<span class="hljs-keyword">const</span> Koa = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;koa&apos;</span>);
+
+<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Koa();
+<span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>;
+<span class="hljs-keyword">const</span> myServer = app.listen(port, <span class="hljs-string">&apos;0.0.0.0&apos;</span>);
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({ server: myServer });
+
+myServer.on(<span class="hljs-string">&apos;listening&apos;</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;My Koa app is listening and its server is used in Botmaster too&apos;</span>);
+})
+</code></pre>
 <h3 id="events">Events</h3>
 <p>Botmaster is built on top of the EventEmitter node.js class. Which means it can emit events and most importantly for us here, it can listen onto them. By doing any of the following:</p>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;server running&apos;</span>, (message) =&gt; {
+<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;listening&apos;</span>, (message) =&gt; {
   <span class="hljs-built_in">console</span>.log(message);
-});
-
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  <span class="hljs-built_in">console</span>.log(bot.type);
-  <span class="hljs-built_in">console</span>.log(update);
 });
 
 botmaster.on(<span class="hljs-string">&apos;error&apos;</span>, (bot, err) =&gt; {
@@ -736,13 +653,11 @@ botmaster.on(<span class="hljs-string">&apos;error&apos;</span>, (bot, err) =&gt
   <span class="hljs-built_in">console</span>.log(err.stack);
 });
 </code></pre>
-<p>These are the only four listeners that you can listen onto in botmaster. Let&apos;s go though them briefly:</p>
+<p>These are the only two listeners that you can listen onto in botmaster. Let&apos;s go though them briefly:</p>
 <h4 id="server-running">server running</h4>
 <p>This event will be emitted only if you are not managing your own server (i.e. you started botmaster without setting the <code>app</code> parameter). It is just here to notify you that the server has been started. You don&apos;t necessarily need to use it. But you might want to do things at this point.</p>
-<h4 id="update">update</h4>
-<p>This is really where all the magic happens. Whenever a message (update in Botmaster semantic) is sent into your application. Botmaster will parse it and format it into its [FB Messenger] standard. Along with it, you will get a <code>bot</code> object which is the underlying object into which the message was sent. Note that the updates are standardized as well as the methods to use from the bot object (i.e. sending a message). Read further down to see how those two objects work.</p>
 <h4 id="error">error</h4>
-<p>This event is thrown whenever an error internal to Botmaster occurs. I.e. if for some reason a misconfigured message was sent in. Or if some other kind of error occurred directly within Botmaster. It is good to listen onto this event and keep track of potential errors. Also, if you code an error within <code>botmaster.on</code>, and don&apos;t catch it, it will be caught by Botmaster and emitted in to <code>error</code>. So like this you have full control of what is going on and can log everything straight from there.</p>
+<p>This event is thrown whenever an error internal to Botmaster occurs. I.e. if for some reason a mis-configured message was sent in. Or if some other kind of error occurred directly within Botmaster. It is good to listen onto this event and keep track of potential errors. Also, if you code an error within your incoming middleware, and don&apos;t catch it, it will be caught by Botmaster and emitted in to <code>error</code>. So like this you have full control of what is going on and can log everything straight from there.</p>
 
                                 
                                 </section>
@@ -786,7 +701,7 @@ botmaster.on(<span class="hljs-string">&apos;error&apos;</span>, (bot, err) =&gt
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Botmaster object","level":"1.4.5","depth":2,"next":{"title":"Writing your own bot class","level":"1.4.6","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]},"previous":{"title":"Outgoing message","level":"1.4.4","depth":2,"path":"working-with-botmaster/outgoing-message.md","ref":"working-with-botmaster/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/botmaster-object.md","mtime":"2017-04-04T16:38:29.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T17:00:41.508Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Botmaster object","level":"1.4.5","depth":2,"next":{"title":"Writing your own bot class","level":"1.4.6","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]},"previous":{"title":"Outgoing message","level":"1.4.4","depth":2,"path":"working-with-botmaster/outgoing-message.md","ref":"working-with-botmaster/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/botmaster-object.md","mtime":"2017-04-04T18:48:37.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T18:49:19.916Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

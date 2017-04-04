@@ -35,6 +35,8 @@ Bot objects allow you perform all sorts of actions. These actions go along the l
 
 As much as you could just start shooting out messages right after creating a bot object (e.g. from our `messengerBot` object in the previous example), you'll typically be using bot objects within middleware. Without diving deep into middleware, we'll show how bot objects are used (similar to what we did in the [quickstart](/gettings-started/quickstart.md))
 
+### Send Messages
+
 Let's first note here, that you can have multiple bot objects for a certain type. I'm sure you can find reasons for why you would want to do this. This is important to mention, as you might have, say, 2 bots of type `messenger` dealt with via Botmaster. You might want to do platform specific code by doing the following:
 
 ```js
@@ -112,6 +114,60 @@ botmaster.use({
 
 >Botmaster does not assure you that the `id` parameter of the `bot` object will exist upon instantiation. the `id` is only assured to be there once an update has been received by the bot. I.e. in all middleware functions This is because some ids aren't known until botmaster knows 'who' the message was sent to (i.e. what id your bot should have).
 
+#### Performing actions after a message is sent 
+
+It is also noteworthy that you would typically want to perform some action upon confirmation that the message was sent or catch a potential error. Because all the sendMessage helper functions return Promises, this is done as such:
+
+```js
+botmaster.use({
+  type: 'incoming',
+  name: 'some-name',
+  controller: (bot, update) => {
+    .
+    .
+    return bot.sendMessage(message)
+
+    .then((body) => {
+      console.log(body);
+    })
+
+    .catch((err) => {
+      console.log(err.message);
+    })
+  }
+})
+```
+
+Where the body object resolved from the `sendMessage` Promise will look As per the API reference, as such:
+
+```js
+ {
+  sentOutgoingMessage: // the OutgoingMessage instance before being formatted
+  sentRawMessage: // the OutgoingMessage object after being formatted for the platforms
+  raw: rawBody, // the raw response from the platforms received from sending the message
+  recipient_id: <id_of_user>,
+  message_id: <message_id_of_what_was_just_sent>
+ }
+```
+
+#### Ignoring outgoing middleware all-together
+
+Typically, the senMessage methods will hit all your setup outgoing middleware (read more about middleware [here](/working-with-botmaster/middleware.md). If you want to avoid that and ignore your setup middleware in certain situations, do something like this:
+
+```js
+botmaster.use({
+  type: 'incoming',
+  name: 'some-name',
+  controller: (bot, update) => {
+    .
+    .
+    return bot.sendMessage(message, { ignoreMiddleware: true })
+  }
+})
+```
+
+#### Bot object parameters
+
 I'll note quickly that each bot object created comes from one of the various bot classes as seen above. They act in the same way on the surface (because of heavy standardization), but have a few idiosynchrasies here and there.
 
 Many of those idiosynchrasies can be found out by leveraging the following in your bot objects: `bot.receives`, `bot.sends` and `bot.retrievesUserInfo`. These objects look as such:
@@ -172,6 +228,10 @@ Where each of these values is true if the bot class implements them. All officia
 
 Some bot classes (like the one provided by the `botmaster-messenger` package) can expose methods that are only available for this specific bot type. These methods will always be prepended with an underscore. E.g. `botmaster-messenger` exposes: `_setGetStartedButton` which allow you to set up a get started button only in FB messenger.
 
+#### Getting bots
+
 Also useful to note is that you can access all the bots added to botmaster by doing `botmaster.bots`. you can also use `botmastet.getBot` or `botmaster.getBots` to get a specific bot (using type or id);
 
-It is important to take note of the `addBot` syntax as you can create your own Bot class that extends the `Botmaster.botTypes.BaseBot` class. For instance, you might want to create your own class that supports your pre-existing messaging standards. Have a look at the [writing your own bot class](/working-with-botmaster/writing-your-own-bot-class.md) documentation to learn how to do this.
+#### Writing your own bot class
+
+It is important to take note of the `addBot` syntax as you can create your own Bot class that extends the `Botmaster.BaseBot` class. For instance, you might want to create your own class that supports your pre-existing messaging standards. Have a look at the [writing your own bot class](/working-with-botmaster/writing-your-own-bot-class.md) documentation to learn how to do this.

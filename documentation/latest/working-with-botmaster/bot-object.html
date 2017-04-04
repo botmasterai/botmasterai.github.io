@@ -603,6 +603,7 @@ botmaster.addBot(<span class="hljs-keyword">new</span> TelegramBot(telegramSetti
 <p>As it turns out, bot objects are really the ones running most of the show in the Botmaster framework (alongside middleware). Your <code>botmaster</code> object is simply a central point of control for you to manage all of your bots. Bot classes are built on top of the Botmaster <code>BaseBot</code> class that exposes all the actions one will want to take using Botmaster.</p>
 <p>Bot objects allow you perform all sorts of actions. These actions go along the line of sending messages to users on the platform, getting info on a certain user (if platform supports that) and creating OutgoingMessages. See the api reference for <a href="../api-reference/base-bot.html">BaseBot</a> to see all the methods that can be used.</p>
 <p>As much as you could just start shooting out messages right after creating a bot object (e.g. from our <code>messengerBot</code> object in the previous example), you&apos;ll typically be using bot objects within middleware. Without diving deep into middleware, we&apos;ll show how bot objects are used (similar to what we did in the <a href="../gettings-started/quickstart.md">quickstart</a>)</p>
+<h3 id="send-messages">Send Messages</h3>
 <p>Let&apos;s first note here, that you can have multiple bot objects for a certain type. I&apos;m sure you can find reasons for why you would want to do this. This is important to mention, as you might have, say, 2 bots of type <code>messenger</code> dealt with via Botmaster. You might want to do platform specific code by doing the following:</p>
 <pre><code class="lang-js">botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
@@ -672,6 +673,48 @@ botmaster.use({
 <blockquote>
 <p>Botmaster does not assure you that the <code>id</code> parameter of the <code>bot</code> object will exist upon instantiation. the <code>id</code> is only assured to be there once an update has been received by the bot. I.e. in all middleware functions This is because some ids aren&apos;t known until botmaster knows &apos;who&apos; the message was sent to (i.e. what id your bot should have).</p>
 </blockquote>
+<h4 id="performing-actions-after-a-message-is-sent">Performing actions after a message is sent</h4>
+<p>It is also noteworthy that you would typically want to perform some action upon confirmation that the message was sent or catch a potential error. Because all the sendMessage helper functions return Promises, this is done as such:</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;some-name&apos;</span>,
+  controller: (bot, update) =&gt; {
+    .
+    .
+    return bot.sendMessage(message)
+
+    .then((body) =&gt; {
+      <span class="hljs-built_in">console</span>.log(body);
+    })
+
+    .catch((err) =&gt; {
+      <span class="hljs-built_in">console</span>.log(err.message);
+    })
+  }
+})
+</code></pre>
+<p>Where the body object resolved from the <code>sendMessage</code> Promise will look As per the API reference, as such:</p>
+<pre><code class="lang-js"> {
+  sentOutgoingMessage: <span class="hljs-comment">// the OutgoingMessage instance before being formatted</span>
+  sentRawMessage: <span class="hljs-comment">// the OutgoingMessage object after being formatted for the platforms</span>
+  raw: rawBody, <span class="hljs-comment">// the raw response from the platforms received from sending the message</span>
+  recipient_id: &lt;id_of_user&gt;,
+  message_id: &lt;message_id_of_what_was_just_sent&gt;
+ }
+</code></pre>
+<h4 id="ignoring-outgoing-middleware-all-together">Ignoring outgoing middleware all-together</h4>
+<p>Typically, the senMessage methods will hit all your setup outgoing middleware (read more about middleware <a href="middleware.html">here</a>. If you want to avoid that and ignore your setup middleware in certain situations, do something like this:</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;some-name&apos;</span>,
+  controller: (bot, update) =&gt; {
+    .
+    .
+    return bot.sendMessage(message, { ignoreMiddleware: <span class="hljs-literal">true</span> })
+  }
+})
+</code></pre>
+<h4 id="bot-object-parameters">Bot object parameters</h4>
 <p>I&apos;ll note quickly that each bot object created comes from one of the various bot classes as seen above. They act in the same way on the surface (because of heavy standardization), but have a few idiosynchrasies here and there.</p>
 <p>Many of those idiosynchrasies can be found out by leveraging the following in your bot objects: <code>bot.receives</code>, <code>bot.sends</code> and <code>bot.retrievesUserInfo</code>. These objects look as such:</p>
 <h5 id="1-botreceives">1. <strong>bot.receives</strong>:</h5>
@@ -722,8 +765,10 @@ botmaster.use({
 </code></pre>
 <p>Where each of these values is true if the bot class implements them. All official bot classes will expose these elements to you so you can leverage those in your middleware.</p>
 <p>Some bot classes (like the one provided by the <code>botmaster-messenger</code> package) can expose methods that are only available for this specific bot type. These methods will always be prepended with an underscore. E.g. <code>botmaster-messenger</code> exposes: <code>_setGetStartedButton</code> which allow you to set up a get started button only in FB messenger.</p>
+<h4 id="getting-bots">Getting bots</h4>
 <p>Also useful to note is that you can access all the bots added to botmaster by doing <code>botmaster.bots</code>. you can also use <code>botmastet.getBot</code> or <code>botmaster.getBots</code> to get a specific bot (using type or id);</p>
-<p>It is important to take note of the <code>addBot</code> syntax as you can create your own Bot class that extends the <code>Botmaster.botTypes.BaseBot</code> class. For instance, you might want to create your own class that supports your pre-existing messaging standards. Have a look at the <a href="writing-your-own-bot-class.html">writing your own bot class</a> documentation to learn how to do this.</p>
+<h4 id="writing-your-own-bot-class">Writing your own bot class</h4>
+<p>It is important to take note of the <code>addBot</code> syntax as you can create your own Bot class that extends the <code>Botmaster.BaseBot</code> class. For instance, you might want to create your own class that supports your pre-existing messaging standards. Have a look at the <a href="writing-your-own-bot-class.html">writing your own bot class</a> documentation to learn how to do this.</p>
 
                                 
                                 </section>
@@ -767,7 +812,7 @@ botmaster.use({
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Bot object","level":"1.4.1","depth":2,"next":{"title":"Middleware","level":"1.4.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},"previous":{"title":"Working With Botmaster","level":"1.4","depth":1,"path":"working-with-botmaster/index.md","ref":"working-with-botmaster/index.md","articles":[{"title":"Bot object","level":"1.4.1","depth":2,"path":"working-with-botmaster/bot-object.md","ref":"working-with-botmaster/bot-object.md","articles":[]},{"title":"Middleware","level":"1.4.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},{"title":"Incoming update","level":"1.4.3","depth":2,"path":"working-with-botmaster/incoming-update.md","ref":"working-with-botmaster/incoming-update.md","articles":[]},{"title":"Outgoing message","level":"1.4.4","depth":2,"path":"working-with-botmaster/outgoing-message.md","ref":"working-with-botmaster/outgoing-message.md","articles":[]},{"title":"Botmaster object","level":"1.4.5","depth":2,"path":"working-with-botmaster/botmaster-object.md","ref":"working-with-botmaster/botmaster-object.md","articles":[]},{"title":"Writing your own bot class","level":"1.4.6","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/bot-object.md","mtime":"2017-04-04T16:59:24.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T17:00:41.508Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Bot object","level":"1.4.1","depth":2,"next":{"title":"Middleware","level":"1.4.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},"previous":{"title":"Working With Botmaster","level":"1.4","depth":1,"path":"working-with-botmaster/index.md","ref":"working-with-botmaster/index.md","articles":[{"title":"Bot object","level":"1.4.1","depth":2,"path":"working-with-botmaster/bot-object.md","ref":"working-with-botmaster/bot-object.md","articles":[]},{"title":"Middleware","level":"1.4.2","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},{"title":"Incoming update","level":"1.4.3","depth":2,"path":"working-with-botmaster/incoming-update.md","ref":"working-with-botmaster/incoming-update.md","articles":[]},{"title":"Outgoing message","level":"1.4.4","depth":2,"path":"working-with-botmaster/outgoing-message.md","ref":"working-with-botmaster/outgoing-message.md","articles":[]},{"title":"Botmaster object","level":"1.4.5","depth":2,"path":"working-with-botmaster/botmaster-object.md","ref":"working-with-botmaster/botmaster-object.md","articles":[]},{"title":"Writing your own bot class","level":"1.4.6","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/bot-object.md","mtime":"2017-04-04T17:40:36.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T18:49:19.916Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

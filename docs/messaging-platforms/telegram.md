@@ -42,3 +42,22 @@ botmaster.on('update', (bot, update) => {
   bot.reply(update, 'Right back at you');
 });
 ```
+
+#### Note on attachment types and conversions
+
+Attachment type conversion works as such for __Telegram__:
+
+| Telegram Type | Botmaster conversion
+|--- |---
+| audio | audio
+| voice  | audio
+| photo  | image
+| video  | video
+| location  | location
+| venue  | location
+
+`contact` attachment types aren't supported in Messenger. So in order to deal with them in Botmaster, you will have to look into your `update.raw` object which is the standard Telegram update. You will find your contact object in `update.raw.contact`.
+
+Also, concerning `location` and `venue` attachments. The url received in Botmaster for Telegram is a google maps one with the coordinates as query parameters. It looks something like this: `https://maps.google.com/?q=<lat>,<long>`
+
+A few of you will want to use attachments with your `socket.io` bots. Because the Botmaster message standard is the Facebook Messenger one, everything is URL based. Which means it is left to the developer to store both incoming and outgoing attachments. A tutorial on how to deal with this will be up soon in the [Tutorials](/tutorials) section.
