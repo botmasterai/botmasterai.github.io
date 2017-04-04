@@ -178,12 +178,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="../working-with-botmaster/botmaster-basics.html">
+        <li class="chapter " data-level="1.3.1" data-path="../working-with-botmaster/middleware.html">
             
-                <a href="../working-with-botmaster/botmaster-basics.html">
+                <a href="../working-with-botmaster/middleware.html">
             
                     
-                    Botmaster basics
+                    Middleware
             
                 </a>
             
@@ -191,12 +191,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="../working-with-botmaster/middleware.html">
+        <li class="chapter " data-level="1.3.2" data-path="../working-with-botmaster/botmaster-basics.html">
             
-                <a href="../working-with-botmaster/middleware.html">
+                <a href="../working-with-botmaster/botmaster-basics.html">
             
                     
-                    Middleware
+                    Botmaster basics
             
                 </a>
             
@@ -595,11 +595,11 @@ npm install --save botmaster-twitter-dm
 botmaster.addBot(twitterBot);
 </code></pre>
 <p>These lines simply indicate to botmaster that it should be notified of all activity going on within our two bot objects. But still, botmaster doesn&apos;t actually do anything yet. let&apos;s change this!</p>
-<h2 id="step-2-listening-to-events">Step 2: listening to events</h2>
+<h2 id="step-2-acting-on-updates">Step 2: Acting on updates</h2>
 <p>In order for botmaster to be be able to do anything based on any activity going on (i.e. users sending messages to your bots), we&apos;ll need to add incoming middleware to our bot (this is not completely unlike express or Koa middleware). So when a user sends a message to one of our bots. It looks like this:</p>
 <pre><code class="lang-js">botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;My incoming middleware&apos;</span>,
+  name: <span class="hljs-string">&apos;my-incoming-middleware&apos;</span>,
   controller: (bot, update) =&gt; {
     <span class="hljs-built_in">console</span>.log(update);
   }
@@ -611,7 +611,7 @@ botmaster.addBot(twitterBot);
 <p>The easiest thing to do to have a bot that answers you is the following; replace the Step 2 code with this:</p>
 <pre><code class="lang-js">botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;My incoming middleware&apos;</span>,
+  name: <span class="hljs-string">&apos;my-incoming-middleware&apos;</span>,
   controller: (bot, update) =&gt; {
     <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Hello World!&apos;</span>);
   }
@@ -686,7 +686,7 @@ botmaster.use({
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Quickstart","level":"1.2.2","depth":2,"next":{"title":"Webhooks","level":"1.2.3","depth":2,"path":"getting-started/webhooks.md","ref":"getting-started/webhooks.md","articles":[]},"previous":{"title":"Installation","level":"1.2.1","depth":2,"path":"getting-started/installation.md","ref":"getting-started/installation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"getting-started/quickstart.md","mtime":"2017-04-03T14:46:41.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T15:50:16.402Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Quickstart","level":"1.2.2","depth":2,"next":{"title":"Webhooks","level":"1.2.3","depth":2,"path":"getting-started/webhooks.md","ref":"getting-started/webhooks.md","articles":[]},"previous":{"title":"Installation","level":"1.2.1","depth":2,"path":"getting-started/installation.md","ref":"getting-started/installation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"getting-started/quickstart.md","mtime":"2017-04-04T13:13:19.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T15:25:52.644Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

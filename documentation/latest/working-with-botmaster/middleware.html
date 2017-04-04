@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="writing-your-own-bot-class.html" />
+    <link rel="next" href="botmaster-basics.html" />
     
     
-    <link rel="prev" href="botmaster-basics.html" />
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -178,12 +178,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="botmaster-basics.html">
+        <li class="chapter active" data-level="1.3.1" data-path="middleware.html">
             
-                <a href="botmaster-basics.html">
+                <a href="middleware.html">
             
                     
-                    Botmaster basics
+                    Middleware
             
                 </a>
             
@@ -191,12 +191,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.2" data-path="middleware.html">
+        <li class="chapter " data-level="1.3.2" data-path="botmaster-basics.html">
             
-                <a href="middleware.html">
+                <a href="botmaster-basics.html">
             
                     
-                    Middleware
+                    Botmaster basics
             
                 </a>
             
@@ -532,202 +532,261 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="middleware">Middleware</h1>
-<p>Middleware in Botmaster is designed to work similarly to  what you would expect in an express.js app. However, you might not have used express and they work slightly differently, so here&apos;s a writeup of how they work.</p>
-<p>Generally, middleware allows developers to do some preprocessing on some received data before performing some main action based on what was received (like sending a response to the client that made the request). Because the term pre-processing is fairly vague and can be interpreted as broad, developers often end up having the main parts of their code within middleware. Botmaster is no different. Here&apos;s a typical diagram flow showing how it looks like under the hood.</p>
-<p><img src="../images/middleware_diagram.png" alt="Middleware Diagram 1"></p>
-<p>Because Botmaster is a chatbot framework and not a web app framework, we go on and define two different types of middleware: <code>incoming</code> and <code>outgoing</code> middleware. Incoming middleware is akin to what you would have in a standard express middleware (if you have experience with express), whereas outgoing middleware will act on your response object.</p>
-<p>Here is the signature of <code>botmaster.use</code></p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>middlewareType</td>
-<td>either <code>&apos;incoming&apos;</code> or <code>&apos;outgoing&apos;</code> depending on what middleware you are setting up.</td>
-</tr>
-<tr>
-<td>options</td>
-<td>(<strong>optional</strong>) set options for when to activate the middleware. Currently only supports a <code>type</code> parameter that takes in a space separated string of platform names (names are defined in the bot classes and values are set in <code>bot.type</code>)</td>
-</tr>
-<tr>
-<td>middlewareCallback</td>
-<td>The actual middleware function that will be called. It is of type: <code>function(bot, update, next)</code> on <code>incoming</code> and <code>function(bot, message, next)</code> on <code>outgoing</code></td>
-</tr>
-</tbody>
-</table>
+<blockquote>
+<p>This is the Botmaster v3 write-up on Middleware. As in v3 there is no more <code>.on(&apos;update&apos;)</code> event, everything now takes place in middleware. If you are moving from v2, have a look at the <a href="../changelog.html#major-308">changelog</a> to see how to migrate your botmaster app.</p>
+</blockquote>
+<p>If you&apos;ve gone through the <a href="../gettings-started/quickstart.md">quickstart</a> guide, you&apos;ve actually already used middleware (well incoming middleware in this case). We do so in the &quot;Acting on updates&quot; section.</p>
+<p>Middleware in Botmaster is designed to work similarly to  what you would expect 
+in an <a href="http://expressjs.com/" target="_blank">express.js</a> app. I.e. almost all your code will reside in them.</p>
+<p>Because Botmaster is a chatbot framework and not a web app framework, we go on and define two different types of middleware: <code>incoming</code> and <code>outgoing</code> middleware.</p>
+<ul>
+<li><p><a href="#incoming-middleware">Incoming middleware</a> gets called in order of declaration whenever a valid update from one of the bots added to botmaster (using <code>botmaster.addBot()</code>) is received.</p>
+</li>
+<li><p><a href="#outgoing-middleware">Outgoing middleware</a> gets called in order of declaration whenever you send a message using one of the bot&apos;s sendMessage methods.</p>
+</li>
+</ul>
+<p>Both middleware types get added to their respective &quot;middleware stack&quot; by using botmaster&apos;s <code>use</code> method. Another helper method <code>useWrapped</code> can be used to add middleware. But we&apos;ll talk about that further down. A description of both methods can be found at the end of this document. For now, let&apos;s jump into examples:</p>
 <h2 id="incoming-middleware">Incoming middleware</h2>
-<p>As mentioned briefly above, <code>incoming</code> middleware in Botmaster is similar to what you would have in express middleware and can be used similarly. They are all called in order of declaration upon receiving an update before entering the <code>on(&apos;update&apos;...)</code> function.</p>
+<p>As mentioned briefly above, <code>incoming</code> middleware in Botmaster is similar to what you would have in express middleware and can be used similarly. They are all called in order of declaration upon receiving an update.</p>
 <h3 id="basic-incoming-middleware-example">Basic incoming middleware example</h3>
 <p>Here is a very simple example of how one would go on and use <code>incoming</code> middleware:</p>
-<pre><code class="lang-js">botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, (bot, update, next) =&gt; {
-  <span class="hljs-comment">// assumed here that some weather API is queried to get that weatherInformation</span>
-  update.weatherInfo = {
-    weather: <span class="hljs-number">23</span>,
-    unit: <span class="hljs-string">&apos;celcius&apos;</span>,
+<pre><code class="lang-js"><span class="hljs-comment">// middleware that uses next (standard middleware you might be acquainted with)</span>
+botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;add-weather-to-update&apos;</span>,
+  controller: (bot, update, next) =&gt; {
+    <span class="hljs-comment">// assumed here that some weather API is queried to get that weatherInformation</span>
+    update.weather = {
+      temperature: <span class="hljs-number">23</span>,
+      unit: <span class="hljs-string">&apos;celcius&apos;</span>,
+    }
+    next(); <span class="hljs-comment">// next needs to be called if your controller does not return a promise</span>
   }
-  next(); <span class="hljs-comment">// !! always call next when done to go to next middleware function</span>
 });
 
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  <span class="hljs-keyword">if</span> (update.weatherInfo.weather &gt; <span class="hljs-number">20</span>) {
-    bot.reply(update, <span class="hljs-string">&apos;the weather is warm&apos;</span>);
-  } <span class="hljs-keyword">else</span> {
-    bot.reply(update, <span class="hljs-string">&apos;the weather is mild&apos;</span>);
+<span class="hljs-comment">// middleware that returns an explicit promise</span>
+botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;add-user-info-to-update&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-comment">// update.weather will exist here</span>
+    <span class="hljs-keyword">if</span> (bot.retrievesUserInfo) {
+      <span class="hljs-keyword">return</span> bot.getUserInfo(update.sender.id).then((userInfo) =&gt; {
+        update.userInfo = userInfo;
+      })
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve();
+  }
+});
+
+<span class="hljs-comment">// middleware that uses async-await because we are using node7 with the async-await</span>
+<span class="hljs-comment">// harmony flag or a transpiler like Babel.</span>
+
+botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;reply-to-user&apos;</span>,
+  controller: <span class="hljs-keyword">async</span> (bot, update) =&gt; {
+    <span class="hljs-keyword">let</span> text;
+    <span class="hljs-keyword">if</span> (update.weather.temperature &gt; <span class="hljs-number">17</span>) {
+      text = <span class="hljs-string">&apos;the weather is warm&apos;</span>;
+    } <span class="hljs-keyword">else</span> {
+      text = <span class="hljs-string">&apos;the weather is cool&apos;</span>;
+    }
+
+    <span class="hljs-keyword">if</span> (update.userInfo) {
+      text += <span class="hljs-string">` <span class="hljs-subst">${update.userInfo.first_name}</span>`</span>;
+    }
+
+    <span class="hljs-keyword">const</span> body = <span class="hljs-keyword">await</span> bot.reply(update, text);
+    <span class="hljs-comment">// do stuff with the body object</span>
   }
 });
 </code></pre>
-<p>This is a very basic example. But hopefully, it gets the message through of how and why you would use <code>incoming</code> middleware. Clearly, anything can be done in a middleware function, like calling external APIs etc. You are encouraged to do so really.</p>
+<p>This is a very basic example. But hopefully, it gets the message through of how you can use <code>incoming</code> middleware. Here we see three ways to use middleware. All three are valid. I&apos;ll briefly address the three ways here:</p>
+<ol>
+<li><p>Using <code>next</code> to go to the next middleware function declared in the stack. This is the most common way middleware functions have handed over control to the next middleware in the stack. Once your middleware function is entered, you do some things and then when you&apos;re ready, you call next(). It is handy to use middleware in this way whenever your middleware makes use of callback based apis or if it&apos;s synchronous in nature.</p>
+</li>
+<li><p>Returning a <code>Promise</code>. Another way to hand over control to the next middleware function in the stack in Botmaster is to return a Promise. Whenever the promise resolves, control will be handed down to the next middleware function in the stack. In our example, we return the promise from <code>getUserInfo</code> if the bot class can retrieve user info. Otherwise, we return a promise that resolves straight away.</p>
+</li>
+<li><p>Returning Promises is great. But it gets better when you start leveraging the use of async-await functions which are already supported in Node7+ (by using the <code>--harmony-async-await</code> flag). Or you can also use Babel or another transpiler to use them. Not how in this function we don&apos;t have to return anything at the end. This is because using async will wrap our function with a Promise that will resolve naturally when it runs its course. Also, using await anywhere within the function on any function that returns a promise will just pause until the promise resolves. That is what we do when we do: <code>const body = await bot.reply(update, text);</code>. The middleware won&apos;t go to the next one, because it is waiting for the reply function&apos;s promise to resolve. Using async-await with Botmaster middleware will soon be the preferred way to write middleware as it allows you to write synchronous looking code that just goes to the next middleware function whenever the function returns (or runs its course)</p>
+</li>
+</ol>
 <h3 id="basic-incoming-middleware-example-with-structure">Basic incoming middleware example with structure</h3>
 <p>In practice, your middleware code will really live within separate files that you would &quot;require&quot; within your main &quot;app.js&quot; file. That means that the previous example will have a tree structure similar to the following:</p>
 <pre><code>&#x251C;&#x2500;&#x2500; app.js
 &#x2514;&#x2500;&#x2500; middleware
     &#x251C;&#x2500;&#x2500; incoming
     &#x2502;   &#x251C;&#x2500;&#x2500; weather.js
+    &#x2502;   &#x251C;&#x2500;&#x2500; user_info.js
+    &#x2502;   &#x251C;&#x2500;&#x2500; reply.js
     &#x2502;   &#x2514;&#x2500;&#x2500; index.js
-    &#x2514;&#x2500;&#x2500; outgoing // no outgoing middleware in this example
+    &#x251C;&#x2500;&#x2500; outgoing // no outgoing middleware in this example
+    |    &#x2514;&#x2500;&#x2500; index.js // this will remain an empty file for now
+    &#x2514;&#x2500;&#x2500; wrapped // no wrapped middleware in this example
         &#x2514;&#x2500;&#x2500; index.js // this will remain an empty file for now
 </code></pre><p>This is only a suggested structure (the one I use). Feel free to come up with a different, potentially better, structure that suits you better.</p>
 <p>That means that the previous example&apos;s code will probably look more like this:</p>
 <p><code>middleware/incoming/weather.js</code></p>
-<pre><code class="lang-js"><span class="hljs-comment">// using eslint disallowFunctionDeclarations here. Read here: https://github.com/airbnb/javascript#functions to see why I use this syntax rather than the standard function updateText(bot,  message, next) one.</span>
-<span class="hljs-keyword">const</span> addWeatherInfoToUpdate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addWeatherInfoToUpdate</span>(<span class="hljs-params">bot, update, next</span>) </span>{
-  update.weatherInfo = {
-    weather: <span class="hljs-number">23</span>,
-    unit: <span class="hljs-string">&apos;celcius&apos;</span>,
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> addWeatherToUpdate = {
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;add-weather-to-update&apos;</span>,
+  controller: (bot, update, next) =&gt; {
+    <span class="hljs-comment">// assumed here that some weather API is queried to get that weatherInformation</span>
+    update.weather = {
+      temperature: <span class="hljs-number">23</span>,
+      unit: <span class="hljs-string">&apos;celcius&apos;</span>,
+    }
+    next(); <span class="hljs-comment">// next needs to be called if your controller does not return a promise</span>
   }
-  next();
 }
 
 <span class="hljs-built_in">module</span>.exports = {
-  addWeatherInfoToUpdate, <span class="hljs-comment">// using shorthand here</span>
+  addWeatherToUpdate, <span class="hljs-comment">// using shorthand here</span>
 }
 </code></pre>
-<p><code>middleware/incoming/index.js</code></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> weather = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./weather&apos;</span>);
-
-<span class="hljs-built_in">module</span>.exports = {
-  weather,
-};
-</code></pre>
-<p><code>app.js</code></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> incomingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/incoming&apos;</span>);
-
-botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, incomingMiddleware.weather.addWeatherInfoToUpdate);
-
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
-  <span class="hljs-keyword">if</span> (update.weatherInformation.weather &gt; <span class="hljs-number">20</span>) {
-    bot.reply(update, <span class="hljs-string">&apos;the weather is warm&apos;</span>);
-  } <span class="hljs-keyword">else</span> {
-    bot.reply(update, <span class="hljs-string">&apos;the weather is mild&apos;</span>);
-  }
-});
-</code></pre>
-<h3 id="complete-incoming-middleware-example-with-structure">Complete incoming middleware example with structure</h3>
-<p>Now if I wanted to, say, add a couple of user info related middleware functions including a middleware function that would get hit only on Facebook Messenger bots (bots of type <code>messenger</code>), using the same base structure, and updating it as follows:</p>
-<pre><code>&#x251C;&#x2500;&#x2500; app.js
-&#x2514;&#x2500;&#x2500; middleware
-    &#x251C;&#x2500;&#x2500; incoming
-    &#x2502;   &#x251C;&#x2500;&#x2500; weather.js
-    &#x2502;   &#x251C;&#x2500;&#x2500; user_info.js
-    &#x2502;   &#x2514;&#x2500;&#x2500; index.js
-    &#x2514;&#x2500;&#x2500; outgoing
-        &#x2514;&#x2500;&#x2500; index.js
-</code></pre><p>I would do the following:</p>
-<p>create the file <code>middleware/incoming/user_info.js</code> as follows:</p>
 <p><code>middleware/incoming/user_info.js</code></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> addUserInfoToUpdate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addUserInfoToUpdate</span>(<span class="hljs-params">bot, update, next</span>) </span>{
-  bot.getUserInfo(update.sender.id)
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> addUserInfoToUpdate = {
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;add-user-info-to-update&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-comment">// &quot;update.weather&quot; will exist here btw</span>
+    <span class="hljs-keyword">if</span> (bot.retrievesUserInfo) {
+      <span class="hljs-keyword">return</span> bot.getUserInfo(update.sender.id).then((userInfo) =&gt; {
+        update.userInfo = userInfo;
+      })
+    }
 
-  .then((userInfo) =&gt; {
-    update.userInfo = userInfo;
-    next(); <span class="hljs-comment">// next is only called once the user information is gathered</span>
-  });
-}
-
-<span class="hljs-keyword">const</span> addUsernameToUpdate = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addUsernameToUpdate</span>(<span class="hljs-params">bot, update, next</span>) </span>{
-  update.username = <span class="hljs-string">&apos;there&apos;</span>;
-
-  <span class="hljs-keyword">if</span> (update.userInfo) {
-    update.username = update.userInfo.first_name;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve();
   }
-  next();
-}
+};
 
 <span class="hljs-built_in">module</span>.exports = {
   addUserInfoToUpdate,
 }
 </code></pre>
-<p>Then update <code>middleware/incoming/index.js</code> and <code>app.js</code> to look like this respectively:</p>
+<p><code>middleware/incoming/reply.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> replyToUser = {
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;reply-to-user&apos;</span>,
+  controller: <span class="hljs-keyword">async</span> (bot, update) =&gt; {
+    <span class="hljs-keyword">let</span> text;
+    <span class="hljs-keyword">if</span> (update.weather.temperature &gt; <span class="hljs-number">17</span>) {
+      text = <span class="hljs-string">&apos;the weather is warm&apos;</span>;
+    } <span class="hljs-keyword">else</span> {
+      text = <span class="hljs-string">&apos;the weather is cool&apos;</span>;
+    }
+
+    <span class="hljs-keyword">if</span> (update.userInfo) {
+      text += <span class="hljs-string">` <span class="hljs-subst">${update.userInfo.first_name}</span>`</span>;
+    }
+
+    <span class="hljs-keyword">const</span> body = <span class="hljs-keyword">await</span> bot.reply(update, text);
+    <span class="hljs-comment">// do stuff with the body object</span>
+  }
+});
+
+<span class="hljs-built_in">module</span>.exports = {
+  replyToUser, <span class="hljs-comment">// using shorthand here</span>
+}
+</code></pre>
 <p><code>middleware/incoming/index.js</code></p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> weather = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./weather&apos;</span>);
-<span class="hljs-keyword">const</span> userInfo = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./user_info&apos;</span>);
+<span class="hljs-keyword">const</span> userInfo = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./userInfo&apos;</span>);
+<span class="hljs-keyword">const</span> reply = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./reply&apos;</span>);
 
 <span class="hljs-built_in">module</span>.exports = {
   weather,
   userInfo,
+  reply,
 };
 </code></pre>
 <p><code>app.js</code></p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> incomingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/incoming&apos;</span>);
 
-botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, incomingMiddleware.weather.addWeatherInfoToUpdate);
-botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, { type: <span class="hljs-string">&apos;messenger&apos;</span> },
-              incomingMiddleware.userInfo.addUserInfoToUpdate);
-botmaster.use(<span class="hljs-string">&apos;incoming&apos;</span>, incomingMiddleware.userInfo.addUsernameToUpdate);
+botmaster.use(incomingMiddleware.weather.addWeatherToUpdate);
+botmaster.use(incomingMiddleware.userInfo.addUserInfoToUpdate);
+botmaster.use(incomingMiddleware.reply.replyToUser);
 
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, (bot, update) =&gt; {
-  <span class="hljs-keyword">if</span> (update.weatherInformation.weather &gt; <span class="hljs-number">20</span>) {
-    bot.reply(update, <span class="hljs-string">`Hi <span class="hljs-subst">${update.username}</span>, the weather is warm`</span>);
-  } <span class="hljs-keyword">else</span> {
-    bot.reply(update, <span class="hljs-string">`Hi <span class="hljs-subst">${update.username}</span>, the weather is warm`</span>);
-  }
-});
+botmaster.on(<span class="hljs-string">&apos;error&apos;</span>, (bot, err) =&gt; {
+  <span class="hljs-built_in">console</span>.log(err.message);
+})
 </code></pre>
-<p>In this example, I expand on the previous example and setup two new middleware functions. One that will be called only on bots of type <code>messenger</code> and the other one on all bots. The first one gets the information available on the user if the bot is of type <code>messenger</code>. The second one then sets the <code>update.username</code> according to whether it finds a name or not. As mentioned, they are called in order of declaration.</p>
-<p>It should be clear by now that this reads much clearer than the previous example. Simply by reading the <code>app.js</code> file I can have an idea of what is going on in the code. Cleary, some weather information and user information is added to the <code>update</code> object that information is then used to customize the text returned to the user.</p>
+<p>This example is really the same as the first one.will be called only on bots of type <code>messenger</code> and the other one on all bots. We just separated it all in a reasonable file structure.</p>
+<p>It should be clear by now that this reads much clearer than the previous example. Simply by reading the <code>app.js</code> file I can have an idea of what is going on in the code. Clearly, some weather information and user information is added to the <code>update</code> object. That information is then used to send customized reply to the user.</p>
+<p>Do note also that we have added an error event listener on the <code>botmaster</code> object. This is done because there is no other way for us to catch errors occurring in incoming middleware. So we emit them like that so you can deal with them in this event listener.</p>
 <p>Now that we&apos;ve had a look at incoming middleware, let&apos;s have a look at how outgoing middleware works.</p>
 <h2 id="outgoing-middleware">Outgoing middleware</h2>
 <p>similar to the <code>incoming</code> middleware, the <code>outgoing</code> middleware is called in order of declaration. However, it is called on every message object sent by you the developer. To illustrate this, here&apos;s an example:</p>
 <h3 id="basic-example">Basic example</h3>
-<pre><code class="lang-js">botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
-  bot.reply(update, <span class="hljs-string">&apos;Hello world!&apos;</span>) <span class="hljs-comment">// using a helper function to send text message</span>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;reply-to-user&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Hello world&apos;</span>);
+  }
 });
 
-botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, message, next</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(message); <span class="hljs-comment">// this is a full valid messenger object.</span>
-
-  message.message.text = <span class="hljs-string">&quot;Hello you!&quot;</span>;
-  next();
+botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;change-text&apos;</span>,
+  controller: (bot, update, message, next) =&gt; {
+    <span class="hljs-built_in">console</span>.log(message); <span class="hljs-comment">// this is a full valid messenger object/ OutgoingMessage object</span>
+    message.message.text = <span class="hljs-string">&quot;Hello you!&quot;</span>;
+    next();
+  }
 });
 </code></pre>
-<p>In this example, the first three lines are what you would expect if you were simply trying to reply &quot;Hello world&quot; to any message. However, if you try this out, you&apos;ll see that you get a &quot;Hello you!&quot; text message back. Indeed, our middleware, aside from printing the message object to show you what it looks like, replaces the text with &quot;Hello you&quot;.</p>
-<p>This is really what you&apos;ll want to be doing within outgoing middleware. First use one of the Botmaster helper functions to send a message, then edit it in your outgoing middleware functions. Botmaster simply creates the valid [messenger compatible] message object before hitting the outgoing middleware where you can play with this.</p>
+<blockquote>
+<p>The three types of middleware controller mentioned in incoming middleware are also valid with outgoing middleware. I.e. we could also have returned a Promise or does so using async-await functions.</p>
+</blockquote>
+<p>In this example, the incoming middleware is what you would expect if you were simply trying to reply &quot;Hello world&quot; to any message. However, if you try this out, you&apos;ll see that you get a &quot;Hello you!&quot; text message back. Indeed, our middleware, aside from printing the message object to show you what it looks like, replaces the text with &quot;Hello you&quot;.</p>
+<p>This is really what you&apos;ll want to be doing within outgoing middleware. First use one of the Botmaster sendMessage helper functions to send a message, then edit it in your outgoing middleware functions. Botmaster simply creates the valid [messenger compatible] message object before hitting the outgoing middleware where you can play with this.</p>
 <h3 id="basic-example-with-structure">Basic example with structure</h3>
 <p>As in the incoming middleware example, in practice, your middleware code will really live within separate files that you would &quot;require: within your main &quot;app.js&quot; file. Using a structure similar to the one used in the incoming middleware example. We look at something like this:</p>
 <pre><code>&#x251C;&#x2500;&#x2500; app.js
 &#x2514;&#x2500;&#x2500; middleware
-    &#x251C;&#x2500;&#x2500; incoming // no incoming middleware in this example
-    &#x2502;   &#x2514;&#x2500;&#x2500; index.js // this will remain an empty file for now
+    &#x251C;&#x2500;&#x2500; incoming
+    &#x2502;   &#x251C;&#x2500;&#x2500; reply.js
+    &#x2502;   &#x2514;&#x2500;&#x2500; index.js
     &#x2514;&#x2500;&#x2500; outgoing
         &#x251C;&#x2500;&#x2500; message_transformers.js
         &#x2514;&#x2500;&#x2500; index.js
-</code></pre><p>Where your code will look something like this
-That means that the previous example will probably look more like this:</p>
-<p><code>middleware/outgoing/message_transformers.js</code></p>
-<pre><code class="lang-js"><span class="hljs-comment">// using eslint disallowFunctionDeclarations here. Read here: https://github.com/airbnb/javascript#functions to see why I use this syntax rather than the standard function updateText(bot,  message, next) one.</span>
-<span class="hljs-keyword">const</span> changeText = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeText</span>(<span class="hljs-params">bot, message, next</span>) </span>{ <span class="hljs-comment">// using</span>
-  <span class="hljs-built_in">console</span>.log(message); <span class="hljs-comment">// this is a full valid messenger object.</span>
+</code></pre><p>Where the code for incoming middleware looks something like this as you could expect:</p>
+<p><code>middleware/incoming/reply.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> replyToUser = {
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;reply-to-user&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Hello world&apos;</span>);
+  }
+});
 
-  message.message.text = <span class="hljs-string">&apos;Hello you!&apos;</span>;
-  next();
+<span class="hljs-built_in">module</span>.exports = {
+  replyToUser,
+}
+</code></pre>
+<p><code>middleware/incoming/index.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> reply = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./reply&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+  reply,
+};
+</code></pre>
+<p>And the code for our outgoing middleware will look like this:</p>
+<p><code>middleware/outgoing/message_transformers.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> changeText = {
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;change-text&apos;</span>,
+  controller: (bot, update, message, next) =&gt; {
+    <span class="hljs-built_in">console</span>.log(message); <span class="hljs-comment">// this is a full valid messenger object/ OutgoingMessage object</span>
+    message.message.text = <span class="hljs-string">&quot;Hello you!&quot;</span>;
+    next();
+  }
 }
 
 <span class="hljs-built_in">module</span>.exports = {
-  changeText, <span class="hljs-comment">// using shorthand here</span>
+  changeText,
 }
 </code></pre>
 <p><code>middleware/outgoing/index.js</code></p>
@@ -738,49 +797,70 @@ That means that the previous example will probably look more like this:</p>
 };
 </code></pre>
 <p><code>app.js</code></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> incomingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/incoming&apos;</span>);
+<span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
 
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
-  bot.reply(update, <span class="hljs-string">&apos;Hello world!&apos;</span>) <span class="hljs-comment">// using a helper function to send text message</span>
+botmaster.use(incomingMiddleware.reply.replyToUser);
+
+botmaster.use(outgoingMiddleware.messageTransformers.changeText);
+</code></pre>
+<p>This might seem like slight overkill at this point because of how trivial of an example this is. But this adds clear structure to our project and when reading our app.js file we can already know what is going on. It also makes it very clear regarding what is going on if you were to add another middleware function right after the <code>changeText</code> one.</p>
+<h3 id="complete-outgoing-middleware-example-with-structure">Complete outgoing middleware example with structure</h3>
+<p>We first edit the reply we give to our user:</p>
+<p><code>middleware/incoming/reply.js</code></p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> replyToUser = {
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;reply-to-user&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> bot.sendTextCascadeTo([<span class="hljs-string">&apos;Hi there, I`m about to ask you to press buttons:&apos;</span>,
+      <span class="hljs-string">&apos;Please press any of: [&quot;Button1&quot;,&quot;Button2&quot;]&apos;</span>,
+      <span class="hljs-string">&apos;Thank you&apos;</span>], update.sender.id)
+    .catch((err) =&gt; {
+      <span class="hljs-built_in">console</span>.log(err.message);
+    })
+  }
 });
 
-botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.updateText);
+<span class="hljs-built_in">module</span>.exports = {
+  replyToUser,
+}
 </code></pre>
-<p>This might seem like slight overkill at this point because of how trivial of an example this is. But this adds clear structure to our project and when reading our app.js file we can already know what is going on. It also makes it very clear regarding what is going on if you were to add another middleware function right after the <code>updateText</code> one.</p>
-<h3 id="complete-outgoing-middleware-example-with-structure">Complete outgoing middleware example with structure</h3>
+<p>Note, we are here using the Bot classes <code>sendTextCascadeTo</code> helper function to send text messages one after the other. See <a href="bot-object.md">Bot object</a>.</p>
+<p>Also note that we have a catch bit there ready to catch any error that might occur within our outgoing middleware or if the platform we are sending the messages to responds with an error/4xx statusCode.</p>
+<p>We now update our outgoing middleware code:</p>
 <p>Taking this one step further, you can do something like the following to, say, send buttons without using the builtin <code>sendDefaultButtonMessageTo</code> method. We&apos;ll keep our structure and simply update the files to look like this:</p>
 <p><code>middleware/outgoing/message_transformers.js</code></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> changeText = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">changeText</span>(<span class="hljs-params">bot, message, next</span>) </span>{ <span class="hljs-comment">// using</span>
-  <span class="hljs-built_in">console</span>.log(message);
-
-  <span class="hljs-keyword">if</span> (message.message.text === <span class="hljs-string">&apos;Thank you&apos;</span>) {
-    message.message.text = <span class="hljs-string">&apos;Thanks&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> changeText = {
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;change-text&apos;</span>,
+  controller: (bot, update, message, next) =&gt; {
+    <span class="hljs-keyword">if</span> (message.message.text === <span class="hljs-string">&apos;Thank you&apos;</span>) {
+      <span class="hljs-comment">// yes, this is very arbitrary. But again, tries to drive the point of how middleware works</span>
+      message.message.text = <span class="hljs-string">&apos;Thanks&apos;</span>;
+    }
+    next();
   }
-
-  next();
 }
 
-<span class="hljs-keyword">const</span> addButtonsToMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addButtonsToMessage</span>(<span class="hljs-params">bot, message, next</span>) </span>{
-  <span class="hljs-keyword">const</span> text = message.message.text;
+<span class="hljs-keyword">const</span> addButtonsToMessage = {
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;add-buttons-to-message&apos;</span>,
+  controller: (bot, update, message) =&gt; {
+    <span class="hljs-keyword">const</span> text = message.message.text;
 
-  <span class="hljs-keyword">const</span> buttonsRegexObject = text.match(<span class="hljs-regexp">/&amp;\[.+]/</span>);
-  <span class="hljs-keyword">if</span> (buttonsRegexObject) {
-    <span class="hljs-keyword">const</span> buttonTitles = <span class="hljs-built_in">JSON</span>.parse(buttonsRegexObject[<span class="hljs-number">0</span>].substring(<span class="hljs-number">1</span>));
-    <span class="hljs-keyword">const</span> cleanedText = text.replace(buttonsRegexObject[<span class="hljs-number">0</span>], <span class="hljs-string">&apos;&apos;</span>);
-
-    message.message.quick_replies = [];
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> buttonTitle <span class="hljs-keyword">of</span> buttonTitles) {
-      message.message.quick_replies.push({
-        content_type: <span class="hljs-string">&apos;text&apos;</span>,
-        title: buttonTitle,
-        payload: buttonTitle,
-      });
+    <span class="hljs-comment">// will match anything that looks like this: `&apos;[&quot;Button1&quot;,&quot;Button2&quot;]&apos;`</span>
+    <span class="hljs-keyword">const</span> buttonsRegexObject = text.match(<span class="hljs-regexp">/&amp;\[.+]/</span>); 
+    <span class="hljs-keyword">if</span> (buttonsRegexObject) {
+      <span class="hljs-comment">// extract buttonTitles into an array</span>
+      <span class="hljs-keyword">const</span> buttonTitles = <span class="hljs-built_in">JSON</span>.parse(buttonsRegexObject[<span class="hljs-number">0</span>].substring(<span class="hljs-number">1</span>));
+      <span class="hljs-comment">// remove them from the text</span>
+      <span class="hljs-keyword">const</span> message.message.text = text.replace(buttonsRegexObject[<span class="hljs-number">0</span>], <span class="hljs-string">&apos;&apos;</span>);
+      <span class="hljs-comment">// adds quick reply buttons to the OutgoingMessage object.</span>
+      message.addPayloadLessQuickReplies(buttonTitles);
     }
 
-    message.message.text = cleanedText;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(); <span class="hljs-comment">// could have used next here too. But driving the point that promises work too</span>
   }
-
-  next();
 }
 
 <span class="hljs-built_in">module</span>.exports = {
@@ -788,47 +868,198 @@ botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMid
   addButtonsToMessage,
 }
 </code></pre>
-<p>This simple <code>addButtonsToMessage</code> function simply uses regular expressions to see if the text contains any bit of text that looks anything like the following: <code>&apos;[&quot;Button1&quot;,&quot;Button2&quot;]&apos;</code>. If any such string is found, it then proceeds to add a quick_replies component to your message object and update the text to remove those button mentions. We next have a look at <code>app.js</code> that also has to be transformed:</p>
+<p>This simple <code>addButtonsToMessage</code> middleware simply uses regular expressions to see if the text contains any bit of text that looks anything like the following: <code>&apos;[&quot;Button1&quot;,&quot;Button2&quot;]&apos;</code>. If any such string is found, it then proceeds to remove said mentions from the text and then add a quick_replies component to your OutgoingMessage object. Note that it does so by using a helper method. These helper methods are available because Botmaster now wraps our message object in an outgoingMessage class that has helper functions to help with composing the message. See the <a href="outgoing-message.md">OutgoingMessage write-up</a> for more on that.</p>
+<p>We next have a look at <code>app.js</code> that also has to be transformed:</p>
 <p><code>app.js</code></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> incomingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/incoming&apos;</span>);
+<span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
 
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
-  bot.sendTextCascadeTo([<span class="hljs-string">&apos;Hi there, I`m about to ask you to press buttons:&apos;</span>,
-                         <span class="hljs-string">&apos;Please press any of: [&quot;Button1&quot;,&quot;Button2&quot;]&apos;</span>,
-                         <span class="hljs-string">&apos;Thank you&apos;</span>]);
-});
+botmaster.use(incomingMiddleware.reply.replyToUser);
 
-botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.updateText);
-botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.addButtonsToMessage);
+botmaster.use(outgoingMiddleware.messageTransformers.changeText);
+botmaster.use(outgoingMiddleware.messageTransformers.addButtonsToMessage);
 </code></pre>
 <p>Now this will work great. But actually, what i want to do is show the user a typing indicator right before sending every message that goes out. Because I&apos;m using a sendCascade function, namely, <code>sendTextCascadeTo</code>, the best way to do so is to do this within an outgoing middleware function. Here&apos;s how we can edit <code>app.js</code> to achieve this goal:</p>
 <p><code>app.js</code></p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> incomingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/incoming&apos;</span>);
+<span class="hljs-keyword">const</span> outgoingMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./middleware/outgoing&apos;</span>);
 
-botmaster.on(<span class="hljs-string">&apos;update&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">bot, update</span>)</span>{
-  bot.sendTextCascadeTo([<span class="hljs-string">&apos;Hi there, I`m about to ask you to press buttons:&apos;</span>,
-                         <span class="hljs-string">&apos;Please press any of: [&quot;Button1&quot;,&quot;Button2&quot;]&apos;</span>,
-                         <span class="hljs-string">&apos;Thank you&apos;</span>]);
+botmaster.use(incomingMiddleware.reply.replyToUser);
+
+botmaster.use(outgoingMiddleware.messageTransformers.changeText);
+botmaster.use(outgoingMiddleware.messageTransformers.addButtonsToMessage);
+
+botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;show-indicator-before-sending-message&apos;</span>,
+  controller: (bot, update, message, next) =&gt; {
+    <span class="hljs-keyword">const</span> userId = message.recipient.id;
+
+    bot.sendIsTypingMessageTo(userId, { ignoreMiddleware: <span class="hljs-literal">true</span> })
+
+    .then(() =&gt; {
+      setTimeout(() =&gt; {
+        next();
+      }, <span class="hljs-number">1000</span>);
+    };
+  },
+});
+</code></pre>
+<p>There&apos;s a few things going on in this added bit of code here. First we make it clear again that middleware code can technically live anywhere. It would be better to have it in a separate file somewhere. But this also works. Second, We introduce the <code>ignoreMiddleware</code> option when sending a message. This will always work and simply tells Botmaster to not go through any of the middleware with this message and send it directly. This is very important as otherwise, we would be stuck in an infinite loop trying to send an &quot;is typing&quot; indicator. Second we note that we use <code>setTimeout</code> to make it look like the bot is typing for about 1 second before firing out the message by calling <code>next()</code>. Note how we don&apos;t return the <code>bot.sendIsTypingMessageTo</code> promise here, if we did, the timeout wouldn&apos;t be respected and we would get an error, as <code>next</code> cannot be called when your middleware returns a promise.</p>
+<h2 id="using-skip-and-cancel">Using <strong>skip</strong> and <strong>cancel</strong></h2>
+<p>Middleware comes with a few options to skip the middleware after a certain one or all together cancel sending a message (in outgoing middleware). <code>cancel</code> does the same as <code>skip</code> in incoming middleware.
+Here&apos;s how you could use those.</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;first-middleware&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> useSomePromiseBasedFunction(<span class="hljs-string">&apos;something&apos;</span>)
+    .then((valueFromFunction) =&gt; {
+      update.value = valueFromFunction;
+      <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;skip&apos;</span>; <span class="hljs-comment">// the returned promise will resolve with &apos;skip&apos;</span>
+    })
+  }
 });
 
-botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.updateText);
-botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, outgoingMiddleware.messageTransformers.addButtonsToMessage);
-botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, (bot, update, next) =&gt; {
-  <span class="hljs-keyword">const</span> userId = message.recipient.id;
-
-  bot.sendIsTypingMessageTo(userId, { ignoreMiddleware: <span class="hljs-literal">true</span> })
-
-  .then(() =&gt; {
-    setTimeout(() =&gt; {
-      next();
-    }, <span class="hljs-number">1000</span>);
-  });
-})
+botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;second-middleware&apos;</span>,
+  controller: (bot, update, next) =&gt; {
+    <span class="hljs-comment">// this will never get hit and nothing really will happen as `first middleware` does not send any message</span>
+  }
+});
 </code></pre>
-<p>There&apos;s a few things going on in this added bit of code here. First we make it clear again that middleware code can technically live anywhere. It would be better to have it in a separate file somewhere. But this also works. Second, We introduce the <code>ignoreMiddleware</code> option when sending a message. This will always work and simply tells Botmaster to not go through any of the middleware with this message and send it directly. This is very important as otherwise, we would be stuck in an infinite loop trying to send an &quot;is typing&quot; indicator. Second we note that we use <code>setTimeout</code> to make it look like the bot is typing for about 1 second before firing out the message by calling <code>next()</code>.</p>
+<p><code>skip</code> can also be used by outgoing middleware along with <code>cancel</code>. Here is an example of using <code>cancel</code>:</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;incoming-middleware&apos;</span>,
+  controller: (bot, update) =&gt; {
+    <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Hey there&apos;</span>);
+  }
+});
+
+botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;first-outgoing-middleware&apos;</span>,
+  controller: (bot, update, message) =&gt; {
+    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) { <span class="hljs-comment">// for some arbitrary reason</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(<span class="hljs-string">&apos;cancel&apos;</span>);
+    }
+  }
+});
+
+botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;second-outgoing-middleware&apos;</span>,
+  controller: (bot, update, message) =&gt; {
+    <span class="hljs-comment">// this will not get hit</span>
+  }
+});
+</code></pre>
+<p>In this last example, not only will &quot;second outgoing middleware&quot; not get hit, the message will also not get sent out.
+Please note, valid syntax for our &quot;first-outgoing-middleware are also the following two&quot;</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;first outgoing middleware&apos;</span>,
+  controller: <span class="hljs-keyword">async</span> (bot, update, message) =&gt; { <span class="hljs-comment">// if using transpiler or node 7.x with harmony flag</span>
+    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;cancel&apos;</span>;
+    }
+  }
+});
+</code></pre>
+<p>and</p>
+<pre><code class="lang-js">botmaster.use({
+  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
+  name: <span class="hljs-string">&apos;first outgoing middleware&apos;</span>,
+  controller: (bot, update, message, next) =&gt; {
+    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) {
+      next(<span class="hljs-string">&apos;cancel&apos;</span>);
+    }
+  }
+});
+</code></pre>
+<p>Now that we&apos;ve covered almost all of middleware let&apos;s quickly introduce how all this middleware was added. We made extensive use of <code>botmaster.use</code> throughout this document and this is </p>
+<h4 id="here-is-the-signature-of-botmasteruse">Here is the signature of <code>botmaster.use</code></h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>middlewareObject</td>
+<td>a valid middleware object.</td>
+</tr>
+</tbody>
+</table>
+<p>Now this might not be very helpful as what we really want to know is what this object looks like. It looks like this:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>either <code>&apos;incoming&apos;</code> or <code>&apos;outgoing&apos;</code> depending on what middleware you are setting up.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>(<strong>optional</strong>) The name for this middleware. This is helpful in debugging, and you can expect it to be used in future versions of Botmaster. But it is optional. I strongly recommend naming your middleware.</td>
+</tr>
+<tr>
+<td>controller</td>
+<td>The actual middleware function that will be called. It is of type: <code>function(bot, update, next)</code> on <code>incoming</code> and <code>function(bot, update, message, next)</code> on <code>outgoing</code>. The <code>next</code> parameter can be omitted if your controller returns a promise. Examples below ensue.</td>
+</tr>
+<tr>
+<td>includeEcho</td>
+<td>(<strong>optional</strong>) Only valid for <strong>incoming</strong> middleware. Whether or not to run this middleware on echo updates. <strong>Defaults to false</strong>.</td>
+</tr>
+<tr>
+<td>includeDelivery</td>
+<td>(<strong>optional</strong>) Only valid for <strong>incoming</strong> middleware. Whether or not to run this middleware on delivery updates. <strong>Defaults to false</strong>.</td>
+</tr>
+<tr>
+<td>includeRead</td>
+<td>(<strong>optional</strong>) Only valid for <strong>incoming</strong> middleware. Whether or not to run this middleware user &quot;user read&quot; updates. <strong>Defaults to false</strong>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="botmasterusewrapped"><code>botmaster.useWrapped</code></h4>
+<p>There is another way to declare middleware in botmaster as of v3. It is by using the useWrapped method. This method should be used after all your normal middleware has been setup using <code>botmaster.use</code>. Essentially, what it does is setup an incoming middleware at the very beginning of your incoming middleware stack and another one at the very end of your outgoing middleware stack.</p>
+<p>Its signature looks like this:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>incomingMiddlewareObject</td>
+<td>a valid incoming middleware object. (as described above)</td>
+</tr>
+<tr>
+<td>outgoingMiddlewareObject</td>
+<td>a valid outgoing middleware object. (as described above)</td>
+</tr>
+</tbody>
+</table>
+<p>And it would be used as such:</p>
+<pre><code class="lang-js">botmaster.useWrapped(incomingMiddleware, outgoingMiddleware);
+</code></pre>
+<p>Where <code>incomingMiddleware</code> and <code>outgoingMiddleware</code> are valid middlewares of their respective types.
+This is useful if writing a middleware package that want to be first to get the update object and last to see it when it goes out.
+It is used in <a href="https://github.com/botmasterai/botmaster-session-ware" target="_blank">botmaster-session-ware</a> for example.</p>
 <h2 id="external-middleware">External middleware</h2>
-<p>This is all great. But Using the code in <code>addButtonsToMessage</code> to add buttons to your message is probably not the best. Indeed, external middleware packages provide better solutions to this problem. Like in any other framework that contains middleware, middleware can be put into packages. These packages are then available and downloadable via <code>npm</code> and thus easily accessible in your code.</p>
-<p>Have a look in our list of official middleware <a href="../middlewares/official-middleware">here</a></p>
+<p>This is all great. But Using the code in <code>addButtonsToMessage</code> to add buttons to your message is probably not the best. Indeed, external middleware packages provide better solutions to this problem. To solve this particular problem, I would suggest having a look at <a href="../middleware/fulfill.md">fulfill</a>. Like in any other framework that contains middleware, middleware can be put into packages. These packages are then available and downloadable via <code>yarn</code> or <code>npm</code> and thus easily accessible in your code. </p>
+<p>Have a look at the <a href="../middlewares/">middlewares</a> to see what official middleware is out there.</p>
 
                                 
                                 </section>
@@ -856,12 +1087,12 @@ botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, (bot, updat
 
             
                 
-                <a href="botmaster-basics.html" class="navigation navigation-prev " aria-label="Previous page: Botmaster basics">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Working With Botmaster">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="writing-your-own-bot-class.html" class="navigation navigation-next " aria-label="Next page: Writing your own bot class">
+                <a href="botmaster-basics.html" class="navigation navigation-next " aria-label="Next page: Botmaster basics">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -872,7 +1103,7 @@ botmaster.use(<span class="hljs-string">&apos;outgoing&apos;</span>, (bot, updat
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Middleware","level":"1.3.2","depth":2,"next":{"title":"Writing your own bot class","level":"1.3.3","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]},"previous":{"title":"Botmaster basics","level":"1.3.1","depth":2,"path":"working-with-botmaster/botmaster-basics.md","ref":"working-with-botmaster/botmaster-basics.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/middleware.md","mtime":"2017-04-03T01:25:27.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T15:50:16.402Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Middleware","level":"1.3.1","depth":2,"next":{"title":"Botmaster basics","level":"1.3.2","depth":2,"path":"working-with-botmaster/botmaster-basics.md","ref":"working-with-botmaster/botmaster-basics.md","articles":[]},"previous":{"title":"Working With Botmaster","level":"1.3","depth":1,"path":"working-with-botmaster/index.md","ref":"working-with-botmaster/index.md","articles":[{"title":"Middleware","level":"1.3.1","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},{"title":"Botmaster basics","level":"1.3.2","depth":2,"path":"working-with-botmaster/botmaster-basics.md","ref":"working-with-botmaster/botmaster-basics.md","articles":[]},{"title":"Writing your own bot class","level":"1.3.3","depth":2,"path":"working-with-botmaster/writing-your-own-bot-class.md","ref":"working-with-botmaster/writing-your-own-bot-class.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/middleware.md","mtime":"2017-04-04T15:25:15.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T15:25:52.644Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

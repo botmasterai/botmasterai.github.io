@@ -178,12 +178,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="../working-with-botmaster/botmaster-basics.html">
+        <li class="chapter " data-level="1.3.1" data-path="../working-with-botmaster/middleware.html">
             
-                <a href="../working-with-botmaster/botmaster-basics.html">
+                <a href="../working-with-botmaster/middleware.html">
             
                     
-                    Botmaster basics
+                    Middleware
             
                 </a>
             
@@ -191,12 +191,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="../working-with-botmaster/middleware.html">
+        <li class="chapter " data-level="1.3.2" data-path="../working-with-botmaster/botmaster-basics.html">
             
-                <a href="../working-with-botmaster/middleware.html">
+                <a href="../working-with-botmaster/botmaster-basics.html">
             
                     
-                    Middleware
+                    Botmaster basics
             
                 </a>
             
@@ -558,7 +558,7 @@
 <h2 id="outgoingmessage">OutgoingMessage</h2>
 <p>This class will help you compose sendable message objects.</p>
 <h3 id="addrecipientbyid">addRecipientById</h3>
-<p>Adds recipient.id param to the OutgoingMessage object. This is most
+<p>Adds <code>recipient.id</code> param to the OutgoingMessage object. This is most
 likely what you will want to do to add a recipient. Alternatively, you Can
 use addRecipientByPhoneNumber if the platform you are sending the message to
 supports that.</p>
@@ -568,7 +568,7 @@ supports that.</p>
 </ul>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addrecipientbyphonenumber">addRecipientByPhoneNumber</h3>
-<p>Adds recipient.phone_number param to the OutgoingMessage object.
+<p>Adds <code>recipient.phone_number</code> param to the OutgoingMessage object.
 You might prefer to add a recipient by id rather. This is achieved via
 addRecipientById</p>
 <p><strong>Parameters</strong></p>
@@ -577,21 +577,21 @@ addRecipientById</p>
 </ul>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="removerecipient">removeRecipient</h3>
-<p>removes the recipient param from the OutgoingMessage object.
+<p>removes the <code>recipient</code> param from the OutgoingMessage object.
 This will remove the object wether it was set with a phone number or an id</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addtext">addText</h3>
-<p>Adds message.text to the OutgoingMessage</p>
+<p>Adds <code>message.text</code> to the OutgoingMessage</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>text</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">string</a></strong> the text to add to the OutgoingMessage object</li>
 </ul>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="removetext">removeText</h3>
-<p>Removes the message.text param from the OutgoingMessage object.</p>
+<p>Removes the <code>message.text</code> param from the OutgoingMessage object.</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addattachment">addAttachment</h3>
-<p>Adds message.attachment to the OutgoingMessage. If you want to add
+<p>Adds <code>message.attachment</code> to the OutgoingMessage. If you want to add
 an attachment simply from a type and a url, have a look at:
 addAttachmentFromUrl</p>
 <p><strong>Parameters</strong></p>
@@ -601,7 +601,7 @@ formatted by the platforms your bot uses</li>
 </ul>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addattachmentfromurl">addAttachmentFromUrl</h3>
-<p>Adds message.attachment from a type and url without requiring you to
+<p>Adds <code>message.attachment</code> from a type and url without requiring you to
 provide the whole attachment object. If you want to add an attachment using
 a full object, use addAttachment.</p>
 <p><strong>Parameters</strong></p>
@@ -611,10 +611,10 @@ a full object, use addAttachment.</p>
 </ul>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="removeattachment">removeAttachment</h3>
-<p>Removes message.attachment param from the OutgoingMessage object.</p>
+<p>Removes <code>message.attachment</code> param from the OutgoingMessage object.</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addquickreplies">addQuickReplies</h3>
-<p>Adds message.quick_replies to the OutgoinMessage object. Use
+<p>Adds <code>message.quick_replies</code> to the OutgoinMessage object. Use
 addPayloadLessQuickReplies if you just want to add quick replies from an
 array of titles</p>
 <p><strong>Parameters</strong></p>
@@ -624,7 +624,7 @@ OutgoingMessage</li>
 </ul>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addpayloadlessquickreplies">addPayloadLessQuickReplies</h3>
-<p>Adds message.quick_replies to the OutgoinMessage object from a simple array
+<p>Adds <code>message.quick_replies</code> to the OutgoinMessage object from a simple array
 of quick replies titles.Use addQuickReplies if want to add quick replies
 from an quick reply objects</p>
 <p><strong>Parameters</strong></p>
@@ -634,15 +634,15 @@ OutgoingMessage</li>
 </ul>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addlocationquickreply">addLocationQuickReply</h3>
-<p>Adds a content_type: location message.quick_replies to the OutgoingMessage.
+<p>Adds a <code>content_type: location</code> message.quick_replies to the OutgoingMessage.
 Use this if the platform the bot class you are using is based on supports
 asking for the location to its users.</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="removequickreplies">removeQuickReplies</h3>
-<p>Removes message.quick_replies param from the OutgoingMessage object.</p>
+<p>Removes <code>message.quick_replies</code> param from the OutgoingMessage object.</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addsenderaction">addSenderAction</h3>
-<p>Adds an arbitrary sender_action to the OutgoinMessage</p>
+<p>Adds an arbitrary <code>sender_action</code> to the OutgoinMessage</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>senderAction</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">string</a></strong> Arbitrary sender action
@@ -650,16 +650,16 @@ asking for the location to its users.</p>
 </ul>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addtypingonsenderaction">addTypingOnSenderAction</h3>
-<p>Adds &quot;typing_on&quot; sender_action to the OutgoinMessage</p>
+<p>Adds <code>sender_action: typing_on</code> to the OutgoinMessage</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addtypingoffsenderaction">addTypingOffSenderAction</h3>
-<p>Adds &quot;typing_off&quot; sender_action to the OutgoinMessage</p>
+<p>Adds <code>sender_action: typing_off</code>  to the OutgoinMessage</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="addmarkseensenderaction">addMarkSeenSenderAction</h3>
-<p>Adds &quot;mark_seen&quot; sender_action to the OutgoinMessage</p>
+<p>Adds <code>sender_action: mark_seen</code>  to the OutgoinMessage</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 <h3 id="removesenderaction">removeSenderAction</h3>
-<p>Removes sender_action param from the OutgoingMessage object.</p>
+<p>Removes <code>sender_action</code> param from the OutgoingMessage object.</p>
 <p>Returns <strong>OutgoinMessage</strong> returns this object to allow for chaining of methods.</p>
 
                                 
@@ -704,7 +704,7 @@ asking for the location to its users.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"OutgoingMessage","level":"1.8.3","depth":2,"next":{"title":"Changelog","level":"1.9","depth":1,"path":"changelog.md","ref":"changelog.md","articles":[]},"previous":{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"api-reference/outgoing-message.md","mtime":"2017-04-03T11:14:06.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T15:50:16.402Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"OutgoingMessage","level":"1.8.3","depth":2,"next":{"title":"Changelog","level":"1.9","depth":1,"path":"changelog.md","ref":"changelog.md","articles":[]},"previous":{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"api-reference/outgoing-message.md","mtime":"2017-04-04T14:38:24.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T15:25:52.644Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

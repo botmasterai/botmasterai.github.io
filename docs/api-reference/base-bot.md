@@ -398,7 +398,7 @@ This class will help you compose sendable message objects.
 
 ### addRecipientById
 
-Adds recipient.id param to the OutgoingMessage object. This is most
+Adds `recipient.id` param to the OutgoingMessage object. This is most
 likely what you will want to do to add a recipient. Alternatively, you Can
 use addRecipientByPhoneNumber if the platform you are sending the message to
 supports that.
@@ -411,7 +411,7 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addRecipientByPhoneNumber
 
-Adds recipient.phone_number param to the OutgoingMessage object.
+Adds `recipient.phone_number` param to the OutgoingMessage object.
 You might prefer to add a recipient by id rather. This is achieved via
 addRecipientById
 
@@ -423,14 +423,14 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### removeRecipient
 
-removes the recipient param from the OutgoingMessage object.
+removes the `recipient` param from the OutgoingMessage object.
 This will remove the object wether it was set with a phone number or an id
 
 Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addText
 
-Adds message.text to the OutgoingMessage
+Adds `message.text` to the OutgoingMessage
 
 **Parameters**
 
@@ -440,13 +440,13 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### removeText
 
-Removes the message.text param from the OutgoingMessage object.
+Removes the `message.text` param from the OutgoingMessage object.
 
 Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addAttachment
 
-Adds message.attachment to the OutgoingMessage. If you want to add
+Adds `message.attachment` to the OutgoingMessage. If you want to add
 an attachment simply from a type and a url, have a look at:
 addAttachmentFromUrl
 
@@ -459,7 +459,7 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addAttachmentFromUrl
 
-Adds message.attachment from a type and url without requiring you to
+Adds `message.attachment` from a type and url without requiring you to
 provide the whole attachment object. If you want to add an attachment using
 a full object, use addAttachment.
 
@@ -472,13 +472,13 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### removeAttachment
 
-Removes message.attachment param from the OutgoingMessage object.
+Removes `message.attachment` param from the OutgoingMessage object.
 
 Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addQuickReplies
 
-Adds message.quick_replies to the OutgoinMessage object. Use
+Adds `message.quick_replies` to the OutgoinMessage object. Use
 addPayloadLessQuickReplies if you just want to add quick replies from an
 array of titles
 
@@ -491,7 +491,7 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addPayloadLessQuickReplies
 
-Adds message.quick_replies to the OutgoinMessage object from a simple array
+Adds `message.quick_replies` to the OutgoinMessage object from a simple array
 of quick replies titles.Use addQuickReplies if want to add quick replies
 from an quick reply objects
 
@@ -504,7 +504,7 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addLocationQuickReply
 
-Adds a content_type: location message.quick_replies to the OutgoingMessage.
+Adds a `content_type: location` message.quick_replies to the OutgoingMessage.
 Use this if the platform the bot class you are using is based on supports
 asking for the location to its users.
 
@@ -512,13 +512,13 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### removeQuickReplies
 
-Removes message.quick_replies param from the OutgoingMessage object.
+Removes `message.quick_replies` param from the OutgoingMessage object.
 
 Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addSenderAction
 
-Adds an arbitrary sender_action to the OutgoinMessage
+Adds an arbitrary `sender_action` to the OutgoinMessage
 
 **Parameters**
 
@@ -529,24 +529,24 @@ Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addTypingOnSenderAction
 
-Adds "typing_on" sender_action to the OutgoinMessage
+Adds `sender_action: typing_on` to the OutgoinMessage
 
 Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addTypingOffSenderAction
 
-Adds "typing_off" sender_action to the OutgoinMessage
+Adds `sender_action: typing_off`  to the OutgoinMessage
 
 Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### addMarkSeenSenderAction
 
-Adds "mark_seen" sender_action to the OutgoinMessage
+Adds `sender_action: mark_seen`  to the OutgoinMessage
 
 Returns **OutgoinMessage** returns this object to allow for chaining of methods.
 
 ### removeSenderAction
 
-Removes sender_action param from the OutgoingMessage object.
+Removes `sender_action` param from the OutgoingMessage object.
 
 Returns **OutgoinMessage** returns this object to allow for chaining of methods.

@@ -176,12 +176,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="working-with-botmaster/botmaster-basics.html">
+        <li class="chapter " data-level="1.3.1" data-path="working-with-botmaster/middleware.html">
             
-                <a href="working-with-botmaster/botmaster-basics.html">
+                <a href="working-with-botmaster/middleware.html">
             
                     
-                    Botmaster basics
+                    Middleware
             
                 </a>
             
@@ -189,12 +189,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="working-with-botmaster/middleware.html">
+        <li class="chapter " data-level="1.3.2" data-path="working-with-botmaster/botmaster-basics.html">
             
-                <a href="working-with-botmaster/middleware.html">
+                <a href="working-with-botmaster/botmaster-basics.html">
             
                     
-                    Middleware
+                    Botmaster basics
             
                 </a>
             
@@ -633,7 +633,7 @@ myServer.on(<span class="hljs-string">&apos;listening&apos;</span>, () =&gt; {
 <p>You will now have something like this in 3.x.x:</p>
 <pre><code class="lang-js">botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;some name of your choosing&apos;</span>, <span class="hljs-comment">// this is optional, but nice for debugging</span>
+  name: <span class="hljs-string">&apos;some-name-of-your-choosing&apos;</span>, <span class="hljs-comment">// this is optional, but nice for debugging</span>
   controller: (bot, update, next) =&gt; {
     <span class="hljs-comment">// your stuff</span>
   }
@@ -644,6 +644,7 @@ You&apos;ll need to do the same thing for your outgoing middleware.</p>
 <p>This is what needs to be changed. However, the core of middleware has changes quite a bit. Middleware can now either use the old syntax using next (as it used to in 2.x.x). Or it can leverage newer syntax by returning a promise. I.e. this is now valid middleware</p>
 <pre><code class="lang-js">botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;some-middleware&apos;</span>,
   controller: (bot, update) =&gt; {
     <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Hey there&apos;</span>)
     .then((body) =&gt; {
@@ -656,6 +657,7 @@ You&apos;ll need to do the same thing for your outgoing middleware.</p>
 with the <code>--harmony-async-await</code> flag or simply if you use a transpiler like Babel. Code like this will be valid</p>
 <pre><code class="lang-js">botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
+  name: <span class="hljs-string">&apos;some-middleware&apos;</span>,
   controller: <span class="hljs-keyword">async</span> (bot, update) =&gt; {
     <span class="hljs-keyword">const</span> body = <span class="hljs-keyword">await</span> bot.reply(update, <span class="hljs-string">&apos;Hey there&apos;</span>)
     <span class="hljs-comment">// this is run after the message is sent. I.e. also after all the outgoing middleware has been executed</span>
@@ -672,7 +674,7 @@ in the following middleware. All that botmaster assures you with is that the nex
 only after the promise from the previous one has resolved. Here&apos;s an example using promises:</p>
 <pre><code class="lang-js">botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;first middleware&apos;</span>,
+  name: <span class="hljs-string">&apos;first-middleware&apos;</span>,
   controller: (bot, update) =&gt; {
     <span class="hljs-keyword">return</span> useSomePromiseBasedFunction(<span class="hljs-string">&apos;something&apos;</span>)
     .then((valueFromFunction) =&gt; {
@@ -683,7 +685,7 @@ only after the promise from the previous one has resolved. Here&apos;s an exampl
 
 botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;second middleware&apos;</span>,
+  name: <span class="hljs-string">&apos;second-middleware&apos;</span>,
   controller: (bot, update, next) =&gt; {
     <span class="hljs-built_in">console</span>.log(update.value); <span class="hljs-comment">// prints valueFromFunction</span>
     next();
@@ -694,77 +696,7 @@ botmaster.use({
 suggested if, say, your second middleware here is synchronous.</p>
 <p>Another addition has been made to middleware. As it turns out, I lied when I said that values resolved by promise-based middleware will be ignored.
 There are two cases where they won&apos;t be ignored. That&apos;s if you return <code>skip</code> or <code>cancel</code>.</p>
-<p>In the previous example, it would look like this:</p>
-<pre><code class="lang-js">botmaster.use({
-  type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;first middleware&apos;</span>,
-  controller: (bot, update) =&gt; {
-    <span class="hljs-keyword">return</span> useSomePromiseBasedFunction(<span class="hljs-string">&apos;something&apos;</span>)
-    .then((valueFromFunction) =&gt; {
-      update.value = valueFromFunction;
-      <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;skip&apos;</span>;
-    })
-  }
-});
-
-botmaster.use({
-  type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;second middleware&apos;</span>,
-  controller: (bot, update, next) =&gt; {
-    <span class="hljs-comment">// this will never get hit and nothing really will hapen as `first middleware` does not send any message</span>
-  }
-});
-</code></pre>
-<p><code>skip</code> can also be used by outgoing middleware along with <code>cancel</code>. Here is an example of using <code>cancel</code>:</p>
-<pre><code class="lang-js">botmaster.use({
-  type: <span class="hljs-string">&apos;incoming&apos;</span>,
-  name: <span class="hljs-string">&apos;incoming middleware&apos;</span>,
-  controller: (bot, update) =&gt; {
-    <span class="hljs-keyword">return</span> bot.reply(update, <span class="hljs-string">&apos;Hey there&apos;</span>);
-  }
-});
-
-botmaster.use({
-  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
-  name: <span class="hljs-string">&apos;first outgoing middleware&apos;</span>,
-  controller: (bot, update, message) =&gt; {
-    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) { <span class="hljs-comment">// for some arbitrary reason</span>
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(<span class="hljs-string">&apos;cancel&apos;</span>);
-    }
-  }
-});
-
-botmaster.use({
-  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
-  name: <span class="hljs-string">&apos;second outgoing middleware&apos;</span>,
-  controller: (bot, update, message) =&gt; {
-    <span class="hljs-comment">// this will not get hit</span>
-  }
-});
-</code></pre>
-<p>In this last example, not only will &quot;second outgoing middleware&quot; not get hit, the message will also not get sent out.
-Please note, valid syntax for our &quot;first outgoing middleware are also the following two&quot;</p>
-<pre><code class="lang-js">botmaster.use({
-  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
-  name: <span class="hljs-string">&apos;first outgoing middleware&apos;</span>,
-  controller: <span class="hljs-keyword">async</span> (bot, update, message) =&gt; { <span class="hljs-comment">// if using transpiler or node 7.x with harmony flag</span>
-    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) { <span class="hljs-comment">// for some arbitrary reason</span>
-      <span class="hljs-keyword">return</span> <span class="hljs-string">&apos;cancel&apos;</span>;
-    }
-  }
-});
-</code></pre>
-<p>and</p>
-<pre><code class="lang-js">botmaster.use({
-  type: <span class="hljs-string">&apos;outgoing&apos;</span>,
-  name: <span class="hljs-string">&apos;first outgoing middleware&apos;</span>,
-  controller: (bot, update, message, next) =&gt; {
-    <span class="hljs-keyword">if</span> (update.message.text === <span class="hljs-string">&apos;Hey there&apos;</span>) { <span class="hljs-comment">// for some arbitrary reason</span>
-      next(<span class="hljs-string">&apos;cancel&apos;</span>);
-    }
-  }
-});
-</code></pre>
+<p>See <a href="working-with-botmaster/middleware.html#using-skip-and-cancel">here</a> to see how to use them.</p>
 <p>Botmaster 3 also add support for using the <code>useWrapped</code> method for adding middleware. This method when used
 will add an incoming middleware at the beginning of the middleware incoming stack and another outgoing middleware at the end
 of the outgoing middeware stack. It&apos;ll look something like this:</p>
@@ -1012,7 +944,7 @@ bot class that will be in the core</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Changelog","level":"1.9","depth":1,"previous":{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"changelog.md","mtime":"2017-04-03T14:42:47.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T15:50:16.402Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Changelog","level":"1.9","depth":1,"previous":{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"changelog.md","mtime":"2017-04-04T15:23:31.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T15:25:52.644Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

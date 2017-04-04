@@ -149,7 +149,7 @@ You will now have something like this in 3.x.x:
 ```js
 botmaster.use({
   type: 'incoming',
-  name: 'some name of your choosing', // this is optional, but nice for debugging
+  name: 'some-name-of-your-choosing', // this is optional, but nice for debugging
   controller: (bot, update, next) => {
     // your stuff
   }
@@ -164,6 +164,7 @@ This is what needs to be changed. However, the core of middleware has changes qu
 ```js
 botmaster.use({
   type: 'incoming',
+  name: 'some-middleware',
   controller: (bot, update) => {
     return bot.reply(update, 'Hey there')
     .then((body) => {
@@ -179,6 +180,7 @@ with the `--harmony-async-await` flag or simply if you use a transpiler like Bab
 ```js
 botmaster.use({
   type: 'incoming',
+  name: 'some-middleware',
   controller: async (bot, update) => {
     const body = await bot.reply(update, 'Hey there')
     // this is run after the message is sent. I.e. also after all the outgoing middleware has been executed
@@ -197,7 +199,7 @@ only after the promise from the previous one has resolved. Here's an example usi
 ```js
 botmaster.use({
   type: 'incoming',
-  name: 'first middleware',
+  name: 'first-middleware',
   controller: (bot, update) => {
     return useSomePromiseBasedFunction('something')
     .then((valueFromFunction) => {
@@ -208,7 +210,7 @@ botmaster.use({
 
 botmaster.use({
   type: 'incoming',
-  name: 'second middleware',
+  name: 'second-middleware',
   controller: (bot, update, next) => {
     console.log(update.value); // prints valueFromFunction
     next();
@@ -222,89 +224,7 @@ suggested if, say, your second middleware here is synchronous.
 Another addition has been made to middleware. As it turns out, I lied when I said that values resolved by promise-based middleware will be ignored.
 There are two cases where they won't be ignored. That's if you return `skip` or `cancel`.
 
-In the previous example, it would look like this:
-
-```js
-botmaster.use({
-  type: 'incoming',
-  name: 'first middleware',
-  controller: (bot, update) => {
-    return useSomePromiseBasedFunction('something')
-    .then((valueFromFunction) => {
-      update.value = valueFromFunction;
-      return 'skip';
-    })
-  }
-});
-
-botmaster.use({
-  type: 'incoming',
-  name: 'second middleware',
-  controller: (bot, update, next) => {
-    // this will never get hit and nothing really will hapen as `first middleware` does not send any message
-  }
-});
-```
-
-`skip` can also be used by outgoing middleware along with `cancel`. Here is an example of using `cancel`:
-
-
-```js
-botmaster.use({
-  type: 'incoming',
-  name: 'incoming middleware',
-  controller: (bot, update) => {
-    return bot.reply(update, 'Hey there');
-  }
-});
-
-botmaster.use({
-  type: 'outgoing',
-  name: 'first outgoing middleware',
-  controller: (bot, update, message) => {
-    if (update.message.text === 'Hey there') { // for some arbitrary reason
-      return Promise.resolve('cancel');
-    }
-  }
-});
-
-botmaster.use({
-  type: 'outgoing',
-  name: 'second outgoing middleware',
-  controller: (bot, update, message) => {
-    // this will not get hit
-  }
-});
-```
-
-In this last example, not only will "second outgoing middleware" not get hit, the message will also not get sent out.
-Please note, valid syntax for our "first outgoing middleware are also the following two"
-
-```js
-botmaster.use({
-  type: 'outgoing',
-  name: 'first outgoing middleware',
-  controller: async (bot, update, message) => { // if using transpiler or node 7.x with harmony flag
-    if (update.message.text === 'Hey there') { // for some arbitrary reason
-      return 'cancel';
-    }
-  }
-});
-```
-
-and
-
-```js
-botmaster.use({
-  type: 'outgoing',
-  name: 'first outgoing middleware',
-  controller: (bot, update, message, next) => {
-    if (update.message.text === 'Hey there') { // for some arbitrary reason
-      next('cancel');
-    }
-  }
-});
-```
+See [here](/working-with-botmaster/middleware.md#using-skip-and-cancel) to see how to use them.
 
 Botmaster 3 also add support for using the `useWrapped` method for adding middleware. This method when used
 will add an incoming middleware at the beginning of the middleware incoming stack and another outgoing middleware at the end

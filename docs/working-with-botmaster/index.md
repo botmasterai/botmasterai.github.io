@@ -1,15 +1,9 @@
----
-chapter: true
-date: 2016-11-04T01:17:34Z
-icon: <i class="fa fa-wrench" aria-hidden="true"></i>
-next: /working-with-botmaster/botmaster-basics
-prev: /getting-started/webhooks
-title: Working with Botmaster
-weight: 0
----
-
 # Working with Botmaster
 
+The following secionts are meant to be read in order after having gone through the [quickstart](/getting-sarted/quickstart.md). Every section starts with the basic concepts on the topic and end with more advanced ones.
+
+1. [Middleware](middleware.md) The first section is on middleware. As most of the code you'll be writing will
+actually be in those, it makes sense to start with that topic.
+
 #### [Botmaster Basics](botmaster-basics.md)
-#### [Middleware](middleware.md)
 #### [Writing your Own Botmaster Class](writing-your-own-bot-class.md)

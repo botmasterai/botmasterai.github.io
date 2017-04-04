@@ -91,14 +91,14 @@ botmaster.addBot(twitterBot);
 
 These lines simply indicate to botmaster that it should be notified of all activity going on within our two bot objects. But still, botmaster doesn't actually do anything yet. let's change this!
 
-## Step 2: listening to events
+## Step 2: Acting on updates
 
 In order for botmaster to be be able to do anything based on any activity going on (i.e. users sending messages to your bots), we'll need to add incoming middleware to our bot (this is not completely unlike express or Koa middleware). So when a user sends a message to one of our bots. It looks like this:
 
 ```js
 botmaster.use({
   type: 'incoming',
-  name: 'My incoming middleware',
+  name: 'my-incoming-middleware',
   controller: (bot, update) => {
     console.log(update);
   }
@@ -116,7 +116,7 @@ The easiest thing to do to have a bot that answers you is the following; replace
 ```js
 botmaster.use({
   type: 'incoming',
-  name: 'My incoming middleware',
+  name: 'my-incoming-middleware',
   controller: (bot, update) => {
     return bot.reply(update, 'Hello World!');
   }

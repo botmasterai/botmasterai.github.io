@@ -82,16 +82,21 @@ This function is just sugar for `middleware.__use` in them
 // The middleware param object is something that looks like this for incoming:
 {
  type: 'incoming',
+ name: 'my-incoming-middleware',
  controller: (bot, update, next) => {
    // do stuff with update,
    // call next (or return a promise)
- }
+ },
+ // includeEcho: true (defaults to false), opt-in to get echo updates
+ // includeDelivery: true (defaults to false), opt-in to get delivery updates
+ // includeRead: true (defaults to false), opt-in to get user read updates
 }
 
 // and like this for outgoing middleware
 
 {
  type: 'outgoing',
+ name: 'my-outgoing-middleware',
  controller: (bot, update, message, next) => {
    // do stuff with message,
    // call next (or return a promise)

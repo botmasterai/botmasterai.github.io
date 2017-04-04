@@ -61,7 +61,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="botmaster-basics.html" />
+    <link rel="next" href="middleware.html" />
     
     
     <link rel="prev" href="../getting-started/webhooks.html" />
@@ -178,12 +178,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="botmaster-basics.html">
+        <li class="chapter " data-level="1.3.1" data-path="middleware.html">
             
-                <a href="botmaster-basics.html">
+                <a href="middleware.html">
             
                     
-                    Botmaster basics
+                    Middleware
             
                 </a>
             
@@ -191,12 +191,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="middleware.html">
+        <li class="chapter " data-level="1.3.2" data-path="botmaster-basics.html">
             
-                <a href="middleware.html">
+                <a href="botmaster-basics.html">
             
                     
-                    Middleware
+                    Botmaster basics
             
                 </a>
             
@@ -532,8 +532,12 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="working-with-botmaster">Working with Botmaster</h1>
+<p>The following secionts are meant to be read in order after having gone through the <a href="../getting-sarted/quickstart.md">quickstart</a>. Every section starts with the basic concepts on the topic and end with more advanced ones.</p>
+<ol>
+<li><a href="middleware.html">Middleware</a> The first section is on middleware. As most of the code you&apos;ll be writing will
+actually be in those, it makes sense to start with that topic.</li>
+</ol>
 <h4 id="botmaster-basics"><a href="botmaster-basics.html">Botmaster Basics</a></h4>
-<h4 id="middleware"><a href="middleware.html">Middleware</a></h4>
 <h4 id="writing-your-own-botmaster-class"><a href="writing-your-own-bot-class.html">Writing your Own Botmaster Class</a></h4>
 
                                 
@@ -567,7 +571,7 @@
                 </a>
                 
                 
-                <a href="botmaster-basics.html" class="navigation navigation-next " aria-label="Next page: Botmaster basics">
+                <a href="middleware.html" class="navigation navigation-next " aria-label="Next page: Middleware">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -578,7 +582,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"chapter":true,"date":"2016-11-04T01:17:34.000Z","icon":"<i class=\"fa fa-wrench\" aria-hidden=\"true\"></i>","next":{"title":"Botmaster basics","level":"1.3.1","depth":2,"path":"working-with-botmaster/botmaster-basics.md","ref":"working-with-botmaster/botmaster-basics.md","articles":[]},"prev":"/getting-started/webhooks","title":"Working With Botmaster","weight":0,"level":"1.3","depth":1,"previous":{"title":"Webhooks","level":"1.2.3","depth":2,"path":"getting-started/webhooks.md","ref":"getting-started/webhooks.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/index.md","mtime":"2017-04-03T01:25:27.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-03T15:50:16.402Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Working With Botmaster","level":"1.3","depth":1,"next":{"title":"Middleware","level":"1.3.1","depth":2,"path":"working-with-botmaster/middleware.md","ref":"working-with-botmaster/middleware.md","articles":[]},"previous":{"title":"Webhooks","level":"1.2.3","depth":2,"path":"getting-started/webhooks.md","ref":"getting-started/webhooks.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/index.md","mtime":"2017-04-04T12:44:24.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T15:25:52.644Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
