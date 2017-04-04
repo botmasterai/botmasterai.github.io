@@ -14,3 +14,7 @@ actually be in those, it makes sense to spend some time getting acquainted with 
 5. [Botmaster object](botmaster-object.md) - Need more control over the server that botmaster receives updates on? read this section
 
 6. [Writing your own bot class](writing-your-own-bot-class.md) - Read this section if you want to start adding support for a different bot platform (which may be your own).
+
+# Debug
+
+You can enable debug mode by setting `DEBUG = botmaster:*` in your environment.

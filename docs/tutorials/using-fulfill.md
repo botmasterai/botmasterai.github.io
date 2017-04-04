@@ -1,3 +1,5 @@
+>This documentation is valid for botmaster 2.x.x This guide will be update once a version of botmaster-fulfill for botmaster 3.x.x is published
+
 # Using Botmaster Fulfill middleware
 
 Although many of you will be using Botmaster because of its ability to connect with message sources like Facebook Messenger, it also has a powerful middleware called Botmaster Fulfill. Fulfill helps helps greatly with building more sophisticated bots that need integrations with external data sources and more complex logic. It's task is to provide a framework for addressing tasks that are outside of the scope of a core NLU or AI engine, so it's complementary to something like Watson Conversation or Wit.ai.

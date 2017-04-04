@@ -576,12 +576,14 @@
                                 
                                 <h1 id="writing-your-own-bot-class">Writing your own bot class</h1>
 <h2 id="bot-classes">Bot classes</h2>
-<p>The following document assumes that you have read the main documentation in &quot;getting started&quot; and in &quot;botmaster basics&quot;. A general understand of how Botmaster and more generally how chatbots work is also assumed.</p>
-<p>Because of that, we will pick up right from there and start looking into the bot classes Botmaster comes bundled with.</p>
-<p>Botmaster makes five usable bot classes available to developers out of the box. <code>MessengerBot</code>, <code>SlackBot</code>, <code>SocketioBot</code>, <code>TelegramBot</code> and <code>TwitterBot</code>.</p>
-<p>For example, you can instantiate a new <code>MessengerBot</code> object as such:</p>
+<p>The following document assumes that you have read the main documentation in &quot;getting started&quot; and in &quot;working with botmaster&quot;. A general understand of how Botmaster and more generally how chatbots work is also assumed.</p>
+<p>Because of that, we will pick up right from there and start looking into the bot classes we built for 
+botmaster.</p>
+<p>A few of these bot classes are made available via the following packages:
+<code>botmaster-messenger</code>, <code>botmaster-slack</code>, <code>botmaster-socket.io</code>, <code>botmaster-telegram</code>, <code>botmaster-twitter-dm</code>.</p>
+<p>Let&apos;s say you added <code>botmaster-messenger</code> as a dependency to your project. You&apos;ll then be able to do the following:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
-<span class="hljs-keyword">const</span> MessengerBot = Botmaster.botTypes.MessengerBot;
+<span class="hljs-keyword">const</span> MessengerBot = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster-messenger&apos;</span>);
 
 <span class="hljs-keyword">const</span> messengerSettings = {
   credentials: {
@@ -589,39 +591,34 @@
     pageToken: <span class="hljs-string">&apos;YOUR pageToken&apos;</span>,
     fbAppSecret: <span class="hljs-string">&apos;YOUR fbAppSecret&apos;</span>
   },
-  webhookEndpoint: <span class="hljs-string">&apos;/webhook1234&apos;</span>,
+  webhookEndpoint: <span class="hljs-string">&apos;webhook1234&apos;</span>,
 };
 
 <span class="hljs-keyword">const</span> messengerBot = <span class="hljs-keyword">new</span> MessengerBot(messengerSettings);
 </code></pre>
-<p>In order to get updates from Messenger, you would then be expected to mount your bot&apos;s express mini-app <code>messengerBot.app</code> onto your own express <code>app</code> by doing something like this:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> app = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;express&apos;</span>)();
-app.use(<span class="hljs-string">&apos;/&apos;</span>, messengerBot.app);
-app.listen(<span class="hljs-number">3001</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{});
+<p>In order to get updates from Messenger, you would then be expected to mount your bot&apos;s requestListener <code>messengerBot.requestListener</code> onto your own server by doing something like this:</p>
+<pre><code class="lang-js">server = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;http&apos;</span>);
+server.createServer(messenger.requestListener);
+server.listen(<span class="hljs-number">3001</span>, <span class="hljs-string">&apos;0.0.0.0&apos;</span>);
 </code></pre>
-<p>Or even better:</p>
-<pre><code class="lang-js">messengerBot.app.listen(<span class="hljs-number">3001</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{});
-</code></pre>
-<p>This will mount your bot onto: <code>https://Your_Domain_Name:3001/webhook1234</code>. Note how the bot type <strong>is not</strong> part of the URL here.</p>
+<p>Now if requests come into your server (on any endpoint), your messengerBot object will try to &quot;emit&quot; the update, i.e. run its master&apos;s incoming middleware with it. But you guessed correctly if you thought that this would not work. Because <code>messengerBot</code> has been added to no botmaster instance, we will get the following error: &apos;bot needs to be added to a botmaster instance in order to emit received updates&apos;.</p>
+<p>Let&apos;s make it work then:</p>
 <h2 id="making-botmaster-objects-and-bot-objects-work-together">Making Botmaster objects and bot objects work together</h2>
 <p>Doing this is really trivial and as it turns out, you do this every time you use the <code>addBot</code> method.</p>
 <p>We recall from the various guides that to create a botmaster object the following is needed:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> Botmaster = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;botmaster&apos;</span>);
-<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster();
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
+  server, <span class="hljs-comment">// the server object we created earlier</span>
+});
 </code></pre>
-<p>As usual, we create a botmaster object. This one supports Twitter and Telegram, but not Messenger. We create it as such:</p>
-<p>In this example the <code>botmaster</code> object will start a new <code>express()</code> <code>app</code> server running locally on port <code>3000</code> as expected by default (see <a href="botmaster-basics#using-botmaster-with-your-own-express-app">here</a> to see how to change that).</p>
-<p>As usual, we add the messenegrBot as follows:</p>
+<p>As usual, we create a botmaster object. And we make sure that it uses the same server as the one we defined earlier. We thhen add the messenegrBot as follows:</p>
 <pre><code class="lang-js">botmaster.addBot(messengerBot);
 </code></pre>
-<p>This will mount your bot onto: <code>https://Your_Domain_Name:3000/messenger/webhook1234</code>. Note how the bot type <strong>is</strong> part of the endpoint here. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.</p>
-<p>You will then get updates from the botmaster object as if you had instantiated it with the messenger settings too if your endpoint is setup properly.</p>
-<blockquote>
-<p>Please note, if you followed these steps and put all this code in one file. You will actually have two express servers running along side each other. One on port 3001 and one on port 3000. Both endpoints mentioned above would work. This is definitely not what you want to do in production. Pick one of the methods and stick to it in production.</p>
-</blockquote>
-<p><strong>The main takeaway from all this is that any bot class that follows a  certain set of rules will be able to be added to a botmaster object.</strong></p>
+<p>This will mount your bot onto: <code>https://Your_Domain_Name:3001/messenger/webhook1234</code>. Note how the bot type <strong>is</strong> part of the endpoint although it is not part of the endpoint. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.</p>
+<p>Now when our server receives updates to <code>https://Your_Domain_Name:3001/messenger/webhook1234</code>, it will forward it to our incoming middleware. It is important to note that this line: <code>server.createServer(messenger.requestListener);</code> will not pose any problem, as botmaster strips all requestlisteners from the server object when instantiated and calls them only if none of the added bot endpoints get hit.</p>
+<p><strong>The main takeaway from all this is that if you are writing a bot class that uses webhooks, all that needs to be exposed is a valid <code>bot.requestListener</code> function. We&apos;ll see how to do this with express and Koa further down.</strong></p>
 <h2 id="creating-your-own-bot-classes">Creating your own bot classes</h2>
-<p>Before defining the rules that have to be respected in order to write a Botmaster compatible bot class let&apos;s look at the constructor of one of the existing one, <code>TelegramBot</code>:</p>
+<p>Before defining the rules that have to be respected in order to write a Botmaster compatible bot class let&apos;s look at the constructor of one of the existing ones. The one from <code>botmaster-telegram</code> in this case:</p>
 <h3 id="constructorsettings"><code>#constructor(settings)</code></h3>
 <pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TelegramBot</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseBot</span> </span>{
 
@@ -631,67 +628,158 @@ app.listen(<span class="hljs-number">3001</span>, <span class="hljs-function"><s
     <span class="hljs-keyword">this</span>.requiresWebhook = <span class="hljs-literal">true</span>;
     <span class="hljs-keyword">this</span>.requiredCredentials = [<span class="hljs-string">&apos;authToken&apos;</span>];
 
+    <span class="hljs-keyword">this</span>.receives = {
+      text: <span class="hljs-literal">true</span>,
+      attachment: {
+        audio: <span class="hljs-literal">true</span>,
+        file: <span class="hljs-literal">true</span>,
+        image: <span class="hljs-literal">true</span>,
+        video: <span class="hljs-literal">true</span>,
+        location: <span class="hljs-literal">true</span>,
+        fallback: <span class="hljs-literal">false</span>,
+      },
+      echo: <span class="hljs-literal">false</span>,
+      read: <span class="hljs-literal">false</span>,
+      delivery: <span class="hljs-literal">false</span>,
+      postback: <span class="hljs-literal">false</span>,
+      quickReply: <span class="hljs-literal">false</span>,
+    };
+
+    <span class="hljs-keyword">this</span>.sends = {
+      text: <span class="hljs-literal">true</span>,
+      quickReply: <span class="hljs-literal">true</span>,
+      locationQuickReply: <span class="hljs-literal">false</span>,
+      senderAction: {
+        typingOn: <span class="hljs-literal">true</span>,
+        typingOff: <span class="hljs-literal">false</span>,
+        markSeen: <span class="hljs-literal">false</span>,
+      },
+      attachment: {
+        audio: <span class="hljs-literal">true</span>,
+        file: <span class="hljs-literal">true</span>,
+        image: <span class="hljs-literal">true</span>,
+        video: <span class="hljs-literal">true</span>,
+      },
+    };
+
+    <span class="hljs-keyword">this</span>.retrievesUserInfo = <span class="hljs-literal">false</span>;
+
+    .
+    .
+    this.id = <span class="hljs-keyword">this</span>.credentials.authToken.split(<span class="hljs-string">&apos;:&apos;</span>)[<span class="hljs-number">0</span>];
+
     <span class="hljs-keyword">this</span>.__applySettings(settings);
-    .
-    .
-    .
-    this.__createMountPoints();
+    <span class="hljs-keyword">this</span>.__createMountPoints();
   }
 
  }
 </code></pre>
-<p>Let&apos;s look into this line by line. The first line reads <code>super(settings)</code>. Which of course just means it calls the constructor of <code>TelegramBot</code>&apos;s superclass, namely, <code>BaseBot</code>. <code>BaseBot</code>&apos;s constructor doesn&apos;t actually do anything fancy a part from calling its own superclass&apos;s constructor and setting a few default values [as pointers for you, the developer]. BaseBot calls its own superclass&apos;s constructor as it inherits from node.js&apos;s <code>EventEmitter</code> which will allow your bot&apos;s classes to listen to events as well as emit them.</p>
+<p>Let&apos;s look into this line by line (or almost). The first line reads <code>super(settings)</code>. Which of course just means it calls the constructor of <code>TelegramBot</code>&apos;s superclass, namely, <code>BaseBot</code>. <code>BaseBot</code>&apos;s constructor doesn&apos;t actually do anything fancy a part from calling its own superclass&apos;s constructor and setting a few default values [as pointers for you, the developer]. BaseBot calls its own superclass&apos;s constructor as it inherits from node.js&apos;s <code>EventEmitter</code> which will allow your bot&apos;s classes to listen to events as well as emit them.</p>
 <p>The following three lines setup some important values.</p>
 <ol>
 <li><code>this.type</code>: the type of bot that is being instantiated. It&apos;s important to specify that as developers might want to condition some code on the type of bot you are writing.</li>
 <li><code>this.requiresWebhook</code>: whether the bot requires webhooks. If the platform you are coding for requires webhooks, you will be expected to set a <code>this.app</code> variable at some point in the setup. We&apos;ll look into this when we have a look at what the <code>this.__createMountPoints();</code> does.</li>
 <li><code>this.requiredCredentials</code>: sets up an array of credentials that are expected to be defined for the platform you are coding your class for. Telegram only takes in 1, so we just have an array with the value <code>&apos;authToken&apos;</code>.</li>
+<li><code>this.receives</code> An object describing what kind of updates this bot class can receive. I.e. If a platforms supports a certain type, only set a value to true if updates are converted to the FB messenger type for that update type too.</li>
+<li><code>this.sends</code> Quite like <code>this.receives</code>, just describes what messages can be sent from this bot.</li>
+<li><code>this.retrievesUserInfo</code> set to true if the platform/bot class can provide extended information on a user by using the <code>bot.getUserInfo</code> method.</li>
+<li><code>this.id</code> the id that is proper to the bot. If not set at this point, it should be set upon receiving the first update from the platform</li>
 </ol>
 <h3 id="applysettingssettings"><code>#__applySettings(settings)</code></h3>
 <p>The next line calls the <code>this.__applySettings(settings)</code> function. This function is implemented in BaseBot and will just make sure that the settings passed on to the bot constructor are valid with respect to the parameters you defined. You should always call this function directly after setting the three [or more or less depending on your bot] parameters specific to the platform you are coding for. If valid, the settings will then be applied to the bot object. e.g. <code>this.webhookEndpoint</code> will be set to <code>settings.webhookEndpoint</code>.</p>
+<h2 id="receiving-updates">Receiving Updates</h2>
 <h3 id="createmountpoints"><code>#__createMountPoints()</code></h3>
 <p>The last line of our controller makes a call to <code>this.__createMountPoints();</code>. This line should only be present if your bot class requires webhooks. If this is the case, you will be expected to define a class member function that looks something like:</p>
-<pre><code class="lang-js">  __createMountPoints() {
-    <span class="hljs-keyword">this</span>.app = express();
-    <span class="hljs-comment">// for parsing application/json</span>
-    <span class="hljs-keyword">this</span>.app.use(bodyParser.json());
-    <span class="hljs-comment">// for parsing application/x-www-form-urlencoded</span>
-    <span class="hljs-keyword">this</span>.app.use(bodyParser.urlencoded({ extended: <span class="hljs-literal">true</span> }));
+<pre><code class="lang-js">__createMountPoints() {
+  <span class="hljs-keyword">this</span>.app = express();
+  <span class="hljs-keyword">this</span>.requestListener = <span class="hljs-keyword">this</span>.app;
+  <span class="hljs-comment">// for parsing application/json</span>
+  <span class="hljs-keyword">this</span>.app.use(bodyParser.json());
+  <span class="hljs-comment">// for parsing application/x-www-form-urlencoded</span>
+  <span class="hljs-keyword">this</span>.app.use(bodyParser.urlencoded({ extended: <span class="hljs-literal">true</span> }));
 
-    <span class="hljs-keyword">this</span>.app.post(<span class="hljs-keyword">this</span>.webhookEndpoint, (req, res) =&gt; {
-      <span class="hljs-keyword">this</span>.__formatUpdate(req.body)
+  <span class="hljs-keyword">this</span>.app.post(<span class="hljs-string">&apos;*&apos;</span>, (req, res) =&gt; {
+    <span class="hljs-keyword">this</span>.__formatUpdate(req.body)
 
-      .then((update) =&gt; {
+    .then((update) =&gt; {
+      <span class="hljs-keyword">this</span>.__emitUpdate(update);
+    }, (err) =&gt; {
+      err.message = <span class="hljs-string">`Error in __formatUpdate &quot;<span class="hljs-subst">${err.message}</span>&quot;. Please report this.`</span>;
+      <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">&apos;error&apos;</span>, err);
+    });
+
+    <span class="hljs-comment">// just letting telegram know we got the update</span>
+    res.sendStatus(<span class="hljs-number">200</span>);
+  });
+}
+</code></pre>
+<p>If we were using Koa in our Bot class, this function would look like this:</p>
+<pre><code class="lang-js">__createMountPoints() {
+  <span class="hljs-keyword">this</span>.app = <span class="hljs-keyword">new</span> Koa();
+  <span class="hljs-keyword">this</span>.requestListener = <span class="hljs-keyword">this</span>.app.callback();
+
+  app.use((ctx) =&gt; {
+    <span class="hljs-keyword">let</span> bodyString = <span class="hljs-string">&apos;&apos;</span>;
+    ctx.req.on(<span class="hljs-string">&apos;data&apos;</span>, (chunk) =&gt; {
+      bodyString += chunk;
+    });
+
+    ctx.req.on(<span class="hljs-string">&apos;end&apos;</span>, <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">const</span> body = <span class="hljs-built_in">JSON</span>.parse(bodyString);
+      <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">const</span> update = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.__formatUpdate(req.body)
         <span class="hljs-keyword">this</span>.__emitUpdate(update);
-      }, (err) =&gt; {
+      } <span class="hljs-keyword">catch</span> (err) {
         err.message = <span class="hljs-string">`Error in __formatUpdate &quot;<span class="hljs-subst">${err.message}</span>&quot;. Please report this.`</span>;
         <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">&apos;error&apos;</span>, err);
-      });
-
-      <span class="hljs-comment">// just letting telegram know we got the update</span>
-      res.sendStatus(<span class="hljs-number">200</span>);
+      }
     });
-  }
+
+    ctx.status = <span class="hljs-number">200</span>;
+  });
+}
 </code></pre>
-<p>Very importantly, this function creates an express router <code>this.app</code> that will be mounted onto the main <code>app</code> router from the botmaster object if <code>botmaster.addBot</code> is used.</p>
-<p>It then sets up the post endpoint that listens onto <code>this.webhookEnpoint</code>. No further assumption is made here.</p>
-<p>Please note that you might have another function that needs to be called at this point. For instance, in the <code>socketioBot</code> class, I make a call to: <code>this.__setupSocketioServer();</code> and that function looks like this:</p>
+<p>Note how in our express app, we are accepting requests from every route. That&apos;s because the botmaster object is responsible to making sure that only requests that are destined for this bot will actually end up hitting that function.</p>
+<p>Very importantly, both these functions create a valid <code>this.requestListener</code> that will be mounted onto the <code>botmaster.server</code> whenever <code>botmaster.addBot</code> is used.</p>
+<h3 id="requestlisteners">requestListeners</h3>
+<p>Valid requestListeners are simply functions that could be used when using node http&apos;s <code>createServer</code> or <code>listen</code> functions. I.e. in Node, in general, you could do </p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Koa();
+<span class="hljs-keyword">const</span> someServer = http.createServer(app.callback());
+someServer.listen(<span class="hljs-number">3000</span>, <span class="hljs-string">&apos;0.0.0.0&apos;</span>);
+</code></pre>
+<p>which would be equivalent to:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Koa();
+<span class="hljs-keyword">const</span> someServer = http.createServer();
+someServer.listen(<span class="hljs-number">3000</span>, <span class="hljs-string">&apos;0.0.0.0&apos;</span>, app.callback());
+</code></pre>
+<p>or</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Koa();
+<span class="hljs-keyword">const</span> someServer = app.listen(<span class="hljs-number">3000</span>, <span class="hljs-string">&apos;0.0.0.0&apos;</span>);
+</code></pre>
+<p>This is equivalent to doing the same thing with express, using the app object. So here&apos;s an example</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> app = express();
+<span class="hljs-keyword">const</span> someServer = http.createServer(app);
+someServer.listen(<span class="hljs-number">3000</span>, <span class="hljs-string">&apos;0.0.0.0&apos;</span>);
+</code></pre>
+<p>As the app object in express is a valid requestListener.</p>
+<h3 id="not-using-webhooks">Not using webhooks?</h3>
+<p>You might have another function that needs to be called at this point. For instance, in the <code>socketioBot</code> class, I make a call to: <code>this.__setupSocketioServer();</code> and that function looks like this:</p>
 <pre><code class="lang-js">__setupSocketioServer() {
   <span class="hljs-keyword">this</span>.ioServer = io(<span class="hljs-keyword">this</span>.server);
 
   <span class="hljs-keyword">this</span>.ioServer.on(<span class="hljs-string">&apos;connection&apos;</span>, (socket) =&gt; {
+    debug(<span class="hljs-string">`new socket connected with id: <span class="hljs-subst">${socket.id}</span>`</span>);
     socket.join(SocketioBot.__getBotmasteruserId(socket));
 
     socket.on(<span class="hljs-string">&apos;message&apos;</span>, (message) =&gt; {
       <span class="hljs-comment">// just broadcast the message to other connected clients with same user id</span>
       <span class="hljs-keyword">const</span> botmasterUserId = SocketioBot.__getBotmasteruserId(socket);
       socket.broadcast.to(botmasterUserId).emit(<span class="hljs-string">&apos;own message&apos;</span>, message);
-      <span class="hljs-comment">// console.log(JSON.stringify(socket.rooms, null, 2));</span>
       <span class="hljs-keyword">const</span> rawUpdate = message;
       <span class="hljs-keyword">try</span> {
         rawUpdate.socket = socket;
       } <span class="hljs-keyword">catch</span> (err) {
-        err.message = <span class="hljs-string">`ERROR: &quot;Expected JSON object but got &apos;<span class="hljs-subst">${typeof message}</span>&apos; <span class="hljs-subst">${message}</span> instead&quot;`</span>;
+        err.message = <span class="hljs-string">`Expected JSON object but got &apos;<span class="hljs-subst">${typeof message}</span>&apos; <span class="hljs-subst">${message}</span> instead`</span>;
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">&apos;error&apos;</span>, err);
       }
       <span class="hljs-keyword">const</span> update = <span class="hljs-keyword">this</span>.__formatUpdate(rawUpdate, botmasterUserId);
@@ -730,44 +818,50 @@ It would make sense for you to do so for consistency and because it has to be de
 };
 </code></pre><p>Your function should return the update object(or a promise that resolves a formatted update object) in order to then call <code>__emitUpdate</code> with it as a parameter.</p>
 <h3 id="emitupdateupdate"><code>#__emitUpdate(update)</code></h3>
-<p>Like <code>__applySettings</code>, this method is implemented in <code>BaseBot</code>. It handles errors, calling the <code>incoming</code> middleware stack, and most importantly, actually calling <code>this.emit(update)</code> to emit the actual update. You can overwrite this method if you wish, but in its current state, it handles the most important cases you will want to deal with. You should call this method with the formatted <code>update</code> object created by calling <code>formatUpdate()</code>;</p>
-<h3 id="sendmessagemessage"><code>#__sendMessage(message)</code></h3>
-<p>All previous methods had either something to do with object instantiation or with incoming messages. We&apos;ll now have a look at what needs to be done within your bot class to send messages.</p>
-<p>The <code>__sendMessage</code> method needs to be implemented. The method should take in a Messenger style message and send a formatted message to the bot platform. It should return a <code>Promise</code> that resolves to something like this:</p>
+<p>Like <code>__applySettings</code>, this method is implemented in <code>BaseBot</code>. It handles errorsa and most importantly calling the <code>incoming</code> middleware stack. You can overwrite this method if you wish, but in its current state, it handles the most important cases you will want to deal with. You should call this method with the formatted <code>update</code> object created by calling <code>formatUpdate()</code>;</p>
+<h2 id="sending-messages">Sending messages</h2>
+<p>Whenever a message is being sent (i.e. a <code>sendMessage</code> helper function is being used), the following methods of your bot class will get hit in order:</p>
+<ol>
+<li>__formatOutgoingMessage</li>
+<li>__sendMessage</li>
+<li>__createStandardBodyResponseComponents</li>
+</ol>
+<h3 id="formatoutgoingmessagemessage"><code>#__formatOutgoingMessage(message)</code></h3>
+<p>First, just like for receiving updates, we need to format outgoing messages to the format that will be accepted by the platform we are sending a message to.</p>
+<p>This function takes in a valid <code>OutgoingMessage</code> as only parameter and returns a formattedOutgoingMessage or RawOutgoingMessage, or a Promise that resolves with that value.</p>
+<h3 id="sendmessagerawmessage"><code>#__sendMessage(rawMessage)</code></h3>
+<p>The <code>__sendMessage</code> is called right after your <strong>formatOutgoingMessage method and will be passed the formattedOutgoingMessage/rawMessage that was returned by </strong>formatOutgoingMessage.</p>
+<p> Code for it might look like this simplified one from <code>TelegramBot</code>:</p>
+<pre><code class="lang-js">__sendMessage(rawMessage) {
+  <span class="hljs-keyword">const</span> endPoint = rawMessage.action
+  ? <span class="hljs-string">&apos;sendChatAction&apos;</span>
+  : <span class="hljs-string">&apos;sendMessage&apos;</span>;
+
+  <span class="hljs-comment">// this.baseUrl is: &apos;https://api.telegram.org&apos;,</span>
+  <span class="hljs-keyword">const</span> url = <span class="hljs-string">`<span class="hljs-subst">${this.baseUrl}</span>/<span class="hljs-subst">${endPoint}</span>`</span>;
+
+  <span class="hljs-keyword">const</span> options = {
+    url,
+    method: <span class="hljs-string">&apos;POST&apos;</span>,
+    json: rawMessage,
+  };
+
+  <span class="hljs-keyword">return</span> request(options);
+}
+</code></pre>
+<p>This method then has to return a promise that resolves with the body response from the platform.</p>
+<h3 id="createstandardbodyresponsecomponents"><code>#__createStandardBodyResponseComponents</code></h3>
+<p>Lastly, before resolving the promise that first called the <code>sendMessage</code> helper function, we want to make sure we can provide them with some sort of standardized components in the body. So this method should return an object that looks like this:</p>
+<p>This means we will need to </p>
 <pre><code class="lang-js">  {
-   raw: rawBody,
    recipient_id: &lt;id_of_user&gt;,
    message_id: &lt;message_id_of_what_was_just_sent&gt;
   }
 </code></pre>
-<p> Code for it might look like this simplified one from <code>TelegramBot</code>:</p>
-<pre><code class="lang-js"> __sendMessage(message) {
-  <span class="hljs-keyword">const</span> options = {
-    url: <span class="hljs-string">&apos;https://api.telegram.org/sendMessage&apos;</span>,
-    method: <span class="hljs-string">&apos;POST&apos;</span>,
-  };
-  options.json = <span class="hljs-keyword">this</span>.__formatOutgoingMessage(message);
-
-  <span class="hljs-keyword">return</span> request(options) <span class="hljs-comment">// using request-promise package and not request here</span>
-
-  .then((body) =&gt; {
-    <span class="hljs-keyword">if</span> (body.error) {
-      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-built_in">JSON</span>.stringify(body.error));
-    }
-
-    <span class="hljs-keyword">const</span> standardizedBody = {
-      raw: body,
-      recipient_id: body.result.chat.id,
-      <span class="hljs-comment">// this is really the equivalent to a Messenger seq.</span>
-      <span class="hljs-comment">// But it&apos;s either that or null for telegram</span>
-      message_id: body.result.message_id,
-    };
-    <span class="hljs-keyword">return</span> standardizedBody;
-  });
-}
-</code></pre>
-<p>See how we are returning a promise that resolves to an object as specified above!</p>
-<p>It is important to note that this be a promise and not a callback. Although developers using Botmaster can use <code>sendMessage</code> type methods with callbacks. The internals of Botmaster use Promises and therefore, so should your bot class.</p>
+<p> In order to do that, this method gets called like such:</p>
+<pre><code> __createStandardBodyResponseComponents(sentOutgoingMessage, sentRawMessage, rawBody)
+</code></pre><p>I.e. everything that has to do with the sent message is available to you.</p>
+<h3 id="basebot-sendmessage-helper-functions">BaseBot sendMessage helper functions</h3>
 <p>Please note that the <code>BaseBot</code> superclass defines a set of methods that allow developers to more easily send messages to all platforms without having to build the whole Messenger compatible object themselves. These methods are the following:</p>
 <p><code>sendMessage</code>
 <code>sendMessageTo</code>
@@ -780,19 +874,16 @@ It would make sense for you to do so for consistency and because it has to be de
 <code>sendCascadeTo</code>
 <code>sendTextCascadeTo</code></p>
 <p>All these methods will convert a developer specified input into a Facebook Messenger compatible message that will be called as a parameter to <code>__sendMessage</code>. That is, they all eventually will call your <code>__sendMessage</code> method. You can however overwrite them if need be.</p>
-<h3 id="formatoutgoingmessagemessage"><code>#__formatOutgoingMessage(message)</code></h3>
-<p>Your <code>sendMessage</code> method is expected to call a <code>__formatOutgoingMessage(message)</code> method that will format the Messenger style message into one that is compatible with the platform you are coding your bot class for.</p>
-<p>You can have a look at the ones defined in the <code>TelegramBot</code> and the <code>TwitterBot</code> classes for inspiration.</p>
 <h3 id="setbotidifnotsetupdate"><code>#__setBotIdIfNotSet(update)</code></h3>
-<p>In order to help you identify between bots of different types, you will want each bot instance to have a <code>this.id</code> value. This should typically be the same as <code>update.recipient.id</code> when getting updates. If these aren&apos;t set upon instantiation (as with Facebook Messenger bots), you can write a function like this <code>MessengerBot</code> one that gets called upon receiving a message.</p>
+<p>In order to help you identify between bots of different types, you will want each bot instance to have a <code>this.id</code> value. This should typically be the same as <code>update.recipient.id</code> when getting updates. If these aren&apos;t set upon instantiation (as with Facebook Messenger bots), you can write a function like this <code>botamaster-messenger</code> one that gets called upon receiving a message.</p>
 <pre><code class="lang-js">__setBotIdIfNotSet(update) {
   <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.id) {
       <span class="hljs-keyword">this</span>.id = update.recipient.id;
   }
 }
 </code></pre>
-<h2 id="is-this-really-all-there-is-to-it">Is this really all there is to it?</h2>
-<p>Yes it is! These few basic steps are the steps that should be followed in order to build your own bot classes. Nothing more is required. Of course, formatting the incoming updates and the outgoing messages won&apos;t always be as trivial as we&apos;d wish, but this guide should help you into doing this.</p>
+<h2 id="extending-bot-classes">Extending bot classes</h2>
+<p>As you might expect, you can extend any bot class that exists, not just BaseBot for your own purpose. You can also expose any added method by prepending them with a single underscore (which tells developers this function is only available for this botType and not via BaseBot)</p>
 
                                 
                                 </section>
@@ -836,7 +927,7 @@ It would make sense for you to do so for consistency and because it has to be de
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Writing your own bot class","level":"1.4.6","depth":2,"next":{"title":"Middlewares","level":"1.5","depth":1,"path":"middlewares/index.md","ref":"middlewares/index.md","articles":[{"title":"fulfill","level":"1.5.1","depth":2,"path":"middlewares/fulfill.md","ref":"middlewares/fulfill.md","articles":[]}]},"previous":{"title":"Botmaster object","level":"1.4.5","depth":2,"path":"working-with-botmaster/botmaster-object.md","ref":"working-with-botmaster/botmaster-object.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/writing-your-own-bot-class.md","mtime":"2017-04-03T01:25:27.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T18:49:19.916Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Writing your own bot class","level":"1.4.6","depth":2,"next":{"title":"Middlewares","level":"1.5","depth":1,"path":"middlewares/index.md","ref":"middlewares/index.md","articles":[{"title":"fulfill","level":"1.5.1","depth":2,"path":"middlewares/fulfill.md","ref":"middlewares/fulfill.md","articles":[]}]},"previous":{"title":"Botmaster object","level":"1.4.5","depth":2,"path":"working-with-botmaster/botmaster-object.md","ref":"working-with-botmaster/botmaster-object.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"working-with-botmaster/writing-your-own-bot-class.md","mtime":"2017-04-04T20:10:26.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T20:10:43.840Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

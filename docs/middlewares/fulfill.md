@@ -1,3 +1,5 @@
+>This documentation is valid for botmaster 2.x.x This guide will be update once a version of botmaster-fulfill for botmaster 3.x.x is published
+
 # Fulfill Middleware
 
 >In addition, to this documentation, we highly recommend that you read the [fulfill tutorial](/tutorials/using-fulfill/).
