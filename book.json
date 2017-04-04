@@ -1,6 +1,6 @@
 {
   "root": "./docs",
-  "plugins": [ "versions", "collapsible-menu" ],
+  "plugins": [ "versions", "expandable-chapters" ],
   "pluginsConfig": {
     "versions": {
       "gitbookConfigURL": "https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json",

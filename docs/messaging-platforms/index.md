@@ -25,7 +25,7 @@ const messengerBot = newMessengerBot({
   webhookEndpoint: 'webhook',
 })
 
-botmaster.add(messengerBot);
+botmaster.addBot(messengerBot);
 ```
 
 ### Official Bot classes

@@ -21,6 +21,10 @@
                 
             
                 
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -164,65 +168,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="../working-with-botmaster/">
-            
-                <a href="../working-with-botmaster/">
-            
-                    
-                    Working With Botmaster
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="../working-with-botmaster/middleware.html">
-            
-                <a href="../working-with-botmaster/middleware.html">
-            
-                    
-                    Middleware
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="../working-with-botmaster/botmaster-basics.html">
-            
-                <a href="../working-with-botmaster/botmaster-basics.html">
-            
-                    
-                    Botmaster basics
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="../working-with-botmaster/writing-your-own-bot-class.html">
-            
-                <a href="../working-with-botmaster/writing-your-own-bot-class.html">
-            
-                    
-                    Writing your own bot class
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="../messaging-platforms/">
+        <li class="chapter " data-level="1.3" data-path="../messaging-platforms/">
             
                 <a href="../messaging-platforms/">
             
@@ -236,7 +182,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../messaging-platforms/messenger.html">
+        <li class="chapter " data-level="1.3.1" data-path="../messaging-platforms/messenger.html">
             
                 <a href="../messaging-platforms/messenger.html">
             
@@ -249,7 +195,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../messaging-platforms/slack.html">
+        <li class="chapter " data-level="1.3.2" data-path="../messaging-platforms/slack.html">
             
                 <a href="../messaging-platforms/slack.html">
             
@@ -262,7 +208,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="../messaging-platforms/socket.io.html">
+        <li class="chapter " data-level="1.3.3" data-path="../messaging-platforms/socket.io.html">
             
                 <a href="../messaging-platforms/socket.io.html">
             
@@ -275,7 +221,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="../messaging-platforms/telegram.html">
+        <li class="chapter " data-level="1.3.4" data-path="../messaging-platforms/telegram.html">
             
                 <a href="../messaging-platforms/telegram.html">
             
@@ -288,12 +234,109 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.5" data-path="../messaging-platforms/twitter-dm.html">
+        <li class="chapter " data-level="1.3.5" data-path="../messaging-platforms/twitter-dm.html">
             
                 <a href="../messaging-platforms/twitter-dm.html">
             
                     
                     Twitter DM
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../working-with-botmaster/">
+            
+                <a href="../working-with-botmaster/">
+            
+                    
+                    Working With Botmaster
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../working-with-botmaster/bot-object.html">
+            
+                <a href="../working-with-botmaster/bot-object.html">
+            
+                    
+                    Bot object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../working-with-botmaster/middleware.html">
+            
+                <a href="../working-with-botmaster/middleware.html">
+            
+                    
+                    Middleware
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../working-with-botmaster/incoming-update.html">
+            
+                <a href="../working-with-botmaster/incoming-update.html">
+            
+                    
+                    Incoming update
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../working-with-botmaster/outgoing-message.html">
+            
+                <a href="../working-with-botmaster/outgoing-message.html">
+            
+                    
+                    Outgoing message
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../working-with-botmaster/botmaster-object.html">
+            
+                <a href="../working-with-botmaster/botmaster-object.html">
+            
+                    
+                    Botmaster object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../working-with-botmaster/writing-your-own-bot-class.html">
+            
+                <a href="../working-with-botmaster/writing-your-own-bot-class.html">
+            
+                    
+                    Writing your own bot class
             
                 </a>
             
@@ -531,68 +574,154 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <!-- Generated by documentation.js. Update this documentation by updating the source code. -->
-<h3 id="table-of-contents">Table of Contents</h3>
+                                <p><a name="Botmaster"></a></p>
+<h2 id="botmaster">Botmaster</h2>
+<p>The Botmaster class to rule them all</p>
+<p><strong>Kind</strong>: global class  </p>
 <ul>
-<li><a href="#botmaster">Botmaster</a><ul>
-<li><a href="#constructor">constructor</a></li>
-<li><a href="#addbot">addBot</a></li>
-<li><a href="#getbot">getBot</a></li>
-<li><a href="#getbots">getBots</a></li>
-<li><a href="#removebot">removeBot</a></li>
-<li><a href="#use">use</a></li>
-<li><a href="#usewrapped">useWrapped</a></li>
+<li><a href="#Botmaster">Botmaster</a><ul>
+<li><a href="#new_Botmaster_new">new Botmaster(settings)</a></li>
+<li><a href="#Botmaster+addBot">.addBot(bot)</a> &#x21D2; <code>Botmaster</code></li>
+<li><a href="#Botmaster+getBot">.getBot(options)</a> &#x21D2; <code>BaseBot</code></li>
+<li><a href="#Botmaster+getBots">.getBots(botType)</a> &#x21D2; <code>Array</code></li>
+<li><a href="#Botmaster+removeBot">.removeBot(bot)</a> &#x21D2; <code>Botmaster</code></li>
+<li><a href="#Botmaster+use">.use(middleware)</a> &#x21D2; <code>Botmaster</code></li>
+<li><a href="#Botmaster+useWrapped">.useWrapped(incomingMiddleware, outgoingMiddleware)</a> &#x21D2; <code>Botmaster</code></li>
 </ul>
 </li>
 </ul>
-<h2 id="botmaster">Botmaster</h2>
-<p><strong>Extends EventEmitter</strong></p>
-<p>The Botmaster class to rule them all</p>
-<h3 id="constructor">constructor</h3>
+<p><a name="new_Botmaster_new"></a></p>
+<h3 id="new-botmastersettings">new Botmaster(settings)</h3>
 <p>sets up a botmaster object attached to the correct server if one is set
 as a parameter. If not, it creates its own http server</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">object</a></strong> </li>
-</ul>
-<h3 id="addbot">addBot</h3>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>settings</td>
+<td><code>object</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong>  </p>
+<pre><code class="lang-js"><span class="hljs-comment">// attach the botmaster generated server to port 5000 rather than the default 3000</span>
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
+  port: <span class="hljs-number">5000</span>,
+});
+</code></pre>
+<p><strong>Example</strong>  </p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;http&apos;</span>);
+
+<span class="hljs-keyword">const</span> myServer = http.createServer()
+<span class="hljs-comment">// use my own server rather than letting botmaster creat its own.</span>
+<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
+  server: myServer,
+});
+</code></pre>
+<p><a name="Botmaster+addBot"></a></p>
+<h3 id="botmasteraddbotbot-&#x21D2;-botmaster">botmaster.addBot(bot) &#x21D2; <code>Botmaster</code></h3>
 <p>Add an existing bot to this instance of Botmaster</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>bot</code> <strong>BaseBot</strong> the bot object to add to botmaster. Must be from
-a subclass of BaseBot</li>
-</ul>
-<p>Returns <strong><a href="#botmaster">Botmaster</a></strong> returns the botmaster object for chaining</p>
-<h3 id="getbot">getBot</h3>
+<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Botmaster</code> - returns the botmaster object for chaining  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bot</td>
+<td><code>BaseBot</code></td>
+<td>the bot object to add to botmaster. Must be from a subclass of BaseBot</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Botmaster+getBot"></a></p>
+<h3 id="botmastergetbotoptions-&#x21D2;-basebot">botmaster.getBot(options) &#x21D2; <code>BaseBot</code></h3>
 <p>Extract First bot of given type or provided id.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">object</a></strong> must be { type: &apos;someBotType} or { id: someBotId }.</li>
-</ul>
-<p>Returns <strong>BaseBot</strong> The bot found of a class that inherits of BaseBot</p>
-<h3 id="getbots">getBots</h3>
+<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>BaseBot</code> - The bot found of a class that inherits of BaseBot  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>options</td>
+<td><code>object</code></td>
+<td>must be { type: &apos;someBotType} or { id: someBotId }.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Botmaster+getBots"></a></p>
+<h3 id="botmastergetbotsbottype-&#x21D2;-array">botmaster.getBots(botType) &#x21D2; <code>Array</code></h3>
 <p>Extract all bots of given type.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>botType</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">string</a></strong> (there can be multiple bots of a same type)</li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank">Array</a></strong> Array of bots found</p>
-<h3 id="removebot">removeBot</h3>
+<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Array</code> - Array of bots found  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>botType</td>
+<td><code>string</code></td>
+<td>(there can be multiple bots of a same type)</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Botmaster+removeBot"></a></p>
+<h3 id="botmasterremovebotbot-&#x21D2;-botmaster">botmaster.removeBot(bot) &#x21D2; <code>Botmaster</code></h3>
 <p>Remove an existing bot from this instance of Botmaster</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>bot</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a></strong> </li>
-</ul>
-<p>Returns <strong><a href="#botmaster">Botmaster</a></strong> returns the botmaster object for chaining</p>
-<h3 id="use">use</h3>
+<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Botmaster</code> - returns the botmaster object for chaining  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bot</td>
+<td><code>Object</code></td>
+</tr>
+</tbody>
+</table>
+<p><a name="Botmaster+use"></a></p>
+<h3 id="botmasterusemiddleware-&#x21D2;-botmaster">botmaster.use(middleware) &#x21D2; <code>Botmaster</code></h3>
 <p>Add middleware to this botmaster object
 This function is just sugar for <code>middleware.__use</code> in them</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>middleware</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">object</a></strong> </li>
-</ul>
-<p><strong>Examples</strong></p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// The middleware param object is something that looks like this for incoming:</span>
+<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Botmaster</code> - returns the botmaster object so you can chain middleware  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>middleware</td>
+<td><code>object</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong>  </p>
+<pre><code class="lang-js"><span class="hljs-comment">// The middleware param object is something that looks like this for incoming:</span>
 {
  type: <span class="hljs-string">&apos;incoming&apos;</span>,
  name: <span class="hljs-string">&apos;my-incoming-middleware&apos;</span>,
@@ -616,18 +745,34 @@ This function is just sugar for <code>middleware.__use</code> in them</p>
  }
 }
 </code></pre>
-<p>Returns <strong><a href="#botmaster">Botmaster</a></strong> returns the botmaster object so you can chain middleware</p>
-<h3 id="usewrapped">useWrapped</h3>
+<p><a name="Botmaster+useWrapped"></a></p>
+<h3 id="botmasterusewrappedincomingmiddleware-outgoingmiddleware-&#x21D2;-botmaster">botmaster.useWrapped(incomingMiddleware, outgoingMiddleware) &#x21D2; <code>Botmaster</code></h3>
 <p>Add wrapped middleware to this botmaster instance. Wrapped middleware
 places the incoming middleware at beginning of incoming stack and
 the outgoing middleware at end of outgoing stack.
 This function is just sugar <code>middleware.useWrapped</code>.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>incomingMiddleware</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">object</a></strong> </li>
-<li><code>outgoingMiddleware</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">object</a></strong> The middleware objects are as you&apos;d expect them to be (see use)</li>
-</ul>
-<p>Returns <strong><a href="#botmaster">Botmaster</a></strong> returns the botmaster object so you can chain middleware</p>
+<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Botmaster</code> - returns the botmaster object so you can chain middleware  </p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>incomingMiddleware</td>
+<td><code>object</code></td>
+<td></td>
+</tr>
+<tr>
+<td>outgoingMiddleware</td>
+<td><code>object</code></td>
+<td>The middleware objects are as you&apos;d expect them to be (see use)</td>
+</tr>
+</tbody>
+</table>
 
                                 
                                 </section>
@@ -671,7 +816,7 @@ This function is just sugar <code>middleware.useWrapped</code>.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Botmaster","level":"1.8.1","depth":2,"next":{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},"previous":{"title":"API reference","level":"1.8","depth":1,"path":"api-reference/index.md","ref":"api-reference/index.md","articles":[{"title":"Botmaster","level":"1.8.1","depth":2,"path":"api-reference/botmaster.md","ref":"api-reference/botmaster.md","articles":[]},{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","collapsible-menu"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"collapsible-menu":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"api-reference/botmaster.md","mtime":"2017-04-04T14:38:24.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T15:25:52.644Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Botmaster","level":"1.8.1","depth":2,"next":{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},"previous":{"title":"API reference","level":"1.8","depth":1,"path":"api-reference/index.md","ref":"api-reference/index.md","articles":[{"title":"Botmaster","level":"1.8.1","depth":2,"path":"api-reference/botmaster.md","ref":"api-reference/botmaster.md","articles":[]},{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"api-reference/botmaster.md","mtime":"2017-04-04T16:35:31.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-04T17:00:41.508Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
@@ -685,7 +830,7 @@ This function is just sugar <code>middleware.useWrapped</code>.</p>
         
     
         
-        <script src="../gitbook/gitbook-plugin-collapsible-menu/plugin.js"></script>
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
         
     
         

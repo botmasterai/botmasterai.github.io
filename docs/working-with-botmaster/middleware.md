@@ -1,7 +1,5 @@
 # Middleware
 
->This is the Botmaster v3 write-up on Middleware. As in v3 there is no more `.on('update')` event, everything now takes place in middleware. If you are moving from v2, have a look at the [changelog](/changelog.html#major-308) to see how to migrate your botmaster app.
-
 If you've gone through the [quickstart](/gettings-started/quickstart.md) guide, you've actually already used middleware (well incoming middleware in this case). We do so in the "Acting on updates" section.
 
 Middleware in Botmaster is designed to work similarly to  what you would expect 
@@ -579,6 +577,11 @@ botmaster.useWrapped(incomingMiddleware, outgoingMiddleware);
 Where `incomingMiddleware` and `outgoingMiddleware` are valid middlewares of their respective types.
 This is useful if writing a middleware package that want to be first to get the update object and last to see it when it goes out.
 It is used in [botmaster-session-ware](https://github.com/botmasterai/botmaster-session-ware) for example.
+
+#### Where is my middleware
+
+Although I doubt most would want to use this, it's good to know that middleware is accessible via all botmaster instances. Middleware stacks are exposed via `botmaster.middleware.incomingMiddlewareStack` and
+`botmaster.middleware.outgoingMiddlewareStack`. Unless you really know what you are doing, it is best to leave those alone.
 
 ## External middleware
 
