@@ -632,7 +632,7 @@ botmaster.use({
  }
 </code></pre>
 <h4 id="ignoring-outgoing-middleware-all-together">Ignoring outgoing middleware all-together</h4>
-<p>Typically, the senMessage methods will hit all your setup outgoing middleware (read more about middleware <a href="middleware.html">here</a>. If you want to avoid that and ignore your setup middleware in certain situations, do something like this:</p>
+<p>Typically, the sendMessage methods will hit all your setup outgoing middleware (read more about middleware <a href="middleware.html">here</a>. If you want to avoid that and ignore your setup middleware in certain situations, do something like this:</p>
 <pre><code class="lang-js">botmaster.use({
   type: <span class="hljs-string">&apos;incoming&apos;</span>,
   name: <span class="hljs-string">&apos;some-name&apos;</span>,
