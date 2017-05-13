@@ -540,7 +540,7 @@ server.listen(<span class="hljs-number">3001</span>, <span class="hljs-string">&
   server, <span class="hljs-comment">// the server object we created earlier</span>
 });
 </code></pre>
-<p>As usual, we create a botmaster object. And we make sure that it uses the same server as the one we defined earlier. We thhen add the messenegrBot as follows:</p>
+<p>As usual, we create a botmaster object. And we make sure that it uses the same server as the one we defined earlier. We then add the messengerBot as follows:</p>
 <pre><code class="lang-js">botmaster.addBot(messengerBot);
 </code></pre>
 <p>This will mount your bot onto: <code>https://Your_Domain_Name:3001/messenger/webhook1234</code>. Note how the bot type <strong>is</strong> part of the endpoint although it is not part of the endpoint. This is because the Botmaster class assumes that you want your endpoint to be mounted onto its botType.</p>
