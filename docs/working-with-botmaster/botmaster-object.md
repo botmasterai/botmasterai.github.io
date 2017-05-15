@@ -8,7 +8,7 @@ The `botmasterSettings` object has the following parameters:
 | Parameter | Description
 |--- |---
 | port  | (__optional__) The port to use for your webhooks (see [webhooks](/getting-started/webhooks.md) to understand more about webhooks). This will only be used if the `server` parameter is not provided. Otherwise, it will be ignored.
-| server  | (__optional__) A valid node http server app object to mount the `webhookEnpoints` onto. If you choose to do this, it is assumed that you will be managing your own server instance (possibly via express of Koa or other). Thus, Botmaster won't start the server.
+| server  | (__optional__) A valid node http server app object to mount the `webhookEndpoints` onto. If you choose to do this, it is assumed that you will be managing your own server instance (possibly via express of Koa or other). Thus, Botmaster won't start the server.
 
 Using botsSettings would look something like this if you want to set the port:
 

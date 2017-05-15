@@ -114,7 +114,7 @@ botmaster.use({
 
 >Botmaster does not assure you that the `id` parameter of the `bot` object will exist upon instantiation. the `id` is only assured to be there once an update has been received by the bot. I.e. in all middleware functions This is because some ids aren't known until botmaster knows 'who' the message was sent to (i.e. what id your bot should have).
 
-#### Performing actions after a message is sent 
+#### Performing actions after a message is sent
 
 It is also noteworthy that you would typically want to perform some action upon confirmation that the message was sent or catch a potential error. Because all the sendMessage helper functions return Promises, this is done as such:
 
@@ -152,7 +152,7 @@ Where the body object resolved from the `sendMessage` Promise will look As per t
 
 #### Ignoring outgoing middleware all-together
 
-Typically, the senMessage methods will hit all your setup outgoing middleware (read more about middleware [here](/working-with-botmaster/middleware.md). If you want to avoid that and ignore your setup middleware in certain situations, do something like this:
+Typically, the sendMessage methods will hit all your setup outgoing middleware (read more about middleware [here](/working-with-botmaster/middleware.md). If you want to avoid that and ignore your setup middleware in certain situations, do something like this:
 
 ```js
 botmaster.use({
@@ -168,9 +168,9 @@ botmaster.use({
 
 #### Bot object parameters
 
-I'll note quickly that each bot object created comes from one of the various bot classes as seen above. They act in the same way on the surface (because of heavy standardization), but have a few idiosynchrasies here and there.
+I'll note quickly that each bot object created comes from one of the various bot classes as seen above. They act in the same way on the surface (because of heavy standardization), but have a few idiosyncrasies here and there.
 
-Many of those idiosynchrasies can be found out by leveraging the following in your bot objects: `bot.receives`, `bot.sends` and `bot.retrievesUserInfo`. These objects look as such:
+Many of those idiosyncrasies can be found out by leveraging the following in your bot objects: `bot.receives`, `bot.sends` and `bot.retrievesUserInfo`. These objects look as such:
 
 ##### 1. **bot.receives**:
 ```js
@@ -230,7 +230,7 @@ Some bot classes (like the one provided by the `botmaster-messenger` package) ca
 
 #### Getting bots
 
-Also useful to note is that you can access all the bots added to botmaster by doing `botmaster.bots`. you can also use `botmastet.getBot` or `botmaster.getBots` to get a specific bot (using type or id);
+Also useful to note is that you can access all the bots added to botmaster by doing `botmaster.bots`. you can also use `botmaster.getBot` or `botmaster.getBots` to get a specific bot (using type or id);
 
 #### Writing your own bot class
 

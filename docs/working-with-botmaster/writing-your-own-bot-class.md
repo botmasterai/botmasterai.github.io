@@ -52,7 +52,7 @@ const botmaster = new Botmaster({
 });
 ```
 
-As usual, we create a botmaster object. And we make sure that it uses the same server as the one we defined earlier. We thhen add the messenegrBot as follows:
+As usual, we create a botmaster object. And we make sure that it uses the same server as the one we defined earlier. We then add the messengerBot as follows:
 
 ```js
 botmaster.addBot(messengerBot);
