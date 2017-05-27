@@ -1,5 +1,35 @@
 # Changelog
 
+### MINOR 3.1.0
+
+WebhookEndpoints can now be specified either with pre-pending or trailing slash (Thanks to @Damell for that (https://github.com/botmasterai/botmaster/pull/26)).
+
+Webhook endpoints don't need to be prepended with the bot type anymore (request by @younes200 (https://github.com/botmasterai/botmaster/pull/23)).
+A new option was added for this in the botmaster controller. And it is used as such:
+
+```js
+const botmaster = new Botmaster({
+  useDefaultMountPathPrepend: false,
+});
+```
+
+By doing this, if you setup a webhook using bot like the in the `botmaster-messenger` package as such:
+
+```js
+const messengerSettings = {
+  credentials: someCredentials,
+  webhookEndpoint: 'webhook/endoint/1234',
+};
+```
+
+You would then be settings up your webhook in Messenger to be:
+
+`<your_base_url>/webhook/endpoint/1234` rather than `<your_base_url>/messenger/webhook/endpoint/1234`
+
+None of these changes should impact your code
+
+Another change was made in the structure of botmaster, but that should not impact you unless you were accessing the private variable `sendOptions.__update` in your middleware. If so, know that it has been moved to `bot.__associatedUpdate` and have a look at the code that was part of this release.
+
 ### MAJOR 3.0.8
 
 Botmaster v3 is almost a complete rewrite of botmaster. Although much of the philosophy is the same, a lot of breaking changes have been introduced. Surely, you will find that they are for the better. This changelog doubles as a migration help.

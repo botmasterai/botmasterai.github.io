@@ -502,6 +502,24 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="changelog">Changelog</h1>
+<h3 id="minor-310">MINOR 3.1.0</h3>
+<p>WebhookEndpoints can now be specified either with pre-pending or trailing slash (Thanks to @Damell for that (<a href="https://github.com/botmasterai/botmaster/pull/26" target="_blank">https://github.com/botmasterai/botmaster/pull/26</a>)).</p>
+<p>Webhook endpoints don&apos;t need to be prepended with the bot type anymore (request by @younes200 (<a href="https://github.com/botmasterai/botmaster/pull/23" target="_blank">https://github.com/botmasterai/botmaster/pull/23</a>)).
+A new option was added for this in the botmaster controller. And it is used as such:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
+  useDefaultMountPathPrepend: <span class="hljs-literal">false</span>,
+});
+</code></pre>
+<p>By doing this, if you setup a webhook using bot like the in the <code>botmaster-messenger</code> package as such:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> messengerSettings = {
+  credentials: someCredentials,
+  webhookEndpoint: <span class="hljs-string">&apos;webhook/endoint/1234&apos;</span>,
+};
+</code></pre>
+<p>You would then be settings up your webhook in Messenger to be:</p>
+<p><code>&lt;your_base_url&gt;/webhook/endpoint/1234</code> rather than <code>&lt;your_base_url&gt;/messenger/webhook/endpoint/1234</code></p>
+<p>None of these changes should impact your code</p>
+<p>Another change was made in the structure of botmaster, but that should not impact you unless you were accessing the private variable <code>sendOptions.__update</code> in your middleware. If so, know that it has been moved to <code>bot.__associatedUpdate</code> and have a look at the code that was part of this release.</p>
 <h3 id="major-308">MAJOR 3.0.8</h3>
 <p>Botmaster v3 is almost a complete rewrite of botmaster. Although much of the philosophy is the same, a lot of breaking changes have been introduced. Surely, you will find that they are for the better. This changelog doubles as a migration help.</p>
 <h5 id="1-upgrading-to-botmastser-v3">1. Upgrading to botmastser v3</h5>
@@ -923,7 +941,7 @@ bot class that will be in the core</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Changelog","level":"1.9","depth":1,"previous":{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.0.8","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"changelog.md","mtime":"2017-05-15T16:56:55.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-16T09:00:54.584Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Changelog","level":"1.9","depth":1,"previous":{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.1.0","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"changelog.md","mtime":"2017-05-27T18:20:54.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-27T18:26:51.219Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
