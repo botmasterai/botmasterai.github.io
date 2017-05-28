@@ -1,5 +1,9 @@
 # Changelog
 
+### PATCH 3.1.1
+
+Just a couple bugfixes. Use 3.1.1 instead of 3.1.0.
+
 ### MINOR 3.1.0
 
 WebhookEndpoints can now be specified either with pre-pending or trailing slash (Thanks to @Damell for that (https://github.com/botmasterai/botmaster/pull/26)).
