@@ -24,7 +24,7 @@ In short, anything you need your bot to do that your AI doesn't, is probably a c
 
 "Separation of concerns" is generally considered a good thing. It turns out that in bot design, it's an especially good thing. Why do we say that?
 
-Designing your conversational flow and how your bot responds to questions is an analyst-type job - you need people good at understanding the problem domain and how to craft a great conversations. You these people to have a nice life, unencumbered by any technical complexities.
+Designing your conversational flow and how your bot responds to questions is an analyst-type job - you need people good at understanding the problem domain and how to craft a great conversations. You want these people to have a nice life, unencumbered by any technical complexities.
 
 If your bot needs to invoke programming logic, for example to call an external API and include the results into the bot's response, you surely want to keep that programming away from your conversational analysts.
 
