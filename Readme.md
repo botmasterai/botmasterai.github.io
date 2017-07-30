@@ -29,6 +29,13 @@ yarn build // or npm run build
 
 This will make sure the botmaster favicon is being used as well as build the whole project for you if you skipped step 4.
 
-#### 6. Submit your Pull Request
+#### 6. Commit to your fork/branch
+
+```
+git add --all
+git commit -m "Your commit message"
+```
+
+#### 7. Submit your Pull Request
 
 As the title says, you can then push to your fork and submit the Pull Request.
