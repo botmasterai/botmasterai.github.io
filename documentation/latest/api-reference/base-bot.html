@@ -560,13 +560,6 @@ in the subclasses in order for them to work.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Example</strong>  </p>
-<pre><code class="lang-js"><span class="hljs-comment">// In general however, one can instantiate a bot object like this:</span>
-<span class="hljs-keyword">const</span> bot = <span class="hljs-keyword">new</span> BaseBotSubClass({ <span class="hljs-comment">// e.g. MessengerBot</span>
-  credentials: <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">my_base_bot_sub_class_credentials</span>&gt;</span>,
-  webhookEnpoint: &apos;someEndpoint&apos; // only if class requires them
-})
-</span></code></pre>
 <p><a name="BaseBot+createOutgoingMessage"></a></p>
 <h3 id="basebotcreateoutgoingmessagemessage-&#x21D2;-outgoingmessage">baseBot.createOutgoingMessage(message) &#x21D2; <code>OutgoingMessage</code></h3>
 <p>createOutgoingMessage exposes the OutgoingMessage constructor
@@ -574,7 +567,7 @@ via BaseBot. This simply means one can create their own
 OutgoingMessage object using any bot object. They can then compose
 it with all its helper functions</p>
 <p>This is the instance version of this method</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>OutgoingMessage</code> - outgoingMessage. The same object passed in with
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>OutgoingMessage</code> - outgoingMessage. The same object passed in with
 all the helper functions from OutgoingMessage  </p>
 <table>
 <thead>
@@ -598,7 +591,7 @@ all the helper functions from OutgoingMessage  </p>
 id of the recipient set. Again, this is jut sugar syntax for creating a
 new outgoingMessage object</p>
 <p>This is the instance version of this method</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>OutgoingMessage</code> - outgoingMessage. A valid OutgoingMessage object with recipient set.  </p>
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>OutgoingMessage</code> - outgoingMessage. A valid OutgoingMessage object with recipient set.  </p>
 <table>
 <thead>
 <tr>
@@ -620,7 +613,7 @@ new outgoingMessage object</p>
 <p>sendMessage() falls back to the sendMessage implementation of whatever
 subclass inherits form BaseBot. The expected format is normally any type of
 message object that could be sent on to messenger</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object (see example)  </p>
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object (see example)  </p>
 <table>
 <thead>
 <tr>
@@ -666,7 +659,7 @@ bot.sendMessage(outgoingMessage);
 <h3 id="basebotsendmessagetomessage-recipientid-sendoptions-&#x21D2;-promise">baseBot.sendMessageTo(message, recipientId, [sendOptions]) &#x21D2; <code>Promise</code></h3>
 <p>sendMessageTo() Just makes it easier to send a message without as much
 structure.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
 (see <code>sendMessage</code> example)  </p>
 <table>
 <thead>
@@ -707,7 +700,7 @@ bot.sendMessageTo(message, update.sender.id);
 <h3 id="basebotsendtextmessagetotext-recipientid-sendoptions-&#x21D2;-promise">baseBot.sendTextMessageTo(text, recipientId, [sendOptions]) &#x21D2; <code>Promise</code></h3>
 <p>sendTextMessageTo() Just makes it easier to send a text message with
 minimal structure.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
 (see <code>sendMessage</code> example)  </p>
 <table>
 <thead>
@@ -743,7 +736,7 @@ minimal structure.</p>
 <p>reply() Another way to easily send a text message. In this case,
 we just send the update that came in as is and then the text we
 want to send as a reply.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
 (see <code>sendMessage</code> example)  </p>
 <table>
 <thead>
@@ -778,7 +771,7 @@ want to send as a reply.</p>
 <h3 id="basebotsendattachmenttoattachment-recipientid-sendoptions-&#x21D2;-promise">baseBot.sendAttachmentTo(attachment, recipientId, [sendOptions]) &#x21D2; <code>Promise</code></h3>
 <p>sendAttachmentTo() makes it easier to send an attachment message with
 less structure.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
 (see <code>sendMessage</code> example)  </p>
 <table>
 <thead>
@@ -821,7 +814,7 @@ bot.sendAttachmentTo(attachment, update.sender.id);
 <h3 id="basebotsendattachmentfromurltotype-url-recipientid-sendoptions-&#x21D2;-promise">baseBot.sendAttachmentFromUrlTo(type, url, recipientId, [sendOptions]) &#x21D2; <code>Promise</code></h3>
 <p>sendAttachmentFromUrlTo() makes it easier to send an attachment message with
 minimal structure.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
 (see <code>sendMessage</code> example)  </p>
 <table>
 <thead>
@@ -862,7 +855,7 @@ minimal structure.</p>
 <p>sendDefaultButtonMessageTo() makes it easier to send a default set of
 buttons. The default button type is the Messenger quick_replies, where
 the payload is the same as the button title and the content_type is text.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
 (see <code>sendMessage</code> example)  </p>
 <table>
 <thead>
@@ -904,7 +897,7 @@ bot.sendDefaultButtonMessageTo(buttonArray,
 <h3 id="basebotsendistypingmessagetorecipientid-sendoptions-&#x21D2;-promise">baseBot.sendIsTypingMessageTo(recipientId, [sendOptions]) &#x21D2; <code>Promise</code></h3>
 <p>sendIsTypingMessageTo() just sets the is typing status to the platform
 if available.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with a body object
 (see <code>sendMessage</code> example)  </p>
 <table>
 <thead>
@@ -935,7 +928,7 @@ if available.</p>
 <h3 id="basebotsendcascademessagearray-sendoptions-&#x21D2;-promise">baseBot.sendCascade(messageArray, [sendOptions]) &#x21D2; <code>Promise</code></h3>
 <p>sendCascade() allows developers to send a cascade of messages
 in a sequence. All types of messages can be sent (including raw messages).</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with an array of body objects
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with an array of body objects
 (see <code>sendMessage</code> example for one said object)  </p>
 <table>
 <thead>
@@ -976,7 +969,7 @@ bot.sendCascade(messageArray);
 <h3 id="basebotsendtextcascadetotextarray-recipientid-sendoptions-&#x21D2;-promise">baseBot.sendTextCascadeTo(textArray, recipientId, [sendOptions]) &#x21D2; <code>Promise</code></h3>
 <p>sendTextCascadeTo() is simply a helper function around sendCascadeTo.
 It allows developers to send a cascade of text messages more easily.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with an array of body objects
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves with an array of body objects
 (see <code>sendMessage</code> example for one said object)  </p>
 <table>
 <thead>
@@ -1013,7 +1006,7 @@ It allows developers to send a cascade of text messages more easily.</p>
 calls <strong>sendMessage in each botClass without calling formatOutgoingMessage
 before. It&apos;s really just sugar around </strong>sendMessage which shouldn&apos;t be used
 directly.</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise  </p>
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise  </p>
 <table>
 <thead>
 <tr>
@@ -1031,7 +1024,7 @@ directly.</p>
 <p><a name="BaseBot+getUserInfo"></a></p>
 <h3 id="basebotgetuserinfouserid-&#x21D2;-promise">baseBot.getUserInfo(userId) &#x21D2; <code>Promise</code></h3>
 <p>Retrieves the basic user info from a user if platform supports it</p>
-<p><strong>Kind</strong>: instance method of <code>BaseBot</code><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves into the user info or an empty
+<p><strong>Kind</strong>: instance method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>Promise</code> - promise that resolves into the user info or an empty
 object by default  </p>
 <table>
 <thead>
@@ -1054,7 +1047,7 @@ via BaseBot. This simply means one can create their own
 OutgoingMessage object using any bot object. They can then compose
 it with all its helper functions</p>
 <p>This is the static version of this method</p>
-<p><strong>Kind</strong>: static method of <code>BaseBot</code><br><strong>Returns</strong>: <code>OutgoingMessage</code> - outgoingMessage. The same object passed in with
+<p><strong>Kind</strong>: static method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>OutgoingMessage</code> - outgoingMessage. The same object passed in with
 all the helper functions from OutgoingMessage  </p>
 <table>
 <thead>
@@ -1078,7 +1071,7 @@ all the helper functions from OutgoingMessage  </p>
 id of the recipient set. Again, this is jut sugar syntax for creating a
 new outgoingMessage object</p>
 <p>This is the static version of this method</p>
-<p><strong>Kind</strong>: static method of <code>BaseBot</code><br><strong>Returns</strong>: <code>OutgoingMessage</code> - outgoingMessage. A valid OutgoingMessage object with recipient set.  </p>
+<p><strong>Kind</strong>: static method of <a href="#BaseBot"><code>BaseBot</code></a><br><strong>Returns</strong>: <code>OutgoingMessage</code> - outgoingMessage. A valid OutgoingMessage object with recipient set.  </p>
 <table>
 <thead>
 <tr>
@@ -1138,7 +1131,7 @@ new outgoingMessage object</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"BaseBot","level":"1.8.2","depth":2,"next":{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"previous":{"title":"Botmaster","level":"1.8.1","depth":2,"path":"api-reference/botmaster.md","ref":"api-reference/botmaster.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.1.1","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"api-reference/base-bot.md","mtime":"2017-07-30T14:53:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-30T14:57:15.084Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"BaseBot","level":"1.8.2","depth":2,"next":{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]},"previous":{"title":"Botmaster","level":"1.8.1","depth":2,"path":"api-reference/botmaster.md","ref":"api-reference/botmaster.md","articles":[]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.1.1","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"api-reference/base-bot.md","mtime":"2018-01-28T18:30:49.470Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-28T19:29:15.847Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

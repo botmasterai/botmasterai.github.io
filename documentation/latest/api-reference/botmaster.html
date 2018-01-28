@@ -510,12 +510,12 @@
 <ul>
 <li><a href="#Botmaster">Botmaster</a><ul>
 <li><a href="#new_Botmaster_new">new Botmaster(settings)</a></li>
-<li><a href="#Botmaster+addBot">.addBot(bot)</a> &#x21D2; <code>Botmaster</code></li>
+<li><a href="#Botmaster+addBot">.addBot(bot)</a> &#x21D2; <a href="#Botmaster"><code>Botmaster</code></a></li>
 <li><a href="#Botmaster+getBot">.getBot(options)</a> &#x21D2; <code>BaseBot</code></li>
 <li><a href="#Botmaster+getBots">.getBots(botType)</a> &#x21D2; <code>Array</code></li>
-<li><a href="#Botmaster+removeBot">.removeBot(bot)</a> &#x21D2; <code>Botmaster</code></li>
-<li><a href="#Botmaster+use">.use(middleware)</a> &#x21D2; <code>Botmaster</code></li>
-<li><a href="#Botmaster+useWrapped">.useWrapped(incomingMiddleware, outgoingMiddleware)</a> &#x21D2; <code>Botmaster</code></li>
+<li><a href="#Botmaster+removeBot">.removeBot(bot)</a> &#x21D2; <a href="#Botmaster"><code>Botmaster</code></a></li>
+<li><a href="#Botmaster+use">.use(middleware)</a> &#x21D2; <a href="#Botmaster"><code>Botmaster</code></a></li>
+<li><a href="#Botmaster+useWrapped">.useWrapped(incomingMiddleware, outgoingMiddleware)</a> &#x21D2; <a href="#Botmaster"><code>Botmaster</code></a></li>
 </ul>
 </li>
 </ul>
@@ -537,25 +537,10 @@ as a parameter. If not, it creates its own http server</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Example</strong>  </p>
-<pre><code class="lang-js"><span class="hljs-comment">// attach the botmaster generated server to port 5000 rather than the default 3000</span>
-<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
-  port: <span class="hljs-number">5000</span>,
-});
-</code></pre>
-<p><strong>Example</strong>  </p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;http&apos;</span>);
-
-<span class="hljs-keyword">const</span> myServer = http.createServer()
-<span class="hljs-comment">// use my own server rather than letting botmaster creat its own.</span>
-<span class="hljs-keyword">const</span> botmaster = <span class="hljs-keyword">new</span> Botmaster({
-  server: myServer,
-});
-</code></pre>
 <p><a name="Botmaster+addBot"></a></p>
-<h3 id="botmasteraddbotbot-&#x21D2;-botmaster">botmaster.addBot(bot) &#x21D2; <code>Botmaster</code></h3>
+<h3 id="botmasteraddbotbot-&#x21D2;-botmaster">botmaster.addBot(bot) &#x21D2; <a href="#Botmaster"><code>Botmaster</code></a></h3>
 <p>Add an existing bot to this instance of Botmaster</p>
-<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Botmaster</code> - returns the botmaster object for chaining  </p>
+<p><strong>Kind</strong>: instance method of <a href="#Botmaster"><code>Botmaster</code></a><br><strong>Returns</strong>: <a href="#Botmaster"><code>Botmaster</code></a> - returns the botmaster object for chaining  </p>
 <table>
 <thead>
 <tr>
@@ -575,7 +560,7 @@ as a parameter. If not, it creates its own http server</p>
 <p><a name="Botmaster+getBot"></a></p>
 <h3 id="botmastergetbotoptions-&#x21D2;-basebot">botmaster.getBot(options) &#x21D2; <code>BaseBot</code></h3>
 <p>Extract First bot of given type or provided id.</p>
-<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>BaseBot</code> - The bot found of a class that inherits of BaseBot  </p>
+<p><strong>Kind</strong>: instance method of <a href="#Botmaster"><code>Botmaster</code></a><br><strong>Returns</strong>: <code>BaseBot</code> - The bot found of a class that inherits of BaseBot  </p>
 <table>
 <thead>
 <tr>
@@ -595,7 +580,7 @@ as a parameter. If not, it creates its own http server</p>
 <p><a name="Botmaster+getBots"></a></p>
 <h3 id="botmastergetbotsbottype-&#x21D2;-array">botmaster.getBots(botType) &#x21D2; <code>Array</code></h3>
 <p>Extract all bots of given type.</p>
-<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Array</code> - Array of bots found  </p>
+<p><strong>Kind</strong>: instance method of <a href="#Botmaster"><code>Botmaster</code></a><br><strong>Returns</strong>: <code>Array</code> - Array of bots found  </p>
 <table>
 <thead>
 <tr>
@@ -613,9 +598,9 @@ as a parameter. If not, it creates its own http server</p>
 </tbody>
 </table>
 <p><a name="Botmaster+removeBot"></a></p>
-<h3 id="botmasterremovebotbot-&#x21D2;-botmaster">botmaster.removeBot(bot) &#x21D2; <code>Botmaster</code></h3>
+<h3 id="botmasterremovebotbot-&#x21D2;-botmaster">botmaster.removeBot(bot) &#x21D2; <a href="#Botmaster"><code>Botmaster</code></a></h3>
 <p>Remove an existing bot from this instance of Botmaster</p>
-<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Botmaster</code> - returns the botmaster object for chaining  </p>
+<p><strong>Kind</strong>: instance method of <a href="#Botmaster"><code>Botmaster</code></a><br><strong>Returns</strong>: <a href="#Botmaster"><code>Botmaster</code></a> - returns the botmaster object for chaining  </p>
 <table>
 <thead>
 <tr>
@@ -631,10 +616,10 @@ as a parameter. If not, it creates its own http server</p>
 </tbody>
 </table>
 <p><a name="Botmaster+use"></a></p>
-<h3 id="botmasterusemiddleware-&#x21D2;-botmaster">botmaster.use(middleware) &#x21D2; <code>Botmaster</code></h3>
+<h3 id="botmasterusemiddleware-&#x21D2;-botmaster">botmaster.use(middleware) &#x21D2; <a href="#Botmaster"><code>Botmaster</code></a></h3>
 <p>Add middleware to this botmaster object
 This function is just sugar for <code>middleware.__use</code> in them</p>
-<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Botmaster</code> - returns the botmaster object so you can chain middleware  </p>
+<p><strong>Kind</strong>: instance method of <a href="#Botmaster"><code>Botmaster</code></a><br><strong>Returns</strong>: <a href="#Botmaster"><code>Botmaster</code></a> - returns the botmaster object so you can chain middleware  </p>
 <table>
 <thead>
 <tr>
@@ -675,12 +660,12 @@ This function is just sugar for <code>middleware.__use</code> in them</p>
 }
 </code></pre>
 <p><a name="Botmaster+useWrapped"></a></p>
-<h3 id="botmasterusewrappedincomingmiddleware-outgoingmiddleware-&#x21D2;-botmaster">botmaster.useWrapped(incomingMiddleware, outgoingMiddleware) &#x21D2; <code>Botmaster</code></h3>
+<h3 id="botmasterusewrappedincomingmiddleware-outgoingmiddleware-&#x21D2;-botmaster">botmaster.useWrapped(incomingMiddleware, outgoingMiddleware) &#x21D2; <a href="#Botmaster"><code>Botmaster</code></a></h3>
 <p>Add wrapped middleware to this botmaster instance. Wrapped middleware
 places the incoming middleware at beginning of incoming stack and
 the outgoing middleware at end of outgoing stack.
 This function is just sugar <code>middleware.useWrapped</code>.</p>
-<p><strong>Kind</strong>: instance method of <code>Botmaster</code><br><strong>Returns</strong>: <code>Botmaster</code> - returns the botmaster object so you can chain middleware  </p>
+<p><strong>Kind</strong>: instance method of <a href="#Botmaster"><code>Botmaster</code></a><br><strong>Returns</strong>: <a href="#Botmaster"><code>Botmaster</code></a> - returns the botmaster object so you can chain middleware  </p>
 <table>
 <thead>
 <tr>
@@ -745,7 +730,7 @@ This function is just sugar <code>middleware.useWrapped</code>.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Botmaster","level":"1.8.1","depth":2,"next":{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},"previous":{"title":"API reference","level":"1.8","depth":1,"path":"api-reference/index.md","ref":"api-reference/index.md","articles":[{"title":"Botmaster","level":"1.8.1","depth":2,"path":"api-reference/botmaster.md","ref":"api-reference/botmaster.md","articles":[]},{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.1.1","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"api-reference/botmaster.md","mtime":"2017-07-30T14:53:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-30T14:57:15.084Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Botmaster","level":"1.8.1","depth":2,"next":{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},"previous":{"title":"API reference","level":"1.8","depth":1,"path":"api-reference/index.md","ref":"api-reference/index.md","articles":[{"title":"Botmaster","level":"1.8.1","depth":2,"path":"api-reference/botmaster.md","ref":"api-reference/botmaster.md","articles":[]},{"title":"BaseBot","level":"1.8.2","depth":2,"path":"api-reference/base-bot.md","ref":"api-reference/base-bot.md","articles":[]},{"title":"OutgoingMessage","level":"1.8.3","depth":2,"path":"api-reference/outgoing-message.md","ref":"api-reference/outgoing-message.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["versions","expandable-chapters"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"versions":{"type":"branches","gitbookConfigURL":"https://raw.githubusercontent.com/botmasterai/botmasterai.github.io/master/book.json","options":[{"value":"http://botmasterai.com/documentation/latest/","text":"latest"},{"value":"http://botmasterai.com/documentation/latest/","text":"Version 3.1.1","selected":true},{"value":"http://botmasterai.com/documentation/v2.3.1/","text":"Version 2.3.1"}]},"expandable-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"api-reference/botmaster.md","mtime":"2018-01-28T18:30:49.471Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-28T19:29:15.847Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
